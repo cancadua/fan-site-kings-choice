@@ -1,0 +1,19 @@
+.uw-cities-space {
+  background: #f8f8f8;
+  border: 2px dashed #8b0000;
+  border-radius: 8px;
+  padding: 24px;
+  min-width: 220px;
+  min-height: 200px;
+}
+
+.city-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.city-list > div {
+  margin-bottom: 0; // Remove bottom margin, use gap instead
+  cursor: grab;
+}

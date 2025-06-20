@@ -1,0 +1,7 @@
+<app-tabs [tabs]="unchartedWaterTabs" [(activeTab)]="activeTab">
+  @if (activeTab.value === 'description') {
+  <app-uw-description></app-uw-description>
+  } @else if (activeTab.value === 'cities-tool') {
+  <app-uw-cities-tool></app-uw-cities-tool>
+  }
+</app-tabs>

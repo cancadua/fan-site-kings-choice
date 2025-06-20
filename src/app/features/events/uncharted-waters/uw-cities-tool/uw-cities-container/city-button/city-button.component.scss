@@ -1,0 +1,20 @@
+.city-btn {
+  background: #8b0000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.city-btn:hover {
+  background: #a52a2a;
+}
+
+// Add a modifier for green background when in space A
+.city-btn.space-a {
+  background: #218838;
+  color: #fff;
+}

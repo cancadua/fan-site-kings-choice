@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Reset margin and padding for the whole app */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -12px;
+  margin-right: -12px;
+  padding: 0 0 24px 0;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Alternatively, for all descendants in one rule: */
+.row :is(.row) {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100%;
+}
+
+.row-content {
+  width: 100%;
+  padding: 24px 0;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12,
+.col-13,
+.col-14,
+.col-15,
+.col-16,
+.col-17,
+.col-18,
+.col-19,
+.col-20,
+.col-21,
+.col-22,
+.col-23,
+.col-24 {
+  min-width: 0; // Prevent column overflow for nested rows
+}
+
+@for $i from 1 through 24 {
+  $percent: ($i / 24) * 100%;
+  .col-#{$i} {
+    flex: 0 0 #{$percent};
+    max-width: #{$percent};
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
+    min-width: 0; // Prevent overflow for nested rows
+  }
+}
+
+// Remove left padding for the first column and right padding for the last column in a row
+.row > [class^='col-']:first-child {
+  padding-left: 0;
+}
+.row > [class^='col-']:last-child {
+  padding-right: 0;
+}

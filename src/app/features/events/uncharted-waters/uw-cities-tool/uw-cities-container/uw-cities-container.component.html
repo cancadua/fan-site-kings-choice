@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-12">
+    <div
+      class="uw-cities-space"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop('A', null)"
+    >
+      <h3>Non empty cities</h3>
+      <div class="city-list">
+        @for (city of nonEmpty(); let i = $index; track $index) {
+        <div
+          draggable="true"
+          (dragstart)="onDragStart(city, 'A', i, $event)"
+          (dragover)="onDragOver($event)"
+          (drop)="onDrop('A', i)"
+        >
+          <app-city-button
+            [city]="city"
+            [nonEmpty]="true"
+            (move)="moveCity(city, 'A')"
+          ></app-city-button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div
+      class="uw-cities-space"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop('B', null)"
+    >
+      <h3>Empty cities</h3>
+      <div class="city-list">
+        @for (city of empty(); let i = $index; track $index) {
+        <div
+          draggable="true"
+          (dragstart)="onDragStart(city, 'B', i, $event)"
+          (dragover)="onDragOver($event)"
+          (drop)="onDrop('B', i)"
+        >
+          <app-city-button
+            [city]="city"
+            (move)="moveCity(city, 'B')"
+          ></app-city-button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

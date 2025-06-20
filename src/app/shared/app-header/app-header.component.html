@@ -1,0 +1,16 @@
+<header>
+  <div class="navbar">
+    <div class="nav-left">
+      <a [routerLink]="navLinks[0].route">{{ navLinks[0].label }}</a>
+    </div>
+    <div class="nav-right">
+      @for (link of navLinks.slice(1); track $index) {
+        <a [routerLink]="link.route">{{ link.label }}</a>
+      }
+    </div>
+  </div>
+  <div class="header-content">
+    <h1 class="title">{{ title }}</h1>
+    <p class="subtitle">{{ subtitle }}</p>
+  </div>
+</header>

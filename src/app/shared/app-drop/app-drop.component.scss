@@ -1,0 +1,100 @@
+.dropdown {
+  margin-top: 24px;
+  position: relative;
+  display: inline-block;
+  outline: none; /* Remove focus outline */
+  width: 300px; /* Permanent width */
+}
+
+.dropdown-label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #aaa;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.dropdown.has-value .dropdown-label {
+  top: -10px;
+  font-size: 0.8rem;
+  color: #8b0000; /* Highlight color for floating label */
+}
+
+.dropdown-toggle {
+  width: 100%;
+  background-color: #8b0000;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth hover effect */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for long text */
+  position: relative; /* To position the triangle */
+}
+
+.dropdown-toggle:hover {
+  background-color: #a52a2a;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.dropdown-toggle::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(270deg); /* Point left by default */
+  border: 5px solid transparent;
+  border-top-color: #fff; /* Triangle color */
+  transition: transform 0.3s ease;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Match the width of the dropdown */
+  z-index: 1000;
+  opacity: 0; /* Initially hidden */
+  transform: scaleY(0); /* Collapsed */
+  transform-origin: top; /* Expand from the top */
+  transition: opacity 0.3s, transform 0.3s; /* Smooth expand/collapse */
+}
+
+.dropdown-menu.open {
+  opacity: 1; /* Fully visible */
+  transform: scaleY(1); /* Expanded */
+}
+
+.dropdown-menu.open ~ .dropdown-toggle::after {
+  transform: translateY(-50%) rotate(0deg); /* Point down when open */
+}
+
+.dropdown-menu li {
+  padding: 10px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  transition: background-color 0.3s; /* Smooth hover effect */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for long text */
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}

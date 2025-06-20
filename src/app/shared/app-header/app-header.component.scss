@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+header {
+  width: 100%;
+  background: url('../../../assets/img/background.jpg') no-repeat center
+    center/cover; // Add your background image
+  color: #fff;
+  text-align: center;
+  padding: 50px 20px;
+  border-bottom: 5px solid #8b0000; // Decorative border
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  font-family: 'Cinzel', serif;
+}
+
+.title {
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.navbar .nav-left,
+.navbar .nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .nav-left a,
+.navbar .nav-right a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.navbar .nav-left a:hover,
+.navbar .nav-right a:hover {
+  color: #ffd700; // Gold color for hover effect
+}
+
+.navbar .nav-left a:hover,
+.navbar .nav-right a:hover {
+  color: #ffd700; // Gold color for hover effect
+}

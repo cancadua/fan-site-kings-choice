@@ -1,0 +1,20 @@
+<div
+  class="dropdown"
+  [class.has-value]="selectedValue()"
+  (focusout)="closeDropdown()"
+  tabindex="0"
+>
+  @if (selectedValue() !== null) {
+  <span class="dropdown-label">{{ label() }}</span>
+  }
+  <button class="dropdown-toggle" (click)="toggleDropdown()">
+    {{ selectedObject?.[viewKey()] ? truncateText(selectedObject?.[viewKey()], 30) : label() }}
+  </button>
+  <ul class="dropdown-menu" [class.open]="isOpen">
+    @for (item of items(); track $index) {
+    <li (click)="selectItem(item)" title="{{ item[viewKey()] }}">
+      {{ truncateText(item[viewKey()], 30) }}
+    </li>
+    }
+  </ul>
+</div>

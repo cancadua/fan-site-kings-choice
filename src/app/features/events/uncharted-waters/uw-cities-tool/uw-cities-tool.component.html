@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-24">
+    <app-uw-cities-container
+      [(nonEmpty)]="nonEmpty"
+      [(empty)]="empty"
+    ></app-uw-cities-container>
+    <div class="row relative">
+      @for(item of full(); track $index) {
+      <div
+        class="dot"
+        [style]="
+          'left: ' +
+          item.position?.left +
+          '; top: ' +
+          item.position?.top +
+          '; background-color: ' +
+          item.color +
+          '; box-shadow: 0 0 5px ' +
+          item.color +
+          ';'
+        "
+      ></div>
+      }
+      <div class="col-24 map" (click)="asd($event)"></div>
+    </div>
+  </div>
+</div>

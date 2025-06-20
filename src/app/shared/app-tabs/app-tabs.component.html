@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-24">
+    <div class="tabs">
+      @for (tab of tabs(); track $index) {
+      <button
+        [class.active]="tab.value === activeTab()?.value"
+        (click)="selectTab(tab)"
+      >
+        {{ tab.label }}
+      </button>
+      }
+    </div>
+  </div>
+  <div class="col-24">
+    <div class="tab-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

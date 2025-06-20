@@ -1,0 +1,8 @@
+<div class="events">
+  <h1>Events</h1>
+  <app-drop [items]="eventsData" [(selectedValue)]="selectedEvent"></app-drop>
+
+  @switch (selectedEvent) { @case(Event.UnchartedWaters) {
+  <app-uncharted-waters></app-uncharted-waters>
+  } }
+</div>

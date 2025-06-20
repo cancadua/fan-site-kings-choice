@@ -1,0 +1,49 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.tabs {
+  margin-top: 20px;
+  min-width: 1000px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #8b0000; /* Add a bottom border for the tab container */
+}
+
+.tabs button {
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  color: #8b0000;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.3s, border-bottom 0.3s;
+  border-bottom: 2px solid transparent; /* Add a bottom border for active effect */
+}
+
+.tabs button.active {
+  color: #fff;
+  background-color: #8b0000;
+  border-radius: 5px 5px 0 0; /* Rounded corners for active tab */
+  border-bottom: 2px solid #8b0000; /* Match the container border */
+}
+
+.tabs button:hover {
+  color: #a52a2a;
+}
+
+.tab-content {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: #333;
+  padding: 20px;
+  border: 1px solid #8b0000;
+  border-radius: 0 0 5px 5px; /* Rounded corners for the content box */
+  background-color: #fff;
+  width: 100%;
+  text-align: center;
+}
