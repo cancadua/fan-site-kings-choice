@@ -4,6 +4,10 @@
   display: inline-block;
   outline: none; /* Remove focus outline */
   width: 300px; /* Permanent width */
+
+  @media (max-width: 400px) {
+    width: 200px; /* Smaller width for small screens */
+  }
 }
 
 .dropdown-label {

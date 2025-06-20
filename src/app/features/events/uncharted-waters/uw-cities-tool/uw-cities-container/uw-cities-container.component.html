@@ -1,12 +1,19 @@
-<div class="row">
-  <div class="col-12">
+<div class="row uw-cities-lists">
+  <div
+    class="col-12 uw-cities-list"
+    [class.expanded]="expandedA"
+    [class.mobile]="isMobile"
+  >
     <div
       class="uw-cities-space"
       (dragover)="onDragOver($event)"
       (drop)="onDrop('A', null)"
     >
-      <h3>Non empty cities</h3>
-      <div class="city-list">
+      <h3 (click)="toggleExpand('A')" class="expand-header">
+        Non empty cities
+        <span class="expand-arrow">{{ expandedA ? '▼' : '▶' }}</span>
+      </h3>
+      <div class="city-list" *ngIf="expandedA || !isMobile">
         @for (city of nonEmpty(); let i = $index; track $index) {
         <div
           draggable="true"
@@ -24,14 +31,21 @@
       </div>
     </div>
   </div>
-  <div class="col-12">
+  <div
+    class="col-12 uw-cities-list"
+    [class.expanded]="expandedB"
+    [class.mobile]="isMobile"
+  >
     <div
       class="uw-cities-space"
       (dragover)="onDragOver($event)"
       (drop)="onDrop('B', null)"
     >
-      <h3>Empty cities</h3>
-      <div class="city-list">
+      <h3 (click)="toggleExpand('B')" class="expand-header">
+        Empty cities
+        <span class="expand-arrow">{{ expandedB ? '▼' : '▶' }}</span>
+      </h3>
+      <div class="city-list" *ngIf="expandedB || !isMobile">
         @for (city of empty(); let i = $index; track $index) {
         <div
           draggable="true"

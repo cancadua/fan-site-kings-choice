@@ -1,5 +1,34 @@
+.uw-desc-root {
+  width: 100%;
+}
+
+.desktop-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.image-col {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-col {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  font-size: 1.2rem;
+}
+
 .event-image {
   height: 350px !important;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .image-text {
@@ -8,4 +37,41 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.desktop-text {
+  // Show only on desktop
+  display: block;
+}
+.mobile-bg {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .desktop-layout {
+    display: none;
+  }
+  .desktop-text {
+    display: none;
+  }
+  .mobile-bg {
+    display: flex;
+    background: url('../../../../../assets/img/uncharted-waters.jpg') no-repeat
+      center center/cover;
+    min-height: 300px;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    padding: 0;
+  }
+  .mobile-bg .mobile-text {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 24px 16px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 0 0 8px 8px;
+  }
 }

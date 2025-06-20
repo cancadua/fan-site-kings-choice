@@ -17,6 +17,32 @@ export class UwCitiesContainer {
 
   dragData: { city: City; from: 'A' | 'B'; index: number } | null = null;
 
+  expandedA = true;
+  expandedB = true;
+  isMobile = false;
+
+  constructor() {
+    this.checkMobile();
+    window.addEventListener('resize', () => this.checkMobile());
+  }
+
+  checkMobile() {
+    this.isMobile = window.innerWidth <= 600;
+    if (this.isMobile) {
+      this.expandedA = false;
+      this.expandedB = false;
+    } else {
+      this.expandedA = true;
+      this.expandedB = true;
+    }
+  }
+
+  toggleExpand(which: 'A' | 'B') {
+    if (!this.isMobile) return;
+    if (which === 'A') this.expandedA = !this.expandedA;
+    if (which === 'B') this.expandedB = !this.expandedB;
+  }
+
   onDragStart(city: City, from: 'A' | 'B', index: number, event: DragEvent) {
     this.dragData = { city, from, index };
     event.dataTransfer?.setData('text/plain', JSON.stringify({}));

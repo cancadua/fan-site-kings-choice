@@ -17,3 +17,49 @@
   margin-bottom: 0; // Remove bottom margin, use gap instead
   cursor: grab;
 }
+
+.uw-cities-lists {
+  flex-direction: row;
+}
+
+.uw-cities-list {
+  // ...existing code...
+}
+
+.expand-header {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.expand-arrow {
+  font-size: 1.2em;
+  margin-left: 8px;
+}
+
+@media (max-width: 600px) {
+  .uw-cities-lists {
+    flex-direction: column;
+  }
+  .uw-cities-list {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+  .uw-cities-space {
+    min-width: unset;
+    min-height: unset; // Remove minimum height on mobile
+    padding: 16px 8px;
+  }
+  .city-list {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  // Remove left and right padding for columns in a row on mobile
+  .row > [class^='col-'] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
