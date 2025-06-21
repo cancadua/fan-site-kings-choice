@@ -4,6 +4,15 @@
     [class.expanded]="expandedA"
     [class.mobile]="isMobile"
   >
+    <div class="input-move-bar">
+      <input
+        type="text"
+        placeholder="Move cities here (comma or space separated)"
+        (keydown.enter)="moveCitiesByInput($event, 'A')"
+        (blur)="moveCitiesByInput($event, 'A')"
+        class="move-input"
+      />
+    </div>
     <div
       class="uw-cities-space"
       (dragover)="onDragOver($event)"
@@ -36,6 +45,15 @@
     [class.expanded]="expandedB"
     [class.mobile]="isMobile"
   >
+    <div class="input-move-bar">
+      <input
+        type="text"
+        placeholder="Move cities here (comma or space separated)"
+        (keydown.enter)="moveCitiesByInput($event, 'B')"
+        (blur)="moveCitiesByInput($event, 'B')"
+        class="move-input"
+      />
+    </div>
     <div
       class="uw-cities-space"
       (dragover)="onDragOver($event)"

@@ -110,4 +110,48 @@ export class UwCitiesContainer {
   onDragOver(event: DragEvent) {
     event.preventDefault();
   }
+
+  moveCitiesByInput(event: Event, to: 'A' | 'B') {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.trim();
+    if (!value) return;
+    const names = value
+      .split(/[,\s]+/)
+      .map((n) => n.trim().toLowerCase())
+      .filter((n) => n.length > 0);
+    if (!names.length) return;
+    // Move from empty to nonEmpty or vice versa
+    if (to === 'A') {
+      const toMove = this.empty().filter((city) =>
+        names.includes(city.name.toLowerCase())
+      );
+      if (toMove.length) {
+        const newEmpty = this.empty().filter(
+          (city) => !names.includes(city.name.toLowerCase())
+        );
+        const newNonEmpty = [
+          ...this.nonEmpty(),
+          ...toMove.map((city) => ({ ...city, color: 'green' })),
+        ];
+        this.empty.set(newEmpty);
+        this.nonEmpty.set(newNonEmpty);
+      }
+    } else {
+      const toMove = this.nonEmpty().filter((city) =>
+        names.includes(city.name.toLowerCase())
+      );
+      if (toMove.length) {
+        const newNonEmpty = this.nonEmpty().filter(
+          (city) => !names.includes(city.name.toLowerCase())
+        );
+        const newEmpty = [
+          ...this.empty(),
+          ...toMove.map((city) => ({ ...city, color: 'red' })),
+        ];
+        this.nonEmpty.set(newNonEmpty);
+        this.empty.set(newEmpty);
+      }
+    }
+    input.value = '';
+  }
 }
