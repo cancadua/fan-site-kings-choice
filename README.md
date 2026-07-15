@@ -1,59 +1,121 @@
-# KingsChoice
+# Kings Choice Fan Site
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+A fan site for the game **Kings Choice**, featuring interactive event content and gameplay tools.
 
-## Development server
+## Overview
 
-To start a local development server, run:
+Kings Choice Fan Site is an Angular-based web application that provides an interactive experience for Kings Choice fans. The site includes event management and specific event gameplay features like the **Uncharted Waters** city selection tool.
 
-```bash
-ng serve
+## Features
+
+- **Event System**: Browse and interact with game events
+- **Uncharted Waters Event**: Interactive city selection tool for event participation
+- **Responsive UI**: Modern Angular components with shared UI library
+- **GitHub Pages Deployment**: Automatically deployed via CI/CD
+
+## Tech Stack
+
+- **Framework**: [Angular](https://angular.dev/) 20.0.0
+- **Language**: [TypeScript](https://www.typescriptlang.org/) 5.8.2
+- **Testing**: Karma/Jasmine
+- **Build Tool**: Angular CLI 20.0.3
+- **Code Formatting**: Prettier
+- **Package Manager**: npm
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── features/
+│   │   ├── home/          # Home page
+│   │   └── events/        # Events management
+│   │       └── uncharted-waters/  # Uncharted Waters event with city tool
+│   ├── shared/            # Shared UI components
+│   │   ├── app-header/
+│   │   ├── app-tabs/
+│   │   └── app-drop/
+│   ├── core/              # Constants and enums
+│   │   ├── constants/     # Events data, city data
+│   │   └── enums/         # Event and continent enums
+│   ├── app.config.ts
+│   ├── app.routes.ts
+│   └── app.ts
+└── main.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Getting Started
 
-## Code scaffolding
+### Prerequisites
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js (v18+)
+- npm (v9+)
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Installation
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
+### Development Server
 
-To build the project run:
+Start the development server:
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open your browser and navigate to `http://localhost:4200/`. The application will automatically reload when you modify any source files.
 
-## Running unit tests
+### Building
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Build the project for production:
 
 ```bash
-ng test
+npm run build
 ```
 
-## Running end-to-end tests
+Build artifacts will be stored in the `dist/` directory.
 
-For end-to-end (e2e) testing, run:
+### Running Tests
+
+Execute unit tests with [Karma](https://karma-runner.github.io):
 
 ```bash
-ng e2e
+npm test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Code Formatting
 
-## Additional Resources
+Format all code using Prettier:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm run format
+```
+
+## Deployment
+
+This project is deployed to GitHub Pages. The deployment is managed via the Angular CLI GitHub Pages plugin (`angular-cli-ghpages`).
+
+## Contributing
+
+When adding new features or components:
+
+1. Use Angular CLI scaffolding for consistency:
+   ```bash
+   ng generate component feature-name
+   ```
+2. Follow the existing folder structure
+3. Run tests and formatting before committing:
+   ```bash
+   npm test
+   npm run format
+   ```
+4. Use conventional commit messages
+
+## Resources
+
+- [Angular Documentation](https://angular.dev/)
+- [Angular CLI Guide](https://angular.dev/tools/cli)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Kings Choice Game](https://www.kingschoice.com/)
