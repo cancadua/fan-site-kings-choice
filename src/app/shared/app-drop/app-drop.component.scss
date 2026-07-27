@@ -1,100 +1,154 @@
+// Color variables
+$black-primary: #0a0a0a;
+$black-light: #2d2d2d;
+$gold-primary: #d4af37;
+$gold-light: #f0e68c;
+$gold-dark: #9d7e2a;
+$emerald: #218838;
+$emerald-light: #28a745;
+$parchment: #f4f1de;
+$stone-light: #e8e4d0;
+
 .dropdown {
-  margin-top: 24px;
   position: relative;
   display: inline-block;
-  outline: none; /* Remove focus outline */
-  width: 300px; /* Permanent width */
+  outline: none;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
 }
 
 .dropdown-label {
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 16px;
   transform: translateY(-50%);
-  font-size: 1rem;
-  color: #aaa;
+  font-size: 0.9rem;
+  color: $gold-primary;
   pointer-events: none;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .dropdown.has-value .dropdown-label {
-  top: -10px;
-  font-size: 0.8rem;
-  color: #8b0000; /* Highlight color for floating label */
+  top: -12px;
+  font-size: 0.75rem;
+  color: $gold-light;
+  background: $black-primary;
+  padding: 0 6px;
 }
 
 .dropdown-toggle {
   width: 100%;
-  background-color: #8b0000;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px; /* Rounded corners */
+  background-color: $black-light;
+  color: $parchment;
+  padding: 14px 16px;
+  border: 2px solid $gold-primary;
+  border-radius: 8px;
   cursor: pointer;
   font-family: 'Cinzel', serif;
   font-size: 1rem;
   text-transform: uppercase;
-  transition: background-color 0.3s, transform 0.3s; /* Smooth hover effect */
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: hidden; /* Hide overflow text */
-  text-overflow: ellipsis; /* Add ellipsis for long text */
-  position: relative; /* To position the triangle */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  background: linear-gradient(135deg, $black-light 0%, rgba(13, 13, 13, 0.8) 100%);
 }
 
 .dropdown-toggle:hover {
-  background-color: #a52a2a;
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  border-color: $gold-light;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+  background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, $black-light 100%);
+  transform: translateY(-2px);
+}
+
+.dropdown-toggle:focus-visible {
+  outline: 2px solid $emerald;
+  outline-offset: 2px;
 }
 
 .dropdown-toggle::after {
-  content: '';
+  content: '▼';
   position: absolute;
-  right: 10px;
+  right: 16px;
   top: 50%;
-  transform: translateY(-50%) rotate(270deg); /* Point left by default */
-  border: 5px solid transparent;
-  border-top-color: #fff; /* Triangle color */
+  transform: translateY(-50%) rotateZ(0deg);
+  color: $gold-primary;
+  font-size: 0.75rem;
   transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.dropdown-toggle.open::after {
+  transform: translateY(-50%) rotateZ(180deg);
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 8px);
   left: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: $black-light;
+  border: 2px solid $gold-primary;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.15);
   list-style: none;
-  padding: 0;
+  padding: 8px 0;
   margin: 0;
-  width: 100%; /* Match the width of the dropdown */
+  width: 100%;
   z-index: 1000;
-  opacity: 0; /* Initially hidden */
-  transform: scaleY(0); /* Collapsed */
-  transform-origin: top; /* Expand from the top */
-  transition: opacity 0.3s, transform 0.3s; /* Smooth expand/collapse */
+  opacity: 0;
+  transform: scaleY(0.8) translateY(-8px);
+  transform-origin: top;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .dropdown-menu.open {
-  opacity: 1; /* Fully visible */
-  transform: scaleY(1); /* Expanded */
-}
-
-.dropdown-menu.open ~ .dropdown-toggle::after {
-  transform: translateY(-50%) rotate(0deg); /* Point down when open */
+  opacity: 1;
+  transform: scaleY(1) translateY(0);
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .dropdown-menu li {
-  padding: 10px;
+  padding: 12px 16px;
   cursor: pointer;
   font-family: 'Cinzel', serif;
-  transition: background-color 0.3s; /* Smooth hover effect */
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: hidden; /* Hide overflow text */
-  text-overflow: ellipsis; /* Add ellipsis for long text */
+  color: $parchment;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+}
+
+.dropdown-menu li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, $emerald 0%, $emerald-light 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .dropdown-menu li:hover {
-  background-color: #f0f0f0;
+  background: linear-gradient(90deg, rgba(33, 136, 56, 0.15) 0%, rgba(40, 167, 69, 0.1) 100%);
+  color: $gold-light;
+  padding-left: 20px;
+}
+
+.dropdown-menu li:hover::before {
+  opacity: 1;
 }

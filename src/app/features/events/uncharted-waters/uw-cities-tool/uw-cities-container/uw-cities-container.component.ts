@@ -1,4 +1,4 @@
-import { Component, model, signal, computed } from '@angular/core';
+import { Component, model, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CityButtonComponent } from './city-button/city-button.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,9 +7,11 @@ import { City } from './uw-cities-container.schema';
 
 @Component({
   selector: 'app-uw-cities-container',
+  standalone: true,
   templateUrl: './uw-cities-container.component.html',
   styleUrls: ['./uw-cities-container.component.scss'],
   imports: [CityButtonComponent, CommonModule, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UwCitiesContainer {
   nonEmpty = model<City[]>([]);

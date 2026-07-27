@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+$black-primary: #0a0a0a;
+$black-dark: #1a1a1a;
+$black-light: #2d2d2d;
+$gold-primary: #d4af37;
+$gold-light: #f0e68c;
+$gold-dark: #9d7e2a;
+$parchment: #f4f1de;
+$shadow: rgba(0, 0, 0, 0.4);
 
 :host {
   display: block;
@@ -7,58 +14,116 @@
 
 header {
   width: 100%;
-  background: url('../../../assets/img/background.jpg') no-repeat center
-    center/cover; // Add your background image
-  color: #fff;
+  background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(26, 26, 26, 0.8)), url('../../../assets/img/background.png') no-repeat center center/cover;
+  color: $parchment;
   text-align: center;
-  padding: 50px 20px;
-  border-bottom: 5px solid #8b0000; // Decorative border
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   font-family: 'Cinzel', serif;
-}
-
-.title {
-  font-size: 3rem;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin: 0;
-}
-
-.subtitle {
-  font-size: 1.5rem;
-  font-style: italic;
-  margin-top: 10px;
+  border-bottom: 4px solid $gold-primary;
+  box-shadow: 0 8px 16px $shadow;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: rgba(0, 0, 0, 0.7);
+  padding: 16px 40px;
+  background: linear-gradient(90deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.95) 100%);
+  border-bottom: 2px solid $gold-primary;
+  box-shadow: inset 0 2px 8px rgba(212, 175, 55, 0.1);
 }
 
-.navbar .nav-left,
-.navbar .nav-right {
+.nav-left,
+.nav-right {
   display: flex;
   align-items: center;
+  gap: 40px;
 }
 
-.navbar .nav-left a,
-.navbar .nav-right a {
-  color: #fff;
+.nav-left a,
+.nav-right a {
+  color: $gold-light;
   text-decoration: none;
-  font-size: 1.2rem;
-  margin: 0 10px;
-  transition: color 0.3s;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  text-transform: uppercase;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: $gold-primary;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    color: $gold-primary;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+
+    &::after {
+      width: 100%;
+    }
+  }
 }
 
-.navbar .nav-left a:hover,
-.navbar .nav-right a:hover {
-  color: #ffd700; // Gold color for hover effect
+.header-content {
+  padding: 60px 40px 50px;
 }
 
-.navbar .nav-left a:hover,
-.navbar .nav-right a:hover {
-  color: #ffd700; // Gold color for hover effect
+.title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin: 0 0 15px 0;
+  color: $gold-light;
+  text-shadow: 2px 2px 8px $shadow, 0 0 20px rgba(212, 175, 55, 0.3);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-style: italic;
+  color: $parchment;
+  margin: 0;
+  text-shadow: 1px 1px 4px $shadow;
+  opacity: 0.9;
+  letter-spacing: 1px;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav-left,
+  .nav-right {
+    gap: 20px;
+  }
+
+  .nav-left a,
+  .nav-right a {
+    font-size: 0.9rem;
+  }
+
+  .header-content {
+    padding: 40px 20px 30px;
+  }
+
+  .title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
 }

@@ -1,63 +1,76 @@
-<div class="row">
-  <div class="col-24">
-    <div class="search-container">
+<div class="medieval-container">
+  <div class="search-header">
+    <div class="decorative-line left"></div>
+    <div class="search-wrapper">
       <input
         type="text"
-        placeholder="Search cities..."
+        placeholder="⚔ Search the realms..."
         [(ngModel)]="searchQuery"
         class="search-input"
       />
     </div>
+    <div class="decorative-line right"></div>
   </div>
-</div>
 
-<div class="row">
-  <div class="col-12">
-    <div
-      class="uw-cities-space"
-      (dragover)="onDragOver($event)"
-      (drop)="onDrop('A', null)"
-    >
-      <h3>Non empty cities</h3>
-      <div class="city-list">
-        @for (city of filteredNonEmpty(); let i = $index; track $index) {
-        <div
-          draggable="true"
-          (dragstart)="onDragStart(city, 'A', i, $event)"
-          (dragover)="onDragOver($event)"
-          (drop)="onDrop('A', i)"
-        >
-          <app-city-button
-            [city]="city"
-            [nonEmpty]="true"
-            (move)="moveCity(city, 'A')"
-          ></app-city-button>
+  <div class="cities-grid">
+    <div class="column populated-column">
+      <div class="column-header">
+        <span class="crown">👑</span>
+        <h2>Populated Cities</h2>
+        <span class="crown">👑</span>
+      </div>
+      <div
+        class="uw-cities-space"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop('A', null)"
+      >
+        <div class="city-list">
+          @for (city of filteredNonEmpty(); let i = $index; track $index) {
+          <div
+            draggable="true"
+            (dragstart)="onDragStart(city, 'A', i, $event)"
+            (dragover)="onDragOver($event)"
+            (drop)="onDrop('A', i)"
+            class="city-item"
+          >
+            <app-city-button
+              [city]="city"
+              [nonEmpty]="true"
+              (move)="moveCity(city, 'A')"
+            ></app-city-button>
+          </div>
+          }
         </div>
-        }
       </div>
     </div>
-  </div>
-  <div class="col-12">
-    <div
-      class="uw-cities-space"
-      (dragover)="onDragOver($event)"
-      (drop)="onDrop('B', null)"
-    >
-      <h3>Empty cities</h3>
-      <div class="city-list">
-        @for (city of filteredEmpty(); let i = $index; track $index) {
-        <div
-          draggable="true"
-          (dragstart)="onDragStart(city, 'B', i, $event)"
-          (dragover)="onDragOver($event)"
-          (drop)="onDrop('B', i)"
-        >
-          <app-city-button
-            [city]="city"
-            (move)="moveCity(city, 'B')"
-          ></app-city-button>
+
+    <div class="column empty-column">
+      <div class="column-header">
+        <span class="skull">💀</span>
+        <h2>Vacant Cities</h2>
+        <span class="skull">💀</span>
+      </div>
+      <div
+        class="uw-cities-space"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop('B', null)"
+      >
+        <div class="city-list">
+          @for (city of filteredEmpty(); let i = $index; track $index) {
+          <div
+            draggable="true"
+            (dragstart)="onDragStart(city, 'B', i, $event)"
+            (dragover)="onDragOver($event)"
+            (drop)="onDrop('B', i)"
+            class="city-item"
+          >
+            <app-city-button
+              [city]="city"
+              (move)="moveCity(city, 'B')"
+            ></app-city-button>
+          </div>
+          }
         </div>
-        }
       </div>
     </div>
   </div>

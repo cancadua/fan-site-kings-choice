@@ -1,4 +1,16 @@
+$black-primary: #0a0a0a;
+$black-dark: #1a1a1a;
+$black-light: #2d2d2d;
+$gold-primary: #d4af37;
+$gold-light: #f0e68c;
+$gold-dark: #9d7e2a;
+$parchment: #f4f1de;
+$shadow: rgba(0, 0, 0, 0.4);
+
 :host {
-  background: url('../../../../assets/img/uncharted-waters.jpg') no-repeat
-    center center/cover; // Add your background image
+  display: block;
+  width: 100%;
+  background: linear-gradient(rgba(10, 10, 10, 0.75), rgba(26, 26, 26, 0.85)), url('../../../../assets/img/uncharted-waters.jpg') no-repeat center center/cover;
+  min-height: 100vh;
+  padding: 40px 20px;
 }

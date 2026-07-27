@@ -1,8 +1,11 @@
-import { Component, forwardRef, input, Input, model } from '@angular/core';
+import { Component, forwardRef, input, model, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-drop',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './app-drop.component.html',
   styleUrls: ['./app-drop.component.scss'],
   providers: [
@@ -12,6 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDropComponent {
   truncateText(text: string | undefined, maxLength: number): string {

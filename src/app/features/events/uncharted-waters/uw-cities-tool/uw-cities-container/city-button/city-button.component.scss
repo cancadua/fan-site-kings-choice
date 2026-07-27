@@ -1,20 +1,94 @@
+// Color variables - design system
+$gold-primary: #d4af37;
+$gold-light: #f0e68c;
+$gold-dark: #9d7e2a;
+$crimson: #c41e3a;
+$crimson-dark: #8b0000;
+$emerald: #218838;
+$emerald-light: #28a745;
+$parchment: #f4f1de;
+
 .city-btn {
-  background: #8b0000;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 18px;
+  position: relative;
+  padding: 12px 24px;
   font-family: 'Cinzel', serif;
-  font-size: 1rem;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: $parchment;
+  border: 2px solid $gold-primary;
+  border-radius: 6px;
+  background: linear-gradient(135deg, $crimson 0%, $crimson-dark 100%);
   cursor: pointer;
-  transition: background 0.2s;
-}
-.city-btn:hover {
-  background: #a52a2a;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(212, 175, 55, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  will-change: transform;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: linear-gradient(135deg, #d63748 0%, $crimson 100%);
+    border-color: $gold-light;
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(212, 175, 55, 0.4),
+      inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(212, 175, 55, 0.2),
+      inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $emerald;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
-// Add a modifier for green background when in space A
 .city-btn.space-a {
-  background: #218838;
-  color: #fff;
+  border-color: $emerald-light;
+  background: linear-gradient(135deg, $emerald 0%, #1a6e2f 100%);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(40, 167, 69, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    background: linear-gradient(135deg, $emerald-light 0%, $emerald 100%);
+    border-color: $gold-light;
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(40, 167, 69, 0.4),
+      inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  }
 }

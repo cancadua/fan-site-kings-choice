@@ -1,15 +1,150 @@
+// Color variables
+$black-primary: #0a0a0a;
+$black-dark: #1a1a1a;
+$black-light: #2d2d2d;
+$gold-primary: #d4af37;
+$gold-light: #f0e68c;
+$gold-dark: #9d7e2a;
+$crimson: #c41e3a;
+$crimson-dark: #8b0000;
+$emerald: #218838;
+$emerald-light: #28a745;
+$parchment: #f4f1de;
+$stone-light: #e8e4d0;
+
 .events {
-  text-align: center;
-  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $black-primary 0%, $black-dark 50%, $black-primary 100%);
+  padding: 60px 40px;
   font-family: 'Cinzel', serif;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(33, 136, 56, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.events > * {
+  position: relative;
+  z-index: 1;
 }
 
 .events h1 {
-  font-size: 2.5rem;
-  color: #8b0000;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: $gold-primary;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+  animation: fadeInDown 0.8s ease-out;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, $gold-primary, transparent);
+    margin: 20px auto 0;
+    animation: slideRight 0.8s ease-out 0.2s both;
+  }
 }
 
-.events p {
-  font-size: 1.2rem;
-  color: #333;
+.events-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.events-selector {
+  background: linear-gradient(135deg, $black-light 0%, rgba(45, 45, 45, 0.8) 100%);
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(212, 175, 55, 0.1);
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s ease-out 0.1s both;
+
+  label {
+    display: block;
+    font-size: 1.1rem;
+    color: $gold-light;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+}
+
+.events-content {
+  animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    width: 0;
+  }
+  to {
+    width: 200px;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .events {
+    padding: 40px 20px;
+  }
+
+  .events h1 {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+
+    &::after {
+      width: 150px;
+    }
+  }
+
+  .events-selector {
+    padding: 24px;
+  }
 }
