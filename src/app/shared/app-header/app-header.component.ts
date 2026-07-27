@@ -5,14 +5,15 @@ import { RouterLink } from '@angular/router';
   selector: 'app-header',
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss'],
-  imports: [RouterLink]
+  imports: [RouterLink],
 })
 export class AppHeaderComponent {
   title = "King's Choice Fan Site";
-  subtitle = "A Journey Through the Medieval Era";
+  subtitle = 'A Journey Through the Medieval Era';
   navLinks = [
     { label: 'Home', route: '/' },
     { label: 'Knights', route: '/knights' },
-    { label: 'Events', route: '/events' }
+    { label: 'Events', route: '/events' },
+    { label: 'Guide', route: '/guide' },
   ];
 }

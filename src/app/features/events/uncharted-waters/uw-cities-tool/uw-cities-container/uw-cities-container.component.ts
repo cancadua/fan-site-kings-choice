@@ -1,4 +1,11 @@
-import { Component, model, signal, computed, ChangeDetectionStrategy, effect } from '@angular/core';
+import {
+  Component,
+  model,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+  effect,
+} from '@angular/core';
 import { CityButtonComponent } from './city-button/city-button.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +32,10 @@ export class UwCitiesContainer {
   filteredNonEmpty = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();
     if (!query) return this.nonEmpty();
-    const queries = query.split(',').map(q => q.trim()).filter(q => q);
+    const queries = query
+      .split(',')
+      .map((q) => q.trim())
+      .filter((q) => q);
     return this.nonEmpty().filter((city) =>
       this.matchesAnySearch(city.name.toLowerCase(), queries)
     );
@@ -34,14 +44,17 @@ export class UwCitiesContainer {
   filteredEmpty = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();
     if (!query) return this.empty();
-    const queries = query.split(',').map(q => q.trim()).filter(q => q);
+    const queries = query
+      .split(',')
+      .map((q) => q.trim())
+      .filter((q) => q);
     return this.empty().filter((city) =>
       this.matchesAnySearch(city.name.toLowerCase(), queries)
     );
   });
 
   private matchesAnySearch(cityName: string, queries: string[]): boolean {
-    return queries.some(query => this.matchesSearch(cityName, query));
+    return queries.some((query) => this.matchesSearch(cityName, query));
   }
 
   private matchesSearch(cityName: string, query: string): boolean {
@@ -90,7 +103,10 @@ export class UwCitiesContainer {
       if (filteredNonEmptyList.length === 1 || hasMultipleQueries) {
         this.moveAllFiltered(filteredNonEmptyList, 'A');
       }
-    } else if (filteredEmptyList.length > 0 && filteredNonEmptyList.length === 0) {
+    } else if (
+      filteredEmptyList.length > 0 &&
+      filteredNonEmptyList.length === 0
+    ) {
       if (filteredEmptyList.length === 1 || hasMultipleQueries) {
         this.moveAllFiltered(filteredEmptyList, 'B');
       }
@@ -101,7 +117,7 @@ export class UwCitiesContainer {
     if (from === 'A') {
       const newNonEmpty = [...this.nonEmpty()];
       const newEmpty = [...this.empty()];
-      citiesToMove.forEach(city => {
+      citiesToMove.forEach((city) => {
         const idx = newNonEmpty.findIndex((c) => c === city);
         if (idx > -1) {
           newNonEmpty.splice(idx, 1);
@@ -115,7 +131,7 @@ export class UwCitiesContainer {
     } else {
       const newEmpty = [...this.empty()];
       const newNonEmpty = [...this.nonEmpty()];
-      citiesToMove.forEach(city => {
+      citiesToMove.forEach((city) => {
         const idx = newEmpty.findIndex((c) => c === city);
         if (idx > -1) {
           newEmpty.splice(idx, 1);

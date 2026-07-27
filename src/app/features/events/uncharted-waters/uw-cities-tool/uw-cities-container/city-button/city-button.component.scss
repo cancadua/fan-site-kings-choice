@@ -21,9 +21,7 @@ $parchment: #f4f1de;
   background: linear-gradient(135deg, $crimson 0%, $crimson-dark 100%);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.3),
-    0 0 12px rgba(212, 175, 55, 0.2),
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 12px rgba(212, 175, 55, 0.2),
     inset 0 1px 2px rgba(255, 255, 255, 0.1);
   text-transform: uppercase;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
@@ -37,7 +35,12 @@ $parchment: #f4f1de;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
     transition: left 0.5s ease;
   }
 
@@ -49,17 +52,13 @@ $parchment: #f4f1de;
     transform: translateY(-3px) scale(1.05);
     background: linear-gradient(135deg, #d63748 0%, $crimson 100%);
     border-color: $gold-light;
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.4),
-      0 0 20px rgba(212, 175, 55, 0.4),
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.4),
       inset 0 1px 2px rgba(255, 255, 255, 0.2);
   }
 
   &:active {
     transform: translateY(-1px) scale(0.98);
-    box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.3),
-      0 0 12px rgba(212, 175, 55, 0.2),
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(212, 175, 55, 0.2),
       inset 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
@@ -78,17 +77,13 @@ $parchment: #f4f1de;
 .city-btn.space-a {
   border-color: $emerald-light;
   background: linear-gradient(135deg, $emerald 0%, #1a6e2f 100%);
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.3),
-    0 0 12px rgba(40, 167, 69, 0.2),
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 12px rgba(40, 167, 69, 0.2),
     inset 0 1px 2px rgba(255, 255, 255, 0.1);
 
   &:hover {
     background: linear-gradient(135deg, $emerald-light 0%, $emerald 100%);
     border-color: $gold-light;
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.4),
-      0 0 20px rgba(40, 167, 69, 0.4),
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(40, 167, 69, 0.4),
       inset 0 1px 2px rgba(255, 255, 255, 0.2);
   }
 }

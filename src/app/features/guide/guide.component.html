@@ -1,0 +1,7 @@
+<app-tabs [tabs]="guideTabs" [(activeTab)]="activeTab">
+  @if (activeTab.value === 'guide') {
+  <app-guide-advanced></app-guide-advanced>
+  } @else if (activeTab.value === 'tips') {
+  <app-guide-tips></app-guide-tips>
+  }
+</app-tabs>

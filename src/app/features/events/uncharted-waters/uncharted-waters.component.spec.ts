@@ -8,9 +8,8 @@ describe('UnchartedWatersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UnchartedWatersComponent]
-    })
-    .compileComponents();
+      imports: [UnchartedWatersComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UnchartedWatersComponent);
     component = fixture.componentInstance;

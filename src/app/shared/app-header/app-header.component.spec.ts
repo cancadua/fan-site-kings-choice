@@ -10,9 +10,8 @@ describe('AppHeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppHeaderComponent],
-      imports: [RouterTestingModule]
-    })
-    .compileComponents();
+      imports: [RouterTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AppHeaderComponent);
     component = fixture.componentInstance;
@@ -28,7 +27,7 @@ describe('AppHeaderComponent', () => {
     expect(component.navLinks).toEqual([
       { label: 'Home', route: '/' },
       { label: 'Knights', route: '/knights' },
-      { label: 'Events', route: '/events' }
+      { label: 'Events', route: '/events' },
     ]);
   });
 });

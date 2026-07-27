@@ -5,7 +5,7 @@
     </div>
     <div class="nav-right">
       @for (link of navLinks.slice(1); track $index) {
-        <a [routerLink]="link.route">{{ link.label }}</a>
+      <a [routerLink]="link.route">{{ link.label }}</a>
       }
     </div>
   </div>

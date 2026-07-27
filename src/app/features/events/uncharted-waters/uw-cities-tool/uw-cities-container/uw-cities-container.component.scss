@@ -67,14 +67,16 @@ $shadow-color: rgba(0, 0, 0, 0.4);
   font-family: 'Cinzel', serif;
   font-weight: 500;
   color: $stone-dark;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 12px rgba(212, 175, 55, 0.2);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+    0 0 12px rgba(212, 175, 55, 0.2);
   transition: all 0.3s ease;
   text-align: center;
 
   &:focus {
     outline: none;
     border-color: $gold-light;
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(212, 175, 55, 0.4);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+      0 0 20px rgba(212, 175, 55, 0.4);
     background: linear-gradient(135deg, #ffffff 0%, $stone-light 100%);
   }
 
@@ -95,12 +97,14 @@ $shadow-color: rgba(0, 0, 0, 0.4);
   font-weight: 700;
   color: $stone-dark;
   cursor: pointer;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 12px rgba(212, 175, 55, 0.2);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+    0 0 12px rgba(212, 175, 55, 0.2);
   transition: all 0.3s ease;
 
   &:hover {
     background: linear-gradient(135deg, $gold-light 0%, $gold-primary 100%);
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(212, 175, 55, 0.4);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+      0 0 20px rgba(212, 175, 55, 0.4);
   }
 
   &:active {
@@ -131,7 +135,11 @@ $shadow-color: rgba(0, 0, 0, 0.4);
     justify-content: center;
     gap: 12px;
     padding: 16px;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 0, 0, 0.05) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.1) 0%,
+      rgba(139, 0, 0, 0.05) 100%
+    );
     border-radius: 8px;
     border: 2px solid $gold-primary;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -153,7 +161,8 @@ $shadow-color: rgba(0, 0, 0, 0.4);
   }
 
   @keyframes bob {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
@@ -163,7 +172,11 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 
   &.populated-column {
     .column-header {
-      background: linear-gradient(135deg, rgba(33, 136, 56, 0.15) 0%, rgba(212, 175, 55, 0.1) 100%);
+      background: linear-gradient(
+        135deg,
+        rgba(33, 136, 56, 0.15) 0%,
+        rgba(212, 175, 55, 0.1) 100%
+      );
       border-color: #218838;
       box-shadow: 0 4px 15px rgba(33, 136, 56, 0.2);
     }
@@ -171,7 +184,11 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 
   &.empty-column {
     .column-header {
-      background: linear-gradient(135deg, rgba(139, 0, 0, 0.15) 0%, rgba(212, 175, 55, 0.1) 100%);
+      background: linear-gradient(
+        135deg,
+        rgba(139, 0, 0, 0.15) 0%,
+        rgba(212, 175, 55, 0.1) 100%
+      );
       border-color: $crimson-light;
       box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
     }
@@ -179,14 +196,16 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 }
 
 .uw-cities-space {
-  background: linear-gradient(135deg, rgba(244, 241, 222, 0.95) 0%, rgba(232, 228, 208, 0.95) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(244, 241, 222, 0.95) 0%,
+    rgba(232, 228, 208, 0.95) 100%
+  );
   border: 4px solid $gold-primary;
   border-radius: 8px;
   padding: 30px;
   min-height: 300px;
-  box-shadow:
-    inset 0 2px 8px rgba(0, 0, 0, 0.1),
-    0 8px 24px rgba(0, 0, 0, 0.4),
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.4),
     0 0 20px rgba(212, 175, 55, 0.2);
   position: relative;
   overflow: hidden;
@@ -198,9 +217,20 @@ $shadow-color: rgba(0, 0, 0, 0.4);
     left: 0;
     right: 0;
     bottom: 0;
-    background-image:
-      repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 0, 0, 0.02) 2px, rgba(139, 0, 0, 0.02) 4px),
-      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 0, 0, 0.02) 2px, rgba(139, 0, 0, 0.02) 4px);
+    background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(139, 0, 0, 0.02) 2px,
+        rgba(139, 0, 0, 0.02) 4px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(139, 0, 0, 0.02) 2px,
+        rgba(139, 0, 0, 0.02) 4px
+      );
     pointer-events: none;
   }
 

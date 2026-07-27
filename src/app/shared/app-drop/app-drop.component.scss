@@ -58,13 +58,21 @@ $stone-light: #e8e4d0;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
-  background: linear-gradient(135deg, $black-light 0%, rgba(13, 13, 13, 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    $black-light 0%,
+    rgba(13, 13, 13, 0.8) 100%
+  );
 }
 
 .dropdown-toggle:hover {
   border-color: $gold-light;
   box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
-  background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, $black-light 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(45, 45, 45, 0.9) 0%,
+    $black-light 100%
+  );
   transform: translateY(-2px);
 }
 
@@ -144,7 +152,11 @@ $stone-light: #e8e4d0;
 }
 
 .dropdown-menu li:hover {
-  background: linear-gradient(90deg, rgba(33, 136, 56, 0.15) 0%, rgba(40, 167, 69, 0.1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(33, 136, 56, 0.15) 0%,
+    rgba(40, 167, 69, 0.1) 100%
+  );
   color: $gold-light;
   padding-left: 20px;
 }

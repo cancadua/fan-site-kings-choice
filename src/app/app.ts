@@ -6,7 +6,7 @@ import { AppHeaderComponent } from './shared/app-header/app-header.component';
   selector: 'app-root',
   imports: [RouterOutlet, AppHeaderComponent],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class AppComponent {
   protected title = 'kings-choice';

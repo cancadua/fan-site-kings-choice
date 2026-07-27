@@ -4,12 +4,29 @@
   <div class="events-container">
     <div class="events-selector">
       <label>Select an Event</label>
-      <app-drop [items]="eventsData" [(selectedValue)]="selectedEvent"></app-drop>
+      <app-drop
+        [items]="eventsData"
+        [(selectedValue)]="selectedEvent"
+      ></app-drop>
     </div>
 
     <div class="events-content">
       @switch (selectedEvent) { @case(Event.UnchartedWaters) {
       <app-uncharted-waters></app-uncharted-waters>
+      } @case(Event.SchoolOfAthens) {
+      <app-school-of-athens></app-school-of-athens>
+      } @case(Event.ScarletBeauty) {
+      <app-scarlet-beauty></app-scarlet-beauty>
+      } @case(Event.WarOfTheLions) {
+      <app-war-of-the-lions></app-war-of-the-lions>
+      } @case(Event.KnightEncounter) {
+      <app-knight-encounter></app-knight-encounter>
+      } @case(Event.PetRace) {
+      <app-pet-race></app-pet-race>
+      } @case(Event.ThroneOfTheWolves) {
+      <app-throne-of-the-wolves></app-throne-of-the-wolves>
+      } @case(Event.DragonIsland) {
+      <app-dragon-island></app-dragon-island>
       } }
     </div>
   </div>

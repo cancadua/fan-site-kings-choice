@@ -51,7 +51,7 @@ Routes are defined in `app.routes.ts`. Each feature module should have its own r
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'events', component: EventsComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
 ```
 
@@ -79,22 +79,24 @@ npm start
 
 ### Development Commands
 
-| Command | Purpose |
-|---------|---------|
-| `npm start` | Run dev server with hot reload |
-| `npm run build` | Production build |
-| `npm test` | Run unit tests |
-| `npm run format` | Format code with Prettier |
-| `npm run watch` | Watch mode build |
+| Command          | Purpose                        |
+| ---------------- | ------------------------------ |
+| `npm start`      | Run dev server with hot reload |
+| `npm run build`  | Production build               |
+| `npm test`       | Run unit tests                 |
+| `npm run format` | Format code with Prettier      |
+| `npm run watch`  | Watch mode build               |
 
 ### Git Workflow
 
 1. **Branch naming**: Use descriptive names
+
    - Feature: `feat/feature-name`
    - Bug fix: `fix/bug-description`
    - Docs: `docs/documentation-update`
 
 2. **Commits**: Use conventional commits
+
    - `feat:` New feature
    - `fix:` Bug fix
    - `refactor:` Code refactoring
@@ -158,7 +160,7 @@ const processUser = (user: any) => {
   imports: [CommonModule],
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventCardComponent {
   @Input() event!: Event;
@@ -188,9 +190,7 @@ export class EventCardComponent {
 <p>{{ (user$ | async)?.name }}</p>
 
 <!-- ❌ Avoid -->
-<button (click)="selectEvent($event)">
-  {{ event?.name || 'Unknown' }}
-</button>
+<button (click)="selectEvent($event)">{{ event?.name || 'Unknown' }}</button>
 ```
 
 ### SCSS
@@ -240,8 +240,9 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
   loadEvents(): void {
-    this.http.get<Event[]>('/api/events')
-      .subscribe(events => this.eventList$.set(events));
+    this.http
+      .get<Event[]>('/api/events')
+      .subscribe((events) => this.eventList$.set(events));
   }
 }
 ```
@@ -257,12 +258,15 @@ export class EventService {
   selector: 'app-events-container',
   standalone: true,
   imports: [EventsListComponent],
-  template: '<app-events-list [events]="events$ | async" (select)="onSelect($event)" />'
+  template:
+    '<app-events-list [events]="events$ | async" (select)="onSelect($event)" />',
 })
 export class EventsContainerComponent {
   events$ = this.eventService.getEvents();
   constructor(private eventService: EventService) {}
-  onSelect(event: Event): void { /* ... */ }
+  onSelect(event: Event): void {
+    /* ... */
+  }
 }
 
 // ✅ Presentational Component
@@ -270,7 +274,8 @@ export class EventsContainerComponent {
   selector: 'app-events-list',
   standalone: true,
   imports: [CommonModule],
-  template: '<div *ngFor="let e of events" (click)="select.emit(e)">{{ e.name }}</div>'
+  template:
+    '<div *ngFor="let e of events" (click)="select.emit(e)">{{ e.name }}</div>',
 })
 export class EventsListComponent {
   @Input() events: Event[] = [];
@@ -330,7 +335,7 @@ describe('EventService', () => {
     const mockEvents = [{ id: '1', name: 'Event 1' }];
     spyOn(service, 'getEvents').and.returnValue(of(mockEvents));
 
-    service.getEvents().subscribe(events => {
+    service.getEvents().subscribe((events) => {
       expect(events).toEqual(mockEvents);
       done();
     });
@@ -400,13 +405,14 @@ ng generate component features/my-feature/my-feature
 ```
 
 Edit the component:
+
 ```typescript
 @Component({
   selector: 'app-my-feature',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './my-feature.component.html',
-  styleUrls: ['./my-feature.component.scss']
+  styleUrls: ['./my-feature.component.scss'],
 })
 export class MyFeatureComponent {
   // Component logic
@@ -423,7 +429,7 @@ ng generate service core/services/my-service
 @Injectable({ providedIn: 'root' })
 export class MyService {
   constructor(private http: HttpClient) {}
-  
+
   getdata(): Observable<Data[]> {
     return this.http.get<Data[]>('/api/data');
   }
@@ -439,18 +445,20 @@ export class MyService {
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'my-feature', component: MyFeatureComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
 ```
 
 ### Updating Dependencies
 
 Check for updates:
+
 ```bash
 npm outdated
 ```
 
 Update packages:
+
 ```bash
 npm update [package-name]
 # or update all
@@ -466,6 +474,7 @@ Always test after updating major versions.
 ### IDE Configuration
 
 **VS Code Recommended Extensions**:
+
 - Angular Language Service
 - Prettier - Code Formatter
 - TypeScript Vue Plugin (Volar)
@@ -473,6 +482,7 @@ Always test after updating major versions.
 - Debugger for Chrome
 
 **VS Code Settings** (`settings.json`):
+
 ```json
 {
   "[typescript]": {
@@ -488,6 +498,7 @@ Always test after updating major versions.
 ### Environment Variables
 
 Create `.env` files for environment-specific config:
+
 ```
 # .env.local
 API_URL=http://localhost:3000
@@ -536,6 +547,7 @@ npm test -- --browsers=Chrome --watch
 - **Time to Interactive**: < 5s
 
 Monitor these metrics regularly using:
+
 - Chrome DevTools Lighthouse
 - WebPageTest
 - Angular Bundle Analyzer
@@ -557,6 +569,7 @@ Monitor these metrics regularly using:
 ### Code Review
 
 Before submitting PRs:
+
 1. Ensure all tests pass
 2. Run formatter: `npm run format`
 3. Check TypeScript strict mode compliance

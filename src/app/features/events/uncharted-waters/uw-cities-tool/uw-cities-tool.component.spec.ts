@@ -8,9 +8,8 @@ describe('UwCitiesToolComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UwCitiesToolComponent]
-    })
-    .compileComponents();
+      imports: [UwCitiesToolComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UwCitiesToolComponent);
     component = fixture.componentInstance;

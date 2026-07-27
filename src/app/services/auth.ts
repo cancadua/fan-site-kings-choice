@@ -7,21 +7,21 @@ import { SupabaseService } from './supabase';
 export class Auth {
   constructor(private supabase: SupabaseService) {}
 
-async signUp(email: string, password: string) {
-  return this.supabase.supabase.auth.signUp({
-    email,
-    password
-  });
-}
+  async signUp(email: string, password: string) {
+    return this.supabase.supabase.auth.signUp({
+      email,
+      password,
+    });
+  }
 
-async signIn(email: string, password: string) {
-  return this.supabase.supabase.auth.signInWithPassword({
-    email,
-    password
-  });
-}
+  async signIn(email: string, password: string) {
+    return this.supabase.supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+  }
 
-async signOut() {
-  return this.supabase.supabase.auth.signOut();
-}
+  async signOut() {
+    return this.supabase.supabase.auth.signOut();
+  }
 }
