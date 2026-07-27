@@ -65,7 +65,7 @@ body {
 }
 
 @for $i from 1 through 24 {
-  $percent: ($i / 24) * 100%;
+  $percent: calc($i / 24) * 100%;
   .col-#{$i} {
     flex: 0 0 #{$percent};
     max-width: #{$percent};
