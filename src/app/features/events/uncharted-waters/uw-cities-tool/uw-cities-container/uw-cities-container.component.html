@@ -2,12 +2,24 @@
   <div class="search-header">
     <div class="decorative-line left"></div>
     <div class="search-wrapper">
-      <input
-        type="text"
-        placeholder="⚔ Search the realms..."
-        [(ngModel)]="searchQuery"
-        class="search-input"
-      />
+      <div class="search-input-group">
+        <input
+          type="text"
+          placeholder="⚔ Search the realms..."
+          [(ngModel)]="searchQuery"
+          (keydown)="onSearchKeyDown($event)"
+          (blur)="onSearchBlur()"
+          class="search-input"
+        />
+        <button
+          (click)="moveFilteredLastCity()"
+          class="confirm-button"
+          type="button"
+          title="Move"
+        >
+          →
+        </button>
+      </div>
     </div>
     <div class="decorative-line right"></div>
   </div>
