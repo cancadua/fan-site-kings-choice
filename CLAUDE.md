@@ -4,7 +4,7 @@
 
 Kings Choice Fan Site is an interactive Angular web application for Kings Choice game fans. The site provides event management and interactive gameplay features like the Uncharted Waters city selection tool.
 
-**Repository**: https://github.com/adrianEDS/fan-site-kings-choice  
+**Repository**: https://github.com/cancadua/fan-site-kings-choice  
 **Deployment**: GitHub Pages (automated via angular-cli-ghpages)  
 **Status**: Active Development
 
