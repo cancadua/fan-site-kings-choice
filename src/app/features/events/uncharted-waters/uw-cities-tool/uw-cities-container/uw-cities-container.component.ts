@@ -1,6 +1,7 @@
-import { Component, model, signal } from '@angular/core';
+import { Component, model, signal, computed } from '@angular/core';
 import { CityButtonComponent } from './city-button/city-button.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { uwCities } from '../../../../../core/constants/uw-cities';
 import { City } from './uw-cities-container.schema';
 
@@ -8,14 +9,32 @@ import { City } from './uw-cities-container.schema';
   selector: 'app-uw-cities-container',
   templateUrl: './uw-cities-container.component.html',
   styleUrls: ['./uw-cities-container.component.scss'],
-  imports: [CityButtonComponent, CommonModule],
+  imports: [CityButtonComponent, CommonModule, FormsModule],
 })
 export class UwCitiesContainer {
   nonEmpty = model<City[]>([]);
 
   empty = model<City[]>([]);
 
+  searchQuery = signal<string>('');
+
   dragData: { city: City; from: 'A' | 'B'; index: number } | null = null;
+
+  filteredNonEmpty = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    if (!query) return this.nonEmpty();
+    return this.nonEmpty().filter((city) =>
+      city.name.toLowerCase().includes(query)
+    );
+  });
+
+  filteredEmpty = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    if (!query) return this.empty();
+    return this.empty().filter((city) =>
+      city.name.toLowerCase().includes(query)
+    );
+  });
 
   onDragStart(city: City, from: 'A' | 'B', index: number, event: DragEvent) {
     this.dragData = { city, from, index };

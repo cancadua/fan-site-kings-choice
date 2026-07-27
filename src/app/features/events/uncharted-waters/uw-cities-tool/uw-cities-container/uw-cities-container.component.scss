@@ -14,6 +14,32 @@
 }
 
 .city-list > div {
-  margin-bottom: 0; // Remove bottom margin, use gap instead
+  margin-bottom: 0;
   cursor: grab;
+}
+
+.search-container {
+  margin-bottom: 24px;
+  padding: 0 12px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  border: 2px solid #8b0000;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #c41e3a;
+    box-shadow: 0 0 8px rgba(196, 30, 58, 0.2);
+  }
+
+  &::placeholder {
+    color: #999;
+  }
 }

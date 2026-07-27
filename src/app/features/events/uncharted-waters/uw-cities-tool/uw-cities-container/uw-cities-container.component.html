@@ -1,4 +1,17 @@
 <div class="row">
+  <div class="col-24">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search cities..."
+        [(ngModel)]="searchQuery"
+        class="search-input"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-12">
     <div
       class="uw-cities-space"
@@ -7,7 +20,7 @@
     >
       <h3>Non empty cities</h3>
       <div class="city-list">
-        @for (city of nonEmpty(); let i = $index; track $index) {
+        @for (city of filteredNonEmpty(); let i = $index; track $index) {
         <div
           draggable="true"
           (dragstart)="onDragStart(city, 'A', i, $event)"
@@ -32,7 +45,7 @@
     >
       <h3>Empty cities</h3>
       <div class="city-list">
-        @for (city of empty(); let i = $index; track $index) {
+        @for (city of filteredEmpty(); let i = $index; track $index) {
         <div
           draggable="true"
           (dragstart)="onDragStart(city, 'B', i, $event)"
