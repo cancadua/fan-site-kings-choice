@@ -1,0 +1,105 @@
+$gold-primary: #d4af37;
+$gold-light: #f0e68c;
+$stone-light: #e8e4d0;
+$parchment: #f4f1de;
+
+.cta-section {
+  padding: 50px 30px;
+  text-align: center;
+  border-top: 2px solid $gold-primary;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.05) 0%,
+    rgba(212, 175, 55, 0.1) 50%,
+    rgba(212, 175, 55, 0.05) 100%
+  );
+
+  h2 {
+    font-size: 2.2rem;
+    color: $gold-primary;
+    margin: 0 0 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  p {
+    font-size: 1.3rem;
+    color: $stone-light;
+    margin: 0 0 30px 0;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  .cta-buttons-footer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 14px 32px;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 2px solid transparent;
+
+  &.primary {
+    background: linear-gradient(135deg, $gold-primary, $gold-light);
+    color: #0a0a0a;
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.6);
+      background: linear-gradient(135deg, $gold-light, $gold-primary);
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+    color: $gold-light;
+    border: 2px solid $gold-primary;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+
+    &:hover {
+      background: rgba(212, 175, 55, 0.1);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 30px 16px;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .cta-buttons-footer {
+      flex-direction: column;
+      gap: 10px;
+
+      .cta-button {
+        width: 100%;
+        padding: 12px 24px;
+      }
+    }
+  }
+}
