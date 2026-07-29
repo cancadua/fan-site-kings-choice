@@ -9,8 +9,4 @@ export const ReapWhatYouSowTabs: ContentTab[] = [
     label: 'How to Play',
     value: 'how-to-play',
   },
-  {
-    label: 'Advanced Tips',
-    value: 'advanced-tips',
-  },
 ];
