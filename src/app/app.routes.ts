@@ -9,4 +9,5 @@ export const routes: Routes = [
   { path: 'events', component: EventsComponent }, // Add route for /events
   { path: 'guide', component: GuideComponent }, // Add route for /guide
   { path: 'knight-development', component: KnightDevelopmentComponent }, // Add route for knight development
+  { path: '**', redirectTo: '' }, // Unknown paths fall back to home (GitHub Pages serves 404.html for deep links)
 ];

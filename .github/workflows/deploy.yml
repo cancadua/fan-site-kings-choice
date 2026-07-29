@@ -4,6 +4,17 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+# angular-cli-ghpages pushes a commit to the gh-pages branch,
+# so the job needs write access to repository contents.
+permissions:
+  contents: write
+
+# Two overlapping deploys would race for the gh-pages branch.
+concurrency:
+  group: gh-pages
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -11,21 +22,30 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@v5
         with:
           node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build project
         run: npm run build
 
+      # --dir must point at the browser bundle: @angular/build:application
+      # emits dist/kings-choice/browser/, not dist/kings-choice/.
+      # --name/--email are required: the runner has no git identity, and
+      # without one `git commit` fails inside gh-pages.
       - name: Deploy to GitHub Pages
-        run: npx angular-cli-ghpages --dir=dist/kings-choice
+        run: >-
+          npx angular-cli-ghpages
+          --dir=dist/kings-choice/browser
+          --name="github-actions[bot]"
+          --email="41898282+github-actions[bot]@users.noreply.github.com"
+          --message="deploy: ${{ github.sha }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
