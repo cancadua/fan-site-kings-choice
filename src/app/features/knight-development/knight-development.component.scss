@@ -96,7 +96,7 @@
 
 .kd-nav-title {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffc107;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -136,7 +136,7 @@
     background: rgba(255, 193, 7, 0.15);
     border-color: #ffc107;
     color: #ffc107;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   @media (max-width: 480px) {
@@ -234,7 +234,7 @@
     font-size: 1.2rem;
     color: #ffc107;
     margin: 0 0 1rem;
-    font-weight: 600;
+    font-weight: 700;
 
     @media (max-width: 480px) {
       font-size: 1rem;
@@ -277,32 +277,3 @@
   }
 }
 
-/* Scrollbar styling */
-.kd-nav::-webkit-scrollbar {
-  height: 4px;
-  width: 6px;
-}
-
-.kd-nav::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 3px;
-}
-
-.kd-nav::-webkit-scrollbar-thumb {
-  background: rgba(255, 193, 7, 0.3);
-  border-radius: 3px;
-
-  &:hover {
-    background: rgba(255, 193, 7, 0.5);
-  }
-}
-
-@media (max-width: 768px) {
-  .kd-nav::-webkit-scrollbar {
-    height: 3px;
-  }
-
-  .kd-nav::-webkit-scrollbar-thumb {
-    background: rgba(255, 193, 7, 0.2);
-  }
-}
