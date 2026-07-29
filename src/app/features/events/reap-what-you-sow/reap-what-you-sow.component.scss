@@ -1,12 +1,84 @@
-.reap-what-you-sow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
+$gold-primary: #d4af37;
+$parchment: #f4f1de;
+$shadow: rgba(0, 0, 0, 0.4);
+
+:host {
+  display: contents;
 }
 
-.coming-soon {
-  color: #b0b0b0;
-  font-style: italic;
+.placeholder-icon {
+  display: block;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+}
+
+.placeholder-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: $gold-primary;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 3px $shadow;
+  text-align: center;
+  margin: 0 0 12px;
+}
+
+.placeholder-text {
+  font-family: 'Cinzel', serif;
   font-size: 1.1rem;
+  font-style: italic;
+  color: $parchment;
+  opacity: 0.7;
+  text-align: center;
+  margin: 0;
+}
+
+.tips-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.tips-list {
+  list-style: none;
+  padding: 0 0 0 20px;
+  margin: 0;
+
+  li {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    color: $parchment;
+    line-height: 1.8;
+    margin: 10px 0;
+    text-shadow: 1px 1px 2px $shadow;
+    letter-spacing: 0.3px;
+
+    &:before {
+      content: '⚔ ';
+      color: $gold-primary;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .placeholder-icon {
+    font-size: 2rem;
+  }
+
+  .placeholder-title {
+    font-size: 1.15rem;
+  }
+
+  .placeholder-text {
+    font-size: 1rem;
+  }
+
+  .tips-list li {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
 }

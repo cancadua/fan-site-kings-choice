@@ -1,3 +1,37 @@
-<div class="reap-what-you-sow">
-  <p class="coming-soon">Coming soon.</p>
-</div>
+<app-tabs [tabs]="reapWhatYouSowTabs" [(activeTab)]="activeTab">
+  @if (activeTab.value === 'basic-information') {
+  <span class="placeholder-icon">📜</span>
+  <h3 class="placeholder-title">Basic Information</h3>
+  <p class="placeholder-text">Coming soon.</p>
+  } @else if (activeTab.value === 'how-to-play') {
+  <span class="placeholder-icon">⚔️</span>
+  <h3 class="placeholder-title">How to Play</h3>
+  <p class="placeholder-text">Coming soon.</p>
+  } @else if (activeTab.value === 'advanced-tips') {
+  <div class="tips-content">
+    <ul class="tips-list">
+      <li>Don't rush Purple/Orange/Red crops.</li>
+      <li>Always activate both adjacency bonuses if possible.</li>
+      <li>Always use the preferred terrain.</li>
+      <li>Save Blessing Trees for Orange/Red crops.</li>
+      <li>Save Hourglasses for expensive crops.</li>
+      <li>Save Traps for expensive crops.</li>
+      <li>Save Loot Tools for Day 2+.</li>
+      <li>Always delegate your knights up to 20% bonus.</li>
+      <li>Knight Total Talents are the only combat stat that matters.</li>
+      <li>
+        Forest tiles have the highest fertility (4), making them excellent
+        for mass production.
+      </li>
+      <li>
+        Coordinate placements with alliance members instead of placing
+        immediately.
+      </li>
+      <li>Don't waste defenses on low-value crops.</li>
+      <li>
+        Expand and contribute to statues and land unlock tiles whenever materials are available.
+      </li>
+    </ul>
+  </div>
+  }
+</app-tabs>
