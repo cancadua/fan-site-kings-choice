@@ -36,9 +36,112 @@ $shadow: rgba(0, 0, 0, 0.4);
   margin: 0;
 }
 
+.how-to-play-content,
 .tips-content {
   max-width: 700px;
   margin: 0 auto;
+}
+
+.steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.step {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.step-number {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: $gold-primary;
+  text-shadow: 1px 1px 3px $shadow;
+}
+
+.step-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $gold-primary;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 3px $shadow;
+  margin: 0;
+}
+
+.step-text {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  color: $parchment;
+  line-height: 1.7;
+  text-shadow: 1px 1px 2px $shadow;
+  margin: 6px 0;
+}
+
+.step-note {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: $parchment;
+  opacity: 0.75;
+  line-height: 1.7;
+  margin: 6px 0 0;
+}
+
+.step-list {
+  list-style: none;
+  padding: 0 0 0 20px;
+  margin: 6px 0;
+
+  li {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    color: $parchment;
+    line-height: 1.7;
+    margin: 6px 0;
+    text-shadow: 1px 1px 2px $shadow;
+
+    &:before {
+      content: '⚔ ';
+      color: $gold-primary;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+  }
+}
+
+.checklist {
+  list-style: none;
+  padding: 0 0 0 20px;
+  margin: 6px 0;
+
+  li {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    color: $parchment;
+    line-height: 1.7;
+    margin: 6px 0;
+    text-shadow: 1px 1px 2px $shadow;
+
+    &:before {
+      content: '⚔ ';
+      color: $gold-primary;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+  }
 }
 
 .tips-list {
@@ -79,6 +182,18 @@ $shadow: rgba(0, 0, 0, 0.4);
 
   .tips-list li {
     font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .step-title {
+    font-size: 1rem;
+  }
+
+  .step-text,
+  .step-note,
+  .step-list li,
+  .checklist li {
+    font-size: 0.95rem;
     line-height: 1.6;
   }
 }

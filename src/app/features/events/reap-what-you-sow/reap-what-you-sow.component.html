@@ -4,9 +4,75 @@
   <h3 class="placeholder-title">Basic Information</h3>
   <p class="placeholder-text">Coming soon.</p>
   } @else if (activeTab.value === 'how-to-play') {
-  <span class="placeholder-icon">⚔️</span>
-  <h3 class="placeholder-title">How to Play</h3>
-  <p class="placeholder-text">Coming soon.</p>
+  <div class="how-to-play-content">
+    <ol class="steps-list">
+      <li class="step">
+        <div class="step-header">
+          <span class="step-number">①</span>
+          <h4 class="step-title">Explore constantly</h4>
+        </div>
+        <ul class="step-list">
+          <li>Never let stamina stay full.</li>
+          <li>Higher Exploration Level = better crops later.</li>
+        </ul>
+      </li>
+      <li class="step">
+        <div class="step-header">
+          <span class="step-number">②</span>
+          <h4 class="step-title">Delegate your best talent knights</h4>
+        </div>
+        <ul class="step-list">
+          <li>More Exploration EXP means better crop rarity.</li>
+        </ul>
+      </li>
+      <li class="step">
+        <div class="step-header">
+          <span class="step-number">③</span>
+          <h4 class="step-title">Plant carefully</h4>
+        </div>
+        <p class="step-text">Before placing a crop, try to activate:</p>
+        <ul class="checklist">
+          <li>Preferred terrain (-10% production time)</li>
+          <li>Neighbor Bonus #1 (+10%)</li>
+          <li>Neighbor Bonus #2 (+10%)</li>
+        </ul>
+        <p class="step-note">High rarity crops are worth waiting for.</p>
+      </li>
+      <li class="step">
+        <div class="step-header">
+          <span class="step-number">④</span>
+          <h4 class="step-title">Defend valuable crops</h4>
+        </div>
+        <p class="step-text">Protect Purple+ crops with:</p>
+        <ul class="step-list">
+          <li>Strong talent knights</li>
+          <li>Traps</li>
+        </ul>
+        <p class="step-note">Ignore low-value crops if necessary.</p>
+      </li>
+      <li class="step">
+        <div class="step-header">
+          <span class="step-number">⑤</span>
+          <h4 class="step-title">Expand & Build Statues</h4>
+        </div>
+        <p class="step-text">Spend materials throughout the event.</p>
+        <p class="step-note">
+          Both improve your alliance's farming options and provide rewards.
+        </p>
+      </li>
+      <li class="step">
+        <div class="step-header">
+          <span class="step-number">⑥</span>
+          <h4 class="step-title">Loot wisely</h4>
+        </div>
+        <p class="step-text">Loot only crops above 60% growth.</p>
+        <p class="step-note">
+          Later in the event, enemies have far more high-rarity crops, making
+          Loot Tools much more valuable.
+        </p>
+      </li>
+    </ol>
+  </div>
   } @else if (activeTab.value === 'advanced-tips') {
   <div class="tips-content">
     <ul class="tips-list">
