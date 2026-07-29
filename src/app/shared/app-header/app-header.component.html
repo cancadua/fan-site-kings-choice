@@ -17,3 +17,12 @@
     </nav>
   </div>
 </header>
+
+<nav class="bottom-nav">
+  @for (link of navLinks; track $index) {
+  <a [routerLink]="link.route" class="bottom-nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <span class="icon">{{ getIcon(link.label) }}</span>
+    <span class="label">{{ link.label }}</span>
+  </a>
+  }
+</nav>

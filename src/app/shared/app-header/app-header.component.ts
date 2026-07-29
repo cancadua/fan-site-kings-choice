@@ -6,7 +6,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   selector: 'app-header',
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss'],
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
 })
 export class AppHeaderComponent {
   title = "King's Choice Fan Site";
@@ -26,5 +26,15 @@ export class AppHeaderComponent {
 
   closeMenu(): void {
     this.menuOpen.set(false);
+  }
+
+  getIcon(label: string): string {
+    const iconMap: Record<string, string> = {
+      'Home': '🏠',
+      'Knights': '⚔️',
+      'Events': '📅',
+      'Guide': '📖'
+    };
+    return iconMap[label] || '→';
   }
 }

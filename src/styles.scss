@@ -121,3 +121,10 @@ body {
 .row > [class^='col-']:last-child {
   padding-right: 0;
 }
+
+// Bottom navigation padding for small screens and tablets
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
