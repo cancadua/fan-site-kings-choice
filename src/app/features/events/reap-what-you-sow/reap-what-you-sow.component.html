@@ -1,8 +1,106 @@
 <app-tabs [tabs]="reapWhatYouSowTabs" [(activeTab)]="activeTab">
   @if (activeTab.value === 'basic-information') {
-  <span class="placeholder-icon">📜</span>
-  <h3 class="placeholder-title">Basic Information</h3>
-  <p class="placeholder-text">Coming soon.</p>
+  <div class="info-content">
+    <section class="info-section">
+      <h4 class="info-section-title">Event Overview</h4>
+      <p class="step-text">
+        RWYS is an Alliance event followed by a Cross-Server stage using the
+        same mechanics.
+      </p>
+      <p class="step-text">The goal is to:</p>
+      <ul class="step-list">
+        <li>Explore to obtain crops and items.</li>
+        <li>Plant crops to earn points.</li>
+        <li>Expand the alliance island.</li>
+        <li>Build statues.</li>
+        <li>Defend your crops.</li>
+        <li>Loot enemy alliances.</li>
+      </ul>
+    </section>
+    <section class="info-section">
+      <h4 class="info-section-title">Resources</h4>
+      <p class="step-text">Exploring costs 1 Stamina and always gives:</p>
+      <ul class="step-list">
+        <li>100 Exploration EXP</li>
+        <li>1 Tile Material or Statue Material</li>
+        <li>1 random Crop or Item</li>
+      </ul>
+      <p class="step-text">Stamina:</p>
+      <ul class="step-list">
+        <li>Max 28</li>
+        <li>+4 every 30 minutes</li>
+      </ul>
+    </section>
+    <section class="info-section">
+      <h4 class="info-section-title">Exploration Level</h4>
+      <p class="step-text">
+        Higher Exploration Level increases the chance of getting higher
+        rarity crops.
+      </p>
+      <p class="step-text">Increase it by:</p>
+      <ul class="step-list">
+        <li>Exploring</li>
+        <li>Delegating up to 4 knights (uses Total Talents only)</li>
+      </ul>
+      <p class="step-note">Maximum EXP bonus from delegation: +20%</p>
+    </section>
+    <section class="info-section">
+      <h4 class="info-section-title">Crop Rarity</h4>
+      <div class="rarity-chain">
+        <span class="rarity-badge rarity-badge--flawed">Flawed</span>
+        <span class="rarity-arrow">→</span>
+        <span class="rarity-badge rarity-badge--common">Common</span>
+        <span class="rarity-arrow">→</span>
+        <span class="rarity-badge rarity-badge--fine">Fine</span>
+        <span class="rarity-arrow">→</span>
+        <span class="rarity-badge rarity-badge--excellent">Excellent</span>
+        <span class="rarity-arrow">→</span>
+        <span class="rarity-badge rarity-badge--rare">Rare</span>
+        <span class="rarity-arrow">→</span>
+        <span class="rarity-badge rarity-badge--exquisite">Exquisite</span>
+        <span class="rarity-arrow">→</span>
+        <span class="rarity-badge rarity-badge--perfect">Perfect</span>
+        <span class="rarity-arrow">→</span>
+        <span class="rarity-badge rarity-badge--legendary">Legendary</span>
+      </div>
+      <p class="step-text">Higher rarity means:</p>
+      <ul class="step-list">
+        <li>More points</li>
+        <li>Longer production</li>
+        <li>Better loot</li>
+      </ul>
+    </section>
+    <section class="info-section">
+      <h4 class="info-section-title">Items</h4>
+      <div class="item-block">
+        <h5 class="item-title">Blessing Tree</h5>
+        <ul class="step-list">
+          <li>Multiple trees stack</li>
+        </ul>
+      </div>
+      <div class="item-block">
+        <h5 class="item-title">Hourglass</h5>
+        <p class="step-text">Speeds up nearby crops</p>
+      </div>
+      <div class="item-block">
+        <h5 class="item-title">Loot Tool</h5>
+        <p class="step-text">Used to attack enemy crops</p>
+      </div>
+      <div class="item-block">
+        <h5 class="item-title">Healing Potion</h5>
+        <p class="step-text">Revives injured knights</p>
+      </div>
+    </section>
+    <section class="info-section">
+      <h4 class="info-section-title">Combat</h4>
+      <p class="step-text">Only Total Talents determine knight strength.</p>
+      <p class="step-text">Tile defenses:</p>
+      <ul class="step-list">
+        <li>Up to 5 knights</li>
+        <li>Traps activate before battle</li>
+      </ul>
+    </section>
+  </div>
   } @else if (activeTab.value === 'how-to-play') {
   <div class="how-to-play-content">
     <ol class="steps-list">
@@ -39,12 +137,12 @@
           <li>Neighbor Bonus #2 (+10%)</li>
         </ul>
         <p class="step-note">
-          Don't rush Purple/Orange/Red crops — high rarity crops are worth
+          Don't rush Purple/Yellow/Orange crops — high rarity crops are worth
           waiting for.
         </p>
         <p class="step-text">Save resources for expensive crops:</p>
         <ul class="step-list">
-          <li>Save Blessing Trees for Orange/Red crops.</li>
+          <li>Save Blessing Trees for Yellow/Orange crops.</li>
           <li>Save Hourglasses for expensive crops.</li>
           <li>Save Traps for expensive crops.</li>
           <li>Save Loot Tools for Day 2+.</li>
