@@ -1,6 +1,14 @@
 <app-tabs [tabs]="unchartedWaterTabs" [(activeTab)]="activeTab">
-  @if (activeTab.value === 'description') {
+  @if (activeTab.value === 'basic-information') {
   <app-uw-description></app-uw-description>
+  } @else if (activeTab.value === 'how-to-play') {
+  <span class="placeholder-icon">⚔️</span>
+  <h3 class="placeholder-title">How to Play</h3>
+  <p class="placeholder-text">Coming soon.</p>
+  } @else if (activeTab.value === 'advanced-tips') {
+  <span class="placeholder-icon">🎯</span>
+  <h3 class="placeholder-title">Advanced Tips</h3>
+  <p class="placeholder-text">Coming soon.</p>
   } @else if (activeTab.value === 'cities-tool') {
   <app-uw-cities-tool></app-uw-cities-tool>
   }
