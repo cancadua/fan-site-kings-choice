@@ -437,126 +437,419 @@ $shadow: rgba(0, 0, 0, 0.4);
 }
 
 // ========== RESPONSIVE ==========
+// Large tablets and up
+@media (max-width: 1024px) {
+  .hero-overlay {
+    padding: 30px 20px;
+  }
+
+  .events-showcase {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}
+
+// Tablets (768px and below)
 @media (max-width: 768px) {
   .hero-section {
-    height: 350px;
+    height: 320px;
+  }
+
+  .hero-overlay {
+    padding: 25px 15px;
   }
 
   .hero-title {
-    font-size: 2.5rem;
-    letter-spacing: 2px;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
   }
 
   .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
 
   .hero-cta {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 
     .cta-button {
       width: 100%;
+      padding: 12px 24px;
+      font-size: 0.95rem;
     }
   }
 
   .section-header {
+    margin-bottom: 30px;
+
     h2 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
+      margin-bottom: 10px;
     }
 
     p {
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
   }
 
   .content-section {
-    padding: 40px 20px;
+    padding: 30px 16px;
   }
 
   .content-card {
-    padding: 24px;
+    padding: 20px;
 
     h3 {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
     }
 
     p {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
     }
   }
 
   .events-highlight-section {
-    padding: 40px 20px;
+    padding: 30px 16px;
 
     h2 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      margin-bottom: 30px;
     }
   }
 
   .events-showcase {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 30px;
   }
 
   .event-item {
-    padding: 16px 12px;
+    padding: 14px 10px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     .event-icon {
-      font-size: 2rem;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
     }
 
     h4 {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      margin: 4px 0;
     }
 
     .event-label {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  .highlight-cta {
+    margin-top: 20px;
+
+    .cta-button {
+      width: 100%;
+      padding: 12px 24px;
     }
   }
 
   .guide-teaser-section {
-    padding: 40px 20px;
+    padding: 30px 16px;
 
     h2 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
+      margin-bottom: 30px;
     }
   }
 
   .guide-teaser-wrapper {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 16px;
   }
 
   .teaser-content {
-    padding: 24px;
+    padding: 20px;
 
     h3 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
     }
 
-    .teaser-list li {
-      font-size: 0.95rem;
+    .teaser-list {
+      margin-bottom: 16px;
+
+      li {
+        font-size: 0.9rem;
+        margin: 10px 0;
+        padding-left: 18px;
+      }
     }
   }
 
   .cta-section {
-    padding: 40px 20px;
+    padding: 30px 16px;
 
     h2 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: 1rem;
+      margin-bottom: 20px;
     }
 
     .cta-buttons-footer {
       flex-direction: column;
+      gap: 10px;
 
       .cta-button {
         width: 100%;
+        padding: 12px 24px;
       }
+    }
+  }
+}
+
+// Small tablets and large phones (480px - 767px)
+@media (max-width: 480px) {
+  .home {
+    font-size: 14px;
+  }
+
+  .hero-section {
+    height: 280px;
+    border-bottom-width: 2px;
+  }
+
+  .hero-overlay {
+    padding: 20px 12px;
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    text-shadow: 2px 2px 8px $shadow;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    gap: 8px;
+
+    .cta-button {
+      width: 100%;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .section-header {
+    margin-bottom: 20px;
+    text-align: center;
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    p {
+      font-size: 0.85rem;
+    }
+  }
+
+  .content-section {
+    padding: 20px 12px;
+  }
+
+  .content-wrapper {
+    gap: 12px;
+  }
+
+  .content-card {
+    padding: 16px;
+    border-radius: 6px;
+
+    &::before {
+      height: 3px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+  }
+
+  .events-highlight-section {
+    padding: 20px 12px;
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+  }
+
+  .events-showcase {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .event-item {
+    padding: 12px 8px;
+    min-height: 85px;
+    border-radius: 6px;
+
+    .event-icon {
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    h4 {
+      font-size: 0.8rem;
+      margin: 2px 0;
+    }
+
+    .event-label {
+      font-size: 0.7rem;
+    }
+  }
+
+  .highlight-cta {
+    margin-top: 15px;
+
+    .cta-button {
+      width: 100%;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      min-height: 44px;
+    }
+  }
+
+  .guide-teaser-section {
+    padding: 20px 12px;
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+  }
+
+  .guide-teaser-wrapper {
+    gap: 12px;
+  }
+
+  .teaser-content {
+    padding: 16px;
+    border-radius: 4px;
+
+    h3 {
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .teaser-list {
+      margin-bottom: 12px;
+
+      li {
+        font-size: 0.8rem;
+        margin: 8px 0;
+        padding-left: 16px;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .cta-section {
+    padding: 20px 12px;
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+
+    .cta-buttons-footer {
+      flex-direction: column;
+      gap: 8px;
+
+      .cta-button {
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 0.85rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// Extra small phones (320px - 479px)
+@media (max-width: 320px) {
+  .hero-section {
+    height: 240px;
+  }
+
+  .hero-title {
+    font-size: 1.4rem;
+    letter-spacing: 0px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .content-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .event-item {
+    min-height: 75px;
+
+    .event-icon {
+      font-size: 1.2rem;
     }
   }
 }

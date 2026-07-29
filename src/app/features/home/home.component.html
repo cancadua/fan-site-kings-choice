@@ -6,132 +6,33 @@
         Master Strategy. Forge Legends. Rule Your Fate
       </p>
       <div class="hero-cta">
-        <a href="/events" class="cta-button primary">Explore Events</a>
-        <a href="/guide" class="cta-button secondary">View Strategy Guide</a>
+        <a [routerLink]="'/events'" class="cta-button primary">Explore Events</a>
+        <a [routerLink]="'/guide'" class="cta-button secondary">View Strategy Guide</a>
       </div>
     </div>
   </div>
-
-  <div class="content-section">
-    <div class="section-header">
-      <h2>What's King's Choice?</h2>
-      <p>A medieval strategy game where every choice matters</p>
-    </div>
-    <div class="content-wrapper">
-      <div class="content-card featured">
-        <div class="card-accent"></div>
-        <h3>Strategic Gameplay</h3>
-        <p>
-          Build your realm from the ground up. Recruit legendary knights, manage
-          your resources wisely, and navigate the complex politics of nobility.
-          Every decision shapes your destiny.
-        </p>
-      </div>
-
-      <div class="content-card">
-        <div class="card-accent accent-emerald"></div>
-        <h3>Engaging Events</h3>
-        <p>
-          Compete in thrilling tournaments, explore uncharted territories, race
-          magical companions, and hunt legendary creatures. With 8 diverse
-          events, there's always something new to conquer.
-        </p>
-      </div>
-
-      <div class="content-card">
-        <div class="card-accent accent-crimson"></div>
-        <h3>Master the Game</h3>
-        <p>
-          Learn advanced strategies, optimize your knight investments, and
-          discover exclusive tips from experienced players. Rise above the
-          competition with our comprehensive strategy guide.
-        </p>
-      </div>
-    </div>
-  </div>
-
+  
   <div class="events-highlight-section">
-    <h2>Featured Events</h2>
-    <p class="section-subtitle">8 Epic Events Await</p>
+    <h2>Featured Event</h2>
+    <p class="section-subtitle">Explore Uncharted Waters</p>
     <div class="events-showcase">
       <div class="event-item">
         <span class="event-icon">⚔</span>
         <h4>Uncharted Waters</h4>
         <span class="event-label">Trading Event</span>
       </div>
-      <div class="event-item">
-        <span class="event-icon">🏛</span>
-        <h4>School of Athens</h4>
-        <span class="event-label">Tournament</span>
-      </div>
-      <div class="event-item">
-        <span class="event-icon">💎</span>
-        <h4>Scarlet Beauty</h4>
-        <span class="event-label">Romance Event</span>
-      </div>
-      <div class="event-item">
-        <span class="event-icon">🦁</span>
-        <h4>War of the Lions</h4>
-        <span class="event-label">PvP Combat</span>
-      </div>
-      <div class="event-item">
-        <span class="event-icon">🗡</span>
-        <h4>Knight Encounter</h4>
-        <span class="event-label">Duels</span>
-      </div>
-      <div class="event-item">
-        <span class="event-icon">🐎</span>
-        <h4>Pet Race</h4>
-        <span class="event-label">Racing</span>
-      </div>
-      <div class="event-item">
-        <span class="event-icon">🐺</span>
-        <h4>Throne of the Wolves</h4>
-        <span class="event-label">Boss Hunt</span>
-      </div>
-      <div class="event-item">
-        <span class="event-icon">🐉</span>
-        <h4>Dragon Island</h4>
-        <span class="event-label">Treasure Hunt</span>
-      </div>
     </div>
     <div class="highlight-cta">
-      <a href="/events" class="cta-button explore">Explore All Events</a>
-    </div>
-  </div>
-
-  <div class="guide-teaser-section">
-    <h2>Master Your Strategy</h2>
-    <div class="guide-teaser-wrapper">
-      <div class="teaser-content">
-        <h3>Advanced Progression Guide</h3>
-        <ul class="teaser-list">
-          <li>Prioritize Leadership EXP for exponential gains</li>
-          <li>Leverage Prestige to dominate Negotiation & Dragon Island</li>
-          <li>Manage Knight Equipment strategically</li>
-          <li>Maximize event participation for core progression</li>
-        </ul>
-        <a href="/guide" class="cta-button secondary">Read Full Guide</a>
-      </div>
-      <div class="teaser-content">
-        <h3>Advanced Tips & Tactics</h3>
-        <ul class="teaser-list">
-          <li>Concentrate knight power in specialized builds</li>
-          <li>Balance attributes across your roster</li>
-          <li>Optimize resource spending efficiency</li>
-          <li>Coordinate with your alliance for dominance</li>
-        </ul>
-        <a href="/guide" class="cta-button secondary">View All Tips</a>
-      </div>
+      <a [routerLink]="'/events'" class="cta-button explore">Explore All Events</a>
     </div>
   </div>
 
   <div class="cta-section">
     <h2>Ready to Rule?</h2>
-    <p>Join thousands of Lords making history in King's Choice</p>
+    <p>Join experienced Lords making history in King's Choice</p>
     <div class="cta-buttons-footer">
-      <a href="/events" class="cta-button primary">Start Playing</a>
-      <a href="/guide" class="cta-button secondary">Learn Strategy</a>
+      <a [routerLink]="'/events'" class="cta-button primary">Learn Events</a>
+      <a [routerLink]="'/guide'" class="cta-button secondary">Learn Strategy</a>
     </div>
   </div>
 </div>
