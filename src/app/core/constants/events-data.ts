@@ -12,4 +12,9 @@ export const EventsData: Array<EventData> = [
     value: Event.UnchartedWaters,
     image: 'assets/uncharted-waters.jpg',
   },
+  {
+    name: 'Reap What You Sow',
+    value: Event.ReapWhatYouSow,
+    image: '',
+  },
 ];

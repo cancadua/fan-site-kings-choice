@@ -1,7 +1,9 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { Event } from '../../core/enums/events';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
+import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
 
 interface EventDetail {
   id: Event;
@@ -16,11 +18,13 @@ interface EventDetail {
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
   standalone: true,
-  imports: [CommonModule, UnchartedWatersComponent],
+  imports: [CommonModule, UnchartedWatersComponent, ReapWhatYouSowComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventsComponent implements AfterViewInit {
+export class EventsComponent implements OnInit, AfterViewInit {
   @ViewChild('navContainer') navContainer!: ElementRef<HTMLElement>;
+
+  constructor(private readonly route: ActivatedRoute) {}
 
   activeEvent: Event = Event.UnchartedWaters;
   readonly Event = Event;
@@ -33,7 +37,21 @@ export class EventsComponent implements AfterViewInit {
       description: 'Explore distant cities to discover valuable resources and rare trade goods. Use the city selection tool to find the best cities for your strategy.',
       component: UnchartedWatersComponent,
     },
+    {
+      id: Event.ReapWhatYouSow,
+      title: 'Reap What You Sow',
+      subtitle: '',
+      description: '',
+      component: ReapWhatYouSowComponent,
+    },
   ];
+
+  ngOnInit(): void {
+    const requestedEvent = this.route.snapshot.queryParamMap.get('event');
+    if (requestedEvent && this.events.some(e => e.id === requestedEvent)) {
+      this.activeEvent = requestedEvent as Event;
+    }
+  }
 
   ngAfterViewInit(): void {
     this.scrollToActiveButton();

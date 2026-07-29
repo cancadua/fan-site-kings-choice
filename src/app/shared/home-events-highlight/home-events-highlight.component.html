@@ -1,10 +1,14 @@
 <div class="events-highlight-section">
-  <h2>Featured Event</h2>
-  <p class="section-subtitle">Explore Uncharted Waters</p>
+  <h2>Featured Events</h2>
+  <p class="section-subtitle">Explore the latest events</p>
   <div class="events-showcase">
-    <a [routerLink]="'/events'" class="event-item">
+    <a [routerLink]="'/events'" [queryParams]="{ event: 'uncharted-waters' }" class="event-item">
       <h4>Uncharted Waters</h4>
       <span class="event-label">Trade & Plunder Event</span>
+    </a>
+    <a [routerLink]="'/events'" [queryParams]="{ event: 'reap-what-you-sow' }" class="event-item">
+      <h4>Reap What You Sow</h4>
+      <span class="event-label">Coming Soon</span>
     </a>
   </div>
   <div class="highlight-cta">
