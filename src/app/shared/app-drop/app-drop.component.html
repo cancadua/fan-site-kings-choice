@@ -14,7 +14,7 @@
     [attr.aria-expanded]="isOpen"
     [attr.aria-label]="label()"
   >
-    {{ selectedObject?.[viewKey()] ? truncateText(selectedObject?.[viewKey()], 30) : label() }}
+    {{ selectedObject?.[viewKey()] ? truncateText(selectedObject[viewKey()], 30) : label() }}
   </button>
   <ul class="dropdown-menu" [class.open]="isOpen" role="listbox">
     @for (item of items(); track $index) {
