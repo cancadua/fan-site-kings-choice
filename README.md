@@ -1,28 +1,34 @@
-# Kings Choice Fan Site
+# 👑 Kings Choice Fan Site
+
+![Angular](https://img.shields.io/badge/Angular-22.0.0-DD0031?logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0.0-3178C6?logo=typescript&logoColor=white)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222?logo=githubpages&logoColor=white)
 
 A fan site for the game **Kings Choice**, featuring interactive event content and gameplay tools.
 
-## Overview
+## 📖 Overview
 
 Kings Choice Fan Site is an Angular-based web application that provides an interactive experience for Kings Choice fans. The site includes event management and specific event gameplay features like the **Uncharted Waters** city selection tool.
 
-## Features
+## ✨ Features
 
-- **Event System**: Browse and interact with game events
-- **Uncharted Waters Event**: Interactive city selection tool for event participation
-- **Responsive UI**: Modern Angular components with shared UI library
-- **GitHub Pages Deployment**: Automatically deployed via CI/CD
+- 🎯 **Event System**: Browse and interact with game events
+- 🗺️ **Uncharted Waters Event**: Interactive city selection tool for event participation
+- 📱 **Responsive UI**: Modern Angular components with shared UI library
+- 🚀 **GitHub Pages Deployment**: Automatically deployed via CI/CD
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **Framework**: [Angular](https://angular.dev/) 20.0.0
-- **Language**: [TypeScript](https://www.typescriptlang.org/) 5.8.2
+- **Framework**: [Angular](https://angular.dev/) 22.0.0
+- **Language**: [TypeScript](https://www.typescriptlang.org/) 6.0.0
+- **Backend**: [Supabase](https://supabase.com/)
 - **Testing**: Karma/Jasmine
-- **Build Tool**: Angular CLI 20.0.3
+- **Build Tool**: Angular CLI 22.0.0
 - **Code Formatting**: Prettier
 - **Package Manager**: npm
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 src/
@@ -44,7 +50,7 @@ src/
 └── main.ts
 ```
 
-## Getting Started
+## 🚦 Getting Started
 
 ### Prerequisites
 
@@ -93,11 +99,11 @@ Format all code using Prettier:
 npm run format
 ```
 
-## Deployment
+## 🌐 Deployment
 
 This project is deployed to GitHub Pages. The deployment is managed via the Angular CLI GitHub Pages plugin (`angular-cli-ghpages`).
 
-## Contributing
+## 🤝 Contributing
 
 When adding new features or components:
 
@@ -113,9 +119,13 @@ When adding new features or components:
    ```
 4. Use conventional commit messages
 
-## Resources
+## 📚 Resources
 
 - [Angular Documentation](https://angular.dev/)
 - [Angular CLI Guide](https://angular.dev/tools/cli)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Kings Choice Game](https://www.kingschoice.com/)
+
+---
+
+<p align="center">Made with ❤️ for the Kings Choice community</p>
