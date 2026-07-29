@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Section {
@@ -22,7 +22,8 @@ interface Subsection {
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KnightDevelopmentComponent {
+export class KnightDevelopmentComponent implements AfterViewInit {
+  @ViewChild('navContainer') navContainer!: ElementRef<HTMLElement>;
   activeSection = 'overview';
 
   sections: Section[] = [
@@ -38,7 +39,7 @@ export class KnightDevelopmentComponent {
     },
     {
       id: 'golden-rule',
-      title: 'The Golden Rule: Build Specialists, Never Generalists',
+      title: 'The Golden Rule',
       subtitle: 'The Foundation of Success',
       content: [
         'You should eventually have four main specialists, each maximized in their respective attribute. Many players incorrectly spread edicts across multiple knights, which permanently slows growth because talents and levels multiply each other.',
@@ -58,7 +59,7 @@ export class KnightDevelopmentComponent {
     },
     {
       id: 'power-breakdown',
-      title: 'What Actually Gives State Power',
+      title: 'Actual State Power',
       subtitle: 'Understanding the Math Behind Growth',
       content: [
         'Every knight\'s attribute roughly comes from: Level × Talent × Percentage Bonuses',
@@ -78,7 +79,7 @@ export class KnightDevelopmentComponent {
     },
     {
       id: 'intellect-priority',
-      title: 'The Hidden Snowball: Intellect First',
+      title: 'The Hidden Snowball',
       subtitle: 'Why Silver Income Is King',
       content: [
         'Most new players think Strength is king. Actually, high Intellect creates:',
@@ -127,7 +128,7 @@ export class KnightDevelopmentComponent {
     },
     {
       id: 'aura-knights',
-      title: 'Aura Knights Are Endgame',
+      title: 'Aura Knights',
       subtitle: 'The Ultimate Knight Investment',
       content: [
         'Exchange Knights become your permanent core. Each new knight collected increases aura effectiveness across the set, making the whole set more valuable than focusing only one member.',
@@ -147,7 +148,7 @@ export class KnightDevelopmentComponent {
     {
       id: 'progression-stages',
       title: 'Progression Stages',
-      subtitle: 'How to Evolve Your Strategy Over Time',
+      subtitle: 'How to Evolve Over Time',
       content: [
         'Your account progression follows distinct phases. Each requires different resource allocation and strategic focus.',
       ],
@@ -221,33 +222,9 @@ export class KnightDevelopmentComponent {
       ],
     },
     {
-      id: 'resource-hoarding',
-      title: 'Resource Hoarding',
-      subtitle: 'Events > Passive Growth',
-      content: [
-        'Winning events matters more than constant growth. Never immediately spend: Edicts, Books, Talent EXP, Armor, Lover gifts, Aura items.',
-        'Save everything for State Power Growth, Talent Growth, and Knight Growth.',
-        'Winning one ranking event often yields more resources than weeks of passive play.',
-      ],
-      subsections: [
-        {
-          title: 'Typical Veteran Savings',
-          content: [
-            '200–500 edicts',
-            '2,000–5,000 Talent EXP',
-            'Hundreds of books',
-            'Weeks of silver',
-            'Promotion armor',
-            'Lover gifts',
-            'Result: One event can produce a 50–100 million State Power jump.',
-          ],
-        },
-      ],
-    },
-    {
       id: 'exile-strategy',
       title: 'Exile Strategy',
-      subtitle: 'What to Keep vs What to Remove',
+      subtitle: 'Who to Banish',
       content: [
         'Eventually exile: 2-star knights, weak non-specialists, knights with poor talent distributions.',
         'Keep: Aura Knights, Lover Knights, High-star specialists.',
@@ -332,7 +309,7 @@ export class KnightDevelopmentComponent {
     },
     {
       id: 'endgame-strategy',
-      title: 'What Comes After: Endgame Strategy',
+      title: 'Endgame Strategy',
       subtitle: 'When Your Main Four Are Maxed',
       content: [
         'Once your Arthurian, Monarch, Scholar, and Epic Hero are essentially "finished" (high talents, Diamond promotion, strong aura), your account enters the optimization phase.',
@@ -394,8 +371,34 @@ export class KnightDevelopmentComponent {
     },
   ];
 
+  ngAfterViewInit(): void {
+    // Initial scroll to center active button
+    this.scrollToActiveButton();
+  }
+
   selectSection(sectionId: string): void {
     this.activeSection = sectionId;
+    setTimeout(() => this.scrollToActiveButton(), 0);
+  }
+
+  private scrollToActiveButton(): void {
+    if (!this.navContainer) return;
+
+    const nav = this.navContainer.nativeElement;
+    const activeButton = nav.querySelector('.kd-nav-link.active') as HTMLElement;
+
+    if (!activeButton) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const buttonRect = activeButton.getBoundingClientRect();
+
+    // Calculate scroll position to center the button in the nav container
+    const scrollAmount = buttonRect.left - navRect.left - (navRect.width / 2) + (buttonRect.width / 2);
+
+    nav.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth',
+    });
   }
 
   getActiveSection(): Section | undefined {
