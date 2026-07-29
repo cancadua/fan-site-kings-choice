@@ -29,7 +29,9 @@
         </header>
 
         <div class="events-article-body">
+          @if (active.description) {
           <p class="events-paragraph">{{ active.description }}</p>
+          }
 
           <!-- Render event-specific component -->
           @switch (activeEvent) { @case(Event.UnchartedWaters) {
