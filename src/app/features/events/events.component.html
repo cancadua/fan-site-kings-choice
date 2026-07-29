@@ -1,19 +1,45 @@
 <div class="events">
-  <h1>Events</h1>
+  <div class="events-header">
+    <h1>Events</h1>
+    <p class="events-subtitle">Participate in seasonal events to earn exclusive rewards</p>
+  </div>
 
   <div class="events-container">
-    <div class="events-selector">
-      <label>Select an Event</label>
-      <app-drop
-        [items]="eventsData"
-        [(selectedValue)]="selectedEvent"
-      ></app-drop>
-    </div>
+    <!-- Navigation Sidebar -->
+    <nav class="events-nav" #navContainer>
+      <div class="events-nav-title">Available Events</div>
+      @for (event of events; track event.id) {
+      <button
+        class="events-nav-link"
+        [class.active]="activeEvent === event.id"
+        (click)="selectEvent(event.id)"
+      >
+        {{ event.title }}
+      </button>
+      }
+    </nav>
 
-    <div class="events-content">
-      @switch (selectedEvent) { @case(Event.UnchartedWaters) {
-      <app-uncharted-waters></app-uncharted-waters>
-      } }
-    </div>
+    <!-- Content Area -->
+    <main class="events-content">
+      @let active = getActiveEvent(); @if (active) {
+      <article class="events-article">
+        <header class="events-article-header">
+          <h2>{{ active.title }}</h2>
+          <p class="events-article-subtitle">{{ active.subtitle }}</p>
+        </header>
+
+        <div class="events-article-body">
+          <p class="events-paragraph">{{ active.description }}</p>
+
+          <!-- Render event-specific component -->
+          @switch (activeEvent) { @case(Event.UnchartedWaters) {
+          <div class="events-component">
+            <app-uncharted-waters></app-uncharted-waters>
+          </div>
+          } }
+        </div>
+      </article>
+      }
+    </main>
   </div>
 </div>
