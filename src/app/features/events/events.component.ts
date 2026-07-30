@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Event } from '../../core/enums/events';
+import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
 import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
 
@@ -9,8 +10,6 @@ interface EventDetail {
   id: Event;
   title: string;
   subtitle: string;
-  description: string;
-  component?: any;
 }
 
 @Component({
@@ -18,12 +17,10 @@ interface EventDetail {
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
   standalone: true,
-  imports: [CommonModule, UnchartedWatersComponent, ReapWhatYouSowComponent],
+  imports: [CommonModule, NavHubComponent, UnchartedWatersComponent, ReapWhatYouSowComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventsComponent implements OnInit, AfterViewInit {
-  @ViewChild('navContainer') navContainer!: ElementRef<HTMLElement>;
-
+export class EventsComponent implements OnInit {
   constructor(private readonly route: ActivatedRoute) {}
 
   activeEvent: Event = Event.UnchartedWaters;
@@ -34,15 +31,11 @@ export class EventsComponent implements OnInit, AfterViewInit {
       id: Event.UnchartedWaters,
       title: 'Uncharted Waters',
       subtitle: 'Trade & Plunder Event',
-      description: '',
-      component: UnchartedWatersComponent,
     },
     {
       id: Event.ReapWhatYouSow,
       title: 'Reap What You Sow',
       subtitle: 'Flora & Fauna Event',
-      description: '',
-      component: ReapWhatYouSowComponent,
     },
   ];
 
@@ -51,37 +44,5 @@ export class EventsComponent implements OnInit, AfterViewInit {
     if (requestedEvent && this.events.some(e => e.id === requestedEvent)) {
       this.activeEvent = requestedEvent as Event;
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.scrollToActiveButton();
-  }
-
-  selectEvent(eventId: Event): void {
-    this.activeEvent = eventId;
-    setTimeout(() => this.scrollToActiveButton(), 0);
-  }
-
-  private scrollToActiveButton(): void {
-    if (!this.navContainer) return;
-
-    const nav = this.navContainer.nativeElement;
-    const activeButton = nav.querySelector('.events-nav-link.active') as HTMLElement;
-
-    if (!activeButton) return;
-
-    const navRect = nav.getBoundingClientRect();
-    const buttonRect = activeButton.getBoundingClientRect();
-
-    const scrollAmount = buttonRect.left - navRect.left - (navRect.width / 2) + (buttonRect.width / 2);
-
-    nav.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth',
-    });
-  }
-
-  getActiveEvent(): EventDetail | undefined {
-    return this.events.find(e => e.id === this.activeEvent);
   }
 }

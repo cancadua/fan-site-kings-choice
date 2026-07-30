@@ -23,13 +23,13 @@ describe('KnightDevelopmentComponent', () => {
     expect(component.activeSection).toBe('overview');
   });
 
-  it('should change active section when selectSection is called', () => {
-    component.selectSection('golden-rule');
+  it('should change active section when activeSection is set', () => {
+    component.activeSection = 'golden-rule';
     expect(component.activeSection).toBe('golden-rule');
   });
 
   it('should return correct active section', () => {
-    component.selectSection('power-breakdown');
+    component.activeSection = 'power-breakdown';
     const activeSection = component.getActiveSection();
     expect(activeSection?.id).toBe('power-breakdown');
   });

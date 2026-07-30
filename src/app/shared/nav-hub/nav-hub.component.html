@@ -1,0 +1,42 @@
+<div class="nav-hub">
+  <div class="nav-hub-header">
+    <h1>{{ title() }}</h1>
+    @if (subtitle()) {
+    <p class="nav-hub-subtitle">{{ subtitle() }}</p>
+    }
+  </div>
+
+  <div class="nav-hub-container">
+    <!-- Navigation Sidebar -->
+    <nav class="nav-hub-nav" #navContainer>
+      <div class="nav-hub-nav-title">{{ navLabel() }}</div>
+      @for (item of items(); track item.id) {
+      <button
+        class="nav-hub-link"
+        [class.active]="activeId() === item.id"
+        (click)="selectItem(item.id)"
+      >
+        {{ item.title }}
+      </button>
+      }
+    </nav>
+
+    <!-- Content Area -->
+    <main class="nav-hub-content">
+      @if (activeItem; as active) {
+      <article class="nav-hub-article">
+        <header class="nav-hub-article-header">
+          <h2>{{ active.title }}</h2>
+          @if (active.subtitle) {
+          <p class="nav-hub-article-subtitle">{{ active.subtitle }}</p>
+          }
+        </header>
+
+        <div class="nav-hub-article-body">
+          <ng-content></ng-content>
+        </div>
+      </article>
+      }
+    </main>
+  </div>
+</div>

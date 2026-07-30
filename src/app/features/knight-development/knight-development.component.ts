@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
 
 interface Section {
   id: string;
@@ -19,11 +20,10 @@ interface Subsection {
   templateUrl: './knight-development.component.html',
   styleUrls: ['./knight-development.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavHubComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KnightDevelopmentComponent implements AfterViewInit {
-  @ViewChild('navContainer') navContainer!: ElementRef<HTMLElement>;
+export class KnightDevelopmentComponent {
   activeSection = 'overview';
 
   sections: Section[] = [
@@ -370,36 +370,6 @@ export class KnightDevelopmentComponent implements AfterViewInit {
       ],
     },
   ];
-
-  ngAfterViewInit(): void {
-    // Initial scroll to center active button
-    this.scrollToActiveButton();
-  }
-
-  selectSection(sectionId: string): void {
-    this.activeSection = sectionId;
-    setTimeout(() => this.scrollToActiveButton(), 0);
-  }
-
-  private scrollToActiveButton(): void {
-    if (!this.navContainer) return;
-
-    const nav = this.navContainer.nativeElement;
-    const activeButton = nav.querySelector('.kd-nav-link.active') as HTMLElement;
-
-    if (!activeButton) return;
-
-    const navRect = nav.getBoundingClientRect();
-    const buttonRect = activeButton.getBoundingClientRect();
-
-    // Calculate scroll position to center the button in the nav container
-    const scrollAmount = buttonRect.left - navRect.left - (navRect.width / 2) + (buttonRect.width / 2);
-
-    nav.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth',
-    });
-  }
 
   getActiveSection(): Section | undefined {
     return this.sections.find(s => s.id === this.activeSection);

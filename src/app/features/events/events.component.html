@@ -1,51 +1,18 @@
-<div class="events">
-  <div class="events-header">
-    <h1>Events</h1>
-    <p class="events-subtitle">Participate in seasonal events to earn exclusive rewards</p>
+<app-nav-hub
+  title="Events"
+  subtitle="Participate in seasonal events to earn exclusive rewards"
+  navLabel="Available Events"
+  [items]="events"
+  [(activeId)]="activeEvent"
+>
+  <!-- Render event-specific component -->
+  @switch (activeEvent) { @case (Event.UnchartedWaters) {
+  <div class="events-component">
+    <app-uncharted-waters></app-uncharted-waters>
   </div>
-
-  <div class="events-container">
-    <!-- Navigation Sidebar -->
-    <nav class="events-nav" #navContainer>
-      <div class="events-nav-title">Available Events</div>
-      @for (event of events; track event.id) {
-      <button
-        class="events-nav-link"
-        [class.active]="activeEvent === event.id"
-        (click)="selectEvent(event.id)"
-      >
-        {{ event.title }}
-      </button>
-      }
-    </nav>
-
-    <!-- Content Area -->
-    <main class="events-content">
-      @let active = getActiveEvent(); @if (active) {
-      <article class="events-article">
-        <header class="events-article-header">
-          <h2>{{ active.title }}</h2>
-          <p class="events-article-subtitle">{{ active.subtitle }}</p>
-        </header>
-
-        <div class="events-article-body">
-          @if (active.description) {
-          <p class="events-paragraph">{{ active.description }}</p>
-          }
-
-          <!-- Render event-specific component -->
-          @switch (activeEvent) { @case(Event.UnchartedWaters) {
-          <div class="events-component">
-            <app-uncharted-waters></app-uncharted-waters>
-          </div>
-          } @case(Event.ReapWhatYouSow) {
-          <div class="events-component">
-            <app-reap-what-you-sow></app-reap-what-you-sow>
-          </div>
-          } }
-        </div>
-      </article>
-      }
-    </main>
+  } @case (Event.ReapWhatYouSow) {
+  <div class="events-component">
+    <app-reap-what-you-sow></app-reap-what-you-sow>
   </div>
-</div>
+  } }
+</app-nav-hub>

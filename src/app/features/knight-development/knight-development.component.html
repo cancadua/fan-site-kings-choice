@@ -1,55 +1,28 @@
-<div class="knight-development">
-  <div class="kd-header">
-    <h1>Knight Development Guide</h1>
-    <p class="kd-subtitle">Advanced Optimization for Serious Players</p>
-  </div>
+<app-nav-hub
+  title="Knight Development Guide"
+  subtitle="Advanced Optimization for Serious Players"
+  navLabel="Sections"
+  [items]="sections"
+  [(activeId)]="activeSection"
+>
+  @let active = getActiveSection(); @if (active) {
+  <div class="kd-article-body">
+    @for (paragraph of active.content; track $index) {
+    <p class="kd-paragraph">{{ paragraph }}</p>
+    }
 
-  <div class="kd-container">
-    <!-- Navigation Sidebar -->
-    <nav class="kd-nav" #navContainer>
-      <div class="kd-nav-title">Sections</div>
-      @for (section of sections; track section.id) {
-      <button
-        class="kd-nav-link"
-        [class.active]="activeSection === section.id"
-        (click)="selectSection(section.id)"
-      >
-        {{ section.title }}
-      </button>
+    @if (active.subsections) {
+    <div class="kd-subsections">
+      @for (subsection of active.subsections; track subsection.title) {
+      <section class="kd-subsection">
+        <h3>{{ subsection.title }}</h3>
+        @for (line of subsection.content; track $index) {
+        <p class="kd-subsection-content">{{ line }}</p>
+        }
+      </section>
       }
-    </nav>
-
-    <!-- Content Area -->
-    <main class="kd-content">
-      @let active = getActiveSection(); @if (active) {
-      <article class="kd-article">
-        <header class="kd-article-header">
-          <h2>{{ active.title }}</h2>
-          @if (active.subtitle) {
-          <p class="kd-article-subtitle">{{ active.subtitle }}</p>
-          }
-        </header>
-
-        <div class="kd-article-body">
-          @for (paragraph of active.content; track $index) {
-          <p class="kd-paragraph">{{ paragraph }}</p>
-          }
-
-          @if (active.subsections) {
-          <div class="kd-subsections">
-            @for (subsection of active.subsections; track subsection.title) {
-            <section class="kd-subsection">
-              <h3>{{ subsection.title }}</h3>
-              @for (line of subsection.content; track $index) {
-              <p class="kd-subsection-content">{{ line }}</p>
-              }
-            </section>
-            }
-          </div>
-          }
-        </div>
-      </article>
-      }
-    </main>
+    </div>
+    }
   </div>
-</div>
+  }
+</app-nav-hub>
