@@ -1,13 +1,21 @@
 <div class="row">
   <div class="col-24">
-    <div class="tabs">
-      @for (tab of tabs(); track $index) {
-      <button
-        [class.active]="tab.value === activeTab()?.value"
-        (click)="selectTab(tab)"
-      >
-        {{ tab.label }}
-      </button>
+    <div class="tabs-wrapper">
+      @if (hasPrevTab) {
+      <span class="tabs-arrow tabs-arrow--left" aria-hidden="true"></span>
+      }
+      <div class="tabs" #tabsContainer>
+        @for (tab of tabs(); track $index) {
+        <button
+          [class.active]="tab.value === activeTab()?.value"
+          (click)="selectTab(tab)"
+        >
+          {{ tab.label }}
+        </button>
+        }
+      </div>
+      @if (hasNextTab) {
+      <span class="tabs-arrow tabs-arrow--right" aria-hidden="true"></span>
       }
     </div>
   </div>

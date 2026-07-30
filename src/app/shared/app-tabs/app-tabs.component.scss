@@ -6,14 +6,38 @@
   width: 100%;
 }
 
+.tabs-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.tabs-arrow {
+  flex-shrink: 0;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+.tabs-arrow--left {
+  border-right: 8px solid $gold-primary;
+}
+
+.tabs-arrow--right {
+  border-left: 8px solid $gold-primary;
+}
+
 .tabs {
   margin-top: 0;
   display: flex;
   gap: 32px;
   margin-bottom: 0;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
+  padding: 0 0 8px;
+  flex: 1;
+  min-width: 0;
   overflow-x: auto;
 }
 
