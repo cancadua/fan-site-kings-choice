@@ -1,7 +1,7 @@
 import { GuideTabs } from './guide.schema';
 import { Component } from '@angular/core';
 import { AppTabsComponent } from '../../shared/app-tabs/app-tabs.component';
-import { ContentTab } from '../../shared/app-tabs/app-tabs.schema';
+import { TabbedPage } from '../../shared/app-tabs/tabbed-page';
 import { GuideAdvancedComponent } from './guide-advanced/guide-advanced.component';
 import { GuideTipsComponent } from './guide-tips/guide-tips.component';
 
@@ -11,8 +11,8 @@ import { GuideTipsComponent } from './guide-tips/guide-tips.component';
   templateUrl: './guide.component.html',
   styleUrl: './guide.component.scss',
 })
-export class GuideComponent {
-  protected readonly guideTabs = GuideTabs;
-
-  activeTab: ContentTab = GuideTabs[0];
+export class GuideComponent extends TabbedPage {
+  constructor() {
+    super(GuideTabs);
+  }
 }

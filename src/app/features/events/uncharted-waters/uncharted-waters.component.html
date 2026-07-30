@@ -1,4 +1,4 @@
-<app-tabs [tabs]="unchartedWaterTabs" [(activeTab)]="activeTab">
+<app-tabs [tabs]="tabs" [(activeTab)]="activeTab">
   @if (activeTab.value === 'basic-information') {
   <app-uw-description></app-uw-description>
   } @else if (activeTab.value === 'how-to-play') {

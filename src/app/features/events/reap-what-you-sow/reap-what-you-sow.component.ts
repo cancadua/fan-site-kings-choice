@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AppTabsComponent } from '../../../shared/app-tabs/app-tabs.component';
-import { ContentTab } from '../../../shared/app-tabs/app-tabs.schema';
+import { TabbedPage } from '../../../shared/app-tabs/tabbed-page';
 import { ReapWhatYouSowTabs } from './reap-what-you-sow.schema';
 
 @Component({
@@ -11,8 +11,8 @@ import { ReapWhatYouSowTabs } from './reap-what-you-sow.schema';
   styleUrl: './reap-what-you-sow.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReapWhatYouSowComponent {
-  protected readonly reapWhatYouSowTabs = ReapWhatYouSowTabs;
-
-  activeTab: ContentTab = ReapWhatYouSowTabs[0];
+export class ReapWhatYouSowComponent extends TabbedPage {
+  constructor() {
+    super(ReapWhatYouSowTabs);
+  }
 }
