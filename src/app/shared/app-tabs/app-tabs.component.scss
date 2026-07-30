@@ -73,13 +73,27 @@ $shadow: rgba(0, 0, 0, 0.4);
 }
 
 @media (max-width: 768px) {
+  .tabs {
+    gap: 20px;
+  }
+
   .tabs button {
-    padding: 12px 20px;
+    padding: 12px 8px;
     font-size: 0.95rem;
   }
 
   .tab-content {
     padding: 24px 0;
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    gap: 14px;
+  }
+
+  .tabs button {
+    font-size: 0.85rem;
   }
 }

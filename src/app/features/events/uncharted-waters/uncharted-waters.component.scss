@@ -48,6 +48,10 @@ $shadow: rgba(0, 0, 0, 0.4);
 }
 
 @media (max-width: 768px) {
+  :host {
+    padding: 24px 16px;
+  }
+
   .placeholder-icon {
     font-size: 2rem;
   }
@@ -58,5 +62,11 @@ $shadow: rgba(0, 0, 0, 0.4);
 
   .placeholder-text {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 20px 12px;
   }
 }

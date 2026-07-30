@@ -10,6 +10,7 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 
 .medieval-container {
   padding: 40px 20px;
+  min-width: 0;
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   border-radius: 12px;
   font-family: 'Cinzel', serif;
@@ -25,6 +26,7 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 
   .search-wrapper {
     flex-grow: 1;
+    min-width: 0;
     max-width: 500px;
   }
 
@@ -36,6 +38,7 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 
   .decorative-line {
     flex-grow: 1;
+    min-width: 0;
     height: 2px;
     background: linear-gradient(
       90deg,
@@ -57,6 +60,7 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 
 .search-input {
   flex: 1;
+  min-width: 0;
   padding: 14px 20px;
   border: 3px solid $gold-primary;
   background: linear-gradient(135deg, $parchment 0%, $stone-light 100%);
@@ -265,5 +269,60 @@ $shadow-color: rgba(0, 0, 0, 0.4);
 
   &:hover {
     transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .medieval-container {
+    padding: 24px 16px;
+  }
+
+  .search-header {
+    gap: 12px;
+    margin-bottom: 30px;
+
+    .decorative-line {
+      &.left,
+      &.right {
+        max-width: 40px;
+      }
+    }
+  }
+
+  .uw-cities-space {
+    padding: 16px;
+    min-height: 200px;
+  }
+
+  .column .column-header h2 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .medieval-container {
+    padding: 16px 12px;
+  }
+
+  .search-header {
+    .decorative-line {
+      &.left,
+      &.right {
+        display: none;
+      }
+    }
+  }
+
+  .search-input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .confirm-button {
+    padding: 12px 14px;
+  }
+
+  .uw-cities-space {
+    padding: 12px;
   }
 }
