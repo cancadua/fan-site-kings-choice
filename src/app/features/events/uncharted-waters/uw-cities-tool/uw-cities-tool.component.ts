@@ -28,7 +28,7 @@ export class UwCitiesToolComponent {
     return [...this.nonEmpty(), ...this.empty()];
   });
 
-  asd(a: any) {
+  logClickPosition(a: any) {
     this.position.push({
       left: ((a.layerX / 1024) * 100).toString() + '%',
       top: ((a.layerY / 826) * 100).toString() + '%',
