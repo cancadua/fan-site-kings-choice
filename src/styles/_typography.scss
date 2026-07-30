@@ -1,0 +1,43 @@
+@use 'variables' as *;
+
+@mixin lore-font {
+  font-family: 'Cinzel', serif;
+}
+
+@mixin lore-heading(
+  $size,
+  $color: $gold-primary,
+  $shadow-size: 1px 1px 3px,
+  $letter-spacing: 0.5px,
+  $weight: 700
+) {
+  @include lore-font;
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  letter-spacing: $letter-spacing;
+  text-shadow: $shadow-size $shadow;
+}
+
+@mixin lore-text(
+  $size: 1.05rem,
+  $line-height: 1.7,
+  $letter-spacing: 0,
+  $shadow-size: 1px 1px 2px
+) {
+  @include lore-font;
+  font-size: $size;
+  color: $parchment;
+  line-height: $line-height;
+  text-shadow: $shadow-size $shadow;
+  letter-spacing: $letter-spacing;
+}
+
+@mixin lore-list-marker($marker: '⚔ ', $spacing: 8px) {
+  &:before {
+    content: $marker;
+    color: $gold-primary;
+    margin-right: $spacing;
+    font-weight: bold;
+  }
+}

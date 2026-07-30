@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'typography' as *;
 
 :host {
   display: contents;
@@ -20,12 +21,7 @@
 }
 
 .info-section-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: $gold-primary;
-  letter-spacing: 0.5px;
-  text-shadow: 1px 1px 3px $shadow;
+  @include lore-heading(1.15rem);
   margin: 0 0 6px;
 }
 
@@ -38,12 +34,11 @@
 }
 
 .item-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: $gold-primary;
-  letter-spacing: 0.3px;
-  text-shadow: 1px 1px 2px $shadow;
+  @include lore-heading(
+    1rem,
+    $shadow-size: 1px 1px 2px,
+    $letter-spacing: 0.3px
+  );
   margin: 0 0 4px;
 }
 
@@ -143,82 +138,39 @@
 }
 
 .step-number {
-  font-family: 'Cinzel', serif;
+  @include lore-font;
   font-size: 1.2rem;
   color: $gold-primary;
   text-shadow: 1px 1px 3px $shadow;
 }
 
 .step-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: $gold-primary;
-  letter-spacing: 0.5px;
-  text-shadow: 1px 1px 3px $shadow;
+  @include lore-heading(1.1rem);
   margin: 0;
 }
 
 .step-text {
-  font-family: 'Cinzel', serif;
-  font-size: 1.05rem;
-  color: $parchment;
-  line-height: 1.7;
-  text-shadow: 1px 1px 2px $shadow;
+  @include lore-text;
   margin: 6px 0;
 }
 
 .step-note {
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
+  @include lore-text(1rem);
   font-style: italic;
-  color: $parchment;
   opacity: 0.75;
-  line-height: 1.7;
   margin: 6px 0 0;
 }
 
-.step-list {
-  list-style: none;
-  padding: 0 0 0 20px;
-  margin: 6px 0;
-
-  li {
-    font-family: 'Cinzel', serif;
-    font-size: 1.05rem;
-    color: $parchment;
-    line-height: 1.7;
-    margin: 6px 0;
-    text-shadow: 1px 1px 2px $shadow;
-
-    &:before {
-      content: '⚔ ';
-      color: $gold-primary;
-      margin-right: 8px;
-      font-weight: bold;
-    }
-  }
-}
-
+.step-list,
 .checklist {
   list-style: none;
   padding: 0 0 0 20px;
   margin: 6px 0;
 
   li {
-    font-family: 'Cinzel', serif;
-    font-size: 1.05rem;
-    color: $parchment;
-    line-height: 1.7;
+    @include lore-text;
     margin: 6px 0;
-    text-shadow: 1px 1px 2px $shadow;
-
-    &:before {
-      content: '⚔ ';
-      color: $gold-primary;
-      margin-right: 8px;
-      font-weight: bold;
-    }
+    @include lore-list-marker;
   }
 }
 

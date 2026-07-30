@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'typography' as *;
 
 :host {
   display: block;
@@ -11,11 +12,8 @@
   padding: 40px 20px;
 
   h2 {
-    font-family: 'Cinzel', serif;
-    font-size: 2rem;
-    color: $gold-primary;
+    @include lore-heading(2rem, $shadow-size: 2px 2px 4px, $letter-spacing: normal);
     margin-bottom: 30px;
-    text-shadow: 2px 2px 4px $shadow;
     border-bottom: 3px solid $gold-primary;
     padding-bottom: 15px;
   }
@@ -25,21 +23,13 @@
   margin-bottom: 40px;
 
   h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    color: $gold-light;
+    @include lore-heading(1.4rem, $color: $gold-light, $letter-spacing: normal);
     margin-bottom: 15px;
-    text-shadow: 1px 1px 3px $shadow;
   }
 
   p {
-    font-family: 'Cinzel', serif;
-    font-size: 1.05rem;
-    color: $parchment;
-    line-height: 1.8;
+    @include lore-text(1.05rem, 1.8, 0.3px);
     margin: 15px 0;
-    text-shadow: 1px 1px 2px $shadow;
-    letter-spacing: 0.3px;
   }
 
   ul {
@@ -48,20 +38,9 @@
     margin: 15px 0;
 
     li {
-      font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
-      color: $parchment;
-      line-height: 1.8;
+      @include lore-text(1.05rem, 1.8, 0.3px);
       margin: 10px 0;
-      text-shadow: 1px 1px 2px $shadow;
-      letter-spacing: 0.3px;
-
-      &:before {
-        content: '⚔ ';
-        color: $gold-primary;
-        margin-right: 10px;
-        font-weight: bold;
-      }
+      @include lore-list-marker($spacing: 10px);
     }
   }
 }
