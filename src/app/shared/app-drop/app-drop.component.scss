@@ -1,13 +1,4 @@
-// Color variables
-$black-primary: #0a0a0a;
-$black-light: #2d2d2d;
-$gold-primary: #d4af37;
-$gold-light: #f0e68c;
-$gold-dark: #9d7e2a;
-$emerald: #218838;
-$emerald-light: #28a745;
-$parchment: #f4f1de;
-$stone-light: #e8e4d0;
+@use 'variables' as *;
 
 .dropdown {
   position: relative;

@@ -1,10 +1,4 @@
-$gold-primary: #d4af37;
-$gold-light: #f0e68c;
-$black-light: #2d2d2d;
-$black-dark: #1a1a1a;
-$stone-light: #e8e4d0;
-$parchment: #f4f1de;
-$shadow: rgba(0, 0, 0, 0.4);
+@use 'variables' as *;
 
 .events-highlight-section {
   padding: 50px 30px;

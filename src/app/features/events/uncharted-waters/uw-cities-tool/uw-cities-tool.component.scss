@@ -1,6 +1,4 @@
-$gold-primary: #d4af37;
-$gold-light: #f0e68c;
-$shadow: rgba(0, 0, 0, 0.4);
+@use 'variables' as *;
 
 :host {
   display: block;

@@ -1,14 +1,4 @@
-$black-primary: #0a0a0a;
-$black-dark: #1a1a1a;
-$black-light: #2d2d2d;
-$gold-primary: #d4af37;
-$gold-light: #f0e68c;
-$gold-dark: #9d7e2a;
-$parchment: #f4f1de;
-$stone-light: #e8e4d0;
-$crimson: #c41e3a;
-$emerald: #218838;
-$shadow: rgba(0, 0, 0, 0.4);
+@use 'variables' as *;
 
 .home {
   min-height: 100vh;

@@ -1,12 +1,4 @@
-// Color variables - design system
-$gold-primary: #d4af37;
-$gold-light: #f0e68c;
-$gold-dark: #9d7e2a;
-$crimson: #c41e3a;
-$crimson-dark: #8b0000;
-$emerald: #218838;
-$emerald-light: #28a745;
-$parchment: #f4f1de;
+@use 'variables' as *;
 
 .city-btn {
   position: relative;

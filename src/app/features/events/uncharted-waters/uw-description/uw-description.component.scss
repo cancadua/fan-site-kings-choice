@@ -1,5 +1,4 @@
-$parchment: #f4f1de;
-$shadow: rgba(0, 0, 0, 0.4);
+@use 'variables' as *;
 
 :host {
   display: block;

@@ -1,12 +1,4 @@
-$gold-primary: #d4af37;
-$gold-light: #f0e68c;
-$gold-dark: #9d7e2a;
-$crimson: #8b0000;
-$crimson-light: #c41e3a;
-$stone-light: #e8e4d0;
-$stone-dark: #4a4a42;
-$parchment: #f4f1de;
-$shadow-color: rgba(0, 0, 0, 0.4);
+@use 'variables' as *;
 
 .medieval-container {
   padding: 40px 20px;
@@ -191,7 +183,7 @@ $shadow-color: rgba(0, 0, 0, 0.4);
         rgba(139, 0, 0, 0.15) 0%,
         rgba(212, 175, 55, 0.1) 100%
       );
-      border-color: $crimson-light;
+      border-color: $crimson;
       box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
     }
   }
