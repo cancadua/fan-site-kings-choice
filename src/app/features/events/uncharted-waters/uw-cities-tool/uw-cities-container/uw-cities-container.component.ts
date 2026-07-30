@@ -27,7 +27,13 @@ export class UwCitiesContainer {
 
   searchQuery = signal<string>('');
 
+  activeColumn = signal<'A' | 'B' | null>('A');
+
   dragData: { city: City; from: 'A' | 'B'; index: number } | null = null;
+
+  selectColumn(column: 'A' | 'B'): void {
+    this.activeColumn.set(this.activeColumn() === column ? null : column);
+  }
 
   filteredNonEmpty = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();

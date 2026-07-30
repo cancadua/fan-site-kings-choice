@@ -1,14 +1,29 @@
 <div class="row">
   <div class="col-24">
     <app-uw-cities-container
+      #citiesContainer
       [(nonEmpty)]="nonEmpty"
       [(empty)]="empty"
     ></app-uw-cities-container>
   </div>
-  <div class="row relative">
+
+  <button
+    type="button"
+    class="map-toggle"
+    (click)="toggleMap()"
+    [attr.aria-expanded]="mapExpanded()"
+  >
+    <span class="chevron" [class.open]="mapExpanded()">▶</span>
+    🗺 {{ mapExpanded() ? 'Hide Map' : 'View Map' }}
+  </button>
+
+  <div class="row relative map-section" [class.expanded]="mapExpanded()">
     @for(item of full(); track $index) {
-    <div
+    <button
+      type="button"
       class="dot"
+      [title]="item.name"
+      [attr.aria-label]="item.name + ' — tap to move'"
       [style]="
         'left: ' +
         item.position?.left +
@@ -22,7 +37,8 @@
         item.color +
         ';'
       "
-    ></div>
+      (click)="citiesContainer.moveCity(item, isPopulated(item) ? 'A' : 'B')"
+    ></button>
     }
     <div class="col-24 map" (click)="logClickPosition($event)"></div>
   </div>

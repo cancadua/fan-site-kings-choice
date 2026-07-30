@@ -24,9 +24,19 @@ export class UwCitiesToolComponent {
 
   empty = signal<City[]>([]);
 
+  mapExpanded = signal(false);
+
   full = computed(() => {
     return [...this.nonEmpty(), ...this.empty()];
   });
+
+  toggleMap(): void {
+    this.mapExpanded.update((expanded) => !expanded);
+  }
+
+  isPopulated(city: City): boolean {
+    return this.nonEmpty().includes(city);
+  }
 
   logClickPosition(a: any) {
     this.position.push({

@@ -63,3 +63,9 @@
     padding: 20px 12px;
   }
 }
+
+@media (max-width: 360px) {
+  :host {
+    padding: 16px 8px;
+  }
+}

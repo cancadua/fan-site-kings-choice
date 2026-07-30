@@ -24,8 +24,30 @@
     <div class="decorative-line right"></div>
   </div>
 
+  <div class="segmented-tabs">
+    <button
+      type="button"
+      class="segment"
+      [class.active]="activeColumn() === 'A'"
+      (click)="selectColumn('A')"
+    >
+      👑 Populated <span class="count">{{ nonEmpty().length }}</span>
+    </button>
+    <button
+      type="button"
+      class="segment"
+      [class.active]="activeColumn() === 'B'"
+      (click)="selectColumn('B')"
+    >
+      💀 Vacant <span class="count">{{ empty().length }}</span>
+    </button>
+  </div>
+
   <div class="cities-grid">
-    <div class="column populated-column">
+    <div
+      class="column populated-column"
+      [class.active]="activeColumn() === 'A'"
+    >
       <div class="column-header">
         <span class="crown">👑</span>
         <h2>Populated Cities</h2>
@@ -56,7 +78,7 @@
       </div>
     </div>
 
-    <div class="column empty-column">
+    <div class="column empty-column" [class.active]="activeColumn() === 'B'">
       <div class="column-header">
         <span class="skull">💀</span>
         <h2>Vacant Cities</h2>

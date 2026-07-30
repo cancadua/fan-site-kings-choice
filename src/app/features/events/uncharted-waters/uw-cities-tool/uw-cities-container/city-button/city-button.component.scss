@@ -2,6 +2,10 @@
 
 .city-btn {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   padding: 12px 24px;
   font-family: 'Cinzel', serif;
   font-size: 15px;
@@ -63,6 +67,25 @@
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .city-btn {
+    min-height: 30px;
+    padding: 5px 10px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    border-width: 1px;
+  }
+}
+
+@media (max-width: 360px) {
+  .city-btn {
+    min-height: 24px;
+    padding: 3px 8px;
+    font-size: 9px;
+    letter-spacing: 0;
   }
 }
 
