@@ -38,10 +38,12 @@ export class UwCitiesToolComponent {
     return this.nonEmpty().includes(city);
   }
 
-  logClickPosition(a: any) {
+  logClickPosition(event: MouseEvent) {
+    const mapEl = event.currentTarget as HTMLElement;
+    const rect = mapEl.getBoundingClientRect();
     this.position.push({
-      left: ((a.layerX / 1024) * 100).toString() + '%',
-      top: ((a.layerY / 826) * 100).toString() + '%',
+      left: (((event.clientX - rect.left) / rect.width) * 100).toString() + '%',
+      top: (((event.clientY - rect.top) / rect.height) * 100).toString() + '%',
     });
     this.counter++;
     console.log(this.position);

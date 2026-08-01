@@ -17,10 +17,12 @@
 }
 
 .dot {
+  --dot-size: 14px;
+  --hover-ratio: 1.57;
   appearance: none;
   padding: 0;
-  width: 14px;
-  height: 14px;
+  width: var(--dot-size);
+  height: var(--dot-size);
   border-radius: 50%;
   position: absolute;
   z-index: 1;
@@ -35,8 +37,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 44px;
-    height: 44px;
+    width: calc(var(--dot-size) * var(--hover-ratio));
+    height: calc(var(--dot-size) * var(--hover-ratio));
     transform: translate(-50%, -50%);
   }
 
@@ -90,8 +92,8 @@
 
 @media (max-width: 768px) {
   .dot {
-    width: 12px;
-    height: 12px;
+    --dot-size: 12px;
+    --hover-ratio: 1.15;
   }
 
   .map {
@@ -102,6 +104,13 @@
   .relative {
     max-width: 100%;
     margin: 16px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .dot {
+    --dot-size: 10px;
+    --hover-ratio: 0.9;
   }
 }
 
@@ -148,8 +157,8 @@
 
 @media (max-width: 360px) {
   .dot {
-    width: 9px;
-    height: 9px;
+    --dot-size: 9px;
+    --hover-ratio: 0.8;
   }
 
   .map-toggle {

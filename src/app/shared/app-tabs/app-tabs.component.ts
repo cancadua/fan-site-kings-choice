@@ -34,6 +34,18 @@ export class AppTabsComponent {
     setTimeout(() => this.scrollToActiveTab(), 0);
   }
 
+  selectPrevTab(): void {
+    const tabs = this.tabs();
+    if (!tabs || !this.hasPrevTab) return;
+    this.selectTab(tabs[this.activeIndex - 1]);
+  }
+
+  selectNextTab(): void {
+    const tabs = this.tabs();
+    if (!tabs || !this.hasNextTab) return;
+    this.selectTab(tabs[this.activeIndex + 1]);
+  }
+
   private scrollToActiveTab(): void {
     const container = this.tabsContainer()?.nativeElement;
     if (!container) return;
