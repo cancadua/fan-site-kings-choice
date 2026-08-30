@@ -9,13 +9,12 @@
 
 .how-to-play-content,
 .info-content {
-  max-width: 700px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .info-section {
   padding: 14px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba($gold-primary, 0.2);
 
   &:last-child {
     border-bottom: none;
@@ -53,12 +52,12 @@
 }
 
 .rarity-badge {
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-size: 0.9rem;
   font-weight: 700;
   color: $parchment;
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba($gold-primary, 0.12);
+  border: 1px solid rgba($gold-primary, 0.4);
   border-radius: 4px;
   padding: 3px 8px;
   text-shadow: 1px 1px 2px $shadow;
@@ -125,7 +124,7 @@
 
 .step {
   padding: 14px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba($gold-primary, 0.2);
 
   &:last-child {
     border-bottom: none;

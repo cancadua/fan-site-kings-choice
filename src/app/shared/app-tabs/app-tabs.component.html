@@ -10,7 +10,7 @@
       ></button>
       }
       <div class="tabs" #tabsContainer>
-        @for (tab of tabs(); track $index) {
+        @for (tab of visibleTabs; track $index) {
         <button
           [class.active]="tab.value === activeTab()?.value"
           (click)="selectTab(tab)"

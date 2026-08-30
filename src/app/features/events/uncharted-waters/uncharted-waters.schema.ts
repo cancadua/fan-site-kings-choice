@@ -8,10 +8,12 @@ export const UnchartedWaterTabs: ContentTab[] = [
   {
     label: 'Smart play',
     value: 'how-to-play',
+    hidden: true,
   },
   {
     label: 'Advanced Tips',
     value: 'advanced-tips',
+    hidden: true,
   },
   {
     label: 'Cities Tool',

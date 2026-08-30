@@ -4,6 +4,6 @@ export abstract class TabbedPage {
   activeTab: ContentTab;
 
   protected constructor(protected readonly tabs: ContentTab[]) {
-    this.activeTab = tabs[0];
+    this.activeTab = tabs.find(tab => !tab.hidden) ?? tabs[0];
   }
 }

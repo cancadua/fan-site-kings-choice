@@ -13,11 +13,14 @@ export class AppTabsComponent {
 
   activeTab = model<ContentTab | null>(null);
 
+  get visibleTabs(): ContentTab[] {
+    return this.tabs()?.filter(tab => !tab.hidden) ?? [];
+  }
+
   get activeIndex(): number {
-    const tabs = this.tabs();
     const activeTab = this.activeTab();
-    if (!tabs || !activeTab) return -1;
-    return tabs.findIndex(tab => tab.value === activeTab.value);
+    if (!activeTab) return -1;
+    return this.visibleTabs.findIndex(tab => tab.value === activeTab.value);
   }
 
   get hasPrevTab(): boolean {
@@ -25,8 +28,7 @@ export class AppTabsComponent {
   }
 
   get hasNextTab(): boolean {
-    const tabs = this.tabs();
-    return this.activeIndex !== -1 && this.activeIndex < (tabs?.length ?? 0) - 1;
+    return this.activeIndex !== -1 && this.activeIndex < this.visibleTabs.length - 1;
   }
 
   selectTab(tab: ContentTab) {
@@ -35,15 +37,13 @@ export class AppTabsComponent {
   }
 
   selectPrevTab(): void {
-    const tabs = this.tabs();
-    if (!tabs || !this.hasPrevTab) return;
-    this.selectTab(tabs[this.activeIndex - 1]);
+    if (!this.hasPrevTab) return;
+    this.selectTab(this.visibleTabs[this.activeIndex - 1]);
   }
 
   selectNextTab(): void {
-    const tabs = this.tabs();
-    if (!tabs || !this.hasNextTab) return;
-    this.selectTab(tabs[this.activeIndex + 1]);
+    if (!this.hasNextTab) return;
+    this.selectTab(this.visibleTabs[this.activeIndex + 1]);
   }
 
   private scrollToActiveTab(): void {

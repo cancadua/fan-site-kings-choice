@@ -1,7 +1,7 @@
 @use 'variables' as *;
 
 :host {
-  display: block;
+  display: contents;
   width: 100%;
   min-height: 100vh;
 }
@@ -11,11 +11,11 @@
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 12px;
-  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+  filter: drop-shadow(0 0 8px rgba($gold-primary, 0.4));
 }
 
 .placeholder-title {
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-size: 1.4rem;
   font-weight: 700;
   color: $gold-primary;
@@ -27,7 +27,7 @@
 }
 
 .placeholder-text {
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-size: 1.1rem;
   font-style: italic;
   color: $parchment;
