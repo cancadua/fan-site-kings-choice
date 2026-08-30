@@ -15,7 +15,6 @@ export class AppHeaderComponent {
     { label: 'Home', route: '/' },
     { label: 'Knights', route: '/knight-development' },
     { label: 'Events', route: '/events' },
-    { label: 'Guide', route: '/guide' },
   ];
 
   menuOpen = signal(false);
@@ -32,8 +31,7 @@ export class AppHeaderComponent {
     const iconMap: Record<string, string> = {
       'Home': '🏠',
       'Knights': '⚔️',
-      'Events': '📅',
-      'Guide': '📖'
+      'Events': '📅'
     };
     return iconMap[label] || '→';
   }
