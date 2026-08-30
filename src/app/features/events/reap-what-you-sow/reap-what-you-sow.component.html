@@ -1,4 +1,4 @@
-<app-tabs [tabs]="tabs" [(activeTab)]="activeTab">
+<app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
   @if (activeTab.value === 'basic-information') {
   <div class="info-content">
     <section class="info-section">
@@ -99,8 +99,8 @@
       </ul>
     </section>
   </div>
-  } @else if (activeTab.value === 'how-to-play') {
-  <div class="how-to-play-content">
+  } @else if (activeTab.value === 'smart-play') {
+  <div class="smart-play-content">
     <ol class="steps-list">
       <li class="step">
         <div class="step-header">

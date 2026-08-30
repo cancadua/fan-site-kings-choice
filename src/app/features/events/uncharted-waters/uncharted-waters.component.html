@@ -1,7 +1,7 @@
-<app-tabs [tabs]="tabs" [(activeTab)]="activeTab">
+<app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
   @if (activeTab.value === 'basic-information') {
   <app-uw-description></app-uw-description>
-  } @else if (activeTab.value === 'how-to-play') {
+  } @else if (activeTab.value === 'smart-play') {
   <span class="placeholder-icon">⚔️</span>
   <h3 class="placeholder-title">Smart play</h3>
   <p class="placeholder-text">Coming soon.</p>

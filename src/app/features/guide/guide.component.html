@@ -1,4 +1,4 @@
-<app-tabs [tabs]="tabs" [(activeTab)]="activeTab">
+<app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
   @if (activeTab.value === 'guide') {
   <app-guide-advanced></app-guide-advanced>
   } @else if (activeTab.value === 'tips') {

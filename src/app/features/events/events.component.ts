@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from '../../core/enums/events';
 import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
@@ -21,7 +21,10 @@ interface EventDetail {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventsComponent implements OnInit {
-  constructor(private readonly route: ActivatedRoute) {}
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+  ) {}
 
   activeEvent: Event = Event.UnchartedWaters;
   readonly Event = Event;
@@ -44,5 +47,15 @@ export class EventsComponent implements OnInit {
     if (requestedEvent && this.events.some(e => e.id === requestedEvent)) {
       this.activeEvent = requestedEvent as Event;
     }
+  }
+
+  onEventChange(event: Event): void {
+    this.activeEvent = event;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { event, tab: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 }

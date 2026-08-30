@@ -3,7 +3,8 @@
   subtitle="Participate in seasonal events to earn exclusive rewards"
   navLabel="Available Events"
   [items]="events"
-  [(activeId)]="activeEvent"
+  [activeId]="activeEvent"
+  (activeIdChange)="onEventChange($event)"
 >
   <!-- Render event-specific component -->
   @switch (activeEvent) { @case (Event.UnchartedWaters) {
