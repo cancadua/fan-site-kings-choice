@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'typography' as *;
+@use 'mixins' as *;
 
 :host {
   display: block;
@@ -7,16 +8,7 @@
 }
 
 .guide-content {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
-
-  h2 {
-    @include lore-heading(2rem, $shadow-size: 2px 2px 4px, $letter-spacing: normal);
-    margin-bottom: 30px;
-    border-bottom: 3px solid $gold-primary;
-    padding-bottom: 15px;
-  }
+  @include guide-page(900px);
 }
 
 .guide-section {
@@ -46,15 +38,6 @@
 }
 
 @media (max-width: 768px) {
-  .guide-content {
-    padding: 20px 16px;
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-  }
-
   .guide-section {
     margin-bottom: 30px;
 

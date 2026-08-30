@@ -53,7 +53,7 @@
   border: none;
   background: none;
   color: $gold-light;
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -81,7 +81,7 @@
 
 .tabs button.active {
   color: $gold-primary;
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  text-shadow: 0 0 10px rgba($gold-primary, 0.3);
 
   &::after {
     width: 100%;
@@ -89,7 +89,7 @@
 }
 
 .tab-content {
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-size: 1.1rem;
   color: $parchment;
   padding: 40px 0;

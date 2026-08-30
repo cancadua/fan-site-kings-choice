@@ -1,8 +1,10 @@
+@use 'variables' as *;
+
 .kd-paragraph {
   font-size: 1rem;
   line-height: 1.8;
   margin: 1rem 0;
-  color: #d0d0d0;
+  color: $knight-text-body;
 
   &:first-child {
     margin-top: 0;
@@ -23,13 +25,13 @@
 
 .kd-subsection {
   padding: 1.5rem;
-  background: rgba(255, 193, 7, 0.05);
-  border-left: 3px solid #ffc107;
+  background: rgba($knight-amber, 0.05);
+  border-left: 3px solid $knight-amber;
   border-radius: 6px;
 
   h3 {
     font-size: 1.2rem;
-    color: #ffc107;
+    color: $knight-amber;
     margin: 0 0 1rem;
     font-weight: 700;
 
@@ -41,7 +43,7 @@
 
   p {
     margin: 0.5rem 0;
-    color: #d0d0d0;
+    color: $knight-text-body;
     line-height: 1.7;
 
     &:first-child {
@@ -61,7 +63,7 @@
 
 .kd-subsection-content {
   margin: 0.5rem 0;
-  color: #d0d0d0;
+  color: $knight-text-body;
   line-height: 1.7;
   font-size: 0.95rem;
 

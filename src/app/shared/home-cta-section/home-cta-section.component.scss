@@ -6,9 +6,9 @@
   border-top: 2px solid $gold-primary;
   background: linear-gradient(
     90deg,
-    rgba(212, 175, 55, 0.05) 0%,
-    rgba(212, 175, 55, 0.1) 50%,
-    rgba(212, 175, 55, 0.05) 100%
+    rgba($gold-primary, 0.05) 0%,
+    rgba($gold-primary, 0.1) 50%,
+    rgba($gold-primary, 0.05) 100%
   );
 
   h2 {
@@ -35,45 +35,7 @@
   }
 }
 
-.cta-button {
-  display: inline-block;
-  padding: 14px 32px;
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  border: 2px solid transparent;
-
-  &.primary {
-    background: linear-gradient(135deg, $gold-primary, $gold-light);
-    color: #0a0a0a;
-    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.6);
-      background: linear-gradient(135deg, $gold-light, $gold-primary);
-    }
-  }
-
-  &.secondary {
-    background: transparent;
-    color: $gold-light;
-    border: 2px solid $gold-primary;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-
-    &:hover {
-      background: rgba(212, 175, 55, 0.1);
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-      transform: translateY(-2px);
-    }
-  }
-}
+// Base .cta-button lives in global src/styles.scss
 
 @media (max-width: 768px) {
   .cta-section {

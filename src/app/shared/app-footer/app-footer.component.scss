@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'mixins' as *;
 
 :host {
   display: block;
@@ -7,15 +8,7 @@
 
 .site-footer {
   width: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 10, 10, 0.95) 0%,
-    rgba(26, 26, 26, 0.98) 100%
-  );
-  border-top: 2px solid $gold-primary;
-  box-shadow: inset 0 2px 8px rgba(212, 175, 55, 0.1), 0 -8px 16px $shadow;
-  color: $parchment;
-  font-family: 'Cinzel', serif;
+  @include chrome-bar(top);
 }
 
 .footer-inner {
@@ -27,9 +20,9 @@
 
 .disclaimer {
   margin: 0 0 16px;
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  border: 1px solid rgba($gold-primary, 0.3);
   border-radius: 6px;
-  background: rgba(212, 175, 55, 0.05);
+  background: rgba($gold-primary, 0.05);
   text-align: left;
 
   summary {
@@ -73,7 +66,7 @@
   padding: 0 16px 16px;
 
   p {
-    font-family: 'Georgia', serif;
+    font-family: $font-body;
     font-size: 0.85rem;
     line-height: 1.6;
     color: $stone-light;
@@ -87,7 +80,7 @@
 
 .copyright {
   margin: 0;
-  font-family: 'Georgia', serif;
+  font-family: $font-body;
   font-size: 0.8rem;
   color: $stone-light;
   opacity: 0.8;

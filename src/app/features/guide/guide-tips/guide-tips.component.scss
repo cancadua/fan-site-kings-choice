@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'typography' as *;
+@use 'mixins' as *;
 
 :host {
   display: block;
@@ -7,15 +8,10 @@
 }
 
 .guide-content {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  @include guide-page(1000px);
 
   h2 {
-    @include lore-heading(2rem, $shadow-size: 2px 2px 4px, $letter-spacing: normal);
     margin-bottom: 40px;
-    border-bottom: 3px solid $gold-primary;
-    padding-bottom: 15px;
     text-align: center;
   }
 }
@@ -37,13 +33,13 @@
   border-radius: 8px;
   padding: 25px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(212, 175, 55, 0.1);
+    inset 0 1px 0 rgba($gold-primary, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3),
-      inset 0 1px 0 rgba(212, 175, 55, 0.1);
+    box-shadow: 0 8px 20px rgba($gold-primary, 0.3),
+      inset 0 1px 0 rgba($gold-primary, 0.1);
   }
 
   h3 {
@@ -58,15 +54,6 @@
 }
 
 @media (max-width: 768px) {
-  .guide-content {
-    padding: 20px 16px;
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 25px;
-    }
-  }
-
   .tips-grid {
     grid-template-columns: 1fr;
     gap: 20px;

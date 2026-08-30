@@ -3,9 +3,9 @@
 .medieval-container {
   padding: 40px 20px;
   min-width: 0;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, $black-dark 0%, $black-light 100%);
   border-radius: 12px;
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
 }
 
 .search-header {
@@ -38,7 +38,7 @@
       $gold-primary 50%,
       transparent 100%
     );
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 8px rgba($gold-primary, 0.3);
 
     &.left {
       max-width: 150px;
@@ -58,11 +58,11 @@
   background: linear-gradient(135deg, $parchment 0%, $stone-light 100%);
   border-radius: 6px 0 0 6px;
   font-size: 15px;
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-weight: 500;
   color: $stone-dark;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
-    0 0 12px rgba(212, 175, 55, 0.2);
+    0 0 12px rgba($gold-primary, 0.2);
   transition: all 0.3s ease;
   text-align: center;
 
@@ -70,7 +70,7 @@
     outline: none;
     border-color: $gold-light;
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
-      0 0 20px rgba(212, 175, 55, 0.4);
+      0 0 20px rgba($gold-primary, 0.4);
     background: linear-gradient(135deg, #ffffff 0%, $stone-light 100%);
   }
 
@@ -87,18 +87,18 @@
   background: linear-gradient(135deg, $gold-primary 0%, $gold-dark 100%);
   border-radius: 0 6px 6px 0;
   font-size: 18px;
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-weight: 700;
   color: $stone-dark;
   cursor: pointer;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
-    0 0 12px rgba(212, 175, 55, 0.2);
+    0 0 12px rgba($gold-primary, 0.2);
   transition: all 0.3s ease;
 
   &:hover {
     background: linear-gradient(135deg, $gold-light 0%, $gold-primary 100%);
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
-      0 0 20px rgba(212, 175, 55, 0.4);
+      0 0 20px rgba($gold-primary, 0.4);
   }
 
   &:active {
@@ -142,9 +142,9 @@
     min-height: 48px;
     padding: 14px 12px;
     border: none;
-    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    background: linear-gradient(135deg, $black-light 0%, $black-dark 100%);
     color: $gold-light;
-    font-family: 'Cinzel', serif;
+    font-family: $font-lore;
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 1px;
@@ -157,7 +157,7 @@
 
     .count {
       font-size: 12px;
-      background: rgba(212, 175, 55, 0.2);
+      background: rgba($gold-primary, 0.2);
       border-radius: 10px;
       padding: 2px 8px;
       min-width: 20px;
@@ -166,10 +166,10 @@
     &.active {
       background: linear-gradient(
         135deg,
-        rgba(212, 175, 55, 0.25) 0%,
-        rgba(139, 0, 0, 0.15) 100%
+        rgba($gold-primary, 0.25) 0%,
+        rgba($crimson-dark, 0.15) 100%
       );
-      box-shadow: inset 0 0 12px rgba(212, 175, 55, 0.2);
+      box-shadow: inset 0 0 12px rgba($gold-primary, 0.2);
     }
   }
 }
@@ -188,8 +188,8 @@
     padding: 16px;
     background: linear-gradient(
       135deg,
-      rgba(212, 175, 55, 0.1) 0%,
-      rgba(139, 0, 0, 0.05) 100%
+      rgba($gold-primary, 0.1) 0%,
+      rgba($crimson-dark, 0.05) 100%
     );
     border-radius: 8px;
     border: 2px solid $gold-primary;
@@ -226,9 +226,9 @@
       background: linear-gradient(
         135deg,
         rgba(33, 136, 56, 0.15) 0%,
-        rgba(212, 175, 55, 0.1) 100%
+        rgba($gold-primary, 0.1) 100%
       );
-      border-color: #218838;
+      border-color: $emerald;
       box-shadow: 0 4px 15px rgba(33, 136, 56, 0.2);
     }
   }
@@ -237,11 +237,11 @@
     .column-header {
       background: linear-gradient(
         135deg,
-        rgba(139, 0, 0, 0.15) 0%,
-        rgba(212, 175, 55, 0.1) 100%
+        rgba($crimson-dark, 0.15) 0%,
+        rgba($gold-primary, 0.1) 100%
       );
       border-color: $crimson;
-      box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba($crimson-dark, 0.2);
     }
   }
 }
@@ -267,7 +267,7 @@
   padding: 30px;
   min-height: 300px;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(212, 175, 55, 0.2);
+    0 0 20px rgba($gold-primary, 0.2);
   position: relative;
   overflow: hidden;
 
@@ -282,15 +282,15 @@
         90deg,
         transparent,
         transparent 2px,
-        rgba(139, 0, 0, 0.02) 2px,
-        rgba(139, 0, 0, 0.02) 4px
+        rgba($crimson-dark, 0.02) 2px,
+        rgba($crimson-dark, 0.02) 4px
       ),
       repeating-linear-gradient(
         0deg,
         transparent,
         transparent 2px,
-        rgba(139, 0, 0, 0.02) 2px,
-        rgba(139, 0, 0, 0.02) 4px
+        rgba($crimson-dark, 0.02) 2px,
+        rgba($crimson-dark, 0.02) 4px
       );
     pointer-events: none;
   }
@@ -302,7 +302,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba($gold-primary, 0.3);
     border-radius: 4px;
     pointer-events: none;
   }

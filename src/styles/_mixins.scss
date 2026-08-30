@@ -1,0 +1,47 @@
+@use 'variables' as *;
+@use 'typography' as *;
+
+// Keyboard focus ring shared by interactive controls (dropdown, buttons, dots).
+@mixin focus-ring($offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid $emerald;
+    outline-offset: $offset;
+  }
+}
+
+// Dark "chrome" bar used by the top navbar, bottom nav and site footer.
+// $edge: which side gets the gold divider ('top' or 'bottom').
+@mixin chrome-bar($edge: top, $angle: 180deg) {
+  background: linear-gradient(
+    $angle,
+    rgba(10, 10, 10, 0.95) 0%,
+    rgba(26, 26, 26, 0.98) 100%
+  );
+  border-#{$edge}: 2px solid $gold-primary;
+  box-shadow: inset 0 2px 8px rgba($gold-primary, 0.1), 0 -8px 16px $shadow;
+  color: $parchment;
+  font-family: $font-lore;
+}
+
+// Centered article column shared by the guide sub-pages.
+@mixin guide-page($max-width: 900px) {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 40px 20px;
+
+  h2 {
+    @include lore-heading(2rem, $shadow-size: 2px 2px 4px, $letter-spacing: normal);
+    margin-bottom: 30px;
+    border-bottom: 3px solid $gold-primary;
+    padding-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 16px;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+  }
+}

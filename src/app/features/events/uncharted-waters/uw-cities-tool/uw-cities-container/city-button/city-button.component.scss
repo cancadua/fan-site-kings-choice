@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'mixins' as *;
 
 .city-btn {
   position: relative;
@@ -7,7 +8,7 @@
   justify-content: center;
   min-height: 44px;
   padding: 12px 24px;
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -17,7 +18,7 @@
   background: linear-gradient(135deg, $crimson 0%, $crimson-dark 100%);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 12px rgba(212, 175, 55, 0.2),
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 12px rgba($gold-primary, 0.2),
     inset 0 1px 2px rgba(255, 255, 255, 0.1);
   text-transform: uppercase;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
@@ -48,20 +49,17 @@
     transform: translateY(-3px) scale(1.05);
     background: linear-gradient(135deg, #d63748 0%, $crimson 100%);
     border-color: $gold-light;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.4),
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba($gold-primary, 0.4),
       inset 0 1px 2px rgba(255, 255, 255, 0.2);
   }
 
   &:active {
     transform: translateY(-1px) scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(212, 175, 55, 0.2),
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 12px rgba($gold-primary, 0.2),
       inset 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  &:focus-visible {
-    outline: 2px solid $emerald;
-    outline-offset: 2px;
-  }
+  @include focus-ring;
 
   &:disabled {
     opacity: 0.5;

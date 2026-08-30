@@ -1,7 +1,7 @@
 @use 'variables' as *;
 
 @mixin lore-font {
-  font-family: 'Cinzel', serif;
+  font-family: $font-lore;
 }
 
 @mixin lore-heading(
