@@ -1,0 +1,279 @@
+<app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
+  @if (activeTab.value === 'basic-information') {
+  <app-content-section heading="Event Overview">
+    <app-content-text>
+      School of Athens is a 3-player team event where you explore three
+      floors, defeat Students, Professors and Masters, and earn Debate Points
+      and team progress.
+    </app-content-text>
+  </app-content-section>
+  <app-content-section heading="The 3 Floors">
+    <app-content-text>Floor 1</app-content-text>
+    <app-content-list
+      [items]="[
+        'Mainly NPCs',
+        'Your goal is to progress upward efficiently',
+        'You currently need 10 Professor/Master defeats to advance, down from the old requirement of 15'
+      ]"
+    />
+    <app-content-text>Floor 2</app-content-text>
+    <app-content-list
+      [items]="[
+        'Stronger NPCs',
+        'Better rewards/points',
+        'Continue progressing toward Floor 3'
+      ]"
+    />
+    <app-content-text>Floor 3</app-content-text>
+    <app-content-list
+      [items]="[
+        'Best scoring opportunities',
+        'Contains NPCs and other players',
+        'PvP becomes important',
+        'Getting defeated sends you back to Floor 2'
+      ]"
+    />
+  </app-content-section>
+  <app-content-section heading="Exploration">
+    <app-content-text>Each exploration uses 1 Stamina.</app-content-text>
+    <app-content-text>When you find an opponent you can:</app-content-text>
+    <app-content-list
+      [items]="[
+        'Debate — attack it yourself',
+        'Mark — let a teammate attack it',
+        'Avoid — skip it'
+      ]"
+    />
+    <app-content-note>
+      If you can't kill something efficiently, Mark it for your teammates
+      instead of wasting attacks.
+    </app-content-note>
+  </app-content-section>
+  <app-content-section heading="Certificates">
+    <app-content-text>
+      Certificates are important for your team ranking.
+    </app-content-text>
+    <app-content-text>You can get them by:</app-content-text>
+    <app-content-list [items]="['Reaching Floor 3', 'Defeating players']" />
+    <app-content-note>
+      But you can also lose Certificates when another player defeats you.
+    </app-content-note>
+  </app-content-section>
+  <app-content-section heading="Debate Score">
+    <app-content-text>
+      Your Debate Score is based primarily on your Knight Power.
+    </app-content-text>
+    <app-content-text>
+      Higher Knight Power = stronger attacks and better ability to defeat
+      difficult opponents.
+    </app-content-text>
+    <app-content-note>
+      You can also use Gold to temporarily increase your Debate Score.
+    </app-content-note>
+  </app-content-section>
+  <app-content-section heading="Scrolls">
+    <app-content-text>
+      During Athens you can obtain different scrolls that provide useful
+      effects, including:
+    </app-content-text>
+    <app-content-list
+      [items]="[
+        'Point bonuses',
+        'Debate bonuses',
+        'Eureka, which can help you advance floors'
+      ]"
+    />
+  </app-content-section>
+  <app-content-section heading="Teamwork">
+    <app-content-text>Athens is a team event.</app-content-text>
+    <app-content-text>
+      Your teammates can kill opponents you've marked, so communicating and
+      coordinating your targets is important.
+    </app-content-text>
+  </app-content-section>
+  } @else if (activeTab.value === 'smart-play') {
+  <app-content-steps>
+    <app-content-step heading="Don't waste stamina before Floor 3">
+      <app-content-text>The biggest strategic idea:</app-content-text>
+      <app-content-list
+        [items]="['Floor 1 & 2 = preparation', 'Floor 3 = profit']"
+      />
+      <app-content-text>
+        Don't unnecessarily burn all your stamina climbing.
+      </app-content-text>
+      <app-content-note>
+        Try to reach Floor 3 with a healthy stamina reserve so you can
+        immediately take advantage of valuable targets.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Coordinate your Floor 3 entry">
+      <app-content-text>Don't go to Floor 3 alone if possible.</app-content-text>
+      <app-content-text>Ideally:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Teammates ready → you reach Floor 3 → protection starts → everyone attacks'
+        ]"
+      />
+      <app-content-note>
+        You get a short protection period after reaching Floor 3, so use it
+        aggressively rather than spending it looking for targets.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Prepare before using your Eureka">
+      <app-content-text>
+        Don't automatically use Eureka the moment you get one. Ask: "Does
+        using this now save me significant stamina/time?"
+      </app-content-text>
+      <app-content-note>
+        Eureka is particularly valuable when it lets you skip a difficult
+        climb and reach Floor 3 faster.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Mark instead of wasting attacks">
+      <app-content-text>
+        If you can't kill a target efficiently: MARK IT. Then tell your
+        teammate — "Marked Plato — 8M HP".
+      </app-content-text>
+      <app-content-note>
+        They finish it, you both benefit, and you continue exploring. This is
+        one of the biggest efficiency advantages of a coordinated team.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Know your one-shot targets">
+      <app-content-text>
+        Before the event gets serious, learn exactly which opponents you can
+        kill in one attack.
+      </app-content-text>
+      <app-content-text>You can one-shot:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Floor 1 Professor',
+          'Floor 1 Master',
+          'Floor 2 Professor'
+        ]"
+      />
+      <app-content-text>You cannot one-shot:</app-content-text>
+      <app-content-list [items]="['Floor 2 Master', 'Floor 3 Master']" />
+      <app-content-text>Then your decision becomes automatic:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Kill — if efficient',
+          'Mark — if teammate can finish',
+          'Avoid — if neither is worthwhile'
+        ]"
+      />
+      <app-content-note>
+        This prevents huge amounts of wasted stamina.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Don't chase points blindly">
+      <app-content-text>
+        More Debate Points aren't always worth the Gold/resource cost. Before
+        spending Gold, ask: "Will this actually change my ranking or allow an
+        important kill?"
+      </app-content-text>
+      <app-content-note>If the answer is no, save it.</app-content-note>
+    </app-content-step>
+    <app-content-step heading="Protect your Certificates">
+      <app-content-text>
+        Once you're on Floor 3, survival becomes part of your score. Getting
+        another kill is good. Getting killed and losing your Certificate is
+        bad.
+      </app-content-text>
+      <app-content-text>
+        So don't blindly attack extremely strong players just because they're
+        available.
+      </app-content-text>
+      <app-content-note>
+        If you're vulnerable: farm NPCs, choose safe targets, preserve
+        Certificates.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Use your team as a system">
+      <app-content-text>
+        A good team shouldn't have three people independently playing Athens.
+        Instead:
+      </app-content-text>
+      <app-content-list
+        [items]="[
+          'Player A — strongest attacker / PvP hunter',
+          'Player B — support + PvP',
+          'Player C — marking + cleanup'
+        ]"
+      />
+      <app-content-note>
+        Communication can be as simple as: "I'm going Floor 3." / "Follow." /
+        "Marked Plato." / "Don't attack X — too strong." / "Push now." That
+        alone can make a huge difference.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Auto-battle ≠ smart-battle">
+      <app-content-text>
+        Auto-battle is useful for routine NPC exploration, and the unlock
+        requirement has been reduced to 30 Stamina. But don't rely on it for
+        important decisions.
+      </app-content-text>
+      <app-content-text>Use auto:</app-content-text>
+      <app-content-list
+        [items]="['Normal Floor 1/2 farming', 'Routine exploration']"
+      />
+      <app-content-text>Use manual:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Preparing for Floor 3',
+          'Choosing PvP targets',
+          'Managing protection',
+          'Deciding when to use Eureka',
+          'Managing limited stamina',
+          'Competitive pushes'
+        ]"
+      />
+    </app-content-step>
+    <app-content-step heading="Athens during Struggle for Supremacy">
+      <app-content-text>
+        If Athens happens during SfS, you're playing two games at once:
+      </app-content-text>
+      <app-content-list
+        [items]="[
+          'Personal objective — maximize your own Athens result',
+          'Alliance objective — help complete the current SfS Athens Alliance Achievement'
+        ]"
+      />
+      <app-content-note>
+        The SfS requirements have been adjusted over time, so check the
+        current Alliance Goal before the event rather than following an old
+        guide.
+      </app-content-note>
+    </app-content-step>
+  </app-content-steps>
+  <app-content-section heading="The Smart-Play Formula">
+    <app-content-text>
+      Before Athens — build a good 3-player team, know your kill thresholds,
+      save stamina, decide who is pushing ranking.
+    </app-content-text>
+    <app-content-text>
+      Floor 1 — progress efficiently, don't waste Gold, mark difficult
+      targets.
+    </app-content-text>
+    <app-content-text>
+      Floor 2 — farm valuable NPCs, use teamwork, prepare stamina/Eureka.
+    </app-content-text>
+    <app-content-text>
+      Before Floor 3 — make sure teammates are ready, have stamina available,
+      coordinate the push.
+    </app-content-text>
+    <app-content-text>
+      Floor 3 — use protection aggressively, hunt profitable targets, collect
+      Certificates, avoid unnecessary deaths.
+    </app-content-text>
+    <app-content-text>
+      Throughout — mark what you can't kill, communicate, don't waste
+      resources for insignificant ranking gains.
+    </app-content-text>
+    <app-content-note>
+      Golden rule: don't play Athens as three individual players. Play it as
+      one 3-person team. That's where the biggest advantage comes from.
+    </app-content-note>
+  </app-content-section>
+  }
+</app-tabs>

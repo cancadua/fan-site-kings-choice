@@ -6,6 +6,7 @@ import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
 import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
 import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle-for-supremacy.component';
+import { SchoolOfAthensComponent } from './school-of-athens/school-of-athens.component';
 
 interface EventDetail {
   id: Event;
@@ -24,6 +25,7 @@ interface EventDetail {
     UnchartedWatersComponent,
     ReapWhatYouSowComponent,
     StruggleForSupremacyComponent,
+    SchoolOfAthensComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -51,6 +53,11 @@ export class EventsComponent implements OnInit {
       id: Event.StruggleForSupremacy,
       title: 'Struggle for Supremacy',
       subtitle: 'Alliance Season Event',
+    },
+    {
+      id: Event.SchoolOfAthens,
+      title: 'School of Athens',
+      subtitle: '3-Player Team Event',
     },
   ];
 

@@ -22,4 +22,9 @@ export const EventsData: Array<EventData> = [
     value: Event.StruggleForSupremacy,
     image: '',
   },
+  {
+    name: 'School of Athens',
+    value: Event.SchoolOfAthens,
+    image: '',
+  },
 ];
