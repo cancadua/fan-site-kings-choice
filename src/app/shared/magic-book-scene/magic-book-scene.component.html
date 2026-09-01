@@ -1,0 +1,29 @@
+<section class="magic-book-scene">
+  <div class="book-glow"></div>
+
+  <img
+    [ngSrc]="bookSrc()"
+    class="book-image"
+    alt=""
+    [width]="bookWidth()"
+    [height]="bookHeight()"
+    priority
+  />
+
+  <div class="sparkles">
+    <span>✦</span>
+    <span>✧</span>
+    <span>✦</span>
+    <span>·</span>
+    <span>✧</span>
+    <span>✦</span>
+  </div>
+
+  <div class="scene-title">
+    <h1>{{ title() }}</h1>
+  </div>
+
+  @if (showSkipHint()) {
+  <p class="skip-hint">Click anywhere to skip</p>
+  }
+</section>

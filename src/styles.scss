@@ -3,6 +3,34 @@
 
 // Cinzel is loaded via <link> in index.html for non-render-blocking delivery.
 
+:root {
+  // Layered arcane gradient for the magic-book intro. Shared with <body> so the
+  // scene's fade-out bleeds into an identical background (see MagicBookScene).
+  --magic-book-scene-bg:
+    radial-gradient(
+      ellipse 65% 50% at 50% 40%,
+      rgba(150, 85, 255, 0.32),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 14% 8%,
+      rgba(80, 120, 255, 0.22),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 88% 94%,
+      rgba(224, 90, 210, 0.2),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 50% 46%,
+      #2c1b50 0%,
+      #170f2f 46%,
+      #0b0818 74%,
+      #07050e 100%
+    );
+}
+
 // ========== BASE STYLES ==========
 /* Reset margin and padding for the whole app */
 * {

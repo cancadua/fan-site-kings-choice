@@ -1,0 +1,297 @@
+@use 'variables' as *;
+@use 'typography' as *;
+
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: block;
+  cursor: pointer;
+}
+
+:host:focus-visible {
+  outline: 2px solid $gold-primary;
+  outline-offset: -4px;
+}
+
+:host(.done) {
+  display: none;
+}
+
+.magic-book-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #07050e;
+  background-image: var(--magic-book-scene-bg);
+  background-attachment: fixed;
+
+  opacity: 1;
+  transition: opacity 1.4s ease;
+}
+
+:host(.skipped) .magic-book-scene {
+  transition-duration: 0.3s;
+}
+
+:host(.fade-out) .magic-book-scene {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* -------------------------
+   BOOK
+------------------------- */
+
+.book-image {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%) scale(0.75) rotate(-3deg);
+
+  width: min(60vw, 720px);
+  height: auto;
+  max-width: none;
+
+  opacity: 0;
+
+  filter: brightness(0.7) drop-shadow(0 20px 25px rgba(0, 0, 0, 0.45));
+
+  will-change: transform, opacity, filter;
+}
+
+:host(.animate) .book-image {
+  animation: bookAppear 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bookAppear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.75) rotate(-3deg);
+    filter: brightness(0.7) drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -52%) scale(1.04) rotate(1deg);
+    filter: brightness(1) drop-shadow(0 20px 25px rgba(0, 0, 0, 0.45));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    filter: brightness(1) drop-shadow(0 20px 25px rgba(0, 0, 0, 0.45));
+  }
+}
+
+/* -------------------------
+   MAGICAL GLOW
+------------------------- */
+
+.book-glow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%) scale(0.9);
+
+  width: min(48vw, 560px);
+  height: min(26vw, 280px);
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    ellipse,
+    rgba(190, 110, 255, 0.65),
+    rgba(100, 40, 220, 0.3),
+    transparent 70%
+  );
+
+  filter: blur(40px);
+
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+:host(.animate) .book-glow {
+  animation:
+    glowAppear 1.6s ease-out 0.8s forwards,
+    glowPulse 3s ease-in-out 2.4s infinite;
+}
+
+@keyframes glowAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  to {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.85;
+  }
+}
+
+/* -------------------------
+   SPARKLES
+------------------------- */
+
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sparkles span {
+  position: absolute;
+
+  color: #fff;
+  font-size: 22px;
+
+  text-shadow:
+    0 0 5px white,
+    0 0 15px #bd70ff,
+    0 0 30px #7b2cff;
+
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+:host(.animate) .sparkles span {
+  animation: sparkleFloat 3s ease-in-out infinite;
+}
+
+/* Positions (relative to viewport, clustered around the book) */
+
+.sparkles span:nth-child(1) {
+  left: 34%;
+  top: 58%;
+  animation-delay: 1.5s;
+}
+
+.sparkles span:nth-child(2) {
+  left: 42%;
+  top: 42%;
+  animation-delay: 2s;
+}
+
+.sparkles span:nth-child(3) {
+  left: 51%;
+  top: 36%;
+  animation-delay: 2.5s;
+}
+
+.sparkles span:nth-child(4) {
+  left: 58%;
+  top: 46%;
+  animation-delay: 1.8s;
+}
+
+.sparkles span:nth-child(5) {
+  left: 64%;
+  top: 40%;
+  animation-delay: 3s;
+}
+
+.sparkles span:nth-child(6) {
+  left: 47%;
+  top: 58%;
+  animation-delay: 2.2s;
+}
+
+@keyframes sparkleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.4);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-70px) scale(1);
+  }
+}
+
+/* -------------------------
+   TITLE
+------------------------- */
+
+.scene-title {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+  padding: 0 8vw 10vh;
+  box-sizing: border-box;
+}
+
+:host(.animate) .scene-title {
+  animation: titleFadeIn 2.4s ease-out 0.6s forwards;
+}
+
+@keyframes titleFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.scene-title h1 {
+  @include lore-heading(clamp(22px, 5vw, 64px), $letter-spacing: 0.25em);
+  margin: 0;
+  max-width: 100%;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 480px) {
+  .scene-title h1 {
+    letter-spacing: 0.12em;
+  }
+}
+
+.skip-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  margin: 0;
+  @include lore-text(0.85rem);
+  color: $parchment;
+  opacity: 0.7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .skip-hint {
+    font-size: 0.75rem;
+    bottom: 4%;
+  }
+}
