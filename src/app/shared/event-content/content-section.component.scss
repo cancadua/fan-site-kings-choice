@@ -1,0 +1,23 @@
+@use 'variables' as *;
+@use 'typography' as *;
+
+:host {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba($gold-primary, 0.2);
+}
+
+:host(:last-child) {
+  border-bottom: none;
+}
+
+.ec-section__title {
+  @include lore-heading(1.15rem);
+  margin: 0 0 6px;
+}
+
+@media (max-width: 768px) {
+  .ec-section__title {
+    font-size: 1rem;
+  }
+}

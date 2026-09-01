@@ -1,0 +1,13 @@
+@use 'typography' as *;
+
+.ec-text {
+  @include lore-text;
+  margin: 6px 0;
+}
+
+@media (max-width: 768px) {
+  .ec-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}

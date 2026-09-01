@@ -1,0 +1,21 @@
+@use 'variables' as *;
+@use 'typography' as *;
+
+.ec-list {
+  list-style: none;
+  padding: 0 0 0 20px;
+  margin: 6px 0;
+
+  li {
+    @include lore-text;
+    margin: 6px 0;
+    @include lore-list-marker;
+  }
+}
+
+@media (max-width: 768px) {
+  .ec-list li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}

@@ -1,0 +1,43 @@
+@use 'variables' as *;
+@use 'typography' as *;
+
+:host {
+  display: block;
+  counter-increment: ec-step;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba($gold-primary, 0.2);
+}
+
+:host(:last-child) {
+  border-bottom: none;
+}
+
+.ec-step__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.ec-step__marker {
+  @include lore-font;
+  font-size: 1.2rem;
+  color: $gold-primary;
+  text-shadow: 1px 1px 3px $shadow;
+
+  // Fall back to the automatic step number when no custom marker is given.
+  &:empty::before {
+    content: counter(ec-step);
+  }
+}
+
+.ec-step__title {
+  @include lore-heading(1.1rem);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .ec-step__title {
+    font-size: 1rem;
+  }
+}
