@@ -29,4 +29,8 @@
   <div class="scene-title">
     <h1>{{ title() }}</h1>
   </div>
+
+  @if (showSkipHint()) {
+  <p class="skip-hint">Click anywhere to skip</p>
+  }
 </section>
