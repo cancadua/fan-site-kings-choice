@@ -13,152 +13,113 @@
 
 <app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
   @if (activeTab.value === 'basic-information') {
-  <div class="info-content">
-    <section class="info-section">
-      <h4 class="info-section-title">Event Overview</h4>
-      <p class="step-text">
-        Struggle for Supremacy (SfS) is a 4-week Alliance Season. Your
-        alliance competes through different events and completes Alliance
-        Goals, while individual players also earn progress toward Individual
-        Milestones, Stage Rankings, and the overall Peak Ranking.
-      </p>
-      <p class="step-text">
-        The key difference from normal ranking events is that your alliance
-        needs to work together. You don't necessarily want everyone spending
-        everything to chase their personal ranking — the goal is to maximize
-        the alliance's overall result.
-      </p>
-      <p class="step-note">
-        Current versions also let leaders see each member's contribution
-        toward Alliance Goals, making coordination easier.
-      </p>
-    </section>
-    <section class="info-section">
-      <h4 class="info-section-title">Participation</h4>
-      <p class="step-text">
-        The current documented requirement is the Top 110 active Lords on
-        Server Power Rankings for participation, while some rewards and
-        progress remain available to ineligible players.
-      </p>
-      <p class="step-note">
-        SfS participation rules have changed over time, so make sure you're
-        using the rules shown in your current game version, rather than an
-        old guide.
-      </p>
-    </section>
-  </div>
+  <app-content-section heading="Event Overview">
+    <app-content-text>
+      Struggle for Supremacy (SfS) is a 4-week Alliance Season. Your alliance
+      competes through different events and completes Alliance Goals, while
+      individual players also earn progress toward Individual Milestones, Stage
+      Rankings, and the overall Peak Ranking.
+    </app-content-text>
+    <app-content-text>
+      The key difference from normal ranking events is that your alliance needs
+      to work together. You don't necessarily want everyone spending everything
+      to chase their personal ranking — the goal is to maximize the alliance's
+      overall result.
+    </app-content-text>
+    <app-content-note>
+      Current versions also let leaders see each member's contribution toward
+      Alliance Goals, making coordination easier.
+    </app-content-note>
+  </app-content-section>
+  <app-content-section heading="Participation">
+    <app-content-text>
+      The current documented requirement is the Top 110 active Lords on Server
+      Power Rankings for participation, while some rewards and progress remain
+      available to ineligible players.
+    </app-content-text>
+    <app-content-note>
+      SfS participation rules have changed over time, so make sure you're using
+      the rules shown in your current game version, rather than an old guide.
+    </app-content-note>
+  </app-content-section>
   } @else if (activeTab.value === 'smart-play') {
-  <div class="smart-play-content">
-    <ol class="steps-list">
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">①</span>
-          <h4 class="step-title">Save before SfS starts</h4>
-        </div>
-        <p class="step-text">
-          Don't burn all your event resources immediately. Enter the season
-          with a stockpile so you can push the events that matter most.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">②</span>
-          <h4 class="step-title">Set one clear alliance goal</h4>
-        </div>
-        <p class="step-text">Decide whether you're aiming for:</p>
-        <ul class="step-list">
-          <li>#1 overall</li>
-          <li>Top 3</li>
-          <li>A specific Stage Ranking</li>
-          <li>Alliance Goals/rewards</li>
-          <li>An MVP/title</li>
-        </ul>
-        <p class="step-note">
-          Don't waste resources trying to achieve everything.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">③</span>
-          <h4 class="step-title">Coordinate spending</h4>
-        </div>
-        <p class="step-text">
-          Before each relevant event, tell members whether to push or save. A
-          coordinated 20-player push is much stronger than everyone randomly
-          spending resources.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">④</span>
-          <h4 class="step-title">Don't let everyone compete individually</h4>
-        </div>
-        <p class="step-text">
-          Choose a few strong players to seriously chase the individual/Peak
-          ranking. Everyone else should prioritize Alliance Goals and
-          efficient contribution.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">⑤</span>
-          <h4 class="step-title">Watch Alliance Goal progress</h4>
-        </div>
-        <p class="step-text">
-          Use the member-progress information to see who is contributing and
-          what the alliance still needs.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">⑥</span>
-          <h4 class="step-title">Save your biggest resources for the right moment</h4>
-        </div>
-        <p class="step-text">
-          Don't spend a huge stockpile just because you can rank #1 in one
-          small event. Look at the overall 4-week payoff.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">⑦</span>
-          <h4 class="step-title">Communicate every day</h4>
-        </div>
-        <p class="step-text">
-          Alliance leadership should post something simple like:
-        </p>
-        <ul class="step-list">
-          <li>PUSH: spend resources in this event</li>
-          <li>SAVE: don't spend, wait for the next event</li>
-          <li>TARGET: we need X more Alliance Goal progress</li>
-        </ul>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">⑧</span>
-          <h4 class="step-title">Don't chase an unwinnable ranking</h4>
-        </div>
-        <p class="step-text">
-          If a much stronger cross-server alliance is massively ahead, don't
-          throw months of saved resources away just to finish slightly
-          higher. Secure the rewards you can realistically obtain.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">⑨</span>
-          <h4 class="step-title">Think 4 weeks, not 1 day</h4>
-        </div>
-        <p class="step-text">
-          The best SfS alliance isn't necessarily the one that spends the
-          most — it is the one that spends its resources at the right times.
-        </p>
-        <p class="step-note">
-          Best rule: coordinate first → save resources → push together →
-          stop when the next reward isn't worth the cost.
-        </p>
-      </li>
-    </ol>
-  </div>
+  <app-content-steps>
+    <app-content-step heading="Save before SfS starts">
+      <app-content-text>
+        Don't burn all your event resources immediately. Enter the season with a
+        stockpile so you can push the events that matter most.
+      </app-content-text>
+    </app-content-step>
+    <app-content-step heading="Set one clear alliance goal">
+      <app-content-text>Decide whether you're aiming for:</app-content-text>
+      <app-content-list
+        [items]="[
+          '#1 overall',
+          'Top 3',
+          'A specific Stage Ranking',
+          'Alliance Goals/rewards',
+          'An MVP/title'
+        ]"
+      />
+      <app-content-note>
+        Don't waste resources trying to achieve everything.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Coordinate spending">
+      <app-content-text>
+        Before each relevant event, tell members whether to push or save. A
+        coordinated 20-player push is much stronger than everyone randomly
+        spending resources.
+      </app-content-text>
+    </app-content-step>
+    <app-content-step heading="Don't let everyone compete individually">
+      <app-content-text>
+        Choose a few strong players to seriously chase the individual/Peak
+        ranking. Everyone else should prioritize Alliance Goals and efficient
+        contribution.
+      </app-content-text>
+    </app-content-step>
+    <app-content-step heading="Watch Alliance Goal progress">
+      <app-content-text>
+        Use the member-progress information to see who is contributing and what
+        the alliance still needs.
+      </app-content-text>
+    </app-content-step>
+    <app-content-step heading="Save your biggest resources for the right moment">
+      <app-content-text>
+        Don't spend a huge stockpile just because you can rank #1 in one small
+        event. Look at the overall 4-week payoff.
+      </app-content-text>
+    </app-content-step>
+    <app-content-step heading="Communicate every day">
+      <app-content-text>
+        Alliance leadership should post something simple like:
+      </app-content-text>
+      <app-content-list
+        [items]="[
+          'PUSH: spend resources in this event',
+          'SAVE: don\'t spend, wait for the next event',
+          'TARGET: we need X more Alliance Goal progress'
+        ]"
+      />
+    </app-content-step>
+    <app-content-step heading="Don't chase an unwinnable ranking">
+      <app-content-text>
+        If a much stronger cross-server alliance is massively ahead, don't throw
+        months of saved resources away just to finish slightly higher. Secure the
+        rewards you can realistically obtain.
+      </app-content-text>
+    </app-content-step>
+    <app-content-step heading="Think 4 weeks, not 1 day">
+      <app-content-text>
+        The best SfS alliance isn't necessarily the one that spends the most — it
+        is the one that spends its resources at the right times.
+      </app-content-text>
+      <app-content-note>
+        Best rule: coordinate first → save resources → push together → stop when
+        the next reward isn't worth the cost.
+      </app-content-note>
+    </app-content-step>
+  </app-content-steps>
   }
 </app-tabs>
