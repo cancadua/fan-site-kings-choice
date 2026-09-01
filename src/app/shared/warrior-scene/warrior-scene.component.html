@@ -1,0 +1,32 @@
+<section class="warrior-scene">
+  <img
+    [ngSrc]="backgroundSrc()"
+    class="scene-bg"
+    alt=""
+    [width]="backgroundWidth()"
+    [height]="backgroundHeight()"
+    priority
+  />
+
+  <img
+    [ngSrc]="leftSrc()"
+    class="warriors warriors-left"
+    alt=""
+    [width]="leftWidth()"
+    [height]="leftHeight()"
+    priority
+  />
+
+  <img
+    [ngSrc]="rightSrc()"
+    class="warriors warriors-right"
+    alt=""
+    [width]="rightWidth()"
+    [height]="rightHeight()"
+    priority
+  />
+
+  <div class="scene-title">
+    <h1>{{ title() }}</h1>
+  </div>
+</section>
