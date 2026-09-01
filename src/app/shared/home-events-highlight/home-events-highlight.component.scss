@@ -26,13 +26,14 @@
 
 .events-showcase {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 16px;
   margin-bottom: 30px;
 }
 
 .event-item {
   display: block;
+  min-width: 0;
   background: linear-gradient(
     135deg,
     rgba($gold-primary, 0.1),
@@ -90,7 +91,7 @@
   }
 
   .events-showcase {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 10px;
     margin-bottom: 30px;
   }
