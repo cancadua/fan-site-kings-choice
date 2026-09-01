@@ -1,195 +1,170 @@
 <app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
   @if (activeTab.value === 'basic-information') {
-  <div class="info-content">
-    <section class="info-section">
-      <h4 class="info-section-title">Event Overview</h4>
-      <p class="step-text">
-        RWYS is an Alliance event followed by a Cross-Server stage using the
-        same mechanics.
-      </p>
-      <p class="step-text">The goal is to:</p>
-      <ul class="step-list">
-        <li>Explore to obtain crops and items.</li>
-        <li>Plant crops to earn points.</li>
-        <li>Expand the alliance island.</li>
-        <li>Build statues that upgrade your crops.</li>
-        <li>Defend your crops.</li>
-        <li>Loot enemy alliances' crops.</li>
-      </ul>
-    </section>
-    <section class="info-section">
-      <h4 class="info-section-title">Resources</h4>
-      <p class="step-text">Exploring costs 1 Stamina and always gives:</p>
-      <ul class="step-list">
-        <li>100 Exploration EXP boosted by your expedition knights boost (0-20%)</li>
-        <li>1 Tile Material or Statue Material</li>
-        <li>1 random Crop or Item</li>
-      </ul>
-      <p class="step-text">Stamina:</p>
-      <ul class="step-list">
-        <li>Max 28</li>
-        <li>+4 every 30 minutes</li>
-      </ul>
-    </section>
-    <section class="info-section">
-      <h4 class="info-section-title">Exploration Level</h4>
-      <p class="step-text">
-        Higher Exploration Level increases the chance of getting higher
-        rarity crops.
-      </p>
-      <p class="step-text">Increase it by:</p>
-      <ul class="step-list">
-        <li>Exploring</li>
-        <li>Delegating up to 4 knights (uses Total Talents only)</li>
-      </ul>
-      <p class="step-note">Maximum EXP bonus from delegation: +20%</p>
-    </section>
-    <section class="info-section">
-      <h4 class="info-section-title">Crop Rarity</h4>
-      <div class="rarity-chain">
-        <span class="rarity-badge rarity-badge--flawed">Flawed</span>
-        <span class="rarity-arrow">→</span>
-        <span class="rarity-badge rarity-badge--common">Common</span>
-        <span class="rarity-arrow">→</span>
-        <span class="rarity-badge rarity-badge--fine">Fine</span>
-        <span class="rarity-arrow">→</span>
-        <span class="rarity-badge rarity-badge--excellent">Excellent</span>
-        <span class="rarity-arrow">→</span>
-        <span class="rarity-badge rarity-badge--rare">Rare</span>
-        <span class="rarity-arrow">→</span>
-        <span class="rarity-badge rarity-badge--exquisite">Exquisite</span>
-        <span class="rarity-arrow">→</span>
-        <span class="rarity-badge rarity-badge--perfect">Perfect</span>
-        <span class="rarity-arrow">→</span>
-        <span class="rarity-badge rarity-badge--legendary">Legendary</span>
-      </div>
-      <p class="step-text">Higher rarity means:</p>
-      <ul class="step-list">
-        <li>More points</li>
-        <li>Longer production</li>
-        <li>Better loot</li>
-      </ul>
-    </section>
-    <section class="info-section">
-      <h4 class="info-section-title">Items</h4>
-      <div class="item-block">
-        <h5 class="item-title">Blessing Tree</h5>
-        <p class="step-text">Multiple trees stack to provide cumulative benefits.</p>
-      </div>
-      <div class="item-block">
-        <h5 class="item-title">Hourglass</h5>
-        <p class="step-text">Speeds up nearby crops</p>
-      </div>
-      <div class="item-block">
-        <h5 class="item-title">Loot Tool</h5>
-        <p class="step-text">Used to attack enemy crops</p>
-      </div>
-      <div class="item-block">
-        <h5 class="item-title">Healing Potion</h5>
-        <p class="step-text">Revives injured knights</p>
-      </div>
-    </section>
-    <section class="info-section">
-      <h4 class="info-section-title">Combat</h4>
-      <p class="step-text">Only Total Talents determine knight strength.</p>
-      <p class="step-text">Tile defenses:</p>
-      <ul class="step-list">
-        <li>Up to 5 knights</li>
-        <li>Traps activate before battle</li>
-      </ul>
-    </section>
-  </div>
+  <app-content-section heading="Event Overview">
+    <app-content-text>
+      RWYS is an Alliance event followed by a Cross-Server stage using the same
+      mechanics.
+    </app-content-text>
+    <app-content-text>The goal is to:</app-content-text>
+    <app-content-list
+      [items]="[
+        'Explore to obtain crops and items.',
+        'Plant crops to earn points.',
+        'Expand the alliance island.',
+        'Build statues that upgrade your crops.',
+        'Defend your crops.',
+        'Loot enemy alliances\' crops.'
+      ]"
+    />
+  </app-content-section>
+  <app-content-section heading="Resources">
+    <app-content-text>Exploring costs 1 Stamina and always gives:</app-content-text>
+    <app-content-list
+      [items]="[
+        '100 Exploration EXP boosted by your expedition knights boost (0-20%)',
+        '1 Tile Material or Statue Material',
+        '1 random Crop or Item'
+      ]"
+    />
+    <app-content-text>Stamina:</app-content-text>
+    <app-content-list [items]="['Max 28', '+4 every 30 minutes']" />
+  </app-content-section>
+  <app-content-section heading="Exploration Level">
+    <app-content-text>
+      Higher Exploration Level increases the chance of getting higher rarity
+      crops.
+    </app-content-text>
+    <app-content-text>Increase it by:</app-content-text>
+    <app-content-list
+      [items]="[
+        'Exploring',
+        'Delegating up to 4 knights (uses Total Talents only)'
+      ]"
+    />
+    <app-content-note>Maximum EXP bonus from delegation: +20%</app-content-note>
+  </app-content-section>
+  <app-content-section heading="Crop Rarity">
+    <div class="rarity-chain">
+      <span class="rarity-badge rarity-badge--flawed">Flawed</span>
+      <span class="rarity-arrow">→</span>
+      <span class="rarity-badge rarity-badge--common">Common</span>
+      <span class="rarity-arrow">→</span>
+      <span class="rarity-badge rarity-badge--fine">Fine</span>
+      <span class="rarity-arrow">→</span>
+      <span class="rarity-badge rarity-badge--excellent">Excellent</span>
+      <span class="rarity-arrow">→</span>
+      <span class="rarity-badge rarity-badge--rare">Rare</span>
+      <span class="rarity-arrow">→</span>
+      <span class="rarity-badge rarity-badge--exquisite">Exquisite</span>
+      <span class="rarity-arrow">→</span>
+      <span class="rarity-badge rarity-badge--perfect">Perfect</span>
+      <span class="rarity-arrow">→</span>
+      <span class="rarity-badge rarity-badge--legendary">Legendary</span>
+    </div>
+    <app-content-text>Higher rarity means:</app-content-text>
+    <app-content-list
+      [items]="['More points', 'Longer production', 'Better loot']"
+    />
+  </app-content-section>
+  <app-content-section heading="Items">
+    <div class="item-block">
+      <h5 class="item-title">Blessing Tree</h5>
+      <app-content-text>
+        Multiple trees stack to provide cumulative benefits.
+      </app-content-text>
+    </div>
+    <div class="item-block">
+      <h5 class="item-title">Hourglass</h5>
+      <app-content-text>Speeds up nearby crops</app-content-text>
+    </div>
+    <div class="item-block">
+      <h5 class="item-title">Loot Tool</h5>
+      <app-content-text>Used to attack enemy crops</app-content-text>
+    </div>
+    <div class="item-block">
+      <h5 class="item-title">Healing Potion</h5>
+      <app-content-text>Revives injured knights</app-content-text>
+    </div>
+  </app-content-section>
+  <app-content-section heading="Combat">
+    <app-content-text>Only Total Talents determine knight strength.</app-content-text>
+    <app-content-text>Tile defenses:</app-content-text>
+    <app-content-list
+      [items]="['Up to 5 knights', 'Traps activate before battle']"
+    />
+  </app-content-section>
   } @else if (activeTab.value === 'smart-play') {
-  <div class="smart-play-content">
-    <ol class="steps-list">
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">①</span>
-          <h4 class="step-title">Explore, explore, explore!</h4>
-        </div>
-        <ul class="step-list">
-          <li>Stay active, keep your moves away from overflow.</li>
-        </ul>
-        <p class="step-note">
-          More moves, more score. More moves, higher level, even more score.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">②</span>
-          <h4 class="step-title">Delegate knights</h4>
-        </div>
-        <ul class="step-list">
-          <li>Delegate your knights to have 20% more bonus EXP for exploring.</li>
-          <li>Knight Total Talents are the only combat stat that matters.</li>
-        </ul>
-        <p class="step-note">
-          Always target to have up to 20% bonus, no more, find smaller knight alternatives if possible.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">③</span>
-          <h4 class="step-title">Plant carefully</h4>
-        </div>
-        <p class="step-text">Before placing a crop, try to activate:</p>
-        <ul class="checklist">
-          <li>Preferred terrain (-10% production time)</li>
-          <li>Neighbor Bonus #1 (+10%)</li>
-          <li>Neighbor Bonus #2 (+10%)</li>
-        </ul>
-        <p class="step-note">
-          Don't rush Purple/Yellow/Orange crops — high rarity crops are worth
-          waiting for.
-        </p>
-        <p class="step-text">Save resources for expensive crops:</p>
-        <ul class="step-list">
-          <li>Save Blessing Trees for Yellow+ crops.</li>
-          <li>Save Hourglasses for expensive crops.</li>
-          <li>Save Loot Tools for the last day.</li>
-        </ul>
-        <p class="step-note">
-          Stacked bonuses can produce massive amount of score.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">④</span>
-          <h4 class="step-title">Defend valuable crops</h4>
-        </div>
-        <p class="step-text">Protect Purple+ crops with:</p>
-        <ul class="step-list">
-          <li>Strong talent knights</li>
-          <li>Traps</li>
-        </ul>
-        <p class="step-note">
-          Don't waste defenses on low-value crops — ignore them if necessary.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">⑤</span>
-          <h4 class="step-title">Expand Land & Build Statues</h4>
-        </div>
-        <p class="step-text">Spend materials throughout the event, keep common focus with the alliance.</p>
-        <p class="step-note">
-          Expand and contribute to statues and land unlock tiles whenever
-          materials are available — both improve your alliance's farming
-          options and provide rewards.
-        </p>
-      </li>
-      <li class="step">
-        <div class="step-header">
-          <span class="step-number">⑥</span>
-          <h4 class="step-title">Loot wisely</h4>
-        </div>
-        <p class="step-text">Loot the highest-value crops available.</p>
-        <p class="step-note">
-          Later in the event, enemies have far more high-rarity crops, making
-          Loot Tools much more valuable.
-        </p>
-      </li>
-    </ol>
-  </div>
+  <app-content-steps>
+    <app-content-step heading="Explore, explore, explore!">
+      <app-content-list
+        [items]="['Stay active, keep your moves away from overflow.']"
+      />
+      <app-content-note>
+        More moves, more score. More moves, higher level, even more score.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Delegate knights">
+      <app-content-list
+        [items]="[
+          'Delegate your knights to have 20% more bonus EXP for exploring.',
+          'Knight Total Talents are the only combat stat that matters.'
+        ]"
+      />
+      <app-content-note>
+        Always target to have up to 20% bonus, no more, find smaller knight
+        alternatives if possible.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Plant carefully">
+      <app-content-text>Before placing a crop, try to activate:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Preferred terrain (-10% production time)',
+          'Neighbor Bonus #1 (+10%)',
+          'Neighbor Bonus #2 (+10%)'
+        ]"
+      />
+      <app-content-note>
+        Don't rush Purple/Yellow/Orange crops — high rarity crops are worth
+        waiting for.
+      </app-content-note>
+      <app-content-text>Save resources for expensive crops:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Save Blessing Trees for Yellow+ crops.',
+          'Save Hourglasses for expensive crops.',
+          'Save Loot Tools for the last day.'
+        ]"
+      />
+      <app-content-note>
+        Stacked bonuses can produce massive amount of score.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Defend valuable crops">
+      <app-content-text>Protect Purple+ crops with:</app-content-text>
+      <app-content-list [items]="['Strong talent knights', 'Traps']" />
+      <app-content-note>
+        Don't waste defenses on low-value crops — ignore them if necessary.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Expand Land & Build Statues">
+      <app-content-text>
+        Spend materials throughout the event, keep common focus with the
+        alliance.
+      </app-content-text>
+      <app-content-note>
+        Expand and contribute to statues and land unlock tiles whenever materials
+        are available — both improve your alliance's farming options and provide
+        rewards.
+      </app-content-note>
+    </app-content-step>
+    <app-content-step heading="Loot wisely">
+      <app-content-text>Loot the highest-value crops available.</app-content-text>
+      <app-content-note>
+        Later in the event, enemies have far more high-rarity crops, making Loot
+        Tools much more valuable.
+      </app-content-note>
+    </app-content-step>
+  </app-content-steps>
   }
 </app-tabs>
