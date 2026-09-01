@@ -17,4 +17,9 @@ export const EventsData: Array<EventData> = [
     value: Event.ReapWhatYouSow,
     image: '',
   },
+  {
+    name: 'Struggle for Supremacy',
+    value: Event.StruggleForSupremacy,
+    image: '',
+  },
 ];

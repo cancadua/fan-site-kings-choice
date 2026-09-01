@@ -5,6 +5,7 @@ import { Event } from '../../core/enums/events';
 import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
 import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
+import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle-for-supremacy.component';
 
 interface EventDetail {
   id: Event;
@@ -17,7 +18,13 @@ interface EventDetail {
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
   standalone: true,
-  imports: [CommonModule, NavHubComponent, UnchartedWatersComponent, ReapWhatYouSowComponent],
+  imports: [
+    CommonModule,
+    NavHubComponent,
+    UnchartedWatersComponent,
+    ReapWhatYouSowComponent,
+    StruggleForSupremacyComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventsComponent implements OnInit {
@@ -39,6 +46,11 @@ export class EventsComponent implements OnInit {
       id: Event.ReapWhatYouSow,
       title: 'Reap What You Sow',
       subtitle: 'Flora & Fauna Event',
+    },
+    {
+      id: Event.StruggleForSupremacy,
+      title: 'Struggle for Supremacy',
+      subtitle: 'Alliance Season Event',
     },
   ];
 
