@@ -1,0 +1,134 @@
+@use 'variables' as *;
+
+.alliance {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $knight-bg-start 0%, $knight-bg-end 100%);
+  color: $knight-text;
+}
+
+.alliance-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba($knight-amber, 0.05);
+  border-bottom: 1px solid rgba($knight-amber, 0.25);
+}
+
+.alliance-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $knight-amber;
+
+  select {
+    padding: 0.4rem 0.6rem;
+    background: rgba(0, 0, 0, 0.35);
+    color: $knight-text;
+    border: 1px solid rgba($knight-amber, 0.3);
+    border-radius: 8px;
+    font: inherit;
+  }
+
+  .role {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid rgba($knight-amber, 0.4);
+    border-radius: 999px;
+    color: $knight-text-muted;
+  }
+}
+
+.alliance-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  flex: 1;
+
+  a {
+    padding: 0.4rem 0.8rem;
+    color: $knight-text-muted;
+    text-decoration: none;
+    border-radius: 8px;
+
+    &.active {
+      color: $black-primary;
+      background: $knight-amber;
+    }
+  }
+}
+
+.sign-out,
+.notice button,
+.create button {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: $knight-amber;
+  border: 1px solid $knight-amber;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.alliance-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 6rem; // bottom padding clears the mobile bottom nav
+}
+
+.notice {
+  color: $knight-text-muted;
+  text-align: center;
+  padding: 2rem 1rem;
+
+  &--error {
+    color: #ff8a80;
+  }
+}
+
+.create {
+  max-width: 480px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h2 {
+    color: $knight-amber;
+  }
+
+  form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.7rem 0.8rem;
+    background: rgba(0, 0, 0, 0.35);
+    color: $knight-text;
+    border: 1px solid rgba($knight-amber, 0.3);
+    border-radius: 8px;
+    font: inherit;
+  }
+
+  .error {
+    color: #ff8a80;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

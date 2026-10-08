@@ -23,11 +23,12 @@ describe('AppHeaderComponent', () => {
   });
 
   it('should have navigation links', () => {
-    expect(component.navLinks.length).toBe(3);
+    expect(component.navLinks.length).toBe(4);
     expect(component.navLinks).toEqual([
       { label: 'Home', route: '/' },
-      { label: 'Knights', route: '/knights' },
+      { label: 'Knights', route: '/knight-development' },
       { label: 'Events', route: '/events' },
+      { label: 'Alliance', route: '/alliance' },
     ]);
   });
 });

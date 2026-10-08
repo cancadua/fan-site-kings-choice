@@ -1,0 +1,45 @@
+<h1>{{ stats() ? 'Reward overview' : 'Dashboard' }}</h1>
+
+@if (error(); as message) {
+<p class="error" role="alert">{{ message }}</p>
+} @else if (loading() && !stats()) {
+<p class="muted">Loading…</p>
+} @else if (stats(); as s) {
+<ul class="totals">
+  <li><strong>{{ s.totals.total }}</strong><span>Total</span></li>
+  <li><strong>{{ s.totals.mvp }}</strong><span>MVP</span></li>
+  <li><strong>{{ s.totals.purple }}</strong><span>Purple</span></li>
+  <li><strong>{{ s.totals.blue }}</strong><span>Blue</span></li>
+  <li><strong>{{ s.totals.normal }}</strong><span>Normal</span></li>
+</ul>
+
+@if (s.players.length === 0) {
+<p class="muted">No players yet. Add players to start tracking rewards.</p>
+} @else {
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>MVP</th>
+        <th>Purple</th>
+        <th>Blue</th>
+        <th>Normal</th>
+        <th>Last reward</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of s.players; track p.playerId) {
+      <tr [class.inactive]="!p.isActive">
+        <td>{{ p.player }}</td>
+        <td>{{ p.mvp }}</td>
+        <td>{{ p.purple }}</td>
+        <td>{{ p.blue }}</td>
+        <td>{{ p.normal }}</td>
+        <td>{{ p.lastReward ? (p.lastReward | date: 'mediumDate') : '—' }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+} }

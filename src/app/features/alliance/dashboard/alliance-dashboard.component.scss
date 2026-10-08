@@ -1,0 +1,68 @@
+@use 'variables' as *;
+
+h1 {
+  color: $knight-amber;
+  margin-bottom: 1rem;
+}
+
+.muted {
+  color: $knight-text-muted;
+}
+
+.error {
+  color: #ff8a80;
+}
+
+.totals {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.9rem 0.5rem;
+    background: rgba($knight-amber, 0.05);
+    border-radius: 12px;
+    border-left: 4px solid $knight-amber;
+  }
+
+  strong {
+    font-size: 1.6rem;
+    color: $knight-amber;
+  }
+
+  span {
+    color: $knight-text-muted;
+    font-size: 0.85rem;
+  }
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid rgba($knight-amber, 0.15);
+    white-space: nowrap;
+  }
+
+  th {
+    color: $knight-amber;
+    font-weight: 600;
+  }
+
+  .inactive {
+    opacity: 0.5;
+  }
+}
