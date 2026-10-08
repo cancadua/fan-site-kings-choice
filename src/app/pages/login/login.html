@@ -1,1 +1,59 @@
-<p>login works!</p>
+<main class="login">
+  <form class="login-card" (ngSubmit)="submit()">
+    <h1>Alliance Management</h1>
+    <p class="login-subtitle">For alliance owners and leaders</p>
+
+    <div class="login-tabs" role="tablist">
+      <button type="button" role="tab" [class.active]="mode() === 'login'" (click)="setMode('login')">
+        Sign in
+      </button>
+      <button type="button" role="tab" [class.active]="mode() === 'register'" (click)="setMode('register')">
+        Register
+      </button>
+    </div>
+
+    <label>
+      <span>Email</span>
+      <input type="email" name="email" autocomplete="email" required [(ngModel)]="email" />
+    </label>
+
+    @if (mode() === 'register') {
+    <label>
+      <span>Username</span>
+      <input
+        type="text"
+        name="username"
+        autocomplete="username"
+        required
+        minlength="3"
+        maxlength="64"
+        [(ngModel)]="username"
+      />
+    </label>
+    }
+
+    <label>
+      <span>Password</span>
+      <input
+        type="password"
+        name="password"
+        required
+        minlength="6"
+        [autocomplete]="mode() === 'login' ? 'current-password' : 'new-password'"
+        [(ngModel)]="password"
+      />
+    </label>
+
+    @if (error(); as message) {
+    <p class="login-error" role="alert">{{ message }}</p>
+    }
+
+    <button type="submit" class="login-submit" [disabled]="busy()">
+      {{ busy() ? 'Please wait…' : mode() === 'login' ? 'Sign in' : 'Create account' }}
+    </button>
+
+    @if (busy()) {
+    <p class="login-hint">The server may take up to a minute to wake up.</p>
+    }
+  </form>
+</main>
