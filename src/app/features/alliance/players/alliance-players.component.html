@@ -1,0 +1,65 @@
+<h1>Players</h1>
+
+<form class="toolbar" (ngSubmit)="add()">
+  <label>
+    Name
+    <input type="text" name="name" maxlength="64" required [(ngModel)]="newName" />
+  </label>
+  <label>
+    Activity (0–100)
+    <input type="number" name="activity" min="0" max="100" [(ngModel)]="newActivity" />
+  </label>
+  <button type="submit" class="primary" [disabled]="!newName().trim()">Add player</button>
+</form>
+
+@if (error(); as message) {
+<p class="error" role="alert">{{ message }}</p>
+}
+
+@if (loading() && players().length === 0) {
+<p class="muted">Loading…</p>
+} @else if (players().length === 0) {
+<p class="muted">No players yet.</p>
+} @else {
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Activity</th>
+        <th>Active</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of players(); track p.id) {
+      <tr [class.inactive]="!p.isActive">
+        <td>{{ p.name }}</td>
+        <td>
+          <input
+            type="number"
+            min="0"
+            max="100"
+            class="activity"
+            [value]="p.activity"
+            (change)="setActivity(p, $event)"
+            [attr.aria-label]="'Activity for ' + p.name"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            [checked]="p.isActive"
+            (change)="toggleActive(p)"
+            [attr.aria-label]="'Active: ' + p.name"
+          />
+        </td>
+        <td class="actions">
+          <button type="button" class="small danger" (click)="remove(p)">Delete</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}

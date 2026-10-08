@@ -19,7 +19,14 @@ export class AllianceShellComponent {
   private readonly router = inject(Router);
   readonly state = inject(AllianceStateService);
 
-  readonly navLinks = [{ label: 'Dashboard', route: '/alliance' }];
+  readonly navLinks = [
+    { label: 'Dashboard', route: '/alliance' },
+    { label: 'Players', route: '/alliance/players' },
+    { label: 'Events', route: '/alliance/events' },
+    { label: 'Rewards', route: '/alliance/rewards' },
+    { label: 'MVP', route: '/alliance/mvp' },
+    { label: 'Members', route: '/alliance/members' },
+  ];
 
   newName = signal('');
   creating = signal(false);

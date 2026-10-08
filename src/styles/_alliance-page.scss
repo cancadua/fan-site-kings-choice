@@ -1,0 +1,112 @@
+@use 'variables' as *;
+
+// Shared look for the alliance management pages. Include once per component stylesheet.
+@mixin alliance-page {
+  h1 {
+    color: $knight-amber;
+    margin-bottom: 1rem;
+  }
+
+  .muted {
+    color: $knight-text-muted;
+  }
+
+  .error {
+    color: #ff8a80;
+    margin: 0.5rem 0;
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-end;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    background: rgba($knight-amber, 0.05);
+    border-left: 4px solid $knight-amber;
+    border-radius: 12px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.85rem;
+      color: $knight-text-muted;
+    }
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 0.5rem 0.65rem;
+    background: rgba(0, 0, 0, 0.35);
+    color: $knight-text;
+    border: 1px solid rgba($knight-amber, 0.3);
+    border-radius: 8px;
+    font: inherit;
+    min-width: 0;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: $knight-amber;
+    border: 1px solid $knight-amber;
+    border-radius: 8px;
+    font: inherit;
+    cursor: pointer;
+
+    &.primary {
+      background: $knight-amber;
+      color: $black-primary;
+      font-weight: 700;
+    }
+
+    &.danger {
+      color: #ff8a80;
+      border-color: #ff8a80;
+    }
+
+    &.small {
+      padding: 0.25rem 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 0.6rem 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid rgba($knight-amber, 0.15);
+      white-space: nowrap;
+    }
+
+    th {
+      color: $knight-amber;
+      font-weight: 600;
+    }
+
+    td.actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .inactive {
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@use 'alliance-page' as *;
+
+:host {
+  display: block;
+  @include alliance-page;
+}
+
+.grow {
+  flex: 1;
+  min-width: 12rem;
+}
+
+td.wrap {
+  white-space: normal;
+  min-width: 10rem;
+}

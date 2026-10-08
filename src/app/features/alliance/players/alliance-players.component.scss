@@ -1,0 +1,10 @@
+@use 'alliance-page' as *;
+
+:host {
+  display: block;
+  @include alliance-page;
+}
+
+.activity {
+  width: 5rem;
+}
