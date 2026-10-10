@@ -10,6 +10,26 @@
   width: 5rem;
 }
 
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  color: $knight-text-muted;
+}
+
+// Swatch next to the player name; the outline keeps dark colors visible.
+.color-dot {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  outline: 1px solid rgba(255, 255, 255, 0.35);
+  vertical-align: middle;
+}
+
 .message {
   max-width: 20rem;
   white-space: normal;

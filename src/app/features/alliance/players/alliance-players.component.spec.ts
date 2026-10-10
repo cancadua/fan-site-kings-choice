@@ -25,6 +25,7 @@ const player = (overrides: Partial<Player> = {}): Player => ({
   name: 'Arthur',
   activity: 50,
   isActive: true,
+  color: 'None',
   createdAt: '2026-01-01T00:00:00Z',
   userId: null,
   username: null,
@@ -101,6 +102,34 @@ describe('AlliancePlayersComponent', () => {
     );
     expect(badges[0].textContent).toContain('No account');
     expect(badges[1].textContent).toContain('Account: lance');
+  });
+
+  it('filters players by color and saves a new color', async () => {
+    await setup('Owner', [
+      player(),
+      player({ id: 'p2', name: 'Lancelot', color: 'Blue' }),
+    ]);
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelectorAll('tbody .color-dot').length).toBe(1);
+
+    const filter = root.querySelector<HTMLSelectElement>('.filter select');
+    filter!.value = 'Blue';
+    filter!.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    expect(component.visiblePlayers().map((p) => p.name)).toEqual(['Lancelot']);
+
+    const select = document.createElement('select');
+    select.innerHTML = '<option value="Red">Red</option>';
+    select.value = 'Red';
+    const done = component.setColor(player(), {
+      target: select,
+    } as unknown as Event);
+    const req = http.expectOne(`${base}/api/players/p1`);
+    expect(req.request.method).toBe('PATCH');
+    expect(req.request.body).toEqual({ color: 'Red' });
+    req.flush(player({ color: 'Red' }));
+    await done;
+    expect(component.players()[0].color).toBe('Red');
   });
 
   it('asks again and deletes with confirm=true after a 409', async () => {

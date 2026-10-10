@@ -4,6 +4,16 @@
 export type AllianceRole = 'Member' | 'Owner' | 'Leader';
 /** Every reward is an MVP; the type is its tier. */
 export type RewardType = 'Normal' | 'Earl' | 'Duke';
+/** Free-form marker for a player; its meaning is decided by the alliance. */
+export type PlayerColor =
+  | 'None'
+  | 'Orange'
+  | 'Yellow'
+  | 'White'
+  | 'Green'
+  | 'Blue'
+  | 'Red'
+  | 'DarkRed';
 export type LinkRequestStatus =
   'Pending' | 'Accepted' | 'Rejected' | 'Cancelled';
 export type PlayerLinkAction = 'Linked' | 'Unlinked';
@@ -102,6 +112,7 @@ export interface Player {
   name: string;
   activity: number;
   isActive: boolean;
+  color: PlayerColor;
   createdAt: string;
   /** The linked account, if any. */
   userId: string | null;
@@ -118,12 +129,14 @@ export interface CreatePlayerRequest {
   allianceId: string;
   name: string;
   activity?: number;
+  color?: PlayerColor;
 }
 
 export interface UpdatePlayerRequest {
   name?: string;
   activity?: number;
   isActive?: boolean;
+  color?: PlayerColor;
 }
 
 // Link requests

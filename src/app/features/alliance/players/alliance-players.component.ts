@@ -20,9 +20,11 @@ import {
   LinkCode,
   LinkRequest,
   Player,
+  PlayerColor,
 } from '../../../core/api/api.models';
 import { AppModalComponent } from '../../../shared/app-modal/app-modal.component';
 import { AllianceStateService } from '../alliance-state.service';
+import { PLAYER_COLORS, playerColor } from '../player-colors';
 
 type InviteRole = NonNullable<InviteRequest['role']>;
 
@@ -40,6 +42,8 @@ export class AlliancePlayersComponent {
 
   /** Roles an Owner can grant when inviting; a Leader always invites as Member. */
   readonly inviteRoles: InviteRole[] = ['Member', 'Leader'];
+  readonly colors = PLAYER_COLORS;
+  readonly playerColor = playerColor;
 
   players = signal<Player[]>([]);
   loading = signal(false);
@@ -48,6 +52,15 @@ export class AlliancePlayersComponent {
 
   newName = signal('');
   newActivity = signal(50);
+  newColor = signal<PlayerColor>('None');
+
+  /** Color filter for the list; null shows every player. */
+  colorFilter = signal<PlayerColor | null>(null);
+  visiblePlayers = computed(() => {
+    const color = this.colorFilter();
+    const players = this.players();
+    return color === null ? players : players.filter((p) => p.color === color);
+  });
 
   isOwner = computed(() => this.state.selected()?.myRole === 'Owner');
 
@@ -82,10 +95,12 @@ export class AlliancePlayersComponent {
           allianceId: alliance.id,
           name,
           activity: this.clampActivity(this.newActivity()),
+          color: this.newColor(),
         })
       );
       this.newName.set('');
       this.newActivity.set(50);
+      this.newColor.set('None');
       await this.load(alliance.id);
     });
   }
@@ -96,6 +111,20 @@ export class AlliancePlayersComponent {
     );
     if (activity === player.activity) return;
     await this.update(player, { activity });
+  }
+
+  async setColor(player: Player, event: Event): Promise<void> {
+    const select = event.target as HTMLSelectElement;
+    const color = select.value as PlayerColor;
+    if (color === player.color) return;
+    await this.update(player, { color });
+    // If saving failed the list still holds the old color; put the select back.
+    if (this.error()) select.value = player.color;
+  }
+
+  setColorFilter(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    this.colorFilter.set(value ? (value as PlayerColor) : null);
   }
 
   toggleActive(player: Player): Promise<void> {
@@ -226,7 +255,7 @@ export class AlliancePlayersComponent {
 
   private update(
     player: Player,
-    patch: { activity?: number; isActive?: boolean }
+    patch: { activity?: number; isActive?: boolean; color?: PlayerColor }
   ): Promise<void> {
     return this.run(async () => {
       const updated = await firstValueFrom(
