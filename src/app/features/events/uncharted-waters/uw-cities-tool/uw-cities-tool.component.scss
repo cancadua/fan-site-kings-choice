@@ -17,6 +17,89 @@
   max-width: 100%;
 }
 
+.share-panel {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto 20px;
+  padding: 16px 20px;
+  border: 2px solid rgba($gold-primary, 0.6);
+  border-radius: 8px;
+  background: linear-gradient(135deg, $black-dark 0%, $black-light 100%);
+  color: $gold-light;
+  font-family: $font-lore;
+  box-sizing: border-box;
+}
+
+.share-text {
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.share-code,
+.share-countdown {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+}
+
+.share-hint {
+  margin: 0 0 12px;
+  font-family: $font-body;
+  font-size: 14px;
+  color: $stone-light;
+}
+
+.share-error {
+  margin: 10px 0 0;
+  font-family: $font-body;
+  color: $crimson;
+}
+
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.share-url {
+  flex: 1 1 260px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 2px solid $gold-primary;
+  border-radius: 6px;
+  background: $parchment;
+  color: $black-primary;
+  font-size: 14px;
+}
+
+.share-button,
+.share-link-button {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-family: $font-lore;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  @include focus-ring(3px);
+}
+
+.share-button {
+  border: 2px solid $gold-primary;
+  background: linear-gradient(135deg, $gold-primary 0%, $gold-dark 100%);
+  color: $black-primary;
+}
+
+.share-link-button {
+  border: 2px solid rgba($gold-primary, 0.6);
+  background: transparent;
+  color: $gold-light;
+}
+
 .dot {
   --dot-size: 14px;
   --hover-ratio: 1.57;

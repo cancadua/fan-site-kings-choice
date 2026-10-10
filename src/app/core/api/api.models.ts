@@ -225,3 +225,19 @@ export interface MvpRecommendation {
   earlRewards: number;
   dukeRewards: number;
 }
+
+// Shared maps (anonymous, expiring)
+export type SharedMapState = Record<string, unknown>;
+
+export interface SharedMap {
+  code: string;
+  version: number;
+  expiresAt: string;
+  updatedAt: string;
+  state: SharedMapState;
+}
+
+export interface PatchSharedMapRequest {
+  set?: SharedMapState;
+  remove?: string[];
+}

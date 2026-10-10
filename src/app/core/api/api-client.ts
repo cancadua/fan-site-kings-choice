@@ -1,10 +1,11 @@
 import {
   HttpClient,
   HttpErrorResponse,
+  HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import {
@@ -29,7 +30,10 @@ import {
   Player,
   PlayerLinkLogEntry,
   RegisterRequest,
+  PatchSharedMapRequest,
   Reward,
+  SharedMap,
+  SharedMapState,
   UnlinkedPlayer,
   UpdateEventRequest,
   UpdatePlayerRequest,
@@ -275,6 +279,40 @@ export class ApiClient {
       `${this.base}/api/recommendations/mvp`,
       { params }
     );
+  }
+
+  // Shared maps (no login needed)
+  createSharedMap(state?: SharedMapState): Observable<SharedMap> {
+    return this.http.post<SharedMap>(`${this.base}/api/shared-maps`, {
+      state,
+    });
+  }
+
+  /** Emits null when the map has not changed since `knownVersion` (304). */
+  sharedMap(code: string, knownVersion?: number): Observable<SharedMap | null> {
+    const headers =
+      knownVersion === undefined
+        ? undefined
+        : new HttpHeaders().set('If-None-Match', `"${knownVersion}"`);
+    return this.http
+      .get<SharedMap>(this.sharedMapUrl(code), { headers })
+      .pipe(
+        catchError((err: unknown) =>
+          isHttpStatus(err, 304) ? of(null) : throwError(() => err)
+        )
+      );
+  }
+
+  /** Sets or removes top-level state keys; other keys are left as they are. */
+  patchSharedMap(
+    code: string,
+    req: PatchSharedMapRequest
+  ): Observable<SharedMap> {
+    return this.http.patch<SharedMap>(this.sharedMapUrl(code), req);
+  }
+
+  private sharedMapUrl(code: string): string {
+    return `${this.base}/api/shared-maps/${encodeURIComponent(code)}`;
   }
 
   private allianceParam(allianceId: string): HttpParams {

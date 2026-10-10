@@ -1,4 +1,72 @@
 <div class="row">
+  <section class="share-panel" aria-label="Shared map">
+    @if (shared.code(); as code) {
+      @if (shared.expired()) {
+        <p class="share-text">This map has expired or doesn't exist.</p>
+        <div class="share-actions">
+          <button
+            type="button"
+            class="share-button"
+            [disabled]="sharing()"
+            (click)="share()"
+          >
+            {{ sharing() ? 'Creating…' : 'Create a new shared map' }}
+          </button>
+          <button type="button" class="share-link-button" (click)="leave()">
+            Use a local map
+          </button>
+        </div>
+      } @else {
+        <p class="share-text">
+          Shared map <strong class="share-code">{{ code }}</strong>
+          @if (shared.loading()) {
+            · loading…
+          } @else if (remaining(); as left) {
+            · expires in <span class="share-countdown">{{ left }}</span>
+          }
+        </p>
+        <p class="share-hint">
+          Everyone with the link sees and edits the same cities.
+        </p>
+        <div class="share-actions">
+          <input
+            class="share-url"
+            type="text"
+            readonly
+            aria-label="Shared map link"
+            [value]="shareLink()"
+            (focus)="$any($event.target).select()"
+          />
+          <button type="button" class="share-button" (click)="copyLink()">
+            {{ copied() ? 'Copied' : 'Copy' }}
+          </button>
+          <button type="button" class="share-link-button" (click)="leave()">
+            Leave
+          </button>
+        </div>
+      }
+      @if (shared.error(); as error) {
+        <p class="share-error" role="alert">{{ error }}</p>
+      }
+    } @else {
+      <p class="share-hint">
+        Track vacant cities together with your alliance: share the map and
+        everyone with the link edits it live for 4 hours.
+      </p>
+      <button
+        type="button"
+        class="share-button"
+        [disabled]="sharing()"
+        (click)="share()"
+      >
+        {{ sharing() ? 'Sharing…' : '🔗 Share map' }}
+      </button>
+    }
+    @if (shareError(); as error) {
+      <p class="share-error" role="alert">{{ error }}</p>
+    }
+  </section>
+
   <div class="col-24">
     <app-uw-cities-container
       #citiesContainer

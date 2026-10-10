@@ -75,7 +75,7 @@ export class EventsComponent implements OnInit {
     this.activeEvent = event;
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { event, tab: null },
+      queryParams: { event, tab: null, map: null },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
