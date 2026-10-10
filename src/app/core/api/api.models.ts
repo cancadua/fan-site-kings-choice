@@ -3,6 +3,11 @@
 
 export type AllianceRole = 'Member' | 'Owner' | 'Leader';
 export type RewardType = 'Normal' | 'Blue' | 'Purple' | 'Mvp';
+export type LinkRequestStatus =
+  'Pending' | 'Accepted' | 'Rejected' | 'Cancelled';
+export type PlayerLinkAction = 'Linked' | 'Unlinked';
+export type PlayerLinkMethod =
+  'Code' | 'Invite' | 'Request' | 'Unlink' | 'MemberRemoved' | 'PlayerDeleted';
 
 // Auth
 export interface RegisterRequest {
@@ -35,6 +40,9 @@ export interface MyAlliance {
   myRole: AllianceRole;
   createdAt: string;
   memberCount: number;
+  /** The player the current account is linked to in this alliance, if any. */
+  myPlayerId: string | null;
+  myPlayerName: string | null;
 }
 
 export interface Alliance {
@@ -51,11 +59,39 @@ export interface Member {
   email: string;
   role: AllianceRole;
   joinedAt: string;
+  playerId: string | null;
+  playerName: string | null;
 }
 
+/** Links a registered account to a player; only the Owner may grant Leader. */
 export interface InviteRequest {
-  email: string;
-  role?: AllianceRole;
+  /** Email or username of a registered account. */
+  user: string;
+  playerId: string;
+  role?: Exclude<AllianceRole, 'Owner'>;
+}
+
+export interface AllianceSearchResult {
+  id: string;
+  name: string;
+}
+
+export interface UnlinkedPlayer {
+  id: string;
+  name: string;
+}
+
+export interface PlayerLinkLogEntry {
+  id: string;
+  playerId: string;
+  playerName: string;
+  userId: string;
+  username: string | null;
+  action: PlayerLinkAction;
+  method: PlayerLinkMethod;
+  actorId: string;
+  actorUsername: string | null;
+  createdAt: string;
 }
 
 // Players
@@ -66,6 +102,15 @@ export interface Player {
   activity: number;
   isActive: boolean;
   createdAt: string;
+  /** The linked account, if any. */
+  userId: string | null;
+  username: string | null;
+}
+
+/** One-time code; it is only ever returned by the request that created it. */
+export interface LinkCode {
+  code: string;
+  expiresAt: string;
 }
 
 export interface CreatePlayerRequest {
@@ -78,6 +123,27 @@ export interface UpdatePlayerRequest {
   name?: string;
   activity?: number;
   isActive?: boolean;
+}
+
+// Link requests
+export interface LinkRequest {
+  id: string;
+  allianceId: string;
+  allianceName: string;
+  playerId: string | null;
+  playerName: string;
+  userId: string;
+  username: string;
+  message: string | null;
+  status: LinkRequestStatus;
+  createdAt: string;
+  resolvedAt: string | null;
+}
+
+export interface CreateLinkRequestRequest {
+  allianceId: string;
+  playerId: string;
+  message?: string;
 }
 
 // Events

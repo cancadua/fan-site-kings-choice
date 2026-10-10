@@ -10,20 +10,27 @@ import { environment } from '../../../environments/environment';
 import {
   Alliance,
   AllianceEvent,
+  AllianceSearchResult,
   AllianceStats,
   AuthResponse,
   CreateEventRequest,
+  CreateLinkRequestRequest,
   CreatePlayerRequest,
   CreateRewardRequest,
   InviteRequest,
+  LinkCode,
+  LinkRequest,
+  LinkRequestStatus,
   LoginRequest,
   Me,
   Member,
   MvpRecommendation,
   MyAlliance,
   Player,
+  PlayerLinkLogEntry,
   RegisterRequest,
   Reward,
+  UnlinkedPlayer,
   UpdateEventRequest,
   UpdatePlayerRequest,
   AllianceRole,
@@ -35,15 +42,24 @@ export function apiErrorMessage(err: unknown): string {
     if (err.status === 0)
       return 'Cannot reach the server. Try again in a moment.';
     if (err.status === 429)
-      return 'Too many attempts. Wait a minute and try again.';
+      return 'Too many attempts. Try again in a few minutes.';
     const body: unknown = err.error;
-    if (body && typeof body === 'object') {
-      const { error, title } = body as { error?: unknown; title?: unknown };
-      if (typeof error === 'string') return error;
-      if (typeof title === 'string') return title;
-    }
+    const { error, title } =
+      body && typeof body === 'object'
+        ? (body as { error?: unknown; title?: unknown })
+        : {};
+    if (typeof error === 'string') return error;
+    // 403/404 usually come without an { error } body.
+    if (err.status === 403) return "You don't have permission to do that.";
+    if (err.status === 404) return "Not found, or you don't have access to it.";
+    if (typeof title === 'string') return title;
   }
   return 'Something went wrong.';
+}
+
+/** True when the request failed with the given HTTP status. */
+export function isHttpStatus(err: unknown, status: number): boolean {
+  return err instanceof HttpErrorResponse && err.status === status;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -71,6 +87,27 @@ export class ApiClient {
 
   createAlliance(name: string): Observable<Alliance> {
     return this.http.post<Alliance>(`${this.base}/api/alliances`, { name });
+  }
+
+  /** Finds alliances by name (min. 2 characters, max. 20 results). */
+  searchAlliances(name: string): Observable<AllianceSearchResult[]> {
+    return this.http.get<AllianceSearchResult[]>(
+      `${this.base}/api/alliances/search`,
+      { params: new HttpParams().set('name', name) }
+    );
+  }
+
+  /** Players of any alliance that have no linked account yet. */
+  unlinkedPlayers(allianceId: string): Observable<UnlinkedPlayer[]> {
+    return this.http.get<UnlinkedPlayer[]>(
+      `${this.base}/api/alliances/${allianceId}/unlinked-players`
+    );
+  }
+
+  linkLog(allianceId: string): Observable<PlayerLinkLogEntry[]> {
+    return this.http.get<PlayerLinkLogEntry[]>(
+      `${this.base}/api/alliances/${allianceId}/link-log`
+    );
   }
 
   members(allianceId: string): Observable<Member[]> {
@@ -118,8 +155,69 @@ export class ApiClient {
     return this.http.patch<Player>(`${this.base}/api/players/${id}`, req);
   }
 
-  deletePlayer(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.base}/api/players/${id}`);
+  /**
+   * Fails with 409 when the player has a linked account; repeat with
+   * `confirm` to delete it anyway (the account then also leaves the alliance).
+   */
+  deletePlayer(id: string, confirm = false): Observable<void> {
+    return this.http.delete<void>(`${this.base}/api/players/${id}`, {
+      params: confirm ? new HttpParams().set('confirm', true) : undefined,
+    });
+  }
+
+  /** Creates a one-time link code for an unlinked player; the previous code stops working. */
+  createLinkCode(playerId: string): Observable<LinkCode> {
+    return this.http.post<LinkCode>(
+      `${this.base}/api/players/${playerId}/link-code`,
+      {}
+    );
+  }
+
+  /** Links the current account to the player the code was issued for. */
+  claimPlayer(code: string): Observable<Player> {
+    return this.http.post<Player>(`${this.base}/api/players/claim`, { code });
+  }
+
+  unlinkPlayer(playerId: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/api/players/${playerId}/link`);
+  }
+
+  // Link requests
+  createLinkRequest(req: CreateLinkRequestRequest): Observable<LinkRequest> {
+    return this.http.post<LinkRequest>(`${this.base}/api/link-requests`, req);
+  }
+
+  /** The current user's requests, newest first. */
+  myLinkRequests(): Observable<LinkRequest[]> {
+    return this.http.get<LinkRequest[]>(`${this.base}/api/link-requests/mine`);
+  }
+
+  cancelLinkRequest(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/api/link-requests/${id}`);
+  }
+
+  /** Requests for an alliance (Owner/Leader), oldest first. */
+  allianceLinkRequests(
+    allianceId: string,
+    status: LinkRequestStatus = 'Pending'
+  ): Observable<LinkRequest[]> {
+    return this.http.get<LinkRequest[]>(`${this.base}/api/link-requests`, {
+      params: this.allianceParam(allianceId).set('status', status),
+    });
+  }
+
+  acceptLinkRequest(id: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/link-requests/${id}/accept`,
+      {}
+    );
+  }
+
+  rejectLinkRequest(id: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}/api/link-requests/${id}/reject`,
+      {}
+    );
   }
 
   // Events

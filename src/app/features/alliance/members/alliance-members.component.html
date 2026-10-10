@@ -1,26 +1,13 @@
 <h1>Members</h1>
 
-@if (isOwner()) {
-  <form class="toolbar" (ngSubmit)="invite()">
-    <label class="grow">
-      Email of a registered user
-      <input type="email" name="email" required [(ngModel)]="inviteEmail" />
-    </label>
-    <label>
-      Role
-      <select name="role" [(ngModel)]="inviteRole">
-        @for (r of assignableRoles; track r) {
-          <option [value]="r">{{ r }}</option>
-        }
-      </select>
-    </label>
-    <button type="submit" class="primary" [disabled]="!inviteEmail().trim()">
-      Invite
-    </button>
-  </form>
-} @else {
-  <p class="muted">Only the alliance owner can invite or manage members.</p>
-}
+<p class="muted">
+  Accounts join the alliance by being linked to a player. To add one, use
+  <em>Invite account</em> or <em>Generate code</em> on the
+  <a routerLink="/alliance/players">Players</a> page.
+  @if (!isOwner()) {
+    Only the alliance owner can change roles or remove accounts.
+  }
+</p>
 
 @if (error(); as message) {
   <p class="error" role="alert">{{ message }}</p>
@@ -38,6 +25,7 @@
         <tr>
           <th>Username</th>
           <th>Email</th>
+          <th>Player</th>
           <th>Role</th>
           <th>Joined</th>
           <th></th>
@@ -48,6 +36,7 @@
           <tr>
             <td>{{ m.username }}</td>
             <td>{{ m.email }}</td>
+            <td>{{ m.playerName ?? '—' }}</td>
             <td>
               @if (isOwner() && m.role !== 'Owner') {
                 <select

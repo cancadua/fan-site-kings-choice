@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
@@ -17,7 +17,7 @@ import { AllianceStateService } from '../alliance-state.service';
 @Component({
   selector: 'app-alliance-members',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [DatePipe, RouterLink],
   templateUrl: './alliance-members.component.html',
   styleUrls: ['./alliance-members.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,30 +34,12 @@ export class AllianceMembersComponent {
   error = signal<string | null>(null);
   info = signal<string | null>(null);
 
-  inviteEmail = signal('');
-  inviteRole = signal<AllianceRole>('Leader');
-
   isOwner = computed(() => this.state.selected()?.myRole === 'Owner');
 
   constructor() {
     effect(() => {
       const alliance = this.state.selected();
       if (alliance) void this.load(alliance.id);
-    });
-  }
-
-  async invite(): Promise<void> {
-    const alliance = this.state.selected();
-    const email = this.inviteEmail().trim();
-    if (!alliance || !email) return;
-
-    await this.run(async () => {
-      await firstValueFrom(
-        this.api.invite(alliance.id, { email, role: this.inviteRole() })
-      );
-      this.inviteEmail.set('');
-      this.info.set(`${email} was added as ${this.inviteRole()}.`);
-      await this.loadMembers(alliance.id);
     });
   }
 
@@ -79,7 +61,13 @@ export class AllianceMembersComponent {
 
   async remove(member: Member): Promise<void> {
     const alliance = this.state.selected();
-    if (!alliance || !confirm(`Remove ${member.username} from the alliance?`))
+    const unlinkNote = member.playerName
+      ? ` They will also be unlinked from player ${member.playerName}.`
+      : '';
+    if (
+      !alliance ||
+      !confirm(`Remove ${member.username} from the alliance?${unlinkNote}`)
+    )
       return;
 
     await this.run(async () => {

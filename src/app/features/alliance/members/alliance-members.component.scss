@@ -1,11 +1,11 @@
 @use 'alliance-page' as *;
+@use 'variables' as *;
 
 :host {
   display: block;
   @include alliance-page;
 }
 
-.grow {
-  flex: 1;
-  min-width: 14rem;
+a {
+  color: $knight-amber;
 }
