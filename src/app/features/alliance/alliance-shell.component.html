@@ -46,11 +46,14 @@
     } @else if (state.selected()) {
       <router-outlet />
     } @else if (state.loaded()) {
+      <!-- No alliance yet: linking to a player is the usual way in. -->
+      <app-alliance-link-account />
+
       <section class="create">
-        <h2>Create your alliance</h2>
+        <h2>Or create your own alliance</h2>
         <p>
-          You aren't an owner or leader of any alliance yet. Create one here, or
-          ask an alliance owner to invite you as a leader.
+          Leading an alliance? Create it here to manage its players, events and
+          rewards.
         </p>
         <form (ngSubmit)="create()">
           <input

@@ -62,6 +62,13 @@ export const allianceRoutes: Routes = [
             (m) => m.AllianceMembersComponent
           ),
       },
+      {
+        path: 'link',
+        loadComponent: () =>
+          import('./link-account/alliance-link-account.component').then(
+            (m) => m.AllianceLinkAccountComponent
+          ),
+      },
       { path: '**', redirectTo: '' },
     ],
   },

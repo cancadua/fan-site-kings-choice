@@ -1,0 +1,210 @@
+<h1>Link your account</h1>
+<p class="muted">
+  Connect your account to your player in an alliance to see your rewards.
+</p>
+
+<div class="tabs" role="tablist" aria-label="How to link">
+  <button
+    type="button"
+    role="tab"
+    id="link-tab-code"
+    aria-controls="link-panel-code"
+    [attr.aria-selected]="tab() === 'code'"
+    [class.active]="tab() === 'code'"
+    (click)="tab.set('code')"
+  >
+    I have a code
+  </button>
+  <button
+    type="button"
+    role="tab"
+    id="link-tab-request"
+    aria-controls="link-panel-request"
+    [attr.aria-selected]="tab() === 'request'"
+    [class.active]="tab() === 'request'"
+    (click)="tab.set('request')"
+  >
+    Request a link
+  </button>
+</div>
+
+@if (tab() === 'code') {
+  <section id="link-panel-code" role="tabpanel" aria-labelledby="link-tab-code">
+    <form class="toolbar" (ngSubmit)="claim()">
+      <label class="grow">
+        Link code from your alliance leader
+        <input
+          type="text"
+          name="code"
+          placeholder="XXXX-XXXX"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+          maxlength="16"
+          required
+          class="code-input"
+          [(ngModel)]="code"
+        />
+      </label>
+      <button
+        type="submit"
+        class="primary"
+        [disabled]="claiming() || !code().trim()"
+      >
+        {{ claiming() ? 'Linking…' : 'Link account' }}
+      </button>
+    </form>
+    @if (claimError(); as message) {
+      <p class="error" role="alert">{{ message }}</p>
+    }
+  </section>
+} @else {
+  <section
+    id="link-panel-request"
+    role="tabpanel"
+    aria-labelledby="link-tab-request"
+  >
+    @if (requestSent(); as message) {
+      <p class="callout" role="status">{{ message }}</p>
+    }
+
+    @if (alliance(); as chosen) {
+      <div class="toolbar chosen">
+        <span>
+          Alliance: <strong>{{ chosen.name }}</strong>
+        </span>
+        <button type="button" class="small" (click)="changeAlliance()">
+          Change
+        </button>
+      </div>
+
+      @if (playersLoading()) {
+        <p class="muted">Loading players…</p>
+      } @else if (players().length === 0) {
+        <p class="muted">
+          Every player in this alliance already has an account. Ask a leader for
+          help.
+        </p>
+      } @else {
+        <p class="muted">Which player are you?</p>
+        <ul class="pick-list">
+          @for (p of players(); track p.id) {
+            <li [class.picked]="player()?.id === p.id">
+              <span>{{ p.name }}</span>
+              <button
+                type="button"
+                class="small"
+                [class.primary]="player()?.id === p.id"
+                [attr.aria-pressed]="player()?.id === p.id"
+                (click)="player.set(p)"
+              >
+                That's me
+              </button>
+            </li>
+          }
+        </ul>
+
+        @if (player(); as picked) {
+          <form class="request-form" (ngSubmit)="sendRequest()">
+            <label>
+              Message for the leader (optional)
+              <textarea
+                name="message"
+                rows="3"
+                [maxlength]="messageMaxLength"
+                [(ngModel)]="message"
+              ></textarea>
+              <span class="muted counter">
+                {{ message().length }}/{{ messageMaxLength }}
+              </span>
+            </label>
+            <button type="submit" class="primary" [disabled]="sending()">
+              {{ sending() ? 'Sending…' : 'Send request as ' + picked.name }}
+            </button>
+          </form>
+        }
+      }
+    } @else {
+      <label class="search">
+        Find your alliance
+        <input
+          type="search"
+          name="query"
+          placeholder="Alliance name"
+          autocomplete="off"
+          [ngModel]="query()"
+          (ngModelChange)="query.set($event)"
+        />
+      </label>
+      @if (searchError(); as message) {
+        <p class="error" role="alert">{{ message }}</p>
+      } @else if (query().trim().length < minSearchLength) {
+        <p class="muted">Type at least {{ minSearchLength }} characters.</p>
+      } @else if (searchResults().length > 0) {
+        <ul class="pick-list">
+          @for (a of searchResults(); track a.id) {
+            <li>
+              <span>{{ a.name }}</span>
+              <button type="button" class="small" (click)="chooseAlliance(a)">
+                Select
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    }
+
+    @if (requestError(); as message) {
+      <p class="error" role="alert">{{ message }}</p>
+    }
+  </section>
+}
+
+<h2>My requests</h2>
+@if (requestsError(); as message) {
+  <p class="error" role="alert">{{ message }}</p>
+}
+@if (requestsLoading() && requests().length === 0) {
+  <p class="muted">Loading…</p>
+} @else if (requests().length === 0) {
+  <p class="muted">You haven't sent any requests.</p>
+} @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Alliance</th>
+          <th>Player</th>
+          <th>Sent</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of requests(); track r.id) {
+          <tr>
+            <td>
+              <span class="badge" [class]="statusBadge(r.status)">
+                {{ r.status }}
+              </span>
+            </td>
+            <td>{{ r.allianceName }}</td>
+            <td>{{ r.playerName }}</td>
+            <td>{{ r.createdAt | date: 'mediumDate' }}</td>
+            <td class="actions">
+              @if (r.status === 'Pending') {
+                <button
+                  type="button"
+                  class="small danger"
+                  (click)="withdraw(r)"
+                >
+                  Withdraw
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

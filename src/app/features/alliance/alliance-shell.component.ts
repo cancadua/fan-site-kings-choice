@@ -18,11 +18,18 @@ import { apiErrorMessage } from '../../core/api/api-client';
 import { SessionService } from '../../core/auth/session.service';
 import { ALLIANCE_SECTIONS } from './alliance-sections';
 import { AllianceStateService } from './alliance-state.service';
+import { AllianceLinkAccountComponent } from './link-account/alliance-link-account.component';
 
 @Component({
   selector: 'app-alliance-shell',
   standalone: true,
-  imports: [FormsModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [
+    FormsModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    AllianceLinkAccountComponent,
+  ],
   templateUrl: './alliance-shell.component.html',
   styleUrls: ['./alliance-shell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
