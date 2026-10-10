@@ -75,6 +75,25 @@
     ></app-uw-cities-container>
   </div>
 
+  <div class="copy-lists">
+    <button
+      type="button"
+      class="share-link-button"
+      [disabled]="nonEmpty().length === 0"
+      (click)="copyCities('populated')"
+    >
+      {{ copiedList() === 'populated' ? 'Copied' : '📋 Copy populated' }}
+    </button>
+    <button
+      type="button"
+      class="share-link-button"
+      [disabled]="empty().length === 0"
+      (click)="copyCities('vacant')"
+    >
+      {{ copiedList() === 'vacant' ? 'Copied' : '📋 Copy vacant' }}
+    </button>
+  </div>
+
   <button
     type="button"
     class="map-toggle"

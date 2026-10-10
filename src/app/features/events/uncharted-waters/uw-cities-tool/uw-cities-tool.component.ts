@@ -22,6 +22,8 @@ export const SHARED_MAP_PARAM = 'map';
 
 const CITY_KEY_PREFIX = 'city:';
 
+type CityList = 'populated' | 'vacant';
+
 /** One state key per city, so people marking different cities never overwrite each other. */
 interface SharedCity {
   vacant: boolean;
@@ -103,6 +105,10 @@ export class UwCitiesToolComponent {
   sharing = signal(false);
   shareError = signal<string | null>(null);
   copied = signal(false);
+
+  /** List whose names were just copied, for the button's feedback. */
+  copiedList = signal<CityList | null>(null);
+  private copiedTimer: ReturnType<typeof setTimeout> | undefined;
 
   readonly shareLink = computed(() => {
     const code = this.shared.code();
@@ -188,6 +194,25 @@ export class UwCitiesToolComponent {
     } catch {
       // Clipboard blocked (e.g. insecure context); the link stays selectable.
       this.copied.set(false);
+    }
+  }
+
+  /** Copies one list as e.g. "EMPTY: Alexandria, Tunis" (names A–Z) for the game chat. */
+  async copyCities(list: CityList): Promise<void> {
+    const cities = list === 'populated' ? this.nonEmpty() : this.empty();
+    const names = cities
+      .map((city) => city.name)
+      .sort((a, b) => a.localeCompare(b))
+      .join(', ');
+    const label = list === 'populated' ? 'NOT EMPTY' : 'EMPTY';
+    try {
+      await navigator.clipboard.writeText(`${label}: ${names}`);
+      this.copiedList.set(list);
+      clearTimeout(this.copiedTimer);
+      this.copiedTimer = setTimeout(() => this.copiedList.set(null), 2000);
+    } catch {
+      // Clipboard blocked (e.g. insecure context).
+      this.copiedList.set(null);
     }
   }
 
