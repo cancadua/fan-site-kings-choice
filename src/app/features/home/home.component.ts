@@ -7,7 +7,12 @@ import { HomeCtaSectionComponent } from '../../shared/home-cta-section/home-cta-
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, HomeEventsHighlightComponent, HomeCtaSectionComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    HomeEventsHighlightComponent,
+    HomeCtaSectionComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

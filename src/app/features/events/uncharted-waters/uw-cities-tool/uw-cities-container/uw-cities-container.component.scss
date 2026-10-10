@@ -61,7 +61,8 @@
   font-family: $font-lore;
   font-weight: 500;
   color: $stone-dark;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    inset 0 4px 8px rgba(0, 0, 0, 0.1),
     0 0 12px rgba($gold-primary, 0.2);
   transition: all 0.3s ease;
   text-align: center;
@@ -69,7 +70,8 @@
   &:focus {
     outline: none;
     border-color: $gold-light;
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+    box-shadow:
+      inset 0 4px 8px rgba(0, 0, 0, 0.1),
       0 0 20px rgba($gold-primary, 0.4);
     background: linear-gradient(135deg, #ffffff 0%, $stone-light 100%);
   }
@@ -91,13 +93,15 @@
   font-weight: 700;
   color: $stone-dark;
   cursor: pointer;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    inset 0 4px 8px rgba(0, 0, 0, 0.1),
     0 0 12px rgba($gold-primary, 0.2);
   transition: all 0.3s ease;
 
   &:hover {
     background: linear-gradient(135deg, $gold-light 0%, $gold-primary 100%);
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1),
+    box-shadow:
+      inset 0 4px 8px rgba(0, 0, 0, 0.1),
       0 0 20px rgba($gold-primary, 0.4);
   }
 
@@ -133,7 +137,9 @@
   font-size: 14px;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: background 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 
   &:not(:last-child) {
     border-right: 2px solid $gold-primary;
@@ -251,7 +257,9 @@
   border-radius: 8px;
   padding: 30px;
   min-height: 300px;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.4),
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.1),
+    0 8px 24px rgba(0, 0, 0, 0.4),
     0 0 20px rgba($gold-primary, 0.2);
   position: relative;
   overflow: hidden;
@@ -263,7 +271,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: repeating-linear-gradient(
+    background-image:
+      repeating-linear-gradient(
         90deg,
         transparent,
         transparent 2px,

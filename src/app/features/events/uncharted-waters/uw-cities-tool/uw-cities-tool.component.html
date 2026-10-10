@@ -18,28 +18,30 @@
   </button>
 
   <div class="row relative map-section" [class.expanded]="mapExpanded()">
-    @for(item of full(); track $index) {
-    <button
-      type="button"
-      class="dot"
-      [title]="item.name"
-      [attr.aria-label]="item.name + ' — tap to move'"
-      [style]="
-        'left: ' +
-        item.position?.left +
-        '; top: ' +
-        item.position?.top +
-        '; background-color: ' +
-        item.color +
-        '; box-shadow: 0 0 8px ' +
-        item.color +
-        ', 0 0 16px ' +
-        item.color +
-        ';'
-      "
-      (click)="citiesContainer.moveCity(item, isPopulated(item) ? 'A' : 'B')"
-    ></button>
+    @for (item of full(); track $index) {
+      <button
+        type="button"
+        class="dot"
+        [title]="item.name"
+        [attr.aria-label]="item.name + ' — tap to move'"
+        [style]="
+          'left: ' +
+          item.position?.left +
+          '; top: ' +
+          item.position?.top +
+          '; background-color: ' +
+          item.color +
+          '; box-shadow: 0 0 8px ' +
+          item.color +
+          ', 0 0 16px ' +
+          item.color +
+          ';'
+        "
+        (click)="citiesContainer.moveCity(item, isPopulated(item) ? 'A' : 'B')"
+      ></button>
     }
+    <!-- Mouse-only dev helper that logs map coordinates for placing cities. -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div class="col-24 map" (click)="logClickPosition($event)"></div>
   </div>
 </div>

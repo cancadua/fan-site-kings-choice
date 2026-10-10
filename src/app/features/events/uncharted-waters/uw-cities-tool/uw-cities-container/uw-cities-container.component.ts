@@ -4,12 +4,10 @@ import {
   signal,
   computed,
   ChangeDetectionStrategy,
-  effect,
 } from '@angular/core';
 import { CityButtonComponent } from './city-button/city-button.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { uwCities } from '../../../../../core/constants/uw-cities';
 import { City } from './uw-cities-container.schema';
 
 @Component({

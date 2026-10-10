@@ -15,7 +15,10 @@ export const routes: Routes = [
   {
     path: 'alliance',
     canActivate: [authGuard],
-    loadChildren: () => import('./features/alliance/alliance.routes').then(m => m.allianceRoutes),
+    loadChildren: () =>
+      import('./features/alliance/alliance.routes').then(
+        (m) => m.allianceRoutes
+      ),
   },
   { path: '**', redirectTo: '' }, // Unknown paths fall back to home (GitHub Pages serves 404.html for deep links)
 ];

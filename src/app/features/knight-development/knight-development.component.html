@@ -5,46 +5,47 @@
   [items]="sections"
   [(activeId)]="activeSection"
 >
-  @let active = getActiveSection(); @if (active) {
-  <div class="kd-article-body">
-    @for (paragraph of active.content; track $index) {
-    <div class="kd-paragraph-block">
-      @for (line of paragraph.text; track $index) {
-      <p class="kd-paragraph">{{ line }}</p>
-      }
-      @if (paragraph.items) {
-      <ul class="kd-items">
-        @for (item of paragraph.items; track $index) {
-        <li>{{ item }}</li>
-        }
-      </ul>
-      }
-    </div>
-    }
-
-    @if (active.subsections) {
-    <div class="kd-subsections">
-      @for (subsection of active.subsections; track subsection.title) {
-      <section class="kd-subsection">
-        <h3>{{ subsection.title }}</h3>
-        @for (paragraph of subsection.content; track $index) {
+  @let active = getActiveSection();
+  @if (active) {
+    <div class="kd-article-body">
+      @for (paragraph of active.content; track $index) {
         <div class="kd-paragraph-block">
           @for (line of paragraph.text; track $index) {
-          <p class="kd-subsection-content">{{ line }}</p>
+            <p class="kd-paragraph">{{ line }}</p>
           }
           @if (paragraph.items) {
-          <ul class="kd-items kd-items--subsection">
-            @for (item of paragraph.items; track $index) {
-            <li>{{ item }}</li>
-            }
-          </ul>
+            <ul class="kd-items">
+              @for (item of paragraph.items; track $index) {
+                <li>{{ item }}</li>
+              }
+            </ul>
           }
         </div>
-        }
-      </section>
+      }
+
+      @if (active.subsections) {
+        <div class="kd-subsections">
+          @for (subsection of active.subsections; track subsection.title) {
+            <section class="kd-subsection">
+              <h3>{{ subsection.title }}</h3>
+              @for (paragraph of subsection.content; track $index) {
+                <div class="kd-paragraph-block">
+                  @for (line of paragraph.text; track $index) {
+                    <p class="kd-subsection-content">{{ line }}</p>
+                  }
+                  @if (paragraph.items) {
+                    <ul class="kd-items kd-items--subsection">
+                      @for (item of paragraph.items; track $index) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  }
+                </div>
+              }
+            </section>
+          }
+        </div>
       }
     </div>
-    }
-  </div>
   }
 </app-nav-hub>

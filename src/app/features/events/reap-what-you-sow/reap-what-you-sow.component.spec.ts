@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { ReapWhatYouSowComponent } from './reap-what-you-sow.component';
 
@@ -9,6 +10,7 @@ describe('ReapWhatYouSowComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReapWhatYouSowComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ReapWhatYouSowComponent);

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -47,7 +52,11 @@ export class Login {
       const response = await firstValueFrom(
         this.mode() === 'login'
           ? this.api.login({ email, password })
-          : this.api.register({ email, username: this.username().trim(), password }),
+          : this.api.register({
+              email,
+              username: this.username().trim(),
+              password,
+            })
       );
       this.session.setToken(response.token);
       await this.router.navigate(['/alliance']);

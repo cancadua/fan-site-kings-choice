@@ -2,25 +2,31 @@
   <header class="alliance-bar">
     <div class="alliance-switcher">
       @if (state.selected(); as current) {
-      <label>
-        <span class="visually-hidden">Alliance</span>
-        <select [value]="current.id" (change)="onSelect($event)">
-          @for (a of state.alliances(); track a.id) {
-          <option [value]="a.id" [selected]="a.id === current.id">{{ a.name }}</option>
-          }
-        </select>
-      </label>
-      <span class="role">{{ current.myRole }}</span>
+        <label>
+          <span class="visually-hidden">Alliance</span>
+          <select [value]="current.id" (change)="onSelect($event)">
+            @for (a of state.alliances(); track a.id) {
+              <option [value]="a.id" [selected]="a.id === current.id">
+                {{ a.name }}
+              </option>
+            }
+          </select>
+        </label>
+        <span class="role">{{ current.myRole }}</span>
       } @else {
-      <strong>Alliance Management</strong>
+        <strong>Alliance Management</strong>
       }
     </div>
 
     <nav class="alliance-nav">
       @for (link of navLinks; track link.route) {
-      <a [routerLink]="link.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        {{ link.label }}
-      </a>
+        <a
+          [routerLink]="link.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          {{ link.label }}
+        </a>
       }
     </nav>
 
@@ -29,37 +35,44 @@
 
   <main class="alliance-body">
     @if (state.loading() && !state.loaded()) {
-    <p class="notice">Loading your alliances… the server may take up to a minute to wake up.</p>
-    } @else if (state.error(); as message) {
-    <div class="notice notice--error" role="alert">
-      <p>{{ message }}</p>
-      <button type="button" (click)="state.load()">Retry</button>
-    </div>
-    } @else if (state.selected()) {
-    <router-outlet />
-    } @else if (state.loaded()) {
-    <section class="create">
-      <h2>Create your alliance</h2>
-      <p>
-        You aren't an owner or leader of any alliance yet. Create one here, or ask an alliance owner to invite you as
-        a leader.
+      <p class="notice">
+        Loading your alliances… the server may take up to a minute to wake up.
       </p>
-      <form (ngSubmit)="create()">
-        <input
-          type="text"
-          name="allianceName"
-          placeholder="Alliance name"
-          minlength="2"
-          maxlength="100"
-          required
-          [(ngModel)]="newName"
-        />
-        <button type="submit" [disabled]="creating() || newName().trim().length < 2">Create</button>
-      </form>
-      @if (createError(); as message) {
-      <p class="error" role="alert">{{ message }}</p>
-      }
-    </section>
+    } @else if (state.error(); as message) {
+      <div class="notice notice--error" role="alert">
+        <p>{{ message }}</p>
+        <button type="button" (click)="state.load()">Retry</button>
+      </div>
+    } @else if (state.selected()) {
+      <router-outlet />
+    } @else if (state.loaded()) {
+      <section class="create">
+        <h2>Create your alliance</h2>
+        <p>
+          You aren't an owner or leader of any alliance yet. Create one here, or
+          ask an alliance owner to invite you as a leader.
+        </p>
+        <form (ngSubmit)="create()">
+          <input
+            type="text"
+            name="allianceName"
+            placeholder="Alliance name"
+            minlength="2"
+            maxlength="100"
+            required
+            [(ngModel)]="newName"
+          />
+          <button
+            type="submit"
+            [disabled]="creating() || newName().trim().length < 2"
+          >
+            Create
+          </button>
+        </form>
+        @if (createError(); as message) {
+          <p class="error" role="alert">{{ message }}</p>
+        }
+      </section>
     }
   </main>
 </div>

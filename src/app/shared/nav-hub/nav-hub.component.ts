@@ -1,4 +1,12 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, input, model, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  input,
+  model,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavHubItem } from './nav-hub.schema';
 
@@ -10,8 +18,11 @@ import { NavHubItem } from './nav-hub.schema';
   styleUrls: ['./nav-hub.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavHubComponent<T extends string = string> implements AfterViewInit {
-  private readonly navContainer = viewChild<ElementRef<HTMLElement>>('navContainer');
+export class NavHubComponent<
+  T extends string = string,
+> implements AfterViewInit {
+  private readonly navContainer =
+    viewChild<ElementRef<HTMLElement>>('navContainer');
 
   title = input.required<string>();
   subtitle = input('');
@@ -24,7 +35,7 @@ export class NavHubComponent<T extends string = string> implements AfterViewInit
   }
 
   get activeItem(): NavHubItem<T> | undefined {
-    return this.items().find(item => item.id === this.activeId());
+    return this.items().find((item) => item.id === this.activeId());
   }
 
   selectItem(id: T): void {
@@ -36,12 +47,15 @@ export class NavHubComponent<T extends string = string> implements AfterViewInit
     const nav = this.navContainer()?.nativeElement;
     if (!nav) return;
 
-    const activeButton = nav.querySelector('.nav-hub-link.active') as HTMLElement;
+    const activeButton = nav.querySelector(
+      '.nav-hub-link.active'
+    ) as HTMLElement;
     if (!activeButton) return;
 
     const navRect = nav.getBoundingClientRect();
     const buttonRect = activeButton.getBoundingClientRect();
-    const scrollAmount = buttonRect.left - navRect.left - navRect.width / 2 + buttonRect.width / 2;
+    const scrollAmount =
+      buttonRect.left - navRect.left - navRect.width / 2 + buttonRect.width / 2;
 
     nav.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   }

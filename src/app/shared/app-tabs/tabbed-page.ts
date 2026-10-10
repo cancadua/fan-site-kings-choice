@@ -9,9 +9,10 @@ export abstract class TabbedPage {
   activeTab: ContentTab;
 
   protected constructor(protected readonly tabs: ContentTab[]) {
-    const fallback = tabs.find(tab => !tab.hidden) ?? tabs[0];
+    const fallback = tabs.find((tab) => !tab.hidden) ?? tabs[0];
     const requested = this.route.snapshot.queryParamMap.get('tab');
-    this.activeTab = tabs.find(tab => tab.value === requested && !tab.hidden) ?? fallback;
+    this.activeTab =
+      tabs.find((tab) => tab.value === requested && !tab.hidden) ?? fallback;
   }
 
   onTabChange(tab: ContentTab | null): void {

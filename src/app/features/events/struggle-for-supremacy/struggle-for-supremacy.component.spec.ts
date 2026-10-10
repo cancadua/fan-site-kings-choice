@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { StruggleForSupremacyComponent } from './struggle-for-supremacy.component';
 
@@ -9,6 +10,7 @@ describe('StruggleForSupremacyComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StruggleForSupremacyComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(StruggleForSupremacyComponent);

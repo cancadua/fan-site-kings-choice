@@ -40,7 +40,7 @@ describe('KnightDevelopmentComponent', () => {
 
   it('should have subsections in some sections', () => {
     const sectionWithSubsections = component.sections.find(
-      s => s.subsections && s.subsections.length > 0
+      (s) => s.subsections && s.subsections.length > 0
     );
     expect(sectionWithSubsections).toBeTruthy();
   });

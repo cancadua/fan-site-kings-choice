@@ -1,71 +1,80 @@
 <h1>Members</h1>
 
 @if (isOwner()) {
-<form class="toolbar" (ngSubmit)="invite()">
-  <label class="grow">
-    Email of a registered user
-    <input type="email" name="email" required [(ngModel)]="inviteEmail" />
-  </label>
-  <label>
-    Role
-    <select name="role" [(ngModel)]="inviteRole">
-      @for (r of assignableRoles; track r) {
-      <option [value]="r">{{ r }}</option>
-      }
-    </select>
-  </label>
-  <button type="submit" class="primary" [disabled]="!inviteEmail().trim()">Invite</button>
-</form>
+  <form class="toolbar" (ngSubmit)="invite()">
+    <label class="grow">
+      Email of a registered user
+      <input type="email" name="email" required [(ngModel)]="inviteEmail" />
+    </label>
+    <label>
+      Role
+      <select name="role" [(ngModel)]="inviteRole">
+        @for (r of assignableRoles; track r) {
+          <option [value]="r">{{ r }}</option>
+        }
+      </select>
+    </label>
+    <button type="submit" class="primary" [disabled]="!inviteEmail().trim()">
+      Invite
+    </button>
+  </form>
 } @else {
-<p class="muted">Only the alliance owner can invite or manage members.</p>
+  <p class="muted">Only the alliance owner can invite or manage members.</p>
 }
 
 @if (error(); as message) {
-<p class="error" role="alert">{{ message }}</p>
+  <p class="error" role="alert">{{ message }}</p>
 }
 @if (info(); as message) {
-<p class="muted">{{ message }}</p>
+  <p class="muted">{{ message }}</p>
 }
 
 @if (loading() && members().length === 0) {
-<p class="muted">Loading…</p>
+  <p class="muted">Loading…</p>
 } @else {
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Joined</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (m of members(); track m.userId) {
-      <tr>
-        <td>{{ m.username }}</td>
-        <td>{{ m.email }}</td>
-        <td>
-          @if (isOwner() && m.role !== 'Owner') {
-          <select [attr.aria-label]="'Role for ' + m.username" (change)="changeRole(m, $event)">
-            @for (r of assignableRoles; track r) {
-            <option [value]="r" [selected]="r === m.role">{{ r }}</option>
-            }
-          </select>
-          } @else {
-          {{ m.role }}
-          }
-        </td>
-        <td>{{ m.joinedAt | date: 'mediumDate' }}</td>
-        <td class="actions">
-          @if (isOwner() && m.role !== 'Owner') {
-          <button type="button" class="small danger" (click)="remove(m)">Remove</button>
-          }
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Joined</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (m of members(); track m.userId) {
+          <tr>
+            <td>{{ m.username }}</td>
+            <td>{{ m.email }}</td>
+            <td>
+              @if (isOwner() && m.role !== 'Owner') {
+                <select
+                  [attr.aria-label]="'Role for ' + m.username"
+                  (change)="changeRole(m, $event)"
+                >
+                  @for (r of assignableRoles; track r) {
+                    <option [value]="r" [selected]="r === m.role">
+                      {{ r }}
+                    </option>
+                  }
+                </select>
+              } @else {
+                {{ m.role }}
+              }
+            </td>
+            <td>{{ m.joinedAt | date: 'mediumDate' }}</td>
+            <td class="actions">
+              @if (isOwner() && m.role !== 'Owner') {
+                <button type="button" class="small danger" (click)="remove(m)">
+                  Remove
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

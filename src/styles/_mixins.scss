@@ -18,7 +18,9 @@
     rgba(26, 26, 26, 0.98) 100%
   );
   border-#{$edge}: 2px solid $gold-primary;
-  box-shadow: inset 0 2px 8px rgba($gold-primary, 0.1), 0 -8px 16px $shadow;
+  box-shadow:
+    inset 0 2px 8px rgba($gold-primary, 0.1),
+    0 -8px 16px $shadow;
   color: $parchment;
   font-family: $font-lore;
 }
@@ -30,7 +32,11 @@
   padding: 40px 20px;
 
   h2 {
-    @include lore-heading(2rem, $shadow-size: 2px 2px 4px, $letter-spacing: normal);
+    @include lore-heading(
+      2rem,
+      $shadow-size: 2px 2px 4px,
+      $letter-spacing: normal
+    );
     margin-bottom: 30px;
     border-bottom: 3px solid $gold-primary;
     padding-bottom: 15px;

@@ -10,11 +10,11 @@ import { City } from './uw-cities-container/uw-cities-container.schema';
   styleUrl: './uw-cities-tool.component.scss',
 })
 export class UwCitiesToolComponent {
-  position: any = [];
+  position: NonNullable<City['position']>[] = [];
   counter = 0;
 
   nonEmpty = signal<City[]>(
-    Object.entries(uwCities).reduce((acc: City[], [key, value]) => {
+    Object.values(uwCities).reduce((acc: City[], value) => {
       if (value.length > 0) {
         acc.push(...value.map((city) => ({ ...city })));
       }

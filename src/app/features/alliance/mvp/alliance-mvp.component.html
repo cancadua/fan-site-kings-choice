@@ -1,55 +1,65 @@
 <h1>MVP recommendations</h1>
 <p class="muted intro">
-  Active players ranked 0–100 by activity, time since their last MVP and last reward, and how few rewards they've had.
+  Active players ranked 0–100 by activity, time since their last MVP and last
+  reward, and how few rewards they've had.
 </p>
 
 @if (error(); as message) {
-<p class="error" role="alert">{{ message }}</p>
+  <p class="error" role="alert">{{ message }}</p>
 }
 
 @if (loading() && recommendations().length === 0) {
-<p class="muted">Loading…</p>
+  <p class="muted">Loading…</p>
 } @else if (recommendations().length === 0) {
-<p class="muted">No active players yet.</p>
+  <p class="muted">No active players yet.</p>
 } @else {
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Player</th>
-        <th>Score</th>
-        <th>Last MVP</th>
-        <th>Last reward</th>
-        <th>Normal</th>
-        <th>Blue</th>
-        <th>Purple</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (r of recommendations(); track r.playerId; let i = $index) {
-      <tr>
-        <td>{{ i + 1 }}</td>
-        <td>{{ r.player }}</td>
-        <td>
-          <span class="score" [style.--pct]="r.score + '%'"
-            ><span class="score-value">{{ r.score }}</span></span
-          >
-        </td>
-        <td>{{ r.lastMvp ? (r.lastMvp | date: 'mediumDate') : 'Never' }}</td>
-        <td>{{ r.lastReward ? (r.lastReward | date: 'mediumDate') : 'Never' }}</td>
-        <td>{{ r.normalRewards }}</td>
-        <td>{{ r.blueRewards }}</td>
-        <td>{{ r.purpleRewards }}</td>
-        <td class="actions">
-          <button type="button" class="small primary" [disabled]="awarding() !== null" (click)="award(r)">
-            Award MVP
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Player</th>
+          <th>Score</th>
+          <th>Last MVP</th>
+          <th>Last reward</th>
+          <th>Normal</th>
+          <th>Blue</th>
+          <th>Purple</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of recommendations(); track r.playerId; let i = $index) {
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ r.player }}</td>
+            <td>
+              <span class="score" [style.--pct]="r.score + '%'"
+                ><span class="score-value">{{ r.score }}</span></span
+              >
+            </td>
+            <td>
+              {{ r.lastMvp ? (r.lastMvp | date: 'mediumDate') : 'Never' }}
+            </td>
+            <td>
+              {{ r.lastReward ? (r.lastReward | date: 'mediumDate') : 'Never' }}
+            </td>
+            <td>{{ r.normalRewards }}</td>
+            <td>{{ r.blueRewards }}</td>
+            <td>{{ r.purpleRewards }}</td>
+            <td class="actions">
+              <button
+                type="button"
+                class="small primary"
+                [disabled]="awarding() !== null"
+                (click)="award(r)"
+              >
+                Award MVP
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

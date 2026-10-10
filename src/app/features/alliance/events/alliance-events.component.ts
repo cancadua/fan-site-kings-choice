@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
@@ -45,8 +51,10 @@ export class AllianceEventsComponent {
           allianceId: alliance.id,
           name,
           description: this.newDescription().trim() || null,
-          date: this.newDate() ? new Date(this.newDate()).toISOString() : undefined,
-        }),
+          date: this.newDate()
+            ? new Date(this.newDate()).toISOString()
+            : undefined,
+        })
       );
       this.newName.set('');
       this.newDescription.set('');
@@ -55,10 +63,11 @@ export class AllianceEventsComponent {
   }
 
   async remove(event: AllianceEvent): Promise<void> {
-    if (!confirm(`Delete "${event.name}"? Rewards given for it are kept.`)) return;
+    if (!confirm(`Delete "${event.name}"? Rewards given for it are kept.`))
+      return;
     await this.run(async () => {
       await firstValueFrom(this.api.deleteEvent(event.id));
-      this.events.update(list => list.filter(e => e.id !== event.id));
+      this.events.update((list) => list.filter((e) => e.id !== event.id));
     });
   }
 

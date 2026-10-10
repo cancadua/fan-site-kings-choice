@@ -21,7 +21,7 @@ export class AppHeaderComponent {
   menuOpen = signal(false);
 
   toggleMenu(): void {
-    this.menuOpen.update(open => !open);
+    this.menuOpen.update((open) => !open);
   }
 
   closeMenu(): void {
@@ -30,10 +30,10 @@ export class AppHeaderComponent {
 
   getIcon(label: string): string {
     const iconMap: Record<string, string> = {
-      'Home': '🏠',
-      'Knights': '⚔️',
-      'Events': '📅',
-      'Alliance': '🛡️'
+      Home: '🏠',
+      Knights: '⚔️',
+      Events: '📅',
+      Alliance: '🛡️',
     };
     return iconMap[label] || '→';
   }

@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from '../../core/enums/events';
@@ -30,10 +35,8 @@ interface EventDetail {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventsComponent implements OnInit {
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-  ) {}
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   activeEvent: Event = Event.UnchartedWaters;
   readonly Event = Event;
@@ -63,7 +66,7 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
     const requestedEvent = this.route.snapshot.queryParamMap.get('event');
-    if (requestedEvent && this.events.some(e => e.id === requestedEvent)) {
+    if (requestedEvent && this.events.some((e) => e.id === requestedEvent)) {
       this.activeEvent = requestedEvent as Event;
     }
   }

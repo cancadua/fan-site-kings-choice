@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
@@ -39,7 +45,11 @@ export class AlliancePlayersComponent {
 
     await this.run(async () => {
       await firstValueFrom(
-        this.api.createPlayer({ allianceId: alliance.id, name, activity: this.clampActivity(this.newActivity()) }),
+        this.api.createPlayer({
+          allianceId: alliance.id,
+          name,
+          activity: this.clampActivity(this.newActivity()),
+        })
       );
       this.newName.set('');
       this.newActivity.set(50);
@@ -48,7 +58,9 @@ export class AlliancePlayersComponent {
   }
 
   async setActivity(player: Player, event: Event): Promise<void> {
-    const activity = this.clampActivity(Number((event.target as HTMLInputElement).value));
+    const activity = this.clampActivity(
+      Number((event.target as HTMLInputElement).value)
+    );
     if (activity === player.activity) return;
     await this.update(player, { activity });
   }
@@ -61,19 +73,28 @@ export class AlliancePlayersComponent {
     if (!confirm(`Delete ${player.name} and all their rewards?`)) return;
     await this.run(async () => {
       await firstValueFrom(this.api.deletePlayer(player.id));
-      this.players.update(list => list.filter(p => p.id !== player.id));
+      this.players.update((list) => list.filter((p) => p.id !== player.id));
     });
   }
 
-  private update(player: Player, patch: { activity?: number; isActive?: boolean }): Promise<void> {
+  private update(
+    player: Player,
+    patch: { activity?: number; isActive?: boolean }
+  ): Promise<void> {
     return this.run(async () => {
-      const updated = await firstValueFrom(this.api.updatePlayer(player.id, patch));
-      this.players.update(list => list.map(p => (p.id === updated.id ? updated : p)));
+      const updated = await firstValueFrom(
+        this.api.updatePlayer(player.id, patch)
+      );
+      this.players.update((list) =>
+        list.map((p) => (p.id === updated.id ? updated : p))
+      );
     });
   }
 
   private clampActivity(value: number): number {
-    return Number.isFinite(value) ? Math.min(100, Math.max(0, Math.round(value))) : 50;
+    return Number.isFinite(value)
+      ? Math.min(100, Math.max(0, Math.round(value)))
+      : 50;
   }
 
   private async load(allianceId: string): Promise<void> {

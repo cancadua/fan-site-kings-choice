@@ -13,10 +13,18 @@ describe('CityButtonComponent', () => {
 
     fixture = TestBed.createComponent(CityButtonComponent);
     component = fixture.componentInstance;
+    component.city = { name: 'Panama City' };
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render the city name', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.city-name')?.textContent).toContain(
+      'Panama City'
+    );
   });
 });
