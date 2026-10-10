@@ -190,7 +190,7 @@
             </td>
             <td>{{ r.allianceName }}</td>
             <td>{{ r.playerName }}</td>
-            <td>{{ r.createdAt | date: 'mediumDate' }}</td>
+            <td>{{ r.createdAt | date }}</td>
             <td class="actions">
               @if (r.status === 'Pending') {
                 <button

@@ -53,7 +53,7 @@
                 {{ m.role }}
               }
             </td>
-            <td>{{ m.joinedAt | date: 'mediumDate' }}</td>
+            <td>{{ m.joinedAt | date }}</td>
             <td class="actions">
               @if (isOwner() && m.role !== 'Owner') {
                 <button type="button" class="small danger" (click)="remove(m)">

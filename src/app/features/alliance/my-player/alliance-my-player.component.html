@@ -22,7 +22,7 @@
           <tbody>
             @for (r of rewards(); track r.id) {
               <tr>
-                <td>{{ r.awardedAt | date: 'mediumDate' }}</td>
+                <td>{{ r.awardedAt | date }}</td>
                 <td>
                   MVP
                   <span class="badge" [class]="tierBadge[r.type]">{{

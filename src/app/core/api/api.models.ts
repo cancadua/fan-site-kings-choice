@@ -6,14 +6,7 @@ export type AllianceRole = 'Member' | 'Owner' | 'Leader';
 export type RewardType = 'Normal' | 'Earl' | 'Duke';
 /** Free-form marker for a player; its meaning is decided by the alliance. */
 export type PlayerColor =
-  | 'None'
-  | 'Orange'
-  | 'Yellow'
-  | 'White'
-  | 'Green'
-  | 'Blue'
-  | 'Red'
-  | 'DarkRed';
+  'None' | 'Orange' | 'Yellow' | 'White' | 'Green' | 'Blue' | 'Red' | 'DarkRed';
 export type LinkRequestStatus =
   'Pending' | 'Accepted' | 'Rejected' | 'Cancelled';
 export type PlayerLinkAction = 'Linked' | 'Unlinked';
