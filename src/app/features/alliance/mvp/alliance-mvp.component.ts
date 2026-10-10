@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 
@@ -38,7 +44,9 @@ export class AllianceMvpComponent {
     this.awarding.set(rec.playerId);
     this.error.set(null);
     try {
-      await firstValueFrom(this.api.createReward({ playerId: rec.playerId, type: 'Mvp' }));
+      await firstValueFrom(
+        this.api.createReward({ playerId: rec.playerId, type: 'Mvp' })
+      );
       await this.load(alliance.id);
     } catch (err) {
       this.error.set(apiErrorMessage(err));
@@ -51,8 +59,11 @@ export class AllianceMvpComponent {
     this.loading.set(true);
     this.error.set(null);
     try {
-      const list = await firstValueFrom(this.api.mvpRecommendations(allianceId));
-      if (this.state.selected()?.id === allianceId) this.recommendations.set(list);
+      const list = await firstValueFrom(
+        this.api.mvpRecommendations(allianceId)
+      );
+      if (this.state.selected()?.id === allianceId)
+        this.recommendations.set(list);
     } catch (err) {
       this.error.set(apiErrorMessage(err));
     } finally {

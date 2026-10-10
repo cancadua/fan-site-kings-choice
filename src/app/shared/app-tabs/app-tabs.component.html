@@ -2,30 +2,30 @@
   <div class="col-24">
     <div class="tabs-wrapper">
       @if (hasPrevTab) {
-      <button
-        type="button"
-        class="tabs-arrow tabs-arrow--left"
-        aria-label="Previous tab"
-        (click)="selectPrevTab()"
-      ></button>
+        <button
+          type="button"
+          class="tabs-arrow tabs-arrow--left"
+          aria-label="Previous tab"
+          (click)="selectPrevTab()"
+        ></button>
       }
       <div class="tabs" #tabsContainer>
         @for (tab of visibleTabs; track $index) {
-        <button
-          [class.active]="tab.value === activeTab()?.value"
-          (click)="selectTab(tab)"
-        >
-          {{ tab.label }}
-        </button>
+          <button
+            [class.active]="tab.value === activeTab()?.value"
+            (click)="selectTab(tab)"
+          >
+            {{ tab.label }}
+          </button>
         }
       </div>
       @if (hasNextTab) {
-      <button
-        type="button"
-        class="tabs-arrow tabs-arrow--right"
-        aria-label="Next tab"
-        (click)="selectNextTab()"
-      ></button>
+        <button
+          type="button"
+          class="tabs-arrow tabs-arrow--right"
+          aria-label="Next tab"
+          (click)="selectNextTab()"
+        ></button>
       }
     </div>
   </div>

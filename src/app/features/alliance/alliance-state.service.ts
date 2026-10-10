@@ -12,7 +12,9 @@ export class AllianceStateService {
   private readonly api = inject(ApiClient);
 
   private readonly alliancesSignal = signal<MyAlliance[]>([]);
-  private readonly selectedIdSignal = signal<string | null>(this.loadSelectedId());
+  private readonly selectedIdSignal = signal<string | null>(
+    this.loadSelectedId()
+  );
   private readonly loadingSignal = signal(false);
   private readonly loadedSignal = signal(false);
   private readonly errorSignal = signal<string | null>(null);
@@ -24,7 +26,11 @@ export class AllianceStateService {
 
   readonly selected = computed(() => {
     const alliances = this.alliancesSignal();
-    return alliances.find(a => a.id === this.selectedIdSignal()) ?? alliances[0] ?? null;
+    return (
+      alliances.find((a) => a.id === this.selectedIdSignal()) ??
+      alliances[0] ??
+      null
+    );
   });
 
   async load(): Promise<void> {

@@ -78,7 +78,7 @@ export class WarriorSceneComponent {
       this.runAfter(this.holdMs(), () => this.beginFadeOut());
 
       this.destroyRef.onDestroy(() => {
-        this.pendingTimers.forEach(timer => clearTimeout(timer));
+        this.pendingTimers.forEach((timer) => clearTimeout(timer));
         this.host.nativeElement.remove();
       });
     });
@@ -88,7 +88,7 @@ export class WarriorSceneComponent {
   protected skip(event?: Event): void {
     event?.preventDefault();
     if (this.fadingOut()) return;
-    this.pendingTimers.forEach(timer => clearTimeout(timer));
+    this.pendingTimers.forEach((timer) => clearTimeout(timer));
     this.pendingTimers.clear();
     this.animating.set(true);
     this.skipped.set(true);

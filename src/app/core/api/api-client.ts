@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -28,8 +32,10 @@ import {
 /** Extracts the API's `{ error }` / ProblemDetails message from a failed request. */
 export function apiErrorMessage(err: unknown): string {
   if (err instanceof HttpErrorResponse) {
-    if (err.status === 0) return 'Cannot reach the server. Try again in a moment.';
-    if (err.status === 429) return 'Too many attempts. Wait a minute and try again.';
+    if (err.status === 0)
+      return 'Cannot reach the server. Try again in a moment.';
+    if (err.status === 429)
+      return 'Too many attempts. Wait a minute and try again.';
     const body: unknown = err.error;
     if (body && typeof body === 'object') {
       const { error, title } = body as { error?: unknown; title?: unknown };
@@ -68,24 +74,40 @@ export class ApiClient {
   }
 
   members(allianceId: string): Observable<Member[]> {
-    return this.http.get<Member[]>(`${this.base}/api/alliances/${allianceId}/members`);
+    return this.http.get<Member[]>(
+      `${this.base}/api/alliances/${allianceId}/members`
+    );
   }
 
   invite(allianceId: string, req: InviteRequest): Observable<void> {
-    return this.http.post<void>(`${this.base}/api/alliances/${allianceId}/invite`, req);
+    return this.http.post<void>(
+      `${this.base}/api/alliances/${allianceId}/invite`,
+      req
+    );
   }
 
-  changeMemberRole(allianceId: string, userId: string, role: AllianceRole): Observable<void> {
-    return this.http.patch<void>(`${this.base}/api/alliances/${allianceId}/members/${userId}`, { role });
+  changeMemberRole(
+    allianceId: string,
+    userId: string,
+    role: AllianceRole
+  ): Observable<void> {
+    return this.http.patch<void>(
+      `${this.base}/api/alliances/${allianceId}/members/${userId}`,
+      { role }
+    );
   }
 
   removeMember(allianceId: string, userId: string): Observable<void> {
-    return this.http.delete<void>(`${this.base}/api/alliances/${allianceId}/members/${userId}`);
+    return this.http.delete<void>(
+      `${this.base}/api/alliances/${allianceId}/members/${userId}`
+    );
   }
 
   // Players
   players(allianceId: string): Observable<Player[]> {
-    return this.http.get<Player[]>(`${this.base}/api/players`, { params: this.allianceParam(allianceId) });
+    return this.http.get<Player[]>(`${this.base}/api/players`, {
+      params: this.allianceParam(allianceId),
+    });
   }
 
   createPlayer(req: CreatePlayerRequest): Observable<Player> {
@@ -102,7 +124,9 @@ export class ApiClient {
 
   // Events
   events(allianceId: string): Observable<AllianceEvent[]> {
-    return this.http.get<AllianceEvent[]>(`${this.base}/api/events`, { params: this.allianceParam(allianceId) });
+    return this.http.get<AllianceEvent[]>(`${this.base}/api/events`, {
+      params: this.allianceParam(allianceId),
+    });
   }
 
   createEvent(req: CreateEventRequest): Observable<AllianceEvent> {
@@ -119,11 +143,15 @@ export class ApiClient {
 
   // Rewards
   rewards(allianceId: string): Observable<Reward[]> {
-    return this.http.get<Reward[]>(`${this.base}/api/rewards`, { params: this.allianceParam(allianceId) });
+    return this.http.get<Reward[]>(`${this.base}/api/rewards`, {
+      params: this.allianceParam(allianceId),
+    });
   }
 
   playerRewards(playerId: string): Observable<Reward[]> {
-    return this.http.get<Reward[]>(`${this.base}/api/rewards/player/${playerId}`);
+    return this.http.get<Reward[]>(
+      `${this.base}/api/rewards/player/${playerId}`
+    );
   }
 
   createReward(req: CreateRewardRequest): Observable<Reward> {
@@ -139,10 +167,16 @@ export class ApiClient {
     return this.http.get<AllianceStats>(`${this.base}/api/stats/${allianceId}`);
   }
 
-  mvpRecommendations(allianceId: string, top?: number): Observable<MvpRecommendation[]> {
+  mvpRecommendations(
+    allianceId: string,
+    top?: number
+  ): Observable<MvpRecommendation[]> {
     let params = this.allianceParam(allianceId);
     if (top) params = params.set('top', top);
-    return this.http.get<MvpRecommendation[]>(`${this.base}/api/recommendations/mvp`, { params });
+    return this.http.get<MvpRecommendation[]>(
+      `${this.base}/api/recommendations/mvp`,
+      { params }
+    );
   }
 
   private allianceParam(allianceId: string): HttpParams {

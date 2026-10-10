@@ -6,7 +6,7 @@
     <select name="player" required [(ngModel)]="playerId">
       <option value="" disabled>Select player…</option>
       @for (p of players(); track p.id) {
-      <option [value]="p.id">{{ p.name }}</option>
+        <option [value]="p.id">{{ p.name }}</option>
       }
     </select>
   </label>
@@ -14,7 +14,7 @@
     Type
     <select name="type" [(ngModel)]="type">
       @for (t of types; track t) {
-      <option [value]="t">{{ t }}</option>
+        <option [value]="t">{{ t }}</option>
       }
     </select>
   </label>
@@ -23,7 +23,7 @@
     <select name="event" [(ngModel)]="eventId">
       <option value="">None</option>
       @for (e of events(); track e.id) {
-      <option [value]="e.id">{{ e.name }}</option>
+        <option [value]="e.id">{{ e.name }}</option>
       }
     </select>
   </label>
@@ -31,38 +31,40 @@
 </form>
 
 @if (error(); as message) {
-<p class="error" role="alert">{{ message }}</p>
+  <p class="error" role="alert">{{ message }}</p>
 }
 
 @if (loading() && rewards().length === 0) {
-<p class="muted">Loading…</p>
+  <p class="muted">Loading…</p>
 } @else if (rewards().length === 0) {
-<p class="muted">No rewards yet.</p>
+  <p class="muted">No rewards yet.</p>
 } @else {
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Player</th>
-        <th>Type</th>
-        <th>Event</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (r of rewards(); track r.id) {
-      <tr>
-        <td>{{ r.awardedAt | date: 'mediumDate' }}</td>
-        <td>{{ r.playerName }}</td>
-        <td>{{ r.type }}</td>
-        <td>{{ eventName(r.eventId) }}</td>
-        <td class="actions">
-          <button type="button" class="small danger" (click)="remove(r)">Remove</button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Player</th>
+          <th>Type</th>
+          <th>Event</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of rewards(); track r.id) {
+          <tr>
+            <td>{{ r.awardedAt | date: 'mediumDate' }}</td>
+            <td>{{ r.playerName }}</td>
+            <td>{{ r.type }}</td>
+            <td>{{ eventName(r.eventId) }}</td>
+            <td class="actions">
+              <button type="button" class="small danger" (click)="remove(r)">
+                Remove
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

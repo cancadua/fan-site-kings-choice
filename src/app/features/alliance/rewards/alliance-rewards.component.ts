@@ -1,10 +1,21 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
-import { AllianceEvent, Player, Reward, RewardType } from '../../../core/api/api.models';
+import {
+  AllianceEvent,
+  Player,
+  Reward,
+  RewardType,
+} from '../../../core/api/api.models';
 import { AllianceStateService } from '../alliance-state.service';
 
 export const REWARD_TYPES: RewardType[] = ['Normal', 'Blue', 'Purple', 'Mvp'];
@@ -50,22 +61,23 @@ export class AllianceRewardsComponent {
           playerId: this.playerId(),
           type: this.type(),
           eventId: this.eventId() || null,
-        }),
+        })
       );
       await this.loadRewards(alliance.id);
     });
   }
 
   async remove(reward: Reward): Promise<void> {
-    if (!confirm(`Remove ${reward.type} reward for ${reward.playerName}?`)) return;
+    if (!confirm(`Remove ${reward.type} reward for ${reward.playerName}?`))
+      return;
     await this.run(async () => {
       await firstValueFrom(this.api.deleteReward(reward.id));
-      this.rewards.update(list => list.filter(r => r.id !== reward.id));
+      this.rewards.update((list) => list.filter((r) => r.id !== reward.id));
     });
   }
 
   eventName(id: string | null): string {
-    return this.events().find(e => e.id === id)?.name ?? '';
+    return this.events().find((e) => e.id === id)?.name ?? '';
   }
 
   private async load(allianceId: string): Promise<void> {
@@ -77,7 +89,7 @@ export class AllianceRewardsComponent {
         firstValueFrom(this.api.rewards(allianceId)),
       ]);
       if (this.state.selected()?.id !== allianceId) return;
-      this.players.set(players.filter(p => p.isActive));
+      this.players.set(players.filter((p) => p.isActive));
       this.events.set(events);
       this.rewards.set(rewards);
       this.playerId.set('');

@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
@@ -45,7 +52,9 @@ export class AllianceMembersComponent {
     if (!alliance || !email) return;
 
     await this.run(async () => {
-      await firstValueFrom(this.api.invite(alliance.id, { email, role: this.inviteRole() }));
+      await firstValueFrom(
+        this.api.invite(alliance.id, { email, role: this.inviteRole() })
+      );
       this.inviteEmail.set('');
       this.info.set(`${email} was added as ${this.inviteRole()}.`);
       await this.loadMembers(alliance.id);
@@ -59,7 +68,9 @@ export class AllianceMembersComponent {
     if (!alliance || role === member.role) return;
 
     await this.run(async () => {
-      await firstValueFrom(this.api.changeMemberRole(alliance.id, member.userId, role));
+      await firstValueFrom(
+        this.api.changeMemberRole(alliance.id, member.userId, role)
+      );
       await this.loadMembers(alliance.id);
     });
     // If the change failed the list still holds the old role; put the select back.
@@ -68,7 +79,8 @@ export class AllianceMembersComponent {
 
   async remove(member: Member): Promise<void> {
     const alliance = this.state.selected();
-    if (!alliance || !confirm(`Remove ${member.username} from the alliance?`)) return;
+    if (!alliance || !confirm(`Remove ${member.username} from the alliance?`))
+      return;
 
     await this.run(async () => {
       await firstValueFrom(this.api.removeMember(alliance.id, member.userId));

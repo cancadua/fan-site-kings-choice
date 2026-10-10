@@ -60,19 +60,19 @@
       >
         <div class="city-list">
           @for (city of filteredNonEmpty(); let i = $index; track $index) {
-          <div
-            draggable="true"
-            (dragstart)="onDragStart(city, 'A', i, $event)"
-            (dragover)="onDragOver($event)"
-            (drop)="onDrop('A', i)"
-            class="city-item"
-          >
-            <app-city-button
-              [city]="city"
-              [nonEmpty]="true"
-              (move)="moveCity(city, 'A')"
-            ></app-city-button>
-          </div>
+            <div
+              draggable="true"
+              (dragstart)="onDragStart(city, 'A', i, $event)"
+              (dragover)="onDragOver($event)"
+              (drop)="onDrop('A', i)"
+              class="city-item"
+            >
+              <app-city-button
+                [city]="city"
+                [nonEmpty]="true"
+                (move)="moveCity(city, 'A')"
+              ></app-city-button>
+            </div>
           }
         </div>
       </div>
@@ -91,18 +91,18 @@
       >
         <div class="city-list">
           @for (city of filteredEmpty(); let i = $index; track $index) {
-          <div
-            draggable="true"
-            (dragstart)="onDragStart(city, 'B', i, $event)"
-            (dragover)="onDragOver($event)"
-            (drop)="onDrop('B', i)"
-            class="city-item"
-          >
-            <app-city-button
-              [city]="city"
-              (move)="moveCity(city, 'B')"
-            ></app-city-button>
-          </div>
+            <div
+              draggable="true"
+              (dragstart)="onDragStart(city, 'B', i, $event)"
+              (dragover)="onDragOver($event)"
+              (drop)="onDrop('B', i)"
+              class="city-item"
+            >
+              <app-city-button
+                [city]="city"
+                (move)="moveCity(city, 'B')"
+              ></app-city-button>
+            </div>
           }
         </div>
       </div>

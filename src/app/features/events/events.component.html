@@ -7,21 +7,26 @@
   (activeIdChange)="onEventChange($event)"
 >
   <!-- Render event-specific component -->
-  @switch (activeEvent) { @case (Event.UnchartedWaters) {
-  <div class="events-component">
-    <app-uncharted-waters></app-uncharted-waters>
-  </div>
-  } @case (Event.ReapWhatYouSow) {
-  <div class="events-component">
-    <app-reap-what-you-sow></app-reap-what-you-sow>
-  </div>
-  } @case (Event.StruggleForSupremacy) {
-  <div class="events-component">
-    <app-struggle-for-supremacy></app-struggle-for-supremacy>
-  </div>
-  } @case (Event.SchoolOfAthens) {
-  <div class="events-component">
-    <app-school-of-athens></app-school-of-athens>
-  </div>
-  } }
+  @switch (activeEvent) {
+    @case (Event.UnchartedWaters) {
+      <div class="events-component">
+        <app-uncharted-waters></app-uncharted-waters>
+      </div>
+    }
+    @case (Event.ReapWhatYouSow) {
+      <div class="events-component">
+        <app-reap-what-you-sow></app-reap-what-you-sow>
+      </div>
+    }
+    @case (Event.StruggleForSupremacy) {
+      <div class="events-component">
+        <app-struggle-for-supremacy></app-struggle-for-supremacy>
+      </div>
+    }
+    @case (Event.SchoolOfAthens) {
+      <div class="events-component">
+        <app-school-of-athens></app-school-of-athens>
+      </div>
+    }
+  }
 </app-nav-hub>

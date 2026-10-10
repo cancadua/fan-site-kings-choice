@@ -1,11 +1,17 @@
 import { ContentSectionComponent } from './content-section.component';
-import { ContentStepsComponent, ContentStepComponent } from './content-steps.component';
+import {
+  ContentStepsComponent,
+  ContentStepComponent,
+} from './content-steps.component';
 import { ContentTextComponent } from './content-text.component';
 import { ContentNoteComponent } from './content-note.component';
 import { ContentListComponent } from './content-list.component';
 
 export { ContentSectionComponent } from './content-section.component';
-export { ContentStepsComponent, ContentStepComponent } from './content-steps.component';
+export {
+  ContentStepsComponent,
+  ContentStepComponent,
+} from './content-steps.component';
 export { ContentTextComponent } from './content-text.component';
 export { ContentNoteComponent } from './content-note.component';
 export { ContentListComponent } from './content-list.component';
