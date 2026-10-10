@@ -63,6 +63,14 @@ export const allianceRoutes: Routes = [
           ),
       },
       {
+        path: 'link-history',
+        ...managersOnly,
+        loadComponent: () =>
+          import('./link-history/alliance-link-history.component').then(
+            (m) => m.AllianceLinkHistoryComponent
+          ),
+      },
+      {
         path: 'link',
         loadComponent: () =>
           import('./link-account/alliance-link-account.component').then(

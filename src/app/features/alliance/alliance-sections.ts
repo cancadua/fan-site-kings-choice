@@ -34,5 +34,6 @@ export const ALLIANCE_SECTIONS: readonly AllianceSection[] = [
   { label: 'Rewards', path: 'rewards', roles: MANAGER_ROLES },
   { label: 'MVP', path: 'mvp', roles: MANAGER_ROLES },
   { label: 'Members', path: 'members', roles: MANAGER_ROLES },
+  { label: 'Link history', path: 'link-history', roles: MANAGER_ROLES },
   { label: 'Link account', path: 'link', roles: ALL_ROLES },
 ];
