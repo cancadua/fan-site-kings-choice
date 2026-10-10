@@ -8,7 +8,7 @@ describe('AppDropComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppDropComponent],
+      imports: [AppDropComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppDropComponent);

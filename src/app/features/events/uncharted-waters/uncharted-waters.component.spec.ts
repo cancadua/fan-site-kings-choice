@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { UnchartedWatersComponent } from './uncharted-waters.component';
 
@@ -9,6 +10,7 @@ describe('UnchartedWatersComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UnchartedWatersComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UnchartedWatersComponent);
