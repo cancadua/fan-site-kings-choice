@@ -61,9 +61,9 @@ const routes: Routes = [
 
 ### Prerequisites
 
-- Node.js >= 18.x
-- npm >= 9.x
-- Angular CLI 20.x (installed as dev dependency)
+- Node.js 24.x LTS (matches CI)
+- npm >= 11.x
+- Angular CLI 22.x (installed as dev dependency)
 
 ### Getting Started
 
@@ -83,7 +83,8 @@ npm start
 | ---------------- | ------------------------------ |
 | `npm start`      | Run dev server with hot reload |
 | `npm run build`  | Production build               |
-| `npm test`       | Run unit tests                 |
+| `npm test`       | Run unit tests (Vitest)        |
+| `npm run lint`   | Lint with ESLint               |
 | `npm run format` | Format code with Prettier      |
 | `npm run watch`  | Watch mode build               |
 
@@ -108,6 +109,7 @@ npm start
 3. **Before Committing**:
    ```bash
    npm test          # Ensure all tests pass
+   npm run lint      # Lint code
    npm run format    # Format code
    git status        # Review changes
    git add [files]   # Stage specific files
@@ -318,7 +320,8 @@ export class EventState {
 ### Unit Tests
 
 - **Coverage Target**: Aim for 80%+ coverage
-- **Framework**: Jasmine/Karma
+- **Framework**: Vitest (`@angular/build:unit-test`, jsdom)
+- **Setup**: `src/test-setup.ts` stubs browser APIs jsdom lacks (e.g. `scrollBy`)
 - **Scope**: Test business logic, not implementation details
 - **Run**: `npm test`
 
@@ -331,14 +334,12 @@ describe('EventService', () => {
     service = TestBed.inject(EventService);
   });
 
-  it('should return events', (done) => {
+  it('should return events', async () => {
     const mockEvents = [{ id: '1', name: 'Event 1' }];
-    spyOn(service, 'getEvents').and.returnValue(of(mockEvents));
+    vi.spyOn(service, 'getEvents').mockReturnValue(of(mockEvents));
 
-    service.getEvents().subscribe((events) => {
-      expect(events).toEqual(mockEvents);
-      done();
-    });
+    const events = await firstValueFrom(service.getEvents());
+    expect(events).toEqual(mockEvents);
   });
 });
 ```
@@ -366,8 +367,8 @@ npm run build
 ### Build Configuration
 
 - **Budget Limits** (from angular.json):
-  - Initial bundle: 1MB max
-  - Component styles: 8KB max per component
+  - Initial bundle: 500kB warning, 1MB error
+  - Component styles: 4kB warning, 8kB error per component
 - **Optimization**: Enabled by default in production
 - **Source Maps**: Disabled in production for security
 
@@ -475,11 +476,13 @@ Always test after updating major versions.
 
 **VS Code Recommended Extensions**:
 
+See `.vscode/extensions.json` (VS Code prompts to install them). Key ones:
+
 - Angular Language Service
 - Prettier - Code Formatter
-- TypeScript Vue Plugin (Volar)
 - ESLint
-- Debugger for Chrome
+- Vitest Explorer
+- Supabase
 
 **VS Code Settings** (`settings.json`):
 
@@ -533,8 +536,9 @@ npm run ng -- cache clean
 # Run single test file
 npm test -- --include='**/my-feature/**'
 
-# Run with debugging
-npm test -- --browsers=Chrome --watch
+# Run in watch mode / with the Vitest UI
+npm test -- --watch
+npm test -- --ui
 ```
 
 ---
@@ -542,7 +546,7 @@ npm test -- --browsers=Chrome --watch
 ## Performance Targets
 
 - **Lighthouse Score**: Target 90+
-- **Bundle Size**: Keep under 1MB (configured)
+- **Bundle Size**: Keep under 500kB initial (warning), 1MB hard limit
 - **First Contentful Paint**: < 2.5s
 - **Time to Interactive**: < 5s
 

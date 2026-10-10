@@ -1,5 +1,8 @@
 import { provideHttpClient } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 
@@ -17,13 +20,17 @@ describe('Login', () => {
     localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [Login],
-      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
 
     http = TestBed.inject(HttpTestingController);
     session = TestBed.inject(SessionService);
     router = TestBed.inject(Router);
-    spyOn(router, 'navigate').and.resolveTo(true);
+    vi.spyOn(router, 'navigate').mockResolvedValue(true);
 
     fixture = TestBed.createComponent(Login);
     component = fixture.componentInstance;
@@ -44,14 +51,16 @@ describe('Login', () => {
     component.password.set('secret1');
     const done = component.submit();
 
-    const req = http.expectOne(r => r.url.endsWith('/api/auth/login'));
+    const req = http.expectOne((r) => r.url.endsWith('/api/auth/login'));
     expect(req.request.body).toEqual({ email: 'a@b.co', password: 'secret1' });
     // Unsigned token with an exp far in the future.
-    const payload = btoa(JSON.stringify({ exp: Math.floor(Date.now() / 1000) + 3600 }));
+    const payload = btoa(
+      JSON.stringify({ exp: Math.floor(Date.now() / 1000) + 3600 })
+    );
     req.flush({ token: `x.${payload}.y` });
     await done;
 
-    expect(session.isLoggedIn()).toBeTrue();
+    expect(session.isLoggedIn()).toBe(true);
     expect(router.navigate).toHaveBeenCalledWith(['/alliance']);
   });
 
@@ -60,13 +69,15 @@ describe('Login', () => {
     component.password.set('wrong');
     const done = component.submit();
 
-    http.expectOne(r => r.url.endsWith('/api/auth/login')).flush(
-      { error: 'Invalid email or password.' },
-      { status: 401, statusText: 'Unauthorized' },
-    );
+    http
+      .expectOne((r) => r.url.endsWith('/api/auth/login'))
+      .flush(
+        { error: 'Invalid email or password.' },
+        { status: 401, statusText: 'Unauthorized' }
+      );
     await done;
 
     expect(component.error()).toBe('Invalid email or password.');
-    expect(session.isLoggedIn()).toBeFalse();
+    expect(session.isLoggedIn()).toBe(false);
   });
 });

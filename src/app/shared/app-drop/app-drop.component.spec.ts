@@ -21,11 +21,11 @@ describe('AppDropComponent', () => {
   });
 
   it('should toggle dropdown', () => {
-    expect(component.isOpen).toBeFalse();
+    expect(component.isOpen).toBe(false);
     component.toggleDropdown();
-    expect(component.isOpen).toBeTrue();
+    expect(component.isOpen).toBe(true);
     component.toggleDropdown();
-    expect(component.isOpen).toBeFalse();
+    expect(component.isOpen).toBe(false);
   });
 
   it('should display items', () => {
