@@ -6,24 +6,18 @@ import {
   signal,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
-import {
-  AllianceEvent,
-  Player,
-  Reward,
-  RewardType,
-} from '../../../core/api/api.models';
+import { AllianceEvent, Player, Reward } from '../../../core/api/api.models';
 import { AllianceStateService } from '../alliance-state.service';
-
-export const REWARD_TYPES: RewardType[] = ['Normal', 'Blue', 'Purple', 'Mvp'];
+import { MVP_TIER_BADGE } from '../mvp-tiers';
+import { AwardMvpFormComponent } from './award-mvp-form/award-mvp-form.component';
 
 @Component({
   selector: 'app-alliance-rewards',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [DatePipe, AwardMvpFormComponent],
   templateUrl: './alliance-rewards.component.html',
   styleUrls: ['./alliance-rewards.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,17 +26,13 @@ export class AllianceRewardsComponent {
   private readonly api = inject(ApiClient);
   private readonly state = inject(AllianceStateService);
 
-  readonly types = REWARD_TYPES;
+  readonly tierBadge = MVP_TIER_BADGE;
 
   rewards = signal<Reward[]>([]);
   players = signal<Player[]>([]);
   events = signal<AllianceEvent[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
-
-  playerId = signal('');
-  type = signal<RewardType>('Normal');
-  eventId = signal('');
 
   constructor() {
     effect(() => {
@@ -51,24 +41,13 @@ export class AllianceRewardsComponent {
     });
   }
 
-  async add(): Promise<void> {
+  async onAwarded(): Promise<void> {
     const alliance = this.state.selected();
-    if (!alliance || !this.playerId()) return;
-
-    await this.run(async () => {
-      await firstValueFrom(
-        this.api.createReward({
-          playerId: this.playerId(),
-          type: this.type(),
-          eventId: this.eventId() || null,
-        })
-      );
-      await this.loadRewards(alliance.id);
-    });
+    if (alliance) await this.run(() => this.loadRewards(alliance.id));
   }
 
   async remove(reward: Reward): Promise<void> {
-    if (!confirm(`Remove ${reward.type} reward for ${reward.playerName}?`))
+    if (!confirm(`Remove the ${reward.type} MVP of ${reward.playerName}?`))
       return;
     await this.run(async () => {
       await firstValueFrom(this.api.deleteReward(reward.id));
@@ -92,8 +71,6 @@ export class AllianceRewardsComponent {
       this.players.set(players.filter((p) => p.isActive));
       this.events.set(events);
       this.rewards.set(rewards);
-      this.playerId.set('');
-      this.eventId.set('');
     });
     this.loading.set(false);
   }

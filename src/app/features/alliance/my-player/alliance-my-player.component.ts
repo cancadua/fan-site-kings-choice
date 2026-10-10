@@ -12,6 +12,7 @@ import { firstValueFrom } from 'rxjs';
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
 import { Reward } from '../../../core/api/api.models';
 import { AllianceStateService } from '../alliance-state.service';
+import { MVP_TIER_BADGE } from '../mvp-tiers';
 
 /** What a plain Member sees: their own player and its rewards. */
 @Component({
@@ -25,6 +26,8 @@ import { AllianceStateService } from '../alliance-state.service';
 export class AllianceMyPlayerComponent {
   private readonly api = inject(ApiClient);
   readonly state = inject(AllianceStateService);
+
+  readonly tierBadge = MVP_TIER_BADGE;
 
   rewards = signal<Reward[]>([]);
   loading = signal(false);

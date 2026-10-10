@@ -9,13 +9,15 @@ import { DatePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
-import { MvpRecommendation } from '../../../core/api/api.models';
+import { AllianceEvent, MvpRecommendation } from '../../../core/api/api.models';
+import { AppModalComponent } from '../../../shared/app-modal/app-modal.component';
 import { AllianceStateService } from '../alliance-state.service';
+import { AwardMvpFormComponent } from '../rewards/award-mvp-form/award-mvp-form.component';
 
 @Component({
   selector: 'app-alliance-mvp',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, AppModalComponent, AwardMvpFormComponent],
   templateUrl: './alliance-mvp.component.html',
   styleUrls: ['./alliance-mvp.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,7 +29,9 @@ export class AllianceMvpComponent {
   recommendations = signal<MvpRecommendation[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
-  awarding = signal<string | null>(null);
+  events = signal<AllianceEvent[]>([]);
+  /** Recommendation whose "Award MVP" form is open. */
+  awarding = signal<MvpRecommendation | null>(null);
 
   constructor() {
     effect(() => {
@@ -36,34 +40,24 @@ export class AllianceMvpComponent {
     });
   }
 
-  async award(rec: MvpRecommendation): Promise<void> {
+  async onAwarded(): Promise<void> {
+    this.awarding.set(null);
     const alliance = this.state.selected();
-    if (!alliance || this.awarding()) return;
-    if (!confirm(`Award MVP to ${rec.player}?`)) return;
-
-    this.awarding.set(rec.playerId);
-    this.error.set(null);
-    try {
-      await firstValueFrom(
-        this.api.createReward({ playerId: rec.playerId, type: 'Mvp' })
-      );
-      await this.load(alliance.id);
-    } catch (err) {
-      this.error.set(apiErrorMessage(err));
-    } finally {
-      this.awarding.set(null);
-    }
+    if (alliance) await this.load(alliance.id);
   }
 
   private async load(allianceId: string): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
     try {
-      const list = await firstValueFrom(
-        this.api.mvpRecommendations(allianceId)
-      );
-      if (this.state.selected()?.id === allianceId)
+      const [list, events] = await Promise.all([
+        firstValueFrom(this.api.mvpRecommendations(allianceId)),
+        firstValueFrom(this.api.events(allianceId)),
+      ]);
+      if (this.state.selected()?.id === allianceId) {
         this.recommendations.set(list);
+        this.events.set(events);
+      }
     } catch (err) {
       this.error.set(apiErrorMessage(err));
     } finally {

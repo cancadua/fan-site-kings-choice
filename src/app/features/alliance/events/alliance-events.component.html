@@ -1,4 +1,8 @@
 <h1>Events</h1>
+<p class="muted intro">
+  Recurring event types (e.g. Showdown). Each MVP can name the event it was
+  awarded for; the date belongs to the MVP.
+</p>
 
 <form class="toolbar" (ngSubmit)="add()">
   <label>
@@ -10,10 +14,6 @@
       required
       [(ngModel)]="newName"
     />
-  </label>
-  <label>
-    Date
-    <input type="date" name="date" [(ngModel)]="newDate" />
   </label>
   <label class="grow">
     Description (optional)
@@ -37,7 +37,6 @@
     <table>
       <thead>
         <tr>
-          <th>Date</th>
           <th>Name</th>
           <th>Description</th>
           <th></th>
@@ -46,7 +45,6 @@
       <tbody>
         @for (e of events(); track e.id) {
           <tr>
-            <td>{{ e.date | date: 'mediumDate' }}</td>
             <td>{{ e.name }}</td>
             <td class="wrap">{{ e.description }}</td>
             <td class="actions">

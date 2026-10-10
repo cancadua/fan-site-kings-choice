@@ -3,27 +3,32 @@
     <h1>{{ alliance.myPlayerName }}</h1>
     <p class="muted">Your player in {{ alliance.name }}.</p>
 
-    <h2>Your rewards</h2>
+    <h2>Your MVPs</h2>
     @if (error(); as message) {
       <p class="error" role="alert">{{ message }}</p>
     } @else if (loading() && rewards().length === 0) {
       <p class="muted">Loading…</p>
     } @else if (rewards().length === 0) {
-      <p class="muted">No rewards yet.</p>
+      <p class="muted">No MVPs yet.</p>
     } @else {
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>Date</th>
-              <th>Type</th>
+              <th>Award</th>
             </tr>
           </thead>
           <tbody>
             @for (r of rewards(); track r.id) {
               <tr>
                 <td>{{ r.awardedAt | date: 'mediumDate' }}</td>
-                <td>{{ r.type }}</td>
+                <td>
+                  MVP
+                  <span class="badge" [class]="tierBadge[r.type]">{{
+                    r.type
+                  }}</span>
+                </td>
               </tr>
             }
           </tbody>

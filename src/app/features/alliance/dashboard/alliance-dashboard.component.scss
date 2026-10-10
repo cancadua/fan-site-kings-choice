@@ -47,6 +47,23 @@ h1 {
     color: $knight-amber;
   }
 
+  // Tier colors match the MVP badges.
+  .earl {
+    border-left-color: #64b5f6;
+
+    strong {
+      color: #64b5f6;
+    }
+  }
+
+  .duke {
+    border-left-color: #ce93d8;
+
+    strong {
+      color: #ce93d8;
+    }
+  }
+
   span {
     color: $knight-text-muted;
     font-size: 0.85rem;

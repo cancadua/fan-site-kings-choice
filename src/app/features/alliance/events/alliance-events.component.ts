@@ -5,7 +5,6 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
@@ -16,7 +15,7 @@ import { AllianceStateService } from '../alliance-state.service';
 @Component({
   selector: 'app-alliance-events',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [FormsModule],
   templateUrl: './alliance-events.component.html',
   styleUrls: ['./alliance-events.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,7 +30,6 @@ export class AllianceEventsComponent {
 
   newName = signal('');
   newDescription = signal('');
-  newDate = signal(new Date().toISOString().slice(0, 10));
 
   constructor() {
     effect(() => {
@@ -51,9 +49,6 @@ export class AllianceEventsComponent {
           allianceId: alliance.id,
           name,
           description: this.newDescription().trim() || null,
-          date: this.newDate()
-            ? new Date(this.newDate()).toISOString()
-            : undefined,
         })
       );
       this.newName.set('');

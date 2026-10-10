@@ -1,34 +1,12 @@
-<h1>Rewards</h1>
+<h1>MVP awards</h1>
 
-<form class="toolbar" (ngSubmit)="add()">
-  <label>
-    Player
-    <select name="player" required [(ngModel)]="playerId">
-      <option value="" disabled>Select player…</option>
-      @for (p of players(); track p.id) {
-        <option [value]="p.id">{{ p.name }}</option>
-      }
-    </select>
-  </label>
-  <label>
-    Type
-    <select name="type" [(ngModel)]="type">
-      @for (t of types; track t) {
-        <option [value]="t">{{ t }}</option>
-      }
-    </select>
-  </label>
-  <label>
-    Event (optional)
-    <select name="event" [(ngModel)]="eventId">
-      <option value="">None</option>
-      @for (e of events(); track e.id) {
-        <option [value]="e.id">{{ e.name }}</option>
-      }
-    </select>
-  </label>
-  <button type="submit" class="primary" [disabled]="!playerId()">Award</button>
-</form>
+<div class="toolbar">
+  <app-award-mvp-form
+    [players]="players()"
+    [events]="events()"
+    (awarded)="onAwarded()"
+  />
+</div>
 
 @if (error(); as message) {
   <p class="error" role="alert">{{ message }}</p>
@@ -37,7 +15,7 @@
 @if (loading() && rewards().length === 0) {
   <p class="muted">Loading…</p>
 } @else if (rewards().length === 0) {
-  <p class="muted">No rewards yet.</p>
+  <p class="muted">No MVPs awarded yet.</p>
 } @else {
   <div class="table-wrap">
     <table>
@@ -45,7 +23,7 @@
         <tr>
           <th>Date</th>
           <th>Player</th>
-          <th>Type</th>
+          <th>Award</th>
           <th>Event</th>
           <th></th>
         </tr>
@@ -55,7 +33,12 @@
           <tr>
             <td>{{ r.awardedAt | date: 'mediumDate' }}</td>
             <td>{{ r.playerName }}</td>
-            <td>{{ r.type }}</td>
+            <td>
+              MVP
+              <span class="badge" [class]="tierBadge[r.type]">{{
+                r.type
+              }}</span>
+            </td>
             <td>{{ eventName(r.eventId) }}</td>
             <td class="actions">
               <button type="button" class="small danger" (click)="remove(r)">

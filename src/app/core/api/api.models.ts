@@ -2,7 +2,8 @@
 // Dates are ISO-8601 strings.
 
 export type AllianceRole = 'Member' | 'Owner' | 'Leader';
-export type RewardType = 'Normal' | 'Blue' | 'Purple' | 'Mvp';
+/** Every reward is an MVP; the type is its tier. */
+export type RewardType = 'Normal' | 'Earl' | 'Duke';
 export type LinkRequestStatus =
   'Pending' | 'Accepted' | 'Rejected' | 'Cancelled';
 export type PlayerLinkAction = 'Linked' | 'Unlinked';
@@ -152,20 +153,17 @@ export interface AllianceEvent {
   allianceId: string;
   name: string;
   description: string | null;
-  date: string;
 }
 
 export interface CreateEventRequest {
   allianceId: string;
   name: string;
   description?: string | null;
-  date?: string;
 }
 
 export interface UpdateEventRequest {
   name?: string;
   description?: string | null;
-  date?: string;
 }
 
 // Rewards
@@ -191,18 +189,17 @@ export interface PlayerStats {
   player: string;
   isActive: boolean;
   normal: number;
-  blue: number;
-  purple: number;
-  mvp: number;
+  earl: number;
+  duke: number;
+  /** Number of MVPs of any tier. */
   total: number;
   lastReward: string | null;
 }
 
 export interface RewardTotals {
   normal: number;
-  blue: number;
-  purple: number;
-  mvp: number;
+  earl: number;
+  duke: number;
   total: number;
 }
 
@@ -217,9 +214,8 @@ export interface MvpRecommendation {
   playerId: string;
   player: string;
   score: number;
-  lastReward: string | null;
   lastMvp: string | null;
   normalRewards: number;
-  blueRewards: number;
-  purpleRewards: number;
+  earlRewards: number;
+  dukeRewards: number;
 }

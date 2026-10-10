@@ -1,0 +1,48 @@
+<form class="award" (ngSubmit)="submit()">
+  @if (lockPlayer()) {
+    <p class="player">
+      Player: <strong>{{ playerName() }}</strong>
+    </p>
+  } @else {
+    <label>
+      Player
+      <select name="player" required [(ngModel)]="playerId">
+        <option value="" disabled>Select player…</option>
+        @for (p of players(); track p.id) {
+          <option [value]="p.id">{{ p.name }}</option>
+        }
+      </select>
+    </label>
+  }
+  <label>
+    Tier
+    <select name="tier" [(ngModel)]="tier">
+      @for (t of tiers; track t) {
+        <option [value]="t">{{ t }}</option>
+      }
+    </select>
+  </label>
+  <label>
+    Event (optional)
+    <select name="event" [(ngModel)]="eventId">
+      <option value="">None</option>
+      @for (e of events(); track e.id) {
+        <option [value]="e.id">{{ e.name }}</option>
+      }
+    </select>
+  </label>
+  <label>
+    Date
+    <input type="date" name="date" required [(ngModel)]="date" />
+  </label>
+  <button
+    type="submit"
+    class="primary"
+    [disabled]="saving() || !playerId() || !date()"
+  >
+    {{ saving() ? 'Saving…' : 'Award MVP' }}
+  </button>
+</form>
+@if (error(); as message) {
+  <p class="error" role="alert">{{ message }}</p>
+}

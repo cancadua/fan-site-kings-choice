@@ -1,7 +1,7 @@
 <h1>MVP recommendations</h1>
 <p class="muted intro">
-  Active players ranked 0–100 by activity, time since their last MVP and last
-  reward, and how few rewards they've had.
+  Active players ranked 0–100 by activity, time since their last MVP, and how
+  few MVPs of each tier they've had.
 </p>
 
 @if (error(); as message) {
@@ -21,10 +21,9 @@
           <th>Player</th>
           <th>Score</th>
           <th>Last MVP</th>
-          <th>Last reward</th>
           <th>Normal</th>
-          <th>Blue</th>
-          <th>Purple</th>
+          <th>Earl</th>
+          <th>Duke</th>
           <th></th>
         </tr>
       </thead>
@@ -41,18 +40,14 @@
             <td>
               {{ r.lastMvp ? (r.lastMvp | date: 'mediumDate') : 'Never' }}
             </td>
-            <td>
-              {{ r.lastReward ? (r.lastReward | date: 'mediumDate') : 'Never' }}
-            </td>
             <td>{{ r.normalRewards }}</td>
-            <td>{{ r.blueRewards }}</td>
-            <td>{{ r.purpleRewards }}</td>
+            <td>{{ r.earlRewards }}</td>
+            <td>{{ r.dukeRewards }}</td>
             <td class="actions">
               <button
                 type="button"
                 class="small primary"
-                [disabled]="awarding() !== null"
-                (click)="award(r)"
+                (click)="awarding.set(r)"
               >
                 Award MVP
               </button>
@@ -63,3 +58,19 @@
     </table>
   </div>
 }
+
+<app-modal
+  title="Award MVP"
+  [open]="awarding() !== null"
+  (closed)="awarding.set(null)"
+>
+  @if (awarding(); as rec) {
+    <app-award-mvp-form
+      [players]="[{ id: rec.playerId, name: rec.player }]"
+      [playerId]="rec.playerId"
+      [lockPlayer]="true"
+      [events]="events()"
+      (awarded)="onAwarded()"
+    />
+  }
+</app-modal>
