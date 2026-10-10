@@ -1,4 +1,5 @@
 @use 'alliance-page' as *;
+@use 'variables' as *;
 
 :host {
   display: block;
@@ -7,4 +8,70 @@
 
 .activity {
   width: 5rem;
+}
+
+.message {
+  max-width: 20rem;
+  white-space: normal;
+}
+
+// Row menu: a popover in the top layer, positioned by placeMenu().
+.row-menu {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 0.25rem;
+  background: $knight-bg-end;
+  border: 1px solid rgba($knight-amber, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+  }
+}
+
+.link-code {
+  margin: 1rem 0;
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-align: center;
+  color: $knight-amber;
+  user-select: all;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: $knight-text-muted;
+  }
+
+  .hint {
+    font-size: 0.75rem;
+  }
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+  &--start {
+    justify-content: flex-start;
+  }
 }

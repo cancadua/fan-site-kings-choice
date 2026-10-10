@@ -26,6 +26,16 @@
           [routerLinkActiveOptions]="{ exact: true }"
         >
           {{ link.label }}
+          @if (link.showsPendingRequests && state.pendingRequests().length) {
+            <span
+              class="nav-badge"
+              [attr.aria-label]="
+                state.pendingRequests().length + ' pending link requests'
+              "
+            >
+              {{ state.pendingRequests().length }}
+            </span>
+          }
         </a>
       }
     </nav>

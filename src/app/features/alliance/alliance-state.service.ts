@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../core/api/api-client';
-import { MyAlliance } from '../../core/api/api.models';
+import { LinkRequest, MyAlliance } from '../../core/api/api.models';
 import { isManagerRole } from './alliance-sections';
 
 const SELECTED_KEY = 'kc_selected_alliance';
@@ -19,12 +19,15 @@ export class AllianceStateService {
   private readonly loadingSignal = signal(false);
   private readonly loadedSignal = signal(false);
   private readonly errorSignal = signal<string | null>(null);
+  private readonly pendingRequestsSignal = signal<LinkRequest[]>([]);
   private inFlight: Promise<void> | null = null;
 
   readonly alliances = this.alliancesSignal.asReadonly();
   readonly loading = this.loadingSignal.asReadonly();
   readonly loaded = this.loadedSignal.asReadonly();
   readonly error = this.errorSignal.asReadonly();
+  /** Pending link requests of the selected alliance (managers only). */
+  readonly pendingRequests = this.pendingRequestsSignal.asReadonly();
 
   readonly selected = computed(() => {
     const alliances = this.alliancesSignal();
@@ -34,6 +37,9 @@ export class AllianceStateService {
       null
     );
   });
+
+  /** Changes only when another alliance is selected, not when the list reloads. */
+  readonly selectedId = computed(() => this.selected()?.id ?? null);
 
   /** True when the user is Owner or Leader of the selected alliance. */
   readonly isManager = computed(() => isManagerRole(this.selected()?.myRole));
@@ -47,6 +53,24 @@ export class AllianceStateService {
   /** Loads the alliance list unless it is already loaded. */
   ensureLoaded(): Promise<void> {
     return this.loadedSignal() ? Promise.resolve() : this.load();
+  }
+
+  /** Refreshes the pending link requests; only managers of the selected alliance have any. */
+  async loadPendingRequests(): Promise<void> {
+    const allianceId = this.selectedId();
+    if (!allianceId || !this.isManager()) {
+      this.pendingRequestsSignal.set([]);
+      return;
+    }
+    try {
+      const requests = await firstValueFrom(
+        this.api.allianceLinkRequests(allianceId)
+      );
+      if (this.selectedId() === allianceId)
+        this.pendingRequestsSignal.set(requests);
+    } catch {
+      // Only feeds the nav badge and the Players page list; keep the last known value.
+    }
   }
 
   select(id: string): void {
@@ -66,6 +90,7 @@ export class AllianceStateService {
 
   reset(): void {
     this.alliancesSignal.set([]);
+    this.pendingRequestsSignal.set([]);
     this.loadedSignal.set(false);
     this.errorSignal.set(null);
   }

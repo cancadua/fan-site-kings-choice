@@ -5,6 +5,7 @@ import {
   effect,
   inject,
   signal,
+  untracked,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -53,6 +54,13 @@ export class AllianceShellComponent {
 
   constructor() {
     void this.state.load();
+
+    effect(() => {
+      // Re-run when another alliance is selected or the user's role changes.
+      this.state.selectedId();
+      this.state.isManager();
+      void untracked(() => this.state.loadPendingRequests());
+    });
 
     // Switching to an alliance with a lower role may leave the user on a
     // section that role can't open; send them to the alliance home instead.
