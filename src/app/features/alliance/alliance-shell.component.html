@@ -19,7 +19,7 @@
     </div>
 
     <nav class="alliance-nav">
-      @for (link of navLinks; track link.route) {
+      @for (link of navLinks(); track link.route) {
         <a
           [routerLink]="link.route"
           routerLinkActive="active"

@@ -1,0 +1,41 @@
+@if (state.selected(); as alliance) {
+  @if (alliance.myPlayerId) {
+    <h1>{{ alliance.myPlayerName }}</h1>
+    <p class="muted">Your player in {{ alliance.name }}.</p>
+
+    <h2>Your rewards</h2>
+    @if (error(); as message) {
+      <p class="error" role="alert">{{ message }}</p>
+    } @else if (loading() && rewards().length === 0) {
+      <p class="muted">Loading…</p>
+    } @else if (rewards().length === 0) {
+      <p class="muted">No rewards yet.</p>
+    } @else {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (r of rewards(); track r.id) {
+              <tr>
+                <td>{{ r.awardedAt | date: 'mediumDate' }}</td>
+                <td>{{ r.type }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  } @else {
+    <h1>{{ alliance.name }}</h1>
+    <p class="callout">
+      Your account isn't linked to a player in this alliance yet. Ask a leader
+      for a link code and enter it under
+      <a routerLink="/alliance/link">Link account</a>.
+    </p>
+  }
+}

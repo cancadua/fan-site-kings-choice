@@ -1,63 +1,81 @@
-<h1>{{ stats() ? 'Reward overview' : 'Dashboard' }}</h1>
+@if (!state.isManager()) {
+  <app-alliance-my-player />
+} @else {
+  <h1>{{ stats() ? 'Reward overview' : 'Dashboard' }}</h1>
 
-@if (error(); as message) {
-  <p class="error" role="alert">{{ message }}</p>
-} @else if (loading() && !stats()) {
-  <p class="muted">Loading…</p>
-} @else if (stats(); as s) {
-  <ul class="totals">
-    <li>
-      <strong>{{ s.totals.total }}</strong
-      ><span>Total</span>
-    </li>
-    <li>
-      <strong>{{ s.totals.mvp }}</strong
-      ><span>MVP</span>
-    </li>
-    <li>
-      <strong>{{ s.totals.purple }}</strong
-      ><span>Purple</span>
-    </li>
-    <li>
-      <strong>{{ s.totals.blue }}</strong
-      ><span>Blue</span>
-    </li>
-    <li>
-      <strong>{{ s.totals.normal }}</strong
-      ><span>Normal</span>
-    </li>
-  </ul>
+  @if (state.selected(); as alliance) {
+    @if (!alliance.myPlayerId) {
+      <p class="callout">
+        Your account isn't linked to a player in this alliance. To link it, open
+        <a routerLink="/alliance/players">Players</a> and use
+        <em>Invite account</em> on your player with your own username, or
+        generate a code for your player and enter it under
+        <a routerLink="/alliance/link">Link account</a>.
+      </p>
+    }
+  }
 
-  @if (s.players.length === 0) {
-    <p class="muted">No players yet. Add players to start tracking rewards.</p>
-  } @else {
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Player</th>
-            <th>MVP</th>
-            <th>Purple</th>
-            <th>Blue</th>
-            <th>Normal</th>
-            <th>Last reward</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (p of s.players; track p.playerId) {
-            <tr [class.inactive]="!p.isActive">
-              <td>{{ p.player }}</td>
-              <td>{{ p.mvp }}</td>
-              <td>{{ p.purple }}</td>
-              <td>{{ p.blue }}</td>
-              <td>{{ p.normal }}</td>
-              <td>
-                {{ p.lastReward ? (p.lastReward | date: 'mediumDate') : '—' }}
-              </td>
+  @if (error(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  } @else if (loading() && !stats()) {
+    <p class="muted">Loading…</p>
+  } @else if (stats(); as s) {
+    <ul class="totals">
+      <li>
+        <strong>{{ s.totals.total }}</strong
+        ><span>Total</span>
+      </li>
+      <li>
+        <strong>{{ s.totals.mvp }}</strong
+        ><span>MVP</span>
+      </li>
+      <li>
+        <strong>{{ s.totals.purple }}</strong
+        ><span>Purple</span>
+      </li>
+      <li>
+        <strong>{{ s.totals.blue }}</strong
+        ><span>Blue</span>
+      </li>
+      <li>
+        <strong>{{ s.totals.normal }}</strong
+        ><span>Normal</span>
+      </li>
+    </ul>
+
+    @if (s.players.length === 0) {
+      <p class="muted">
+        No players yet. Add players to start tracking rewards.
+      </p>
+    } @else {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>MVP</th>
+              <th>Purple</th>
+              <th>Blue</th>
+              <th>Normal</th>
+              <th>Last reward</th>
             </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            @for (p of s.players; track p.playerId) {
+              <tr [class.inactive]="!p.isActive">
+                <td>{{ p.player }}</td>
+                <td>{{ p.mvp }}</td>
+                <td>{{ p.purple }}</td>
+                <td>{{ p.blue }}</td>
+                <td>{{ p.normal }}</td>
+                <td>
+                  {{ p.lastReward ? (p.lastReward | date: 'mediumDate') : '—' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
   }
 }

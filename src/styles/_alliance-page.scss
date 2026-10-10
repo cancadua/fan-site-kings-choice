@@ -7,8 +7,50 @@
     margin-bottom: 1rem;
   }
 
+  h2 {
+    color: $knight-amber;
+    font-size: 1.15rem;
+    margin: 1.5rem 0 0.75rem;
+  }
+
   .muted {
     color: $knight-text-muted;
+  }
+
+  .callout {
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: rgba($knight-amber, 0.08);
+    border-left: 4px solid $knight-amber;
+    border-radius: 8px;
+
+    a {
+      color: $knight-amber;
+    }
+  }
+
+  // Small pill; --tone sets its color (amber by default).
+  .badge {
+    --tone: #{$knight-amber};
+    display: inline-block;
+    padding: 0.1rem 0.55rem;
+    font-size: 0.8rem;
+    color: var(--tone);
+    border: 1px solid var(--tone);
+    border-radius: 999px;
+    white-space: nowrap;
+
+    &--muted {
+      --tone: #{$knight-text-muted};
+    }
+
+    &--success {
+      --tone: #81c784;
+    }
+
+    &--danger {
+      --tone: #ff8a80;
+    }
   }
 
   .error {

@@ -6,23 +6,25 @@ import {
   signal,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
 import { AllianceStats } from '../../../core/api/api.models';
 import { AllianceStateService } from '../alliance-state.service';
+import { AllianceMyPlayerComponent } from '../my-player/alliance-my-player.component';
 
 @Component({
   selector: 'app-alliance-dashboard',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink, AllianceMyPlayerComponent],
   templateUrl: './alliance-dashboard.component.html',
   styleUrls: ['./alliance-dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AllianceDashboardComponent {
   private readonly api = inject(ApiClient);
-  private readonly state = inject(AllianceStateService);
+  readonly state = inject(AllianceStateService);
 
   stats = signal<AllianceStats | null>(null);
   loading = signal(false);
@@ -30,8 +32,9 @@ export class AllianceDashboardComponent {
 
   constructor() {
     effect(() => {
+      // Plain Members can't read alliance stats; they get their own view.
       const alliance = this.state.selected();
-      if (alliance) void this.load(alliance.id);
+      if (alliance && this.state.isManager()) void this.load(alliance.id);
     });
   }
 
