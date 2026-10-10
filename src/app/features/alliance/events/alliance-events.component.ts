@@ -10,12 +10,15 @@ import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
 import { AllianceEvent } from '../../../core/api/api.models';
+import { FilterRowComponent } from '../../../shared/table-query/filter-row.component';
+import { SortHeaderComponent } from '../../../shared/table-query/sort-header.component';
+import { TableQuery } from '../../../shared/table-query/table-query';
 import { AllianceStateService } from '../alliance-state.service';
 
 @Component({
   selector: 'app-alliance-events',
   standalone: true,
-  imports: [FormsModule],
+  imports: [SortHeaderComponent, FilterRowComponent, FormsModule],
   templateUrl: './alliance-events.component.html',
   styleUrls: ['./alliance-events.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +28,11 @@ export class AllianceEventsComponent {
   private readonly state = inject(AllianceStateService);
 
   events = signal<AllianceEvent[]>([]);
+  readonly table = new TableQuery([
+    { key: 'name', type: 'text', label: 'Name' },
+    { key: 'description', type: 'text', label: 'Description' },
+    { key: 'actions', type: 'none' },
+  ]);
   loading = signal(false);
   error = signal<string | null>(null);
 
@@ -34,7 +42,8 @@ export class AllianceEventsComponent {
   constructor() {
     effect(() => {
       const alliance = this.state.selected();
-      if (alliance) void this.load(alliance.id);
+      const params = this.table.params();
+      if (alliance) void this.load(alliance.id, params);
     });
   }
 
@@ -66,11 +75,18 @@ export class AllianceEventsComponent {
     });
   }
 
-  private async load(allianceId: string): Promise<void> {
+  private async load(
+    allianceId: string,
+    params = this.table.params()
+  ): Promise<void> {
     this.loading.set(true);
     await this.run(async () => {
-      const events = await firstValueFrom(this.api.events(allianceId));
-      if (this.state.selected()?.id === allianceId) this.events.set(events);
+      const events = await firstValueFrom(this.api.events(allianceId, params));
+      if (
+        this.state.selected()?.id === allianceId &&
+        this.table.params() === params
+      )
+        this.events.set(events);
     });
     this.loading.set(false);
   }

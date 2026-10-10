@@ -164,21 +164,22 @@
 @if (requestsError(); as message) {
   <p class="error" role="alert">{{ message }}</p>
 }
-@if (requestsLoading() && requests().length === 0) {
+@if (requestsLoading() && requests().length === 0 && !table.hasFilters()) {
   <p class="muted">Loading…</p>
-} @else if (requests().length === 0) {
+} @else if (requests().length === 0 && !table.hasFilters()) {
   <p class="muted">You haven't sent any requests.</p>
 } @else {
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Status</th>
-          <th>Alliance</th>
-          <th>Player</th>
-          <th>Sent</th>
+          <th appSortHeader="status" [query]="table">Status</th>
+          <th appSortHeader="allianceName" [query]="table">Alliance</th>
+          <th appSortHeader="playerName" [query]="table">Player</th>
+          <th appSortHeader="createdAt" [query]="table">Sent</th>
           <th></th>
         </tr>
+        <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
         @for (r of requests(); track r.id) {
@@ -202,6 +203,11 @@
                 </button>
               }
             </td>
+          </tr>
+        }
+        @if (requests().length === 0) {
+          <tr>
+            <td class="muted" colspan="5">No matches.</td>
           </tr>
         }
       </tbody>

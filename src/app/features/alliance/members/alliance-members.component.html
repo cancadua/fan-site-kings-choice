@@ -23,13 +23,14 @@
     <table>
       <thead>
         <tr>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Player</th>
-          <th>Role</th>
-          <th>Joined</th>
+          <th appSortHeader="username" [query]="table">Username</th>
+          <th appSortHeader="email" [query]="table">Email</th>
+          <th appSortHeader="playerName" [query]="table">Player</th>
+          <th appSortHeader="role" [query]="table">Role</th>
+          <th appSortHeader="joinedAt" [query]="table">Joined</th>
           <th></th>
         </tr>
+        <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
         @for (m of members(); track m.userId) {
@@ -61,6 +62,11 @@
                 </button>
               }
             </td>
+          </tr>
+        }
+        @if (members().length === 0) {
+          <tr>
+            <td class="muted" colspan="6">No matches.</td>
           </tr>
         }
       </tbody>

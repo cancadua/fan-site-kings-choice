@@ -10,15 +10,18 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
-import { Reward } from '../../../core/api/api.models';
+import { ListParams, Reward } from '../../../core/api/api.models';
+import { FilterRowComponent } from '../../../shared/table-query/filter-row.component';
+import { SortHeaderComponent } from '../../../shared/table-query/sort-header.component';
+import { TableQuery } from '../../../shared/table-query/table-query';
 import { AllianceStateService } from '../alliance-state.service';
-import { MVP_TIER_BADGE } from '../mvp-tiers';
+import { MVP_TIER_BADGE, MVP_TIER_OPTIONS } from '../mvp-tiers';
 
 /** What a plain Member sees: their own player and its rewards. */
 @Component({
   selector: 'app-alliance-my-player',
   standalone: true,
-  imports: [DatePipe, RouterLink],
+  imports: [SortHeaderComponent, FilterRowComponent, DatePipe, RouterLink],
   templateUrl: './alliance-my-player.component.html',
   styleUrls: ['./alliance-my-player.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +31,10 @@ export class AllianceMyPlayerComponent {
   readonly state = inject(AllianceStateService);
 
   readonly tierBadge = MVP_TIER_BADGE;
+  readonly table = new TableQuery([
+    { key: 'awardedAt', type: 'date', label: 'Date' },
+    { key: 'type', type: 'enum', label: 'Award', options: MVP_TIER_OPTIONS },
+  ]);
 
   rewards = signal<Reward[]>([]);
   loading = signal(false);
@@ -36,17 +43,23 @@ export class AllianceMyPlayerComponent {
   constructor() {
     effect(() => {
       const playerId = this.state.selected()?.myPlayerId;
-      this.rewards.set([]);
-      if (playerId) void this.load(playerId);
+      const params = this.table.params();
+      if (playerId) void this.load(playerId, params);
+      else this.rewards.set([]);
     });
   }
 
-  private async load(playerId: string): Promise<void> {
+  private async load(playerId: string, params: ListParams): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
     try {
-      const rewards = await firstValueFrom(this.api.playerRewards(playerId));
-      if (this.state.selected()?.myPlayerId === playerId)
+      const rewards = await firstValueFrom(
+        this.api.playerRewards(playerId, params)
+      );
+      if (
+        this.state.selected()?.myPlayerId === playerId &&
+        this.table.params() === params
+      )
         this.rewards.set(rewards);
     } catch (err) {
       this.error.set(apiErrorMessage(err));

@@ -4,6 +4,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
 import { AllianceStateService } from '../alliance-state.service';
@@ -15,7 +16,11 @@ describe('AllianceLinkHistoryComponent', () => {
   it('shows link log entries with readable method labels', async () => {
     await TestBed.configureTestingModule({
       imports: [AllianceLinkHistoryComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([]),
+      ],
     }).compileComponents();
     const http = TestBed.inject(HttpTestingController);
     const state = TestBed.inject(AllianceStateService);

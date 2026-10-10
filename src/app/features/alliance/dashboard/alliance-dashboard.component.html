@@ -17,7 +17,8 @@
 
   @if (error(); as message) {
     <p class="error" role="alert">{{ message }}</p>
-  } @else if (loading() && !stats()) {
+  }
+  @if (loading() && !stats()) {
     <p class="muted">Loading…</p>
   } @else if (stats(); as s) {
     <ul class="totals">
@@ -39,20 +40,21 @@
       </li>
     </ul>
 
-    @if (s.players.length === 0) {
+    @if (s.players.length === 0 && !table.hasFilters()) {
       <p class="muted">No players yet. Add players to start tracking MVPs.</p>
     } @else {
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Player</th>
-              <th>MVPs</th>
-              <th>Duke</th>
-              <th>Earl</th>
-              <th>Normal</th>
-              <th>Last MVP</th>
+              <th appSortHeader="player" [query]="table">Player</th>
+              <th appSortHeader="total" [query]="table">MVPs</th>
+              <th appSortHeader="duke" [query]="table">Duke</th>
+              <th appSortHeader="earl" [query]="table">Earl</th>
+              <th appSortHeader="normal" [query]="table">Normal</th>
+              <th appSortHeader="lastReward" [query]="table">Last MVP</th>
             </tr>
+            <tr [appFilterRow]="table"></tr>
           </thead>
           <tbody>
             @for (p of s.players; track p.playerId) {
@@ -65,6 +67,11 @@
                 <td>
                   {{ p.lastReward ? (p.lastReward | date) : '—' }}
                 </td>
+              </tr>
+            }
+            @if (s.players.length === 0) {
+              <tr>
+                <td class="muted" colspan="6">No matches.</td>
               </tr>
             }
           </tbody>

@@ -12,21 +12,22 @@
   <p class="error" role="alert">{{ message }}</p>
 }
 
-@if (loading() && rewards().length === 0) {
+@if (loading() && rewards().length === 0 && !table.hasFilters()) {
   <p class="muted">Loading…</p>
-} @else if (rewards().length === 0) {
+} @else if (rewards().length === 0 && !table.hasFilters()) {
   <p class="muted">No MVPs awarded yet.</p>
 } @else {
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Player</th>
-          <th>Award</th>
+          <th appSortHeader="awardedAt" [query]="table">Date</th>
+          <th appSortHeader="playerName" [query]="table">Player</th>
+          <th appSortHeader="type" [query]="table">Award</th>
           <th>Event</th>
           <th></th>
         </tr>
+        <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
         @for (r of rewards(); track r.id) {
@@ -45,6 +46,11 @@
                 Remove
               </button>
             </td>
+          </tr>
+        }
+        @if (rewards().length === 0) {
+          <tr>
+            <td class="muted" colspan="5">No matches.</td>
           </tr>
         }
       </tbody>

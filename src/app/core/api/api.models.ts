@@ -1,6 +1,9 @@
 // Mirrors AllianceRewards.Api DTOs. Enums are serialized as strings (JsonStringEnumConverter).
 // Dates are ISO-8601 strings.
 
+/** Sorting and column filters for list endpoints (sortBy, sortDir, column, columnMin/Max). */
+export type ListParams = Readonly<Record<string, string>>;
+
 export type AllianceRole = 'Member' | 'Owner' | 'Leader';
 /** Every reward is an MVP; the type is its tier. */
 export type RewardType = 'Normal' | 'Earl' | 'Duke';

@@ -28,19 +28,20 @@
   <p class="error" role="alert">{{ message }}</p>
 }
 
-@if (loading() && events().length === 0) {
+@if (loading() && events().length === 0 && !table.hasFilters()) {
   <p class="muted">Loading…</p>
-} @else if (events().length === 0) {
+} @else if (events().length === 0 && !table.hasFilters()) {
   <p class="muted">No events yet.</p>
 } @else {
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Description</th>
+          <th appSortHeader="name" [query]="table">Name</th>
+          <th appSortHeader="description" [query]="table">Description</th>
           <th></th>
         </tr>
+        <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
         @for (e of events(); track e.id) {
@@ -52,6 +53,11 @@
                 Delete
               </button>
             </td>
+          </tr>
+        }
+        @if (events().length === 0) {
+          <tr>
+            <td class="muted" colspan="3">No matches.</td>
           </tr>
         }
       </tbody>

@@ -3,6 +3,12 @@ import { RewardType } from '../../core/api/api.models';
 /** MVP tiers, lowest first. Every reward is an MVP of one of these tiers. */
 export const MVP_TIERS: readonly RewardType[] = ['Normal', 'Earl', 'Duke'];
 
+/** Tier choices for table filters. */
+export const MVP_TIER_OPTIONS = MVP_TIERS.map((tier) => ({
+  value: tier,
+  label: tier,
+}));
+
 /** Badge modifier per tier: Earl blue, Duke purple, Normal neutral. */
 export const MVP_TIER_BADGE: Record<RewardType, string> = {
   Normal: 'badge--muted',

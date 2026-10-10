@@ -12,12 +12,18 @@ import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
 import { AllianceRole, Member } from '../../../core/api/api.models';
+import { FilterRowComponent } from '../../../shared/table-query/filter-row.component';
+import { SortHeaderComponent } from '../../../shared/table-query/sort-header.component';
+import {
+  TableQuery,
+  enumOptions,
+} from '../../../shared/table-query/table-query';
 import { AllianceStateService } from '../alliance-state.service';
 
 @Component({
   selector: 'app-alliance-members',
   standalone: true,
-  imports: [DatePipe, RouterLink],
+  imports: [SortHeaderComponent, FilterRowComponent, DatePipe, RouterLink],
   templateUrl: './alliance-members.component.html',
   styleUrls: ['./alliance-members.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +36,23 @@ export class AllianceMembersComponent {
   readonly assignableRoles: AllianceRole[] = ['Leader', 'Member'];
 
   members = signal<Member[]>([]);
+  readonly table = new TableQuery([
+    { key: 'username', type: 'text', label: 'Username' },
+    { key: 'email', type: 'text', label: 'Email' },
+    { key: 'playerName', type: 'text', label: 'Player' },
+    {
+      key: 'role',
+      type: 'enum',
+      label: 'Role',
+      options: enumOptions({
+        Owner: 'Owner',
+        Leader: 'Leader',
+        Member: 'Member',
+      }),
+    },
+    { key: 'joinedAt', type: 'date', label: 'Joined' },
+    { key: 'actions', type: 'none' },
+  ]);
   loading = signal(false);
   error = signal<string | null>(null);
   info = signal<string | null>(null);
@@ -39,6 +62,7 @@ export class AllianceMembersComponent {
   constructor() {
     effect(() => {
       const alliance = this.state.selected();
+      this.table.params();
       if (alliance) void this.load(alliance.id);
     });
   }
@@ -83,8 +107,13 @@ export class AllianceMembersComponent {
   }
 
   private async loadMembers(allianceId: string): Promise<void> {
-    const members = await firstValueFrom(this.api.members(allianceId));
-    if (this.state.selected()?.id === allianceId) this.members.set(members);
+    const params = this.table.params();
+    const members = await firstValueFrom(this.api.members(allianceId, params));
+    if (
+      this.state.selected()?.id === allianceId &&
+      this.table.params() === params
+    )
+      this.members.set(members);
   }
 
   private async run(action: () => Promise<void>): Promise<void> {

@@ -8,9 +8,9 @@
   <p class="error" role="alert">{{ message }}</p>
 }
 
-@if (loading() && recommendations().length === 0) {
+@if (loading() && recommendations().length === 0 && !table.hasFilters()) {
   <p class="muted">Loading…</p>
-} @else if (recommendations().length === 0) {
+} @else if (recommendations().length === 0 && !table.hasFilters()) {
   <p class="muted">No active players yet.</p>
 } @else {
   <div class="table-wrap">
@@ -18,19 +18,21 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Player</th>
-          <th>Score</th>
-          <th>Last MVP</th>
-          <th>Normal</th>
-          <th>Earl</th>
-          <th>Duke</th>
+          <th appSortHeader="player" [query]="table">Player</th>
+          <th appSortHeader="score" [query]="table">Score</th>
+          <th appSortHeader="lastMvp" [query]="table">Last MVP</th>
+          <th appSortHeader="normalRewards" [query]="table">Normal</th>
+          <th appSortHeader="earlRewards" [query]="table">Earl</th>
+          <th appSortHeader="dukeRewards" [query]="table">Duke</th>
           <th></th>
         </tr>
+        <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
         @for (r of recommendations(); track r.playerId; let i = $index) {
           <tr>
-            <td>{{ i + 1 }}</td>
+            <!-- The rank only means something in the default (score) order. -->
+            <td>{{ table.sortBy() ? '' : i + 1 }}</td>
             <td>{{ r.player }}</td>
             <td>
               <span class="score" [style.--pct]="r.score + '%'"
@@ -52,6 +54,11 @@
                 Award MVP
               </button>
             </td>
+          </tr>
+        }
+        @if (recommendations().length === 0) {
+          <tr>
+            <td class="muted" colspan="8">No matches.</td>
           </tr>
         }
       </tbody>

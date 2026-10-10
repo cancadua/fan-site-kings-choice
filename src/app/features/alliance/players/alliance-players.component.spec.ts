@@ -104,19 +104,13 @@ describe('AlliancePlayersComponent', () => {
     expect(badges[1].textContent).toContain('Account: lance');
   });
 
-  it('filters players by color and saves a new color', async () => {
+  it('shows color markers and saves a new color', async () => {
     await setup('Owner', [
       player(),
       player({ id: 'p2', name: 'Lancelot', color: 'Blue' }),
     ]);
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelectorAll('tbody .color-dot').length).toBe(1);
-
-    const filter = root.querySelector<HTMLSelectElement>('.filter select');
-    filter!.value = 'Blue';
-    filter!.dispatchEvent(new Event('change'));
-    fixture.detectChanges();
-    expect(component.visiblePlayers().map((p) => p.name)).toEqual(['Lancelot']);
 
     const select = document.createElement('select');
     select.innerHTML = '<option value="Red">Red</option>';

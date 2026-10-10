@@ -50,15 +50,16 @@
       <table>
         <thead>
           <tr>
-            <th>Account</th>
-            <th>Player</th>
-            <th>Message</th>
-            <th>Sent</th>
+            <th appSortHeader="username" [query]="requestTable">Account</th>
+            <th appSortHeader="playerName" [query]="requestTable">Player</th>
+            <th appSortHeader="message" [query]="requestTable">Message</th>
+            <th appSortHeader="createdAt" [query]="requestTable">Sent</th>
             <th></th>
           </tr>
+          <tr [appFilterRow]="requestTable"></tr>
         </thead>
         <tbody>
-          @for (r of state.pendingRequests(); track r.id) {
+          @for (r of requests(); track r.id) {
             <tr>
               <td>{{ r.username }}</td>
               <td>{{ r.playerName }}</td>
@@ -82,6 +83,11 @@
               </td>
             </tr>
           }
+          @if (requests().length === 0) {
+            <tr>
+              <td class="muted" colspan="5">No matches.</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
@@ -89,137 +95,127 @@
   </section>
 }
 
-@if (loading() && players().length === 0) {
+@if (loading() && players().length === 0 && !table.hasFilters()) {
   <p class="muted">Loading…</p>
-} @else if (players().length === 0) {
+} @else if (players().length === 0 && !table.hasFilters()) {
   <p class="muted">No players yet.</p>
 } @else {
-  <label class="filter">
-    Show
-    <select [value]="colorFilter() ?? ''" (change)="setColorFilter($event)">
-      <option value="">All colors</option>
-      @for (c of colors; track c.value) {
-        <option [value]="c.value">{{ c.label }}</option>
-      }
-    </select>
-  </label>
-  @if (visiblePlayers().length === 0) {
-    <p class="muted">No players with this color.</p>
-  } @else {
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Account</th>
-            <th>Color</th>
-            <th>Activity</th>
-            <th>Active</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (p of visiblePlayers(); track p.id) {
-            <tr [class.inactive]="!p.isActive">
-              <td>
-                @if (playerColor(p.color).swatch; as swatch) {
-                  <span
-                    class="color-dot"
-                    [style.background]="swatch"
-                    [attr.title]="playerColor(p.color).label"
-                  ></span>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th appSortHeader="name" [query]="table">Name</th>
+          <th appSortHeader="username" [query]="table">Account</th>
+          <th appSortHeader="color" [query]="table">Color</th>
+          <th appSortHeader="activity" [query]="table">Activity</th>
+          <th appSortHeader="isActive" [query]="table">Active</th>
+          <th></th>
+        </tr>
+        <tr [appFilterRow]="table"></tr>
+      </thead>
+      <tbody>
+        @for (p of players(); track p.id) {
+          <tr [class.inactive]="!p.isActive">
+            <td>
+              @if (playerColor(p.color).swatch; as swatch) {
+                <span
+                  class="color-dot"
+                  [style.background]="swatch"
+                  [attr.title]="playerColor(p.color).label"
+                ></span>
+              }
+              {{ p.name }}
+            </td>
+            <td>
+              @if (p.userId) {
+                <span class="badge badge--success">
+                  Account: {{ p.username ?? 'unknown' }}
+                </span>
+              } @else {
+                <span class="badge badge--muted">No account</span>
+              }
+            </td>
+            <td>
+              <select
+                [attr.aria-label]="'Color for ' + p.name"
+                (change)="setColor(p, $event)"
+              >
+                @for (c of colors; track c.value) {
+                  <option [value]="c.value" [selected]="c.value === p.color">
+                    {{ c.label }}
+                  </option>
                 }
-                {{ p.name }}
-              </td>
-              <td>
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                class="activity"
+                [value]="p.activity"
+                (change)="setActivity(p, $event)"
+                [attr.aria-label]="'Activity for ' + p.name"
+              />
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                [checked]="p.isActive"
+                (change)="toggleActive(p)"
+                [attr.aria-label]="'Active: ' + p.name"
+              />
+            </td>
+            <td class="actions">
+              <button
+                #trigger
+                type="button"
+                class="small"
+                [attr.popovertarget]="'player-menu-' + p.id"
+                [attr.aria-label]="'Account actions for ' + p.name"
+              >
+                Account ▾
+              </button>
+              <div
+                #menu
+                popover
+                class="row-menu"
+                [id]="'player-menu-' + p.id"
+                (beforetoggle)="placeMenu($event, trigger)"
+              >
                 @if (p.userId) {
-                  <span class="badge badge--success">
-                    Account: {{ p.username ?? 'unknown' }}
-                  </span>
+                  <button type="button" (click)="menu.hidePopover(); unlink(p)">
+                    Unlink account
+                  </button>
                 } @else {
-                  <span class="badge badge--muted">No account</span>
+                  <button
+                    type="button"
+                    (click)="menu.hidePopover(); generateCode(p)"
+                  >
+                    Generate code
+                  </button>
+                  <button
+                    type="button"
+                    (click)="menu.hidePopover(); openInvite(p)"
+                  >
+                    Invite account
+                  </button>
                 }
-              </td>
-              <td>
-                <select
-                  [attr.aria-label]="'Color for ' + p.name"
-                  (change)="setColor(p, $event)"
-                >
-                  @for (c of colors; track c.value) {
-                    <option [value]="c.value" [selected]="c.value === p.color">
-                      {{ c.label }}
-                    </option>
-                  }
-                </select>
-              </td>
-              <td>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  class="activity"
-                  [value]="p.activity"
-                  (change)="setActivity(p, $event)"
-                  [attr.aria-label]="'Activity for ' + p.name"
-                />
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  [checked]="p.isActive"
-                  (change)="toggleActive(p)"
-                  [attr.aria-label]="'Active: ' + p.name"
-                />
-              </td>
-              <td class="actions">
-                <button
-                  #trigger
-                  type="button"
-                  class="small"
-                  [attr.popovertarget]="'player-menu-' + p.id"
-                  [attr.aria-label]="'Account actions for ' + p.name"
-                >
-                  Account ▾
-                </button>
-                <div
-                  #menu
-                  popover
-                  class="row-menu"
-                  [id]="'player-menu-' + p.id"
-                  (beforetoggle)="placeMenu($event, trigger)"
-                >
-                  @if (p.userId) {
-                    <button
-                      type="button"
-                      (click)="menu.hidePopover(); unlink(p)"
-                    >
-                      Unlink account
-                    </button>
-                  } @else {
-                    <button
-                      type="button"
-                      (click)="menu.hidePopover(); generateCode(p)"
-                    >
-                      Generate code
-                    </button>
-                    <button
-                      type="button"
-                      (click)="menu.hidePopover(); openInvite(p)"
-                    >
-                      Invite account
-                    </button>
-                  }
-                </div>
-                <button type="button" class="small danger" (click)="remove(p)">
-                  Delete
-                </button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
+              </div>
+              <button type="button" class="small danger" (click)="remove(p)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+        @if (players().length === 0) {
+          <tr>
+            <td class="muted" colspan="6">No matches.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }
 
 <app-modal

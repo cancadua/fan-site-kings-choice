@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   signal,
+  untracked,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -26,6 +28,12 @@ import {
   LinkRequestStatus,
   UnlinkedPlayer,
 } from '../../../core/api/api.models';
+import { FilterRowComponent } from '../../../shared/table-query/filter-row.component';
+import { SortHeaderComponent } from '../../../shared/table-query/sort-header.component';
+import {
+  TableQuery,
+  enumOptions,
+} from '../../../shared/table-query/table-query';
 import { AllianceStateService } from '../alliance-state.service';
 
 type LinkTab = 'code' | 'request';
@@ -49,7 +57,7 @@ const STATUS_BADGE: Record<LinkRequestStatus, string> = {
 @Component({
   selector: 'app-alliance-link-account',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [SortHeaderComponent, FilterRowComponent, DatePipe, FormsModule],
   templateUrl: './alliance-link-account.component.html',
   styleUrls: ['./alliance-link-account.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -103,11 +111,31 @@ export class AllianceLinkAccountComponent {
 
   // "My requests"
   requests = signal<LinkRequest[]>([]);
+  readonly table = new TableQuery([
+    {
+      key: 'status',
+      type: 'enum',
+      label: 'Status',
+      options: enumOptions({
+        Pending: 'Pending',
+        Accepted: 'Accepted',
+        Rejected: 'Rejected',
+        Cancelled: 'Cancelled',
+      }),
+    },
+    { key: 'allianceName', type: 'text', label: 'Alliance' },
+    { key: 'playerName', type: 'text', label: 'Player' },
+    { key: 'createdAt', type: 'date', label: 'Sent' },
+    { key: 'actions', type: 'none' },
+  ]);
   requestsLoading = signal(false);
   requestsError = signal<string | null>(null);
 
   constructor() {
-    void this.loadRequests();
+    effect(() => {
+      this.table.params();
+      void untracked(() => this.loadRequests());
+    });
   }
 
   statusBadge(status: LinkRequestStatus): string {
@@ -203,7 +231,9 @@ export class AllianceLinkAccountComponent {
   private async loadRequests(): Promise<void> {
     this.requestsLoading.set(true);
     try {
-      this.requests.set(await firstValueFrom(this.api.myLinkRequests()));
+      const params = this.table.params();
+      const requests = await firstValueFrom(this.api.myLinkRequests(params));
+      if (this.table.params() === params) this.requests.set(requests);
     } catch (err) {
       this.requestsError.set(apiErrorMessage(err));
     } finally {

@@ -5,6 +5,7 @@ import {
   effect,
   inject,
   signal,
+  untracked,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,10 +20,14 @@ import {
   InviteRequest,
   LinkCode,
   LinkRequest,
+  ListParams,
   Player,
   PlayerColor,
 } from '../../../core/api/api.models';
 import { AppModalComponent } from '../../../shared/app-modal/app-modal.component';
+import { FilterRowComponent } from '../../../shared/table-query/filter-row.component';
+import { SortHeaderComponent } from '../../../shared/table-query/sort-header.component';
+import { TableQuery } from '../../../shared/table-query/table-query';
 import { AllianceStateService } from '../alliance-state.service';
 import { PLAYER_COLORS, playerColor } from '../player-colors';
 
@@ -31,7 +36,13 @@ type InviteRole = NonNullable<InviteRequest['role']>;
 @Component({
   selector: 'app-alliance-players',
   standalone: true,
-  imports: [DatePipe, FormsModule, AppModalComponent],
+  imports: [
+    SortHeaderComponent,
+    FilterRowComponent,
+    DatePipe,
+    FormsModule,
+    AppModalComponent,
+  ],
   templateUrl: './alliance-players.component.html',
   styleUrls: ['./alliance-players.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,13 +65,42 @@ export class AlliancePlayersComponent {
   newActivity = signal(50);
   newColor = signal<PlayerColor>('None');
 
-  /** Color filter for the list; null shows every player. */
-  colorFilter = signal<PlayerColor | null>(null);
-  visiblePlayers = computed(() => {
-    const color = this.colorFilter();
-    const players = this.players();
-    return color === null ? players : players.filter((p) => p.color === color);
-  });
+  readonly table = new TableQuery([
+    { key: 'name', type: 'text', label: 'Name' },
+    {
+      key: 'username',
+      type: 'presence',
+      label: 'Account',
+      presentLabel: 'Linked',
+      absentLabel: 'No account',
+    },
+    {
+      key: 'color',
+      type: 'enum',
+      label: 'Color',
+      options: PLAYER_COLORS.map(({ value, label }) => ({ value, label })),
+    },
+    { key: 'activity', type: 'number', label: 'Activity' },
+    { key: 'isActive', type: 'bool', label: 'Active' },
+    { key: 'actions', type: 'none' },
+  ]);
+
+  /** Link requests table; its params are prefixed to keep them apart from the players'. */
+  readonly requestTable = new TableQuery(
+    [
+      { key: 'username', type: 'text', label: 'Account' },
+      { key: 'playerName', type: 'text', label: 'Player' },
+      { key: 'message', type: 'text', label: 'Message' },
+      { key: 'createdAt', type: 'date', label: 'Sent' },
+      { key: 'actions', type: 'none' },
+    ],
+    'req.'
+  );
+  /** Filtered/sorted pending requests; null while the table shows them as they are. */
+  private readonly queriedRequests = signal<LinkRequest[] | null>(null);
+  readonly requests = computed(
+    () => this.queriedRequests() ?? this.state.pendingRequests()
+  );
 
   isOwner = computed(() => this.state.selected()?.myRole === 'Owner');
 
@@ -80,7 +120,19 @@ export class AlliancePlayersComponent {
   constructor() {
     effect(() => {
       const allianceId = this.state.selectedId();
+      this.table.params();
       if (allianceId) void this.load(allianceId);
+    });
+    effect(() => {
+      const allianceId = this.state.selectedId();
+      const params = this.requestTable.params();
+      // Reload when the pending list changes (accepted, rejected, new).
+      this.state.pendingRequests();
+      if (!allianceId || Object.keys(params).length === 0) {
+        this.queriedRequests.set(null);
+        return;
+      }
+      void untracked(() => this.loadRequests(allianceId, params));
     });
   }
 
@@ -120,11 +172,6 @@ export class AlliancePlayersComponent {
     await this.update(player, { color });
     // If saving failed the list still holds the old color; put the select back.
     if (this.error()) select.value = player.color;
-  }
-
-  setColorFilter(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    this.colorFilter.set(value ? (value as PlayerColor) : null);
   }
 
   toggleActive(player: Player): Promise<void> {
@@ -294,8 +341,28 @@ export class AlliancePlayersComponent {
   }
 
   private async loadPlayers(allianceId: string): Promise<void> {
-    const players = await firstValueFrom(this.api.players(allianceId));
-    if (this.state.selectedId() === allianceId) this.players.set(players);
+    const params = this.table.params();
+    const players = await firstValueFrom(this.api.players(allianceId, params));
+    if (
+      this.state.selectedId() === allianceId &&
+      this.table.params() === params
+    )
+      this.players.set(players);
+  }
+
+  private async loadRequests(
+    allianceId: string,
+    params: ListParams
+  ): Promise<void> {
+    try {
+      const requests = await firstValueFrom(
+        this.api.allianceLinkRequests(allianceId, 'Pending', params)
+      );
+      if (this.requestTable.params() === params)
+        this.queriedRequests.set(requests);
+    } catch (err) {
+      this.error.set(apiErrorMessage(err));
+    }
   }
 
   private async run(action: () => Promise<void>): Promise<void> {
