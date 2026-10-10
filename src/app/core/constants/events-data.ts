@@ -6,7 +6,7 @@ type EventData = Record<string, string> & {
   image: string;
 };
 
-export const EventsData: Array<EventData> = [
+export const EventsData: EventData[] = [
   {
     name: 'Uncharted Waters',
     value: Event.UnchartedWaters,

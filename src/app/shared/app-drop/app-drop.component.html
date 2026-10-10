@@ -5,7 +5,7 @@
   tabindex="0"
 >
   @if (selectedValue() !== null) {
-  <span class="dropdown-label">{{ label() }}</span>
+    <span class="dropdown-label">{{ label() }}</span>
   }
   <button
     class="dropdown-toggle"
@@ -14,18 +14,25 @@
     [attr.aria-expanded]="isOpen"
     [attr.aria-label]="label()"
   >
-    {{ selectedObject?.[viewKey()] ? truncateText(selectedObject[viewKey()], 30) : label() }}
+    {{
+      selectedObject?.[viewKey()]
+        ? truncateText(selectedObject[viewKey()], 30)
+        : label()
+    }}
   </button>
   <ul class="dropdown-menu" [class.open]="isOpen" role="listbox">
     @for (item of items(); track $index) {
-    <li
-      (click)="selectItem(item)"
-      title="{{ item[viewKey()] }}"
-      role="option"
-      [attr.aria-selected]="selectedValue() === item[valueKey()]"
-    >
-      {{ truncateText(item[viewKey()], 30) }}
-    </li>
+      <li
+        (click)="selectItem(item)"
+        (keydown.enter)="selectItem(item)"
+        (keydown.space)="selectItem(item); $event.preventDefault()"
+        tabindex="-1"
+        title="{{ item[viewKey()] }}"
+        role="option"
+        [attr.aria-selected]="selectedValue() === item[valueKey()]"
+      >
+        {{ truncateText(item[viewKey()], 30) }}
+      </li>
     }
   </ul>
 </div>
