@@ -1,0 +1,1 @@
+var r=[`Normal`,`Earl`,`Duke`];var o=r.map(e=>({value:e,label:e}));var n={Normal:`badge--muted`,Earl:`badge--earl`,Duke:`badge--duke`};function d(){let e=new Date,t=a=>String(a).padStart(2,`0`);return`${e.getFullYear()}-${t(e.getMonth()+1)}-${t(e.getDate())}`}export{r as i,n,o as r,d as t};
