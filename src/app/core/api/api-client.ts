@@ -144,6 +144,18 @@ export class ApiClient {
     );
   }
 
+  /** Renames the member's linked player; the account username is unchanged. */
+  renameMember(
+    allianceId: string,
+    userId: string,
+    name: string
+  ): Observable<Member> {
+    return this.http.patch<Member>(
+      `${this.base}/api/alliances/${allianceId}/members/${userId}/name`,
+      { name }
+    );
+  }
+
   removeMember(allianceId: string, userId: string): Observable<void> {
     return this.http.delete<void>(
       `${this.base}/api/alliances/${allianceId}/members/${userId}`

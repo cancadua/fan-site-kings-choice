@@ -58,6 +58,9 @@ export class AllianceMembersComponent {
   info = signal<string | null>(null);
 
   isOwner = computed(() => this.state.selected()?.myRole === 'Owner');
+  isManager = this.state.isManager;
+  /** userId of the member whose player name is being edited. */
+  renaming = signal<string | null>(null);
 
   constructor() {
     effect(() => {
@@ -81,6 +84,26 @@ export class AllianceMembersComponent {
     });
     // If the change failed the list still holds the old role; put the select back.
     if (this.error()) select.value = member.role;
+  }
+
+  async rename(member: Member, input: HTMLInputElement): Promise<void> {
+    const alliance = this.state.selected();
+    const name = input.value.trim();
+    if (!alliance) return;
+    if (!name || name === member.playerName) {
+      this.renaming.set(null);
+      return;
+    }
+
+    await this.run(async () => {
+      const updated = await firstValueFrom(
+        this.api.renameMember(alliance.id, member.userId, name)
+      );
+      this.members.update((list) =>
+        list.map((m) => (m.userId === updated.userId ? updated : m))
+      );
+      this.renaming.set(null);
+    });
   }
 
   async remove(member: Member): Promise<void> {

@@ -37,7 +37,44 @@
           <tr>
             <td>{{ m.username }}</td>
             <td>{{ m.email }}</td>
-            <td>{{ m.playerName ?? '—' }}</td>
+            <td>
+              @if (renaming() === m.userId) {
+                <form
+                  class="rename"
+                  (submit)="$event.preventDefault(); rename(m, nameInput)"
+                >
+                  <input
+                    #nameInput
+                    type="text"
+                    maxlength="64"
+                    required
+                    [value]="m.playerName ?? ''"
+                    [attr.aria-label]="'New player name for ' + m.username"
+                    (keydown.escape)="renaming.set(null)"
+                  />
+                  <button type="submit" class="small primary">Save</button>
+                  <button
+                    type="button"
+                    class="small"
+                    (click)="renaming.set(null)"
+                  >
+                    Cancel
+                  </button>
+                </form>
+              } @else {
+                {{ m.playerName ?? '—' }}
+                @if (isManager() && m.playerId) {
+                  <button
+                    type="button"
+                    class="small"
+                    [attr.aria-label]="'Rename player ' + m.playerName"
+                    (click)="renaming.set(m.userId)"
+                  >
+                    Rename
+                  </button>
+                }
+              }
+            </td>
             <td>
               @if (isOwner() && m.role !== 'Owner') {
                 <select
