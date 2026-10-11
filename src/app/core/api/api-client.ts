@@ -109,20 +109,15 @@ export class ApiClient {
     );
   }
 
-  linkLog(
-    allianceId: string,
-    query: ListParams = {}
-  ): Observable<PlayerLinkLogEntry[]> {
+  linkLog(allianceId: string): Observable<PlayerLinkLogEntry[]> {
     return this.http.get<PlayerLinkLogEntry[]>(
-      `${this.base}/api/alliances/${allianceId}/link-log`,
-      { params: query }
+      `${this.base}/api/alliances/${allianceId}/link-log`
     );
   }
 
-  members(allianceId: string, query: ListParams = {}): Observable<Member[]> {
+  members(allianceId: string): Observable<Member[]> {
     return this.http.get<Member[]>(
-      `${this.base}/api/alliances/${allianceId}/members`,
-      { params: query }
+      `${this.base}/api/alliances/${allianceId}/members`
     );
   }
 
@@ -210,10 +205,8 @@ export class ApiClient {
   }
 
   /** The current user's requests, newest first. */
-  myLinkRequests(query: ListParams = {}): Observable<LinkRequest[]> {
-    return this.http.get<LinkRequest[]>(`${this.base}/api/link-requests/mine`, {
-      params: query,
-    });
+  myLinkRequests(): Observable<LinkRequest[]> {
+    return this.http.get<LinkRequest[]>(`${this.base}/api/link-requests/mine`);
   }
 
   cancelLinkRequest(id: string): Observable<void> {
@@ -223,13 +216,10 @@ export class ApiClient {
   /** Requests for an alliance (Owner/Leader), oldest first. */
   allianceLinkRequests(
     allianceId: string,
-    status: LinkRequestStatus = 'Pending',
-    query: ListParams = {}
+    status: LinkRequestStatus = 'Pending'
   ): Observable<LinkRequest[]> {
     return this.http.get<LinkRequest[]>(`${this.base}/api/link-requests`, {
-      params: this.allianceParam(allianceId)
-        .appendAll(query)
-        .set('status', status),
+      params: this.allianceParam(allianceId).set('status', status),
     });
   }
 
@@ -248,12 +238,9 @@ export class ApiClient {
   }
 
   // Events
-  events(
-    allianceId: string,
-    query: ListParams = {}
-  ): Observable<AllianceEvent[]> {
+  events(allianceId: string): Observable<AllianceEvent[]> {
     return this.http.get<AllianceEvent[]>(`${this.base}/api/events`, {
-      params: this.allianceParam(allianceId).appendAll(query),
+      params: this.allianceParam(allianceId),
     });
   }
 
@@ -270,19 +257,15 @@ export class ApiClient {
   }
 
   // Rewards
-  rewards(allianceId: string, query: ListParams = {}): Observable<Reward[]> {
+  rewards(allianceId: string): Observable<Reward[]> {
     return this.http.get<Reward[]>(`${this.base}/api/rewards`, {
-      params: this.allianceParam(allianceId).appendAll(query),
+      params: this.allianceParam(allianceId),
     });
   }
 
-  playerRewards(
-    playerId: string,
-    query: ListParams = {}
-  ): Observable<Reward[]> {
+  playerRewards(playerId: string): Observable<Reward[]> {
     return this.http.get<Reward[]>(
-      `${this.base}/api/rewards/player/${playerId}`,
-      { params: query }
+      `${this.base}/api/rewards/player/${playerId}`
     );
   }
 
@@ -295,20 +278,15 @@ export class ApiClient {
   }
 
   // Stats and recommendations
-  /** Filters and sorting apply to the player list; totals follow the filters. */
-  stats(allianceId: string, query: ListParams = {}): Observable<AllianceStats> {
-    return this.http.get<AllianceStats>(
-      `${this.base}/api/stats/${allianceId}`,
-      { params: query }
-    );
+  stats(allianceId: string): Observable<AllianceStats> {
+    return this.http.get<AllianceStats>(`${this.base}/api/stats/${allianceId}`);
   }
 
   mvpRecommendations(
     allianceId: string,
-    top?: number,
-    query: ListParams = {}
+    top?: number
   ): Observable<MvpRecommendation[]> {
-    let params = this.allianceParam(allianceId).appendAll(query);
+    let params = this.allianceParam(allianceId);
     if (top) params = params.set('top', top);
     return this.http.get<MvpRecommendation[]>(
       `${this.base}/api/recommendations/mvp`,

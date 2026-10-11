@@ -95,9 +95,9 @@
   </section>
 }
 
-@if (loading() && players().length === 0 && !table.hasFilters()) {
+@if (loading() && players().length === 0) {
   <p class="muted">Loading…</p>
-} @else if (players().length === 0 && !table.hasFilters()) {
+} @else if (players().length === 0) {
   <p class="muted">No players yet.</p>
 } @else {
   <div class="table-wrap">
@@ -114,7 +114,7 @@
         <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
-        @for (p of players(); track p.id) {
+        @for (p of rows(); track p.id) {
           <tr [class.inactive]="!p.isActive">
             <td>
               @if (playerColor(p.color).swatch; as swatch) {
@@ -208,7 +208,7 @@
             </td>
           </tr>
         }
-        @if (players().length === 0) {
+        @if (rows().length === 0) {
           <tr>
             <td class="muted" colspan="6">No matches.</td>
           </tr>

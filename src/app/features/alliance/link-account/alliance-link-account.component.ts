@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   inject,
   signal,
-  untracked,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -111,6 +109,7 @@ export class AllianceLinkAccountComponent {
 
   // "My requests"
   requests = signal<LinkRequest[]>([]);
+  readonly rows = computed(() => this.table.apply(this.requests()));
   readonly table = new TableQuery([
     {
       key: 'status',
@@ -132,10 +131,7 @@ export class AllianceLinkAccountComponent {
   requestsError = signal<string | null>(null);
 
   constructor() {
-    effect(() => {
-      this.table.params();
-      void untracked(() => this.loadRequests());
-    });
+    void this.loadRequests();
   }
 
   statusBadge(status: LinkRequestStatus): string {
@@ -197,7 +193,7 @@ export class AllianceLinkAccountComponent {
     this.requestError.set(null);
     try {
       const message = this.message().trim();
-      await firstValueFrom(
+      const created = await firstValueFrom(
         this.api.createLinkRequest({
           allianceId: alliance.id,
           playerId: player.id,
@@ -209,7 +205,7 @@ export class AllianceLinkAccountComponent {
       this.requestSent.set(
         `Request sent. A leader of ${alliance.name} will review it.`
       );
-      await this.loadRequests();
+      this.requests.update((list) => [created, ...list]);
     } catch (err) {
       this.requestError.set(apiErrorMessage(err));
     } finally {
@@ -231,9 +227,7 @@ export class AllianceLinkAccountComponent {
   private async loadRequests(): Promise<void> {
     this.requestsLoading.set(true);
     try {
-      const params = this.table.params();
-      const requests = await firstValueFrom(this.api.myLinkRequests(params));
-      if (this.table.params() === params) this.requests.set(requests);
+      this.requests.set(await firstValueFrom(this.api.myLinkRequests()));
     } catch (err) {
       this.requestsError.set(apiErrorMessage(err));
     } finally {

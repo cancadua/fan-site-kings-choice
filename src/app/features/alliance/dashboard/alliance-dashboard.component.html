@@ -23,24 +23,24 @@
   } @else if (stats(); as s) {
     <ul class="totals">
       <li>
-        <strong>{{ s.totals.total }}</strong
+        <strong>{{ totals()?.total }}</strong
         ><span>MVPs</span>
       </li>
       <li class="duke">
-        <strong>{{ s.totals.duke }}</strong
+        <strong>{{ totals()?.duke }}</strong
         ><span>Duke</span>
       </li>
       <li class="earl">
-        <strong>{{ s.totals.earl }}</strong
+        <strong>{{ totals()?.earl }}</strong
         ><span>Earl</span>
       </li>
       <li>
-        <strong>{{ s.totals.normal }}</strong
+        <strong>{{ totals()?.normal }}</strong
         ><span>Normal</span>
       </li>
     </ul>
 
-    @if (s.players.length === 0 && !table.hasFilters()) {
+    @if (s.players.length === 0) {
       <p class="muted">No players yet. Add players to start tracking MVPs.</p>
     } @else {
       <div class="table-wrap">
@@ -57,7 +57,7 @@
             <tr [appFilterRow]="table"></tr>
           </thead>
           <tbody>
-            @for (p of s.players; track p.playerId) {
+            @for (p of rows(); track p.playerId) {
               <tr [class.inactive]="!p.isActive">
                 <td>{{ p.player }}</td>
                 <td>{{ p.total }}</td>
@@ -69,7 +69,7 @@
                 </td>
               </tr>
             }
-            @if (s.players.length === 0) {
+            @if (rows().length === 0) {
               <tr>
                 <td class="muted" colspan="6">No matches.</td>
               </tr>

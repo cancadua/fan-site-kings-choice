@@ -5,7 +5,6 @@ import {
   effect,
   inject,
   signal,
-  untracked,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +19,6 @@ import {
   InviteRequest,
   LinkCode,
   LinkRequest,
-  ListParams,
   Player,
   PlayerColor,
 } from '../../../core/api/api.models';
@@ -57,6 +55,7 @@ export class AlliancePlayersComponent {
   readonly playerColor = playerColor;
 
   players = signal<Player[]>([]);
+  readonly rows = computed(() => this.table.apply(this.players()));
   loading = signal(false);
   error = signal<string | null>(null);
   info = signal<string | null>(null);
@@ -96,10 +95,8 @@ export class AlliancePlayersComponent {
     ],
     'req.'
   );
-  /** Filtered/sorted pending requests; null while the table shows them as they are. */
-  private readonly queriedRequests = signal<LinkRequest[] | null>(null);
-  readonly requests = computed(
-    () => this.queriedRequests() ?? this.state.pendingRequests()
+  readonly requests = computed(() =>
+    this.requestTable.apply(this.state.pendingRequests())
   );
 
   isOwner = computed(() => this.state.selected()?.myRole === 'Owner');
@@ -120,19 +117,7 @@ export class AlliancePlayersComponent {
   constructor() {
     effect(() => {
       const allianceId = this.state.selectedId();
-      this.table.params();
       if (allianceId) void this.load(allianceId);
-    });
-    effect(() => {
-      const allianceId = this.state.selectedId();
-      const params = this.requestTable.params();
-      // Reload when the pending list changes (accepted, rejected, new).
-      this.state.pendingRequests();
-      if (!allianceId || Object.keys(params).length === 0) {
-        this.queriedRequests.set(null);
-        return;
-      }
-      void untracked(() => this.loadRequests(allianceId, params));
     });
   }
 
@@ -142,7 +127,7 @@ export class AlliancePlayersComponent {
     if (!alliance || !name) return;
 
     await this.run(async () => {
-      await firstValueFrom(
+      const created = await firstValueFrom(
         this.api.createPlayer({
           allianceId: alliance.id,
           name,
@@ -153,7 +138,7 @@ export class AlliancePlayersComponent {
       this.newName.set('');
       this.newActivity.set(50);
       this.newColor.set('None');
-      await this.load(alliance.id);
+      this.players.update((list) => [...list, created]);
     });
   }
 
@@ -341,28 +326,8 @@ export class AlliancePlayersComponent {
   }
 
   private async loadPlayers(allianceId: string): Promise<void> {
-    const params = this.table.params();
-    const players = await firstValueFrom(this.api.players(allianceId, params));
-    if (
-      this.state.selectedId() === allianceId &&
-      this.table.params() === params
-    )
-      this.players.set(players);
-  }
-
-  private async loadRequests(
-    allianceId: string,
-    params: ListParams
-  ): Promise<void> {
-    try {
-      const requests = await firstValueFrom(
-        this.api.allianceLinkRequests(allianceId, 'Pending', params)
-      );
-      if (this.requestTable.params() === params)
-        this.queriedRequests.set(requests);
-    } catch (err) {
-      this.error.set(apiErrorMessage(err));
-    }
+    const players = await firstValueFrom(this.api.players(allianceId));
+    if (this.state.selectedId() === allianceId) this.players.set(players);
   }
 
   private async run(action: () => Promise<void>): Promise<void> {

@@ -6,9 +6,9 @@
 @if (error(); as message) {
   <p class="error" role="alert">{{ message }}</p>
 }
-@if (loading() && entries().length === 0 && !table.hasFilters()) {
+@if (loading() && entries().length === 0) {
   <p class="muted">Loading…</p>
-} @else if (entries().length === 0 && !table.hasFilters()) {
+} @else if (entries().length === 0) {
   <p class="muted">No accounts have been linked yet.</p>
 } @else {
   <div class="table-wrap">
@@ -25,7 +25,7 @@
         <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
-        @for (e of entries(); track e.id) {
+        @for (e of rows(); track e.id) {
           <tr>
             <td>{{ e.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
             <td>
@@ -43,7 +43,7 @@
             <td>{{ e.actorUsername ?? '—' }}</td>
           </tr>
         }
-        @if (entries().length === 0) {
+        @if (rows().length === 0) {
           <tr>
             <td class="muted" colspan="6">No matches.</td>
           </tr>

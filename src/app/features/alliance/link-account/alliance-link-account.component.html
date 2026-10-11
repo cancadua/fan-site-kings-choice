@@ -164,9 +164,9 @@
 @if (requestsError(); as message) {
   <p class="error" role="alert">{{ message }}</p>
 }
-@if (requestsLoading() && requests().length === 0 && !table.hasFilters()) {
+@if (requestsLoading() && requests().length === 0) {
   <p class="muted">Loading…</p>
-} @else if (requests().length === 0 && !table.hasFilters()) {
+} @else if (requests().length === 0) {
   <p class="muted">You haven't sent any requests.</p>
 } @else {
   <div class="table-wrap">
@@ -182,7 +182,7 @@
         <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
-        @for (r of requests(); track r.id) {
+        @for (r of rows(); track r.id) {
           <tr>
             <td>
               <span class="badge" [class]="statusBadge(r.status)">
@@ -205,7 +205,7 @@
             </td>
           </tr>
         }
-        @if (requests().length === 0) {
+        @if (rows().length === 0) {
           <tr>
             <td class="muted" colspan="5">No matches.</td>
           </tr>

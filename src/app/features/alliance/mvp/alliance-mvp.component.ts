@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   signal,
@@ -46,6 +47,7 @@ export class AllianceMvpComponent {
     { key: 'dukeRewards', type: 'number', label: 'Duke' },
     { key: 'actions', type: 'none' },
   ]);
+  readonly rows = computed(() => this.table.apply(this.recommendations()));
   loading = signal(false);
   error = signal<string | null>(null);
   events = signal<AllianceEvent[]>([]);
@@ -54,35 +56,29 @@ export class AllianceMvpComponent {
 
   constructor() {
     effect(() => {
-      const alliance = this.state.selected();
-      this.table.params();
-      if (alliance) void this.load(alliance.id);
+      const allianceId = this.state.selectedId();
+      if (allianceId) void this.load(allianceId);
     });
   }
 
   async onAwarded(): Promise<void> {
     this.awarding.set(null);
-    const alliance = this.state.selected();
-    if (alliance) await this.load(alliance.id);
+    const allianceId = this.state.selectedId();
+    if (allianceId) await this.load(allianceId, false);
   }
 
-  private async load(allianceId: string): Promise<void> {
+  /** Scores change with every award, so they are reloaded; events only with the alliance. */
+  private async load(allianceId: string, withEvents = true): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
-    const params = this.table.params();
     try {
       const [list, events] = await Promise.all([
-        firstValueFrom(
-          this.api.mvpRecommendations(allianceId, undefined, params)
-        ),
-        firstValueFrom(this.api.events(allianceId)),
+        firstValueFrom(this.api.mvpRecommendations(allianceId)),
+        withEvents ? firstValueFrom(this.api.events(allianceId)) : null,
       ]);
-      if (
-        this.state.selected()?.id === allianceId &&
-        this.table.params() === params
-      ) {
+      if (this.state.selectedId() === allianceId) {
         this.recommendations.set(list);
-        this.events.set(events);
+        if (events) this.events.set(events);
       }
     } catch (err) {
       this.error.set(apiErrorMessage(err));

@@ -116,9 +116,6 @@ describe('AllianceLinkAccountComponent', () => {
       message: 'It is me',
     });
     req.flush(pending, { status: 201, statusText: 'Created' });
-    await Promise.resolve();
-    await Promise.resolve();
-    http.expectOne(`${base}/api/link-requests/mine`).flush([pending]);
     await send;
 
     expect(component.requestSent()).toContain('Knights');

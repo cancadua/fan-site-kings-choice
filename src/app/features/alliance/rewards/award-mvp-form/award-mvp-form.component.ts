@@ -11,7 +11,11 @@ import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../../core/api/api-client';
-import { AllianceEvent, RewardType } from '../../../../core/api/api.models';
+import {
+  AllianceEvent,
+  Reward,
+  RewardType,
+} from '../../../../core/api/api.models';
 import { MVP_TIERS, todayIsoDate } from '../../mvp-tiers';
 
 export interface AwardablePlayer {
@@ -39,7 +43,7 @@ export class AwardMvpFormComponent {
   lockPlayer = input(false);
   playerId = model('');
   /** Emitted after the MVP was saved. */
-  awarded = output<void>();
+  awarded = output<Reward>();
 
   tier = signal<RewardType>('Normal');
   eventId = signal('');
@@ -59,7 +63,7 @@ export class AwardMvpFormComponent {
     this.error.set(null);
     try {
       const date = this.date();
-      await firstValueFrom(
+      const reward = await firstValueFrom(
         this.api.createReward({
           playerId,
           type: this.tier(),
@@ -75,7 +79,7 @@ export class AwardMvpFormComponent {
       this.eventId.set('');
       this.date.set(todayIsoDate());
       if (!this.lockPlayer()) this.playerId.set('');
-      this.awarded.emit();
+      this.awarded.emit(reward);
     } catch (err) {
       this.error.set(apiErrorMessage(err));
     } finally {

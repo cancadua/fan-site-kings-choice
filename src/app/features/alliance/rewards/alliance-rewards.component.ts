@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   signal,
@@ -49,6 +50,7 @@ export class AllianceRewardsComponent {
   ]);
 
   rewards = signal<Reward[]>([]);
+  readonly rows = computed(() => this.table.apply(this.rewards()));
   players = signal<Player[]>([]);
   events = signal<AllianceEvent[]>([]);
   loading = signal(false);
@@ -61,14 +63,12 @@ export class AllianceRewardsComponent {
     });
     effect(() => {
       const allianceId = this.state.selectedId();
-      this.table.params();
       if (allianceId) void this.load(allianceId);
     });
   }
 
-  async onAwarded(): Promise<void> {
-    const alliance = this.state.selected();
-    if (alliance) await this.run(() => this.loadRewards(alliance.id));
+  onAwarded(reward: Reward): void {
+    this.rewards.update((list) => [reward, ...list]);
   }
 
   async remove(reward: Reward): Promise<void> {
@@ -104,13 +104,8 @@ export class AllianceRewardsComponent {
   }
 
   private async loadRewards(allianceId: string): Promise<void> {
-    const params = this.table.params();
-    const rewards = await firstValueFrom(this.api.rewards(allianceId, params));
-    if (
-      this.state.selectedId() === allianceId &&
-      this.table.params() === params
-    )
-      this.rewards.set(rewards);
+    const rewards = await firstValueFrom(this.api.rewards(allianceId));
+    if (this.state.selectedId() === allianceId) this.rewards.set(rewards);
   }
 
   private async run(action: () => Promise<void>): Promise<void> {

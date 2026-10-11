@@ -4,7 +4,7 @@
   <app-award-mvp-form
     [players]="players()"
     [events]="events()"
-    (awarded)="onAwarded()"
+    (awarded)="onAwarded($event)"
   />
 </div>
 
@@ -12,9 +12,9 @@
   <p class="error" role="alert">{{ message }}</p>
 }
 
-@if (loading() && rewards().length === 0 && !table.hasFilters()) {
+@if (loading() && rewards().length === 0) {
   <p class="muted">Loading…</p>
-} @else if (rewards().length === 0 && !table.hasFilters()) {
+} @else if (rewards().length === 0) {
   <p class="muted">No MVPs awarded yet.</p>
 } @else {
   <div class="table-wrap">
@@ -30,7 +30,7 @@
         <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
-        @for (r of rewards(); track r.id) {
+        @for (r of rows(); track r.id) {
           <tr>
             <td>{{ r.awardedAt | date }}</td>
             <td>{{ r.playerName }}</td>
@@ -48,7 +48,7 @@
             </td>
           </tr>
         }
-        @if (rewards().length === 0) {
+        @if (rows().length === 0) {
           <tr>
             <td class="muted" colspan="5">No matches.</td>
           </tr>

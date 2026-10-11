@@ -53,6 +53,7 @@ export class AllianceMembersComponent {
     { key: 'joinedAt', type: 'date', label: 'Joined' },
     { key: 'actions', type: 'none' },
   ]);
+  readonly rows = computed(() => this.table.apply(this.members()));
   loading = signal(false);
   error = signal<string | null>(null);
   info = signal<string | null>(null);
@@ -64,9 +65,8 @@ export class AllianceMembersComponent {
 
   constructor() {
     effect(() => {
-      const alliance = this.state.selected();
-      this.table.params();
-      if (alliance) void this.load(alliance.id);
+      const allianceId = this.state.selectedId();
+      if (allianceId) void this.load(allianceId);
     });
   }
 
@@ -80,7 +80,9 @@ export class AllianceMembersComponent {
       await firstValueFrom(
         this.api.changeMemberRole(alliance.id, member.userId, role)
       );
-      await this.loadMembers(alliance.id);
+      this.members.update((list) =>
+        list.map((m) => (m.userId === member.userId ? { ...m, role } : m))
+      );
     });
     // If the change failed the list still holds the old role; put the select back.
     if (this.error()) select.value = member.role;
@@ -119,7 +121,9 @@ export class AllianceMembersComponent {
 
     await this.run(async () => {
       await firstValueFrom(this.api.removeMember(alliance.id, member.userId));
-      await this.loadMembers(alliance.id);
+      this.members.update((list) =>
+        list.filter((m) => m.userId !== member.userId)
+      );
     });
   }
 
@@ -130,13 +134,8 @@ export class AllianceMembersComponent {
   }
 
   private async loadMembers(allianceId: string): Promise<void> {
-    const params = this.table.params();
-    const members = await firstValueFrom(this.api.members(allianceId, params));
-    if (
-      this.state.selected()?.id === allianceId &&
-      this.table.params() === params
-    )
-      this.members.set(members);
+    const members = await firstValueFrom(this.api.members(allianceId));
+    if (this.state.selectedId() === allianceId) this.members.set(members);
   }
 
   private async run(action: () => Promise<void>): Promise<void> {

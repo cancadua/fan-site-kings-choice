@@ -8,9 +8,9 @@
   <p class="error" role="alert">{{ message }}</p>
 }
 
-@if (loading() && recommendations().length === 0 && !table.hasFilters()) {
+@if (loading() && recommendations().length === 0) {
   <p class="muted">Loading…</p>
-} @else if (recommendations().length === 0 && !table.hasFilters()) {
+} @else if (recommendations().length === 0) {
   <p class="muted">No active players yet.</p>
 } @else {
   <div class="table-wrap">
@@ -29,7 +29,7 @@
         <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
-        @for (r of recommendations(); track r.playerId; let i = $index) {
+        @for (r of rows(); track r.playerId; let i = $index) {
           <tr>
             <!-- The rank only means something in the default (score) order. -->
             <td>{{ table.sortBy() ? '' : i + 1 }}</td>
@@ -56,7 +56,7 @@
             </td>
           </tr>
         }
-        @if (recommendations().length === 0) {
+        @if (rows().length === 0) {
           <tr>
             <td class="muted" colspan="8">No matches.</td>
           </tr>

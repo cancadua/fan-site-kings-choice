@@ -33,7 +33,7 @@
         <tr [appFilterRow]="table"></tr>
       </thead>
       <tbody>
-        @for (m of members(); track m.userId) {
+        @for (m of rows(); track m.userId) {
           <tr>
             <td>{{ m.username }}</td>
             <td>{{ m.email }}</td>
@@ -101,7 +101,7 @@
             </td>
           </tr>
         }
-        @if (members().length === 0) {
+        @if (rows().length === 0) {
           <tr>
             <td class="muted" colspan="6">No matches.</td>
           </tr>

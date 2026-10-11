@@ -7,7 +7,7 @@ import {
 
 import { TableQuery } from './table-query';
 
-/** Header cell that sorts its table by `appSortHeader` (an API column) on click. */
+/** Header cell that sorts its table by `appSortHeader` (a column key) on click. */
 @Component({
   // Attribute selector: tables only allow <tr>/<th> here, not a custom element.
   // eslint-disable-next-line @angular-eslint/component-selector

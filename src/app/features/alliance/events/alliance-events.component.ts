@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   signal,
@@ -33,6 +34,7 @@ export class AllianceEventsComponent {
     { key: 'description', type: 'text', label: 'Description' },
     { key: 'actions', type: 'none' },
   ]);
+  readonly rows = computed(() => this.table.apply(this.events()));
   loading = signal(false);
   error = signal<string | null>(null);
 
@@ -41,9 +43,8 @@ export class AllianceEventsComponent {
 
   constructor() {
     effect(() => {
-      const alliance = this.state.selected();
-      const params = this.table.params();
-      if (alliance) void this.load(alliance.id, params);
+      const allianceId = this.state.selectedId();
+      if (allianceId) void this.load(allianceId);
     });
   }
 
@@ -53,7 +54,7 @@ export class AllianceEventsComponent {
     if (!alliance || !name) return;
 
     await this.run(async () => {
-      await firstValueFrom(
+      const created = await firstValueFrom(
         this.api.createEvent({
           allianceId: alliance.id,
           name,
@@ -62,7 +63,7 @@ export class AllianceEventsComponent {
       );
       this.newName.set('');
       this.newDescription.set('');
-      await this.load(alliance.id);
+      this.events.update((list) => [...list, created]);
     });
   }
 
@@ -75,18 +76,11 @@ export class AllianceEventsComponent {
     });
   }
 
-  private async load(
-    allianceId: string,
-    params = this.table.params()
-  ): Promise<void> {
+  private async load(allianceId: string): Promise<void> {
     this.loading.set(true);
     await this.run(async () => {
-      const events = await firstValueFrom(this.api.events(allianceId, params));
-      if (
-        this.state.selected()?.id === allianceId &&
-        this.table.params() === params
-      )
-        this.events.set(events);
+      const events = await firstValueFrom(this.api.events(allianceId));
+      if (this.state.selectedId() === allianceId) this.events.set(events);
     });
     this.loading.set(false);
   }

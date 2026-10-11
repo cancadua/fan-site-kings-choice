@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   signal,
@@ -10,7 +11,7 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
-import { ListParams, Reward } from '../../../core/api/api.models';
+import { Reward } from '../../../core/api/api.models';
 import { FilterRowComponent } from '../../../shared/table-query/filter-row.component';
 import { SortHeaderComponent } from '../../../shared/table-query/sort-header.component';
 import { TableQuery } from '../../../shared/table-query/table-query';
@@ -37,29 +38,24 @@ export class AllianceMyPlayerComponent {
   ]);
 
   rewards = signal<Reward[]>([]);
+  readonly rows = computed(() => this.table.apply(this.rewards()));
   loading = signal(false);
   error = signal<string | null>(null);
 
   constructor() {
     effect(() => {
       const playerId = this.state.selected()?.myPlayerId;
-      const params = this.table.params();
-      if (playerId) void this.load(playerId, params);
+      if (playerId) void this.load(playerId);
       else this.rewards.set([]);
     });
   }
 
-  private async load(playerId: string, params: ListParams): Promise<void> {
+  private async load(playerId: string): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
     try {
-      const rewards = await firstValueFrom(
-        this.api.playerRewards(playerId, params)
-      );
-      if (
-        this.state.selected()?.myPlayerId === playerId &&
-        this.table.params() === params
-      )
+      const rewards = await firstValueFrom(this.api.playerRewards(playerId));
+      if (this.state.selected()?.myPlayerId === playerId)
         this.rewards.set(rewards);
     } catch (err) {
       this.error.set(apiErrorMessage(err));

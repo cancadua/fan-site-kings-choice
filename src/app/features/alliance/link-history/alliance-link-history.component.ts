@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   signal,
@@ -10,7 +11,6 @@ import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
 import {
-  ListParams,
   PlayerLinkAction,
   PlayerLinkLogEntry,
   PlayerLinkMethod,
@@ -72,30 +72,24 @@ export class AllianceLinkHistoryComponent {
   ]);
 
   entries = signal<PlayerLinkLogEntry[]>([]);
+  readonly rows = computed(() => this.table.apply(this.entries()));
   loading = signal(false);
   error = signal<string | null>(null);
 
   constructor() {
     effect(() => {
       const allianceId = this.state.selectedId();
-      const params = this.table.params();
-      if (allianceId) void this.load(allianceId, params);
+      if (allianceId) void this.load(allianceId);
     });
   }
 
-  private async load(allianceId: string, params: ListParams): Promise<void> {
+  private async load(allianceId: string): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
     try {
-      const entries = await firstValueFrom(
-        this.api.linkLog(allianceId, params)
-      );
-      // Ignore a stale response (another alliance or newer filters).
-      if (
-        this.state.selectedId() === allianceId &&
-        this.table.params() === params
-      )
-        this.entries.set(entries);
+      const entries = await firstValueFrom(this.api.linkLog(allianceId));
+      // Ignore a stale response (switched alliance meanwhile).
+      if (this.state.selectedId() === allianceId) this.entries.set(entries);
     } catch (err) {
       this.error.set(apiErrorMessage(err));
     } finally {
