@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+dialog {
+  width: min(32rem, calc(100vw - 2rem));
+  padding: 1.25rem;
+  background: $knight-bg-end;
+  color: $knight-text;
+  border: 1px solid rgba($knight-amber, 0.4);
+  border-radius: 12px;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+
+header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+h2 {
+  margin: 0;
+  color: $knight-amber;
+  font-size: 1.2rem;
+}
+
+.close {
+  padding: 0 0.4rem;
+  background: none;
+  color: $knight-text-muted;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}

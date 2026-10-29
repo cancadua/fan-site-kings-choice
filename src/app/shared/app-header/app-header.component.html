@@ -1,10 +1,16 @@
 <header>
   <div class="navbar">
     <div class="nav-left">
-      <a [routerLink]="navLinks[0].route" (click)="closeMenu()">{{ navLinks[0].label }}</a>
+      <a [routerLink]="navLinks[0].route" (click)="closeMenu()">{{
+        navLinks[0].label
+      }}</a>
     </div>
 
-    <button class="hamburger" (click)="toggleMenu()" [class.active]="menuOpen()">
+    <button
+      class="hamburger"
+      (click)="toggleMenu()"
+      [class.active]="menuOpen()"
+    >
       <span class="line line1"></span>
       <span class="line line2"></span>
       <span class="line line3"></span>
@@ -12,7 +18,7 @@
 
     <nav class="nav-right" [class.open]="menuOpen()">
       @for (link of navLinks.slice(1); track $index) {
-      <a [routerLink]="link.route" (click)="closeMenu()">{{ link.label }}</a>
+        <a [routerLink]="link.route" (click)="closeMenu()">{{ link.label }}</a>
       }
     </nav>
   </div>
@@ -20,9 +26,14 @@
 
 <nav class="bottom-nav">
   @for (link of navLinks; track $index) {
-  <a [routerLink]="link.route" class="bottom-nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-    <span class="icon">{{ getIcon(link.label) }}</span>
-    <span class="label">{{ link.label }}</span>
-  </a>
+    <a
+      [routerLink]="link.route"
+      class="bottom-nav-link"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <span class="icon">{{ getIcon(link.label) }}</span>
+      <span class="label">{{ link.label }}</span>
+    </a>
   }
 </nav>

@@ -23,7 +23,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppDropComponent {
+export class AppDropComponent implements ControlValueAccessor {
   truncateText(text: string | undefined, maxLength: number): string {
     if (!text) {
       return '';
@@ -35,7 +35,7 @@ export class AppDropComponent {
     return text;
   }
 
-  items = model<Array<Record<string, string>>>();
+  items = model<Record<string, string>[]>();
 
   viewKey = input<string>('name');
 
@@ -49,9 +49,9 @@ export class AppDropComponent {
 
   selectedObject: Record<string, string> | null = null;
 
-  private onChange: (value: string | null) => void = () => {};
+  private onChange: (value: string | null) => void = () => undefined;
 
-  private onTouched: () => void = () => {};
+  private onTouched: () => void = () => undefined;
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
@@ -80,9 +80,5 @@ export class AppDropComponent {
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    // Optional: Handle disabled state if needed
   }
 }

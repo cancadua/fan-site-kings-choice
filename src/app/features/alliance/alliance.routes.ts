@@ -1,6 +1,14 @@
 import { Routes } from '@angular/router';
 
+import { allianceRoleGuard } from './alliance-role.guard';
+import { MANAGER_ROLES } from './alliance-sections';
 import { AllianceShellComponent } from './alliance-shell.component';
+
+/** Restricts a route to Owner/Leader of the selected alliance. */
+const managersOnly = {
+  canActivate: [allianceRoleGuard],
+  data: { roles: MANAGER_ROLES },
+};
 
 export const allianceRoutes: Routes = [
   {
@@ -10,27 +18,64 @@ export const allianceRoutes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./dashboard/alliance-dashboard.component').then(m => m.AllianceDashboardComponent),
+          import('./dashboard/alliance-dashboard.component').then(
+            (m) => m.AllianceDashboardComponent
+          ),
       },
       {
         path: 'players',
-        loadComponent: () => import('./players/alliance-players.component').then(m => m.AlliancePlayersComponent),
+        ...managersOnly,
+        loadComponent: () =>
+          import('./players/alliance-players.component').then(
+            (m) => m.AlliancePlayersComponent
+          ),
       },
       {
         path: 'events',
-        loadComponent: () => import('./events/alliance-events.component').then(m => m.AllianceEventsComponent),
+        ...managersOnly,
+        loadComponent: () =>
+          import('./events/alliance-events.component').then(
+            (m) => m.AllianceEventsComponent
+          ),
       },
       {
         path: 'rewards',
-        loadComponent: () => import('./rewards/alliance-rewards.component').then(m => m.AllianceRewardsComponent),
+        ...managersOnly,
+        loadComponent: () =>
+          import('./rewards/alliance-rewards.component').then(
+            (m) => m.AllianceRewardsComponent
+          ),
       },
       {
         path: 'mvp',
-        loadComponent: () => import('./mvp/alliance-mvp.component').then(m => m.AllianceMvpComponent),
+        ...managersOnly,
+        loadComponent: () =>
+          import('./mvp/alliance-mvp.component').then(
+            (m) => m.AllianceMvpComponent
+          ),
       },
       {
         path: 'members',
-        loadComponent: () => import('./members/alliance-members.component').then(m => m.AllianceMembersComponent),
+        ...managersOnly,
+        loadComponent: () =>
+          import('./members/alliance-members.component').then(
+            (m) => m.AllianceMembersComponent
+          ),
+      },
+      {
+        path: 'link-history',
+        ...managersOnly,
+        loadComponent: () =>
+          import('./link-history/alliance-link-history.component').then(
+            (m) => m.AllianceLinkHistoryComponent
+          ),
+      },
+      {
+        path: 'link',
+        loadComponent: () =>
+          import('./link-account/alliance-link-account.component').then(
+            (m) => m.AllianceLinkAccountComponent
+          ),
       },
       { path: '**', redirectTo: '' },
     ],

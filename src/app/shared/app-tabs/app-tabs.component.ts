@@ -7,20 +7,21 @@ import { ContentTab } from './app-tabs.schema';
   styleUrls: ['./app-tabs.component.scss'],
 })
 export class AppTabsComponent {
-  private readonly tabsContainer = viewChild<ElementRef<HTMLElement>>('tabsContainer');
+  private readonly tabsContainer =
+    viewChild<ElementRef<HTMLElement>>('tabsContainer');
 
   tabs = input<ContentTab[]>();
 
   activeTab = model<ContentTab | null>(null);
 
   get visibleTabs(): ContentTab[] {
-    return this.tabs()?.filter(tab => !tab.hidden) ?? [];
+    return this.tabs()?.filter((tab) => !tab.hidden) ?? [];
   }
 
   get activeIndex(): number {
     const activeTab = this.activeTab();
     if (!activeTab) return -1;
-    return this.visibleTabs.findIndex(tab => tab.value === activeTab.value);
+    return this.visibleTabs.findIndex((tab) => tab.value === activeTab.value);
   }
 
   get hasPrevTab(): boolean {
@@ -28,7 +29,9 @@ export class AppTabsComponent {
   }
 
   get hasNextTab(): boolean {
-    return this.activeIndex !== -1 && this.activeIndex < this.visibleTabs.length - 1;
+    return (
+      this.activeIndex !== -1 && this.activeIndex < this.visibleTabs.length - 1
+    );
   }
 
   selectTab(tab: ContentTab) {
@@ -50,12 +53,18 @@ export class AppTabsComponent {
     const container = this.tabsContainer()?.nativeElement;
     if (!container) return;
 
-    const activeButton = container.querySelector('button.active') as HTMLElement;
+    const activeButton = container.querySelector(
+      'button.active'
+    ) as HTMLElement;
     if (!activeButton) return;
 
     const containerRect = container.getBoundingClientRect();
     const buttonRect = activeButton.getBoundingClientRect();
-    const scrollAmount = buttonRect.left - containerRect.left - containerRect.width / 2 + buttonRect.width / 2;
+    const scrollAmount =
+      buttonRect.left -
+      containerRect.left -
+      containerRect.width / 2 +
+      buttonRect.width / 2;
 
     container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   }

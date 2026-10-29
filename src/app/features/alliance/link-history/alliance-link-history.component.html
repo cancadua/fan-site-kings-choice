@@ -1,0 +1,54 @@
+<h1>Link history</h1>
+<p class="muted">
+  Every time an account was linked to or unlinked from a player.
+</p>
+
+@if (error(); as message) {
+  <p class="error" role="alert">{{ message }}</p>
+}
+@if (loading() && entries().length === 0) {
+  <p class="muted">Loading…</p>
+} @else if (entries().length === 0) {
+  <p class="muted">No accounts have been linked yet.</p>
+} @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th appSortHeader="createdAt" [query]="table">Date</th>
+          <th appSortHeader="action" [query]="table">Action</th>
+          <th appSortHeader="playerName" [query]="table">Player</th>
+          <th appSortHeader="username" [query]="table">Account</th>
+          <th appSortHeader="method" [query]="table">Method</th>
+          <th appSortHeader="actorUsername" [query]="table">By</th>
+        </tr>
+        <tr [appFilterRow]="table"></tr>
+      </thead>
+      <tbody>
+        @for (e of rows(); track e.id) {
+          <tr>
+            <td>{{ e.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>
+              <span
+                class="badge"
+                [class.badge--success]="e.action === 'Linked'"
+                [class.badge--muted]="e.action === 'Unlinked'"
+              >
+                {{ actionLabels[e.action] }}
+              </span>
+            </td>
+            <td>{{ e.playerName }}</td>
+            <td>{{ e.username ?? '—' }}</td>
+            <td>{{ methodLabels[e.method] }}</td>
+            <td>{{ e.actorUsername ?? '—' }}</td>
+          </tr>
+        }
+        @if (rows().length === 0) {
+          <tr>
+            <td class="muted" colspan="6">No matches.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

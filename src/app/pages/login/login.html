@@ -4,17 +4,33 @@
     <p class="login-subtitle">For alliance owners and leaders</p>
 
     <div class="login-tabs" role="tablist">
-      <button type="button" role="tab" [class.active]="mode() === 'login'" (click)="setMode('login')">
+      <button
+        type="button"
+        role="tab"
+        [class.active]="mode() === 'login'"
+        (click)="setMode('login')"
+      >
         Sign in
       </button>
-      <button type="button" role="tab" [class.active]="mode() === 'register'" (click)="setMode('register')">
+      <button
+        type="button"
+        role="tab"
+        [class.active]="mode() === 'register'"
+        (click)="setMode('register')"
+      >
         Register
       </button>
     </div>
 
     <label>
       <span>Email</span>
-      <input type="email" name="email" autocomplete="email" required [(ngModel)]="email" />
+      <input
+        type="email"
+        name="email"
+        autocomplete="email"
+        required
+        [(ngModel)]="email"
+      />
     </label>
 
     @if (mode() === 'register') {
@@ -49,7 +65,8 @@
     }
 
     <button type="submit" class="login-submit" [disabled]="busy()">
-      {{ busy() ? 'Please wait…' : mode() === 'login' ? 'Sign in' : 'Create account' }}
+      {{ busy() ? 'Please wait…' : mode() === 'login' ? 'Sign in' : 'Create
+      account' }}
     </button>
 
     @if (busy()) {

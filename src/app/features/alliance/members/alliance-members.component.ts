@@ -1,16 +1,29 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
 import { AllianceRole, Member } from '../../../core/api/api.models';
+import { FilterRowComponent } from '../../../shared/table-query/filter-row.component';
+import { SortHeaderComponent } from '../../../shared/table-query/sort-header.component';
+import {
+  TableQuery,
+  enumOptions,
+} from '../../../shared/table-query/table-query';
 import { AllianceStateService } from '../alliance-state.service';
 
 @Component({
   selector: 'app-alliance-members',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [SortHeaderComponent, FilterRowComponent, DatePipe, RouterLink],
   templateUrl: './alliance-members.component.html',
   styleUrls: ['./alliance-members.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,32 +36,37 @@ export class AllianceMembersComponent {
   readonly assignableRoles: AllianceRole[] = ['Leader', 'Member'];
 
   members = signal<Member[]>([]);
+  readonly table = new TableQuery([
+    { key: 'username', type: 'text', label: 'Username' },
+    { key: 'email', type: 'text', label: 'Email' },
+    { key: 'playerName', type: 'text', label: 'Player' },
+    {
+      key: 'role',
+      type: 'enum',
+      label: 'Role',
+      options: enumOptions({
+        Owner: 'Owner',
+        Leader: 'Leader',
+        Member: 'Member',
+      }),
+    },
+    { key: 'joinedAt', type: 'date', label: 'Joined' },
+    { key: 'actions', type: 'none' },
+  ]);
+  readonly rows = computed(() => this.table.apply(this.members()));
   loading = signal(false);
   error = signal<string | null>(null);
   info = signal<string | null>(null);
 
-  inviteEmail = signal('');
-  inviteRole = signal<AllianceRole>('Leader');
-
   isOwner = computed(() => this.state.selected()?.myRole === 'Owner');
+  isManager = this.state.isManager;
+  /** userId of the member whose player name is being edited. */
+  renaming = signal<string | null>(null);
 
   constructor() {
     effect(() => {
-      const alliance = this.state.selected();
-      if (alliance) void this.load(alliance.id);
-    });
-  }
-
-  async invite(): Promise<void> {
-    const alliance = this.state.selected();
-    const email = this.inviteEmail().trim();
-    if (!alliance || !email) return;
-
-    await this.run(async () => {
-      await firstValueFrom(this.api.invite(alliance.id, { email, role: this.inviteRole() }));
-      this.inviteEmail.set('');
-      this.info.set(`${email} was added as ${this.inviteRole()}.`);
-      await this.loadMembers(alliance.id);
+      const allianceId = this.state.selectedId();
+      if (allianceId) void this.load(allianceId);
     });
   }
 
@@ -59,20 +77,53 @@ export class AllianceMembersComponent {
     if (!alliance || role === member.role) return;
 
     await this.run(async () => {
-      await firstValueFrom(this.api.changeMemberRole(alliance.id, member.userId, role));
-      await this.loadMembers(alliance.id);
+      await firstValueFrom(
+        this.api.changeMemberRole(alliance.id, member.userId, role)
+      );
+      this.members.update((list) =>
+        list.map((m) => (m.userId === member.userId ? { ...m, role } : m))
+      );
     });
     // If the change failed the list still holds the old role; put the select back.
     if (this.error()) select.value = member.role;
   }
 
+  async rename(member: Member, input: HTMLInputElement): Promise<void> {
+    const alliance = this.state.selected();
+    const name = input.value.trim();
+    if (!alliance) return;
+    if (!name || name === member.playerName) {
+      this.renaming.set(null);
+      return;
+    }
+
+    await this.run(async () => {
+      const updated = await firstValueFrom(
+        this.api.renameMember(alliance.id, member.userId, name)
+      );
+      this.members.update((list) =>
+        list.map((m) => (m.userId === updated.userId ? updated : m))
+      );
+      this.renaming.set(null);
+    });
+  }
+
   async remove(member: Member): Promise<void> {
     const alliance = this.state.selected();
-    if (!alliance || !confirm(`Remove ${member.username} from the alliance?`)) return;
+    const unlinkNote = member.playerName
+      ? ` They will also be unlinked from player ${member.playerName}.`
+      : '';
+    if (
+      !alliance ||
+      !confirm(`Remove ${member.username} from the alliance?${unlinkNote}`)
+    )
+      return;
 
     await this.run(async () => {
       await firstValueFrom(this.api.removeMember(alliance.id, member.userId));
-      await this.loadMembers(alliance.id);
+      this.members.update((list) =>
+        list.filter((m) => m.userId !== member.userId)
+      );
     });
   }
 
@@ -84,7 +135,7 @@ export class AllianceMembersComponent {
 
   private async loadMembers(allianceId: string): Promise<void> {
     const members = await firstValueFrom(this.api.members(allianceId));
-    if (this.state.selected()?.id === allianceId) this.members.set(members);
+    if (this.state.selectedId() === allianceId) this.members.set(members);
   }
 
   private async run(action: () => Promise<void>): Promise<void> {

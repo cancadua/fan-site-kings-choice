@@ -8,7 +8,8 @@
 
 header {
   width: 100%;
-  background: linear-gradient(rgba($black-primary, 0.7), rgba($black-dark, 0.8)),
+  background:
+    linear-gradient(rgba($black-primary, 0.7), rgba($black-dark, 0.8)),
     url('../../../assets/img/background.png') no-repeat center center/cover;
   color: $parchment;
   text-align: center;
@@ -113,7 +114,9 @@ header {
   letter-spacing: 4px;
   margin: 0 0 15px 0;
   color: $gold-light;
-  text-shadow: 2px 2px 8px $shadow, 0 0 20px rgba($gold-primary, 0.3);
+  text-shadow:
+    2px 2px 8px $shadow,
+    0 0 20px rgba($gold-primary, 0.3);
   line-height: 1.2;
 }
 
@@ -126,7 +129,6 @@ header {
   opacity: 0.9;
   letter-spacing: 1px;
 }
-
 
 .bottom-nav {
   display: none;

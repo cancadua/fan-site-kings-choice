@@ -1,8 +1,20 @@
 // Mirrors AllianceRewards.Api DTOs. Enums are serialized as strings (JsonStringEnumConverter).
 // Dates are ISO-8601 strings.
 
+/** Sorting and column filters for list endpoints (sortBy, sortDir, column, columnMin/Max). */
+export type ListParams = Readonly<Record<string, string>>;
+
 export type AllianceRole = 'Member' | 'Owner' | 'Leader';
-export type RewardType = 'Normal' | 'Blue' | 'Purple' | 'Mvp';
+/** Every reward is an MVP; the type is its tier. */
+export type RewardType = 'Normal' | 'Earl' | 'Duke';
+/** Free-form marker for a player; its meaning is decided by the alliance. */
+export type PlayerColor =
+  'None' | 'Orange' | 'Yellow' | 'White' | 'Green' | 'Blue' | 'Red' | 'DarkRed';
+export type LinkRequestStatus =
+  'Pending' | 'Accepted' | 'Rejected' | 'Cancelled';
+export type PlayerLinkAction = 'Linked' | 'Unlinked';
+export type PlayerLinkMethod =
+  'Code' | 'Invite' | 'Request' | 'Unlink' | 'MemberRemoved' | 'PlayerDeleted';
 
 // Auth
 export interface RegisterRequest {
@@ -35,6 +47,9 @@ export interface MyAlliance {
   myRole: AllianceRole;
   createdAt: string;
   memberCount: number;
+  /** The player the current account is linked to in this alliance, if any. */
+  myPlayerId: string | null;
+  myPlayerName: string | null;
 }
 
 export interface Alliance {
@@ -51,11 +66,39 @@ export interface Member {
   email: string;
   role: AllianceRole;
   joinedAt: string;
+  playerId: string | null;
+  playerName: string | null;
 }
 
+/** Links a registered account to a player; only the Owner may grant Leader. */
 export interface InviteRequest {
-  email: string;
-  role?: AllianceRole;
+  /** Email or username of a registered account. */
+  user: string;
+  playerId: string;
+  role?: Exclude<AllianceRole, 'Owner'>;
+}
+
+export interface AllianceSearchResult {
+  id: string;
+  name: string;
+}
+
+export interface UnlinkedPlayer {
+  id: string;
+  name: string;
+}
+
+export interface PlayerLinkLogEntry {
+  id: string;
+  playerId: string;
+  playerName: string;
+  userId: string;
+  username: string | null;
+  action: PlayerLinkAction;
+  method: PlayerLinkMethod;
+  actorId: string;
+  actorUsername: string | null;
+  createdAt: string;
 }
 
 // Players
@@ -65,19 +108,52 @@ export interface Player {
   name: string;
   activity: number;
   isActive: boolean;
+  color: PlayerColor;
   createdAt: string;
+  /** The linked account, if any. */
+  userId: string | null;
+  username: string | null;
+}
+
+/** One-time code; it is only ever returned by the request that created it. */
+export interface LinkCode {
+  code: string;
+  expiresAt: string;
 }
 
 export interface CreatePlayerRequest {
   allianceId: string;
   name: string;
   activity?: number;
+  color?: PlayerColor;
 }
 
 export interface UpdatePlayerRequest {
   name?: string;
   activity?: number;
   isActive?: boolean;
+  color?: PlayerColor;
+}
+
+// Link requests
+export interface LinkRequest {
+  id: string;
+  allianceId: string;
+  allianceName: string;
+  playerId: string | null;
+  playerName: string;
+  userId: string;
+  username: string;
+  message: string | null;
+  status: LinkRequestStatus;
+  createdAt: string;
+  resolvedAt: string | null;
+}
+
+export interface CreateLinkRequestRequest {
+  allianceId: string;
+  playerId: string;
+  message?: string;
 }
 
 // Events
@@ -86,20 +162,17 @@ export interface AllianceEvent {
   allianceId: string;
   name: string;
   description: string | null;
-  date: string;
 }
 
 export interface CreateEventRequest {
   allianceId: string;
   name: string;
   description?: string | null;
-  date?: string;
 }
 
 export interface UpdateEventRequest {
   name?: string;
   description?: string | null;
-  date?: string;
 }
 
 // Rewards
@@ -125,18 +198,17 @@ export interface PlayerStats {
   player: string;
   isActive: boolean;
   normal: number;
-  blue: number;
-  purple: number;
-  mvp: number;
+  earl: number;
+  duke: number;
+  /** Number of MVPs of any tier. */
   total: number;
   lastReward: string | null;
 }
 
 export interface RewardTotals {
   normal: number;
-  blue: number;
-  purple: number;
-  mvp: number;
+  earl: number;
+  duke: number;
   total: number;
 }
 
@@ -151,9 +223,24 @@ export interface MvpRecommendation {
   playerId: string;
   player: string;
   score: number;
-  lastReward: string | null;
   lastMvp: string | null;
   normalRewards: number;
-  blueRewards: number;
-  purpleRewards: number;
+  earlRewards: number;
+  dukeRewards: number;
+}
+
+// Shared maps (anonymous, expiring)
+export type SharedMapState = Record<string, unknown>;
+
+export interface SharedMap {
+  code: string;
+  version: number;
+  expiresAt: string;
+  updatedAt: string;
+  state: SharedMapState;
+}
+
+export interface PatchSharedMapRequest {
+  set?: SharedMapState;
+  remove?: string[];
 }

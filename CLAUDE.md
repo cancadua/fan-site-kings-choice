@@ -61,9 +61,9 @@ const routes: Routes = [
 
 ### Prerequisites
 
-- Node.js >= 18.x
-- npm >= 9.x
-- Angular CLI 20.x (installed as dev dependency)
+- Node.js 24.x LTS (matches CI)
+- npm >= 11.x
+- Angular CLI 22.x (installed as dev dependency)
 
 ### Getting Started
 
@@ -83,6 +83,7 @@ npm start
 | ---------------- | ------------------------------ |
 | `npm start`      | Run dev server with hot reload |
 | `npm run build`  | Production build               |
+| `npm run lint`   | Lint with ESLint               |
 | `npm run format` | Format code with Prettier      |
 | `npm run watch`  | Watch mode build               |
 
@@ -105,6 +106,7 @@ npm start
 
 3. **Before Committing**:
    ```bash
+   npm run lint      # Lint code
    npm run format    # Format code
    git status        # Review changes
    git add [files]   # Stage specific files
@@ -322,8 +324,8 @@ npm run build
 ### Build Configuration
 
 - **Budget Limits** (from angular.json):
-  - Initial bundle: 1MB max
-  - Component styles: 8KB max per component
+  - Initial bundle: 500kB warning, 1MB error
+  - Component styles: 4kB warning, 8kB error per component
 - **Optimization**: Enabled by default in production
 - **Source Maps**: Disabled in production for security
 
@@ -430,11 +432,12 @@ Always test after updating major versions.
 
 **VS Code Recommended Extensions**:
 
+See `.vscode/extensions.json` (VS Code prompts to install them). Key ones:
+
 - Angular Language Service
 - Prettier - Code Formatter
-- TypeScript Vue Plugin (Volar)
 - ESLint
-- Debugger for Chrome
+- Supabase
 
 **VS Code Settings** (`settings.json`):
 
@@ -488,7 +491,7 @@ npm run ng -- cache clean
 ## Performance Targets
 
 - **Lighthouse Score**: Target 90+
-- **Bundle Size**: Keep under 1MB (configured)
+- **Bundle Size**: Keep under 500kB initial (warning), 1MB hard limit
 - **First Contentful Paint**: < 2.5s
 - **Time to Interactive**: < 5s
 

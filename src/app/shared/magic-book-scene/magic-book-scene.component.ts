@@ -75,15 +75,27 @@ export class MagicBookSceneComponent {
       this.renderer.appendChild(this.document.body, this.host.nativeElement);
       // `fixed` anchors the gradient to the viewport, not the (tall, scrollable)
       // <body> box — otherwise its centre drifts and the book edge shows a seam.
-      this.renderer.setStyle(this.document.body, 'background-color', SCENE_BACKGROUND_COLOR);
-      this.renderer.setStyle(this.document.body, 'background-image', SCENE_BACKGROUND_IMAGE);
-      this.renderer.setStyle(this.document.body, 'background-attachment', 'fixed');
+      this.renderer.setStyle(
+        this.document.body,
+        'background-color',
+        SCENE_BACKGROUND_COLOR
+      );
+      this.renderer.setStyle(
+        this.document.body,
+        'background-image',
+        SCENE_BACKGROUND_IMAGE
+      );
+      this.renderer.setStyle(
+        this.document.body,
+        'background-attachment',
+        'fixed'
+      );
 
       this.runAfter(50, () => this.animating.set(true));
       this.runAfter(this.holdMs(), () => this.beginFadeOut());
 
       this.destroyRef.onDestroy(() => {
-        this.pendingTimers.forEach(timer => clearTimeout(timer));
+        this.pendingTimers.forEach((timer) => clearTimeout(timer));
         this.restoreBodyBackground();
         this.host.nativeElement.remove();
       });
@@ -94,7 +106,7 @@ export class MagicBookSceneComponent {
   protected skip(event?: Event): void {
     event?.preventDefault();
     if (this.fadingOut()) return;
-    this.pendingTimers.forEach(timer => clearTimeout(timer));
+    this.pendingTimers.forEach((timer) => clearTimeout(timer));
     this.pendingTimers.clear();
     this.animating.set(true);
     this.skipped.set(true);

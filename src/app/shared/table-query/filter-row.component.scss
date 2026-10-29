@@ -1,0 +1,85 @@
+@use 'variables' as *;
+
+.filter-cell {
+  padding: 0.35rem 0.5rem 0.6rem;
+  vertical-align: top;
+  border-bottom: 1px solid rgba($knight-amber, 0.15);
+}
+
+input,
+select,
+summary,
+button {
+  box-sizing: border-box;
+  padding: 0.3rem 0.45rem;
+  background: rgba(0, 0, 0, 0.35);
+  color: $knight-text;
+  border: 1px solid rgba($knight-amber, 0.3);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.8rem;
+}
+
+input[type='search'] {
+  width: 100%;
+  min-width: 7rem;
+}
+
+input[type='number'] {
+  width: 4.5rem;
+}
+
+input[type='date'] {
+  width: 8.5rem;
+  color-scheme: dark;
+}
+
+.range {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.multi {
+  position: relative;
+
+  summary {
+    min-width: 6rem;
+    cursor: pointer;
+    list-style: none;
+
+    &::after {
+      content: ' ▾';
+    }
+  }
+}
+
+.multi-options {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  background: $knight-bg-end;
+  border: 1px solid rgba($knight-amber, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+
+  label {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    color: $knight-text;
+  }
+}
+
+.clear {
+  color: $knight-amber;
+  border-color: $knight-amber;
+  cursor: pointer;
+}

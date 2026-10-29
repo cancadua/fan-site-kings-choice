@@ -13,6 +13,18 @@ h1 {
   color: #ff8a80;
 }
 
+.callout {
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  background: rgba($knight-amber, 0.08);
+  border-left: 4px solid $knight-amber;
+  border-radius: 8px;
+
+  a {
+    color: $knight-amber;
+  }
+}
+
 .totals {
   list-style: none;
   display: grid;
@@ -33,6 +45,23 @@ h1 {
   strong {
     font-size: 1.6rem;
     color: $knight-amber;
+  }
+
+  // Tier colors match the MVP badges.
+  .earl {
+    border-left-color: #64b5f6;
+
+    strong {
+      color: #64b5f6;
+    }
+  }
+
+  .duke {
+    border-left-color: #ce93d8;
+
+    strong {
+      color: #ce93d8;
+    }
   }
 
   span {

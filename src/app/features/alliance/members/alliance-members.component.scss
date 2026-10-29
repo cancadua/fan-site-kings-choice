@@ -1,11 +1,21 @@
 @use 'alliance-page' as *;
+@use 'variables' as *;
 
 :host {
   display: block;
   @include alliance-page;
 }
 
-.grow {
-  flex: 1;
-  min-width: 14rem;
+.rename {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+
+  input {
+    min-width: 8rem;
+  }
+}
+
+a {
+  color: $knight-amber;
 }

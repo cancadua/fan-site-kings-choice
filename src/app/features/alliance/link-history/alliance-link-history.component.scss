@@ -1,0 +1,6 @@
+@use 'alliance-page' as *;
+
+:host {
+  display: block;
+  @include alliance-page;
+}

@@ -1,52 +1,66 @@
 <h1>Events</h1>
+<p class="muted intro">
+  Recurring event types (e.g. Showdown). Each MVP can name the event it was
+  awarded for; the date belongs to the MVP.
+</p>
 
 <form class="toolbar" (ngSubmit)="add()">
   <label>
     Name
-    <input type="text" name="name" maxlength="100" required [(ngModel)]="newName" />
-  </label>
-  <label>
-    Date
-    <input type="date" name="date" [(ngModel)]="newDate" />
+    <input
+      type="text"
+      name="name"
+      maxlength="100"
+      required
+      [(ngModel)]="newName"
+    />
   </label>
   <label class="grow">
     Description (optional)
     <input type="text" name="description" [(ngModel)]="newDescription" />
   </label>
-  <button type="submit" class="primary" [disabled]="!newName().trim()">Add event</button>
+  <button type="submit" class="primary" [disabled]="!newName().trim()">
+    Add event
+  </button>
 </form>
 
 @if (error(); as message) {
-<p class="error" role="alert">{{ message }}</p>
+  <p class="error" role="alert">{{ message }}</p>
 }
 
 @if (loading() && events().length === 0) {
-<p class="muted">Loading…</p>
+  <p class="muted">Loading…</p>
 } @else if (events().length === 0) {
-<p class="muted">No events yet.</p>
+  <p class="muted">No events yet.</p>
 } @else {
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (e of events(); track e.id) {
-      <tr>
-        <td>{{ e.date | date: 'mediumDate' }}</td>
-        <td>{{ e.name }}</td>
-        <td class="wrap">{{ e.description }}</td>
-        <td class="actions">
-          <button type="button" class="small danger" (click)="remove(e)">Delete</button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th appSortHeader="name" [query]="table">Name</th>
+          <th appSortHeader="description" [query]="table">Description</th>
+          <th></th>
+        </tr>
+        <tr [appFilterRow]="table"></tr>
+      </thead>
+      <tbody>
+        @for (e of rows(); track e.id) {
+          <tr>
+            <td>{{ e.name }}</td>
+            <td class="wrap">{{ e.description }}</td>
+            <td class="actions">
+              <button type="button" class="small danger" (click)="remove(e)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+        @if (rows().length === 0) {
+          <tr>
+            <td class="muted" colspan="3">No matches.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

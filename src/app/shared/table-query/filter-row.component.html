@@ -1,0 +1,118 @@
+@for (col of query().columns; track col.key; let last = $last) {
+  <td class="filter-cell">
+    @switch (col.type) {
+      @case ('text') {
+        <input
+          type="search"
+          placeholder="Filter…"
+          [attr.aria-label]="'Filter ' + (col.label ?? col.key)"
+          [value]="query().value(col.key)"
+          (input)="query().set(col.key, text($event))"
+        />
+      }
+      @case ('number') {
+        <span class="range">
+          <input
+            type="number"
+            placeholder="Min"
+            [attr.aria-label]="(col.label ?? col.key) + ' from'"
+            [value]="query().value(col.key + 'Min')"
+            (input)="query().set(col.key + 'Min', text($event))"
+          />
+          <input
+            type="number"
+            placeholder="Max"
+            [attr.aria-label]="(col.label ?? col.key) + ' to'"
+            [value]="query().value(col.key + 'Max')"
+            (input)="query().set(col.key + 'Max', text($event))"
+          />
+        </span>
+      }
+      @case ('date') {
+        <span class="range">
+          <input
+            type="date"
+            [attr.aria-label]="(col.label ?? col.key) + ' from'"
+            [value]="query().value(col.key + 'Min')"
+            (change)="query().set(col.key + 'Min', text($event), true)"
+          />
+          <input
+            type="date"
+            [attr.aria-label]="(col.label ?? col.key) + ' to'"
+            [value]="query().value(col.key + 'Max')"
+            (change)="query().set(col.key + 'Max', text($event), true)"
+          />
+        </span>
+      }
+      @case ('bool') {
+        <select
+          [attr.aria-label]="'Filter ' + (col.label ?? col.key)"
+          [value]="query().value(col.key)"
+          (change)="query().set(col.key, text($event), true)"
+        >
+          <option value="">Any</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      }
+      @case ('select') {
+        <select
+          [attr.aria-label]="'Filter ' + (col.label ?? col.key)"
+          [value]="query().value(col.key)"
+          (change)="query().set(col.key, text($event), true)"
+        >
+          <option value="">Any</option>
+          @for (option of options(col); track option.value) {
+            <option
+              [value]="option.value"
+              [selected]="option.value === query().value(col.key)"
+            >
+              {{ option.label }}
+            </option>
+          }
+        </select>
+      }
+      @case ('presence') {
+        <select
+          [attr.aria-label]="'Filter ' + (col.label ?? col.key)"
+          [value]="query().value(col.key)"
+          (change)="query().set(col.key, text($event), true)"
+        >
+          <option value="">Any</option>
+          <option value="notnull">{{ col.presentLabel ?? 'Set' }}</option>
+          <option value="null">{{ col.absentLabel ?? 'Not set' }}</option>
+        </select>
+      }
+      @case ('enum') {
+        <details class="multi">
+          <summary [attr.aria-label]="'Filter ' + (col.label ?? col.key)">
+            {{ enumSummary(col) }}
+          </summary>
+          <div class="multi-options">
+            @for (option of options(col); track option.value) {
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="selected(col).includes(option.value)"
+                  (change)="toggleOption(col, option.value)"
+                />
+                {{ option.label }}
+              </label>
+            }
+          </div>
+        </details>
+      }
+      @default {
+        @if (last && query().hasFilters()) {
+          <button
+            type="button"
+            class="small clear"
+            (click)="query().clearFilters()"
+          >
+            Clear
+          </button>
+        }
+      }
+    }
+  </td>
+}

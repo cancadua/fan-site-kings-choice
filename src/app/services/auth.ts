@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
-  constructor(private supabase: SupabaseService) {}
+  private supabase = inject(SupabaseService);
 
   async signUp(email: string, password: string) {
     return this.supabase.supabase.auth.signUp({

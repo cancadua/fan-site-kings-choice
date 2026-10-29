@@ -1,0 +1,27 @@
+@use 'alliance-page' as *;
+@use 'variables' as *;
+
+:host {
+  display: block;
+  @include alliance-page;
+}
+
+.award {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: $knight-text-muted;
+  }
+
+  .player {
+    flex-basis: 100%;
+    margin: 0;
+  }
+}

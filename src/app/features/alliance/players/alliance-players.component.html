@@ -3,63 +3,325 @@
 <form class="toolbar" (ngSubmit)="add()">
   <label>
     Name
-    <input type="text" name="name" maxlength="64" required [(ngModel)]="newName" />
+    <input
+      type="text"
+      name="name"
+      maxlength="64"
+      required
+      [(ngModel)]="newName"
+    />
   </label>
   <label>
     Activity (0–100)
-    <input type="number" name="activity" min="0" max="100" [(ngModel)]="newActivity" />
+    <input
+      type="number"
+      name="activity"
+      min="0"
+      max="100"
+      [(ngModel)]="newActivity"
+    />
   </label>
-  <button type="submit" class="primary" [disabled]="!newName().trim()">Add player</button>
+  <label>
+    Color
+    <select name="color" [(ngModel)]="newColor">
+      @for (c of colors; track c.value) {
+        <option [value]="c.value">{{ c.label }}</option>
+      }
+    </select>
+  </label>
+  <button type="submit" class="primary" [disabled]="!newName().trim()">
+    Add player
+  </button>
 </form>
 
 @if (error(); as message) {
-<p class="error" role="alert">{{ message }}</p>
+  <p class="error" role="alert">{{ message }}</p>
+}
+@if (info(); as message) {
+  <p class="callout" role="status">{{ message }}</p>
+}
+
+@if (state.pendingRequests().length > 0) {
+  <section aria-labelledby="link-requests-title">
+    <h2 id="link-requests-title">
+      Link requests ({{ state.pendingRequests().length }})
+    </h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th appSortHeader="username" [query]="requestTable">Account</th>
+            <th appSortHeader="playerName" [query]="requestTable">Player</th>
+            <th appSortHeader="message" [query]="requestTable">Message</th>
+            <th appSortHeader="createdAt" [query]="requestTable">Sent</th>
+            <th></th>
+          </tr>
+          <tr [appFilterRow]="requestTable"></tr>
+        </thead>
+        <tbody>
+          @for (r of requests(); track r.id) {
+            <tr>
+              <td>{{ r.username }}</td>
+              <td>{{ r.playerName }}</td>
+              <td class="message">{{ r.message ?? '—' }}</td>
+              <td>{{ r.createdAt | date }}</td>
+              <td class="actions">
+                <button
+                  type="button"
+                  class="small primary"
+                  (click)="acceptRequest(r)"
+                >
+                  Accept
+                </button>
+                <button
+                  type="button"
+                  class="small danger"
+                  (click)="rejectRequest(r)"
+                >
+                  Reject
+                </button>
+              </td>
+            </tr>
+          }
+          @if (requests().length === 0) {
+            <tr>
+              <td class="muted" colspan="5">No matches.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <h2>All players</h2>
+  </section>
 }
 
 @if (loading() && players().length === 0) {
-<p class="muted">Loading…</p>
+  <p class="muted">Loading…</p>
 } @else if (players().length === 0) {
-<p class="muted">No players yet.</p>
+  <p class="muted">No players yet.</p>
 } @else {
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Activity</th>
-        <th>Active</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (p of players(); track p.id) {
-      <tr [class.inactive]="!p.isActive">
-        <td>{{ p.name }}</td>
-        <td>
-          <input
-            type="number"
-            min="0"
-            max="100"
-            class="activity"
-            [value]="p.activity"
-            (change)="setActivity(p, $event)"
-            [attr.aria-label]="'Activity for ' + p.name"
-          />
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            [checked]="p.isActive"
-            (change)="toggleActive(p)"
-            [attr.aria-label]="'Active: ' + p.name"
-          />
-        </td>
-        <td class="actions">
-          <button type="button" class="small danger" (click)="remove(p)">Delete</button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th appSortHeader="name" [query]="table">Name</th>
+          <th appSortHeader="username" [query]="table">Account</th>
+          <th appSortHeader="color" [query]="table">Color</th>
+          <th appSortHeader="activity" [query]="table">Activity</th>
+          <th appSortHeader="isActive" [query]="table">Active</th>
+          <th></th>
+        </tr>
+        <tr [appFilterRow]="table"></tr>
+      </thead>
+      <tbody>
+        @for (p of rows(); track p.id) {
+          <tr [class.inactive]="!p.isActive">
+            <td>
+              @if (playerColor(p.color).swatch; as swatch) {
+                <span
+                  class="color-dot"
+                  [style.background]="swatch"
+                  [attr.title]="playerColor(p.color).label"
+                ></span>
+              }
+              {{ p.name }}
+            </td>
+            <td>
+              @if (p.userId) {
+                <span class="badge badge--success">
+                  Account: {{ p.username ?? 'unknown' }}
+                </span>
+              } @else {
+                <span class="badge badge--muted">No account</span>
+              }
+            </td>
+            <td>
+              <select
+                [attr.aria-label]="'Color for ' + p.name"
+                (change)="setColor(p, $event)"
+              >
+                @for (c of colors; track c.value) {
+                  <option [value]="c.value" [selected]="c.value === p.color">
+                    {{ c.label }}
+                  </option>
+                }
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                class="activity"
+                [value]="p.activity"
+                (change)="setActivity(p, $event)"
+                [attr.aria-label]="'Activity for ' + p.name"
+              />
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                [checked]="p.isActive"
+                (change)="toggleActive(p)"
+                [attr.aria-label]="'Active: ' + p.name"
+              />
+            </td>
+            <td class="actions">
+              <button
+                #trigger
+                type="button"
+                class="small"
+                [attr.popovertarget]="'player-menu-' + p.id"
+                [attr.aria-label]="'Account actions for ' + p.name"
+              >
+                Account ▾
+              </button>
+              <div
+                #menu
+                popover
+                class="row-menu"
+                [id]="'player-menu-' + p.id"
+                (beforetoggle)="placeMenu($event, trigger)"
+              >
+                @if (p.userId) {
+                  <button type="button" (click)="menu.hidePopover(); unlink(p)">
+                    Unlink account
+                  </button>
+                } @else {
+                  <button
+                    type="button"
+                    (click)="menu.hidePopover(); generateCode(p)"
+                  >
+                    Generate code
+                  </button>
+                  <button
+                    type="button"
+                    (click)="menu.hidePopover(); openInvite(p)"
+                  >
+                    Invite account
+                  </button>
+                }
+              </div>
+              <button type="button" class="small danger" (click)="remove(p)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+        @if (rows().length === 0) {
+          <tr>
+            <td class="muted" colspan="6">No matches.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }
+
+<app-modal
+  title="Link code"
+  [open]="issuedCode() !== null"
+  (closed)="issuedCode.set(null)"
+>
+  @if (issuedCode(); as issued) {
+    <p>
+      Give this code to <strong>{{ issued.player.name }}</strong
+      >. They enter it under <em>Link account</em> after signing in.
+    </p>
+    <p class="link-code" aria-label="Link code">{{ issued.code.code }}</p>
+    <div class="modal-actions modal-actions--start">
+      <button
+        type="button"
+        class="primary"
+        (click)="copyCode(issued.code.code)"
+      >
+        {{ copied() ? 'Copied' : 'Copy' }}
+      </button>
+      <span class="muted">
+        Expires {{ issued.code.expiresAt | date: 'dd.MM.yyyy HH:mm' }}
+      </span>
+    </div>
+    <p class="callout">
+      This code is shown only now and can't be displayed again. Generating a new
+      code for {{ issued.player.name }} invalidates this one.
+    </p>
+    <div class="modal-actions">
+      <button type="button" (click)="issuedCode.set(null)">Done</button>
+    </div>
+  }
+</app-modal>
+
+<app-modal
+  title="Invite account"
+  [open]="invitePlayer() !== null"
+  (closed)="invitePlayer.set(null)"
+>
+  @if (invitePlayer(); as player) {
+    <form class="modal-form" (ngSubmit)="invite()">
+      <p>
+        Link a registered account to <strong>{{ player.name }}</strong
+        >. The account joins the alliance if it isn't a member yet.
+      </p>
+      <label>
+        Email or username
+        <input
+          type="text"
+          name="user"
+          autocomplete="off"
+          required
+          [(ngModel)]="inviteUser"
+        />
+      </label>
+      @if (isOwner()) {
+        <label>
+          Role
+          <select name="role" [(ngModel)]="inviteRole">
+            @for (r of inviteRoles; track r) {
+              <option [value]="r">{{ r }}</option>
+            }
+          </select>
+          <span class="muted hint">
+            Applies only to accounts that aren't in the alliance yet.
+          </span>
+        </label>
+      }
+      @if (inviteError(); as message) {
+        <p class="error" role="alert">{{ message }}</p>
+      }
+      <div class="modal-actions">
+        <button type="button" (click)="invitePlayer.set(null)">Cancel</button>
+        <button
+          type="submit"
+          class="primary"
+          [disabled]="inviting() || !inviteUser().trim()"
+        >
+          {{ inviting() ? 'Inviting…' : 'Invite' }}
+        </button>
+      </div>
+    </form>
+  }
+</app-modal>
+
+<app-modal
+  title="Delete linked player"
+  [open]="confirmDeletePlayer() !== null"
+  (closed)="confirmDeletePlayer.set(null)"
+>
+  @if (confirmDeletePlayer(); as player) {
+    <p class="callout">
+      {{ player.name }} is linked to the account
+      <strong>{{ player.username ?? 'unknown' }}</strong
+      >. Deleting the player also removes that account from the alliance, unless
+      it's the alliance owner.
+    </p>
+    <p>All rewards of {{ player.name }} will be deleted too.</p>
+    <div class="modal-actions">
+      <button type="button" (click)="confirmDeletePlayer.set(null)">
+        Cancel
+      </button>
+      <button type="button" class="danger" (click)="confirmDelete()">
+        Delete and remove account
+      </button>
+    </div>
+  }
+</app-modal>

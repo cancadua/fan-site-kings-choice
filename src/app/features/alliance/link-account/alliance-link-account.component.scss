@@ -1,0 +1,72 @@
+@use 'alliance-page' as *;
+@use 'variables' as *;
+
+:host {
+  display: block;
+  @include alliance-page;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin: 1rem 0;
+
+  button[aria-selected='true'] {
+    background: $knight-amber;
+    color: $black-primary;
+    font-weight: 700;
+  }
+}
+
+.grow {
+  flex: 1;
+  min-width: 12rem;
+}
+
+.code-input {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.chosen {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search,
+.request-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 32rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  color: $knight-text-muted;
+}
+
+.pick-list {
+  list-style: none;
+  max-width: 32rem;
+  margin: 0 0 1rem;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid rgba($knight-amber, 0.15);
+
+    &.picked {
+      background: rgba($knight-amber, 0.08);
+    }
+  }
+}
+
+.counter {
+  align-self: flex-end;
+  font-size: 0.75rem;
+}

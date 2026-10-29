@@ -51,7 +51,7 @@ export class KnightDevelopmentComponent {
           content: [
             {
               text: [
-                'There are few factors to consider while chosing the right knight from the available options of sets. The sets are specialized in one of the four attributes: Strength, Intellect, Leadership, and Charisma. Each set has a unique aura that benefits all knights in that set.',              
+                'There are few factors to consider while chosing the right knight from the available options of sets. The sets are specialized in one of the four attributes: Strength, Intellect, Leadership, and Charisma. Each set has a unique aura that benefits all knights in that set.',
               ],
               items: [
                 'Additional aura percentage bonuses',
@@ -61,7 +61,7 @@ export class KnightDevelopmentComponent {
             },
           ],
         },
-      ]
+      ],
     },
     {
       id: 'golden-rule',
@@ -72,7 +72,7 @@ export class KnightDevelopmentComponent {
           text: [
             'You should quickly have four main specialists, each maximized in their respective attribute.',
             'Many players incorrectly spread edicts across multiple knights, which permanently slows growth because talents and levels multiply each other.',
-            'The game\'s attribute formula scales with both level and talents, so concentrating investment is mathematically superior.',
+            "The game's attribute formula scales with both level and talents, so concentrating investment is mathematically superior.",
           ],
         },
       ],
@@ -100,7 +100,7 @@ export class KnightDevelopmentComponent {
           content: [
             {
               text: [
-                'Intellect → Monarch. In the very early game use Dante while focusing on his lover charm, then flawlessly migrate to Monarch once his aura becomes superior to Dante\'s intellect percentage lover boost.',
+                "Intellect → Monarch. In the very early game use Dante while focusing on his lover charm, then flawlessly migrate to Monarch once his aura becomes superior to Dante's intellect percentage lover boost.",
               ],
               items: [
                 'Silver income → knight levels',
@@ -133,11 +133,7 @@ export class KnightDevelopmentComponent {
           content: [
             {
               text: ['Charisma → Epic Hero.'],
-              items: [
-                'Soldier production',
-                'Outpost',
-                'The Throne of Wolves',
-              ],
+              items: ['Soldier production', 'Outpost', 'The Throne of Wolves'],
             },
           ],
         },
@@ -150,7 +146,7 @@ export class KnightDevelopmentComponent {
       content: [
         {
           text: [
-            'Every knight\'s attribute roughly comes from: Level × Talent × Percentage Bonuses',
+            "Every knight's attribute roughly comes from: Level × Talent × Percentage Bonuses",
             'Percentage bonuses come from: Lovers, Aura, Negotiation, Decor, and some global buffs.',
             'Books are flat bonuses only - they do NOT scale with level.',
           ],
@@ -177,8 +173,12 @@ export class KnightDevelopmentComponent {
       subtitle: 'Why Silver Income Is King',
       content: [
         {
-          text: ['Most new players think Strength is king. Actually, high Intellect creates:'],
-          items: ['More silver → More knight levels → More State Power → More Knight Power'],
+          text: [
+            'Most new players think Strength is king. Actually, high Intellect creates:',
+          ],
+          items: [
+            'More silver → More knight levels → More State Power → More Knight Power',
+          ],
         },
         {
           text: [
@@ -327,7 +327,7 @@ export class KnightDevelopmentComponent {
       content: [
         {
           text: [
-            'Many players waste University seats. Never leave seats empty - it\'s effectively free Talent EXP every day cycle.',
+            "Many players waste University seats. Never leave seats empty - it's effectively free Talent EXP every day cycle.",
           ],
         },
       ],
@@ -349,6 +349,6 @@ export class KnightDevelopmentComponent {
   ];
 
   getActiveSection(): Section | undefined {
-    return this.sections.find(s => s.id === this.activeSection);
+    return this.sections.find((s) => s.id === this.activeSection);
   }
 }

@@ -16,16 +16,22 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
 
   const token = session.token();
-  const authedReq = token ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) : req;
+  const authedReq = token
+    ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+    : req;
 
   return next(authedReq).pipe(
     catchError((err: unknown) => {
-      const isAuthCall = AUTH_PATHS.some(path => req.url.endsWith(path));
-      if (err instanceof HttpErrorResponse && err.status === 401 && !isAuthCall) {
+      const isAuthCall = AUTH_PATHS.some((path) => req.url.endsWith(path));
+      if (
+        err instanceof HttpErrorResponse &&
+        err.status === 401 &&
+        !isAuthCall
+      ) {
         session.clear();
         void router.navigate(['/login']);
       }
       return throwError(() => err);
-    }),
+    })
   );
 };

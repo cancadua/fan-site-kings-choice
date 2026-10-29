@@ -1,15 +1,19 @@
-<app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
+<app-tabs
+  [tabs]="tabs"
+  [activeTab]="activeTab"
+  (activeTabChange)="onTabChange($event)"
+>
   @if (activeTab.value === 'basic-information') {
-  <app-uw-description></app-uw-description>
+    <app-uw-description></app-uw-description>
   } @else if (activeTab.value === 'smart-play') {
-  <span class="placeholder-icon">⚔️</span>
-  <h3 class="placeholder-title">Smart play</h3>
-  <p class="placeholder-text">Coming soon.</p>
+    <span class="placeholder-icon">⚔️</span>
+    <h3 class="placeholder-title">Smart play</h3>
+    <p class="placeholder-text">Coming soon.</p>
   } @else if (activeTab.value === 'advanced-tips') {
-  <span class="placeholder-icon">🎯</span>
-  <h3 class="placeholder-title">Advanced Tips</h3>
-  <p class="placeholder-text">Coming soon.</p>
+    <span class="placeholder-icon">🎯</span>
+    <h3 class="placeholder-title">Advanced Tips</h3>
+    <p class="placeholder-text">Coming soon.</p>
   } @else if (activeTab.value === 'cities-tool') {
-  <app-uw-cities-tool></app-uw-cities-tool>
+    <app-uw-cities-tool></app-uw-cities-tool>
   }
 </app-tabs>

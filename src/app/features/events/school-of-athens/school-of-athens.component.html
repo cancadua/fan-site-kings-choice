@@ -1,175 +1,208 @@
 <app-magic-book-scene title="SCHOOL OF ATHENS"></app-magic-book-scene>
 
-<app-tabs [tabs]="tabs" [activeTab]="activeTab" (activeTabChange)="onTabChange($event)">
+<app-tabs
+  [tabs]="tabs"
+  [activeTab]="activeTab"
+  (activeTabChange)="onTabChange($event)"
+>
   @if (activeTab.value === 'basic-information') {
-  <app-content-section heading="Event Overview">
-    <app-content-text>
-      School of Athens is a 3-player team event where you explore three
-      floors, defeat Students, Professors and Masters, and earn Debate Points
-      and team progress.
-    </app-content-text>
-  </app-content-section>
-  <app-content-section heading="The 3 Floors">
-    <app-content-text>Floor 1</app-content-text>
-    <app-content-list
-      [items]="[
-        'Mainly NPCs',
-        'Your goal is to progress upward efficiently',
-        'You currently need 10 Professor/Master defeats to advance'
-      ]"
-    />
-    <app-content-text>Floor 2</app-content-text>
-    <app-content-list
-      [items]="[
-        'Stronger NPCs',
-        'Better rewards/points',
-        'Continue progressing toward Floor 3'
-      ]"
-    />
-    <app-content-text>Floor 3</app-content-text>
-    <app-content-list
-      [items]="[
-        'Best scoring opportunities',
-        'Contains NPCs and other players',
-        'PvP becomes important',
-        'Getting defeated sends you back to Floor 2'
-      ]"
-    />
-  </app-content-section>
-  <app-content-section heading="Exploration">
-    <app-content-text>Each exploration uses 1 Stamina.</app-content-text>
-    <app-content-text>When you find an opponent you can:</app-content-text>
-    <app-content-list
-      [items]="[
-        'Debate — attack it yourself',
-        'Mark — let a teammate attack it',
-        'Avoid — skip it'
-      ]"
-    />
-    <app-content-note>
-      If you can't kill something efficiently yourself, hit it and mark it for your teammates
-      instead of wasting score.
-    </app-content-note>
-  </app-content-section>
-  <app-content-section heading="Certificates">
-    <app-content-text>
-      Certificates are important for your team ranking.
-    </app-content-text>
-    <app-content-text>You can get them by:</app-content-text>
-    <app-content-list [items]="['Reaching Floor 3', 'Defeating players']" />
-    <app-content-note>
-      But you can also lose Certificates when another player defeats you.
-    </app-content-note>
-  </app-content-section>
-  <app-content-section heading="Debate Score">
-    <app-content-text>
-      Your Debate Score is based on your total Knight Power.
-    </app-content-text>
-    <app-content-text>
-      Higher Knight Power = stronger attacks, score and better ability to defeat
-      difficult opponents.
-    </app-content-text>
-    <app-content-note>
-      You can also use Gold to temporarily (until the end of the day)  increase your Debate Score.
-    </app-content-note>
-  </app-content-section>
-  <app-content-section heading="Scrolls">
-    <app-content-text>
-      During Athens you can obtain different scrolls that provide useful
-      effects, including:
-    </app-content-text>
-    <app-content-list
-      [items]="[
-        'Point bonuses',
-        'Debate bonuses',
-        'Eureka, which can help you advance floors'
-      ]"
-    />
-  </app-content-section>
-  <app-content-section heading="Teamwork">
-    <app-content-text>Athens is a team event.</app-content-text>
-    <app-content-text>
-      Your teammates can kill opponents you've marked, so communicating and
-      coordinating your targets is important.
-    </app-content-text>
-  </app-content-section>
-  } @else if (activeTab.value === 'smart-play') {
-  <app-content-steps>
-    <app-content-step heading="Effective scoring">
-      <app-content-text>You get score for dealing damage to opponents YOU encounter and defeating any opponent.</app-content-text>
-      <app-content-text>You should focus on dealing damage to enemies you find yourself and helping your team to finish off their targets.</app-content-text>
-      <app-content-note>
-        Don't skip opponents you can't defeat, always place an attack before moving on.
-      </app-content-note>
-    </app-content-step>
-    <app-content-step heading="Collect stamina before Floor 3">
-      <app-content-text>The biggest strategic idea:</app-content-text>
-      <app-content-note>
-        Try to reach Floor 3 with a healthy stamina reserve so you can
-        immediately take advantage of valuable targets.
-      </app-content-note>
-    </app-content-step>
-    <app-content-step heading="Coordinate your Floor 3 entry">
-      <app-content-text>Don't go to Floor 3 alone if possible.</app-content-text>
-      <app-content-text>Ideally:</app-content-text>
+    <app-content-section heading="Event Overview">
+      <app-content-text>
+        School of Athens is a 3-player team event where you explore three
+        floors, defeat Students, Professors and Masters, and earn Debate Points
+        and team progress.
+      </app-content-text>
+    </app-content-section>
+    <app-content-section heading="The 3 Floors">
+      <app-content-text>Floor 1</app-content-text>
       <app-content-list
         [items]="[
-          'Teammates ready → you reach Floor 3 → protection starts → everyone attacks'
+          'Mainly NPCs',
+          'Your goal is to progress upward efficiently',
+          'You currently need 10 Professor/Master defeats to advance',
+        ]"
+      />
+      <app-content-text>Floor 2</app-content-text>
+      <app-content-list
+        [items]="[
+          'Stronger NPCs',
+          'Better rewards/points',
+          'Continue progressing toward Floor 3',
+        ]"
+      />
+      <app-content-text>Floor 3</app-content-text>
+      <app-content-list
+        [items]="[
+          'Best scoring opportunities',
+          'Contains NPCs and other players',
+          'PvP becomes important',
+          'Getting defeated sends you back to Floor 2',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="Exploration">
+      <app-content-text>Each exploration uses 1 Stamina.</app-content-text>
+      <app-content-text>When you find an opponent you can:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Debate — attack it yourself',
+          'Mark — let a teammate attack it',
+          'Avoid — skip it',
         ]"
       />
       <app-content-note>
-        You get a short protection period after reaching Floor 3, so use it
-        aggressively rather than spending it looking for targets.
+        If you can't kill something efficiently yourself, hit it and mark it for
+        your teammates instead of wasting score.
       </app-content-note>
-    </app-content-step>
-    <app-content-step heading="Prepare before using your scrolls">
+    </app-content-section>
+    <app-content-section heading="Certificates">
       <app-content-text>
-        Don't automatically use scrolls the moment you get them. Ask: "Does
-        using this now save me significant score?"
+        Certificates are important for your team ranking.
+      </app-content-text>
+      <app-content-text>You can get them by:</app-content-text>
+      <app-content-list [items]="['Reaching Floor 3', 'Defeating players']" />
+      <app-content-note>
+        But you can also lose Certificates when another player defeats you.
+      </app-content-note>
+    </app-content-section>
+    <app-content-section heading="Debate Score">
+      <app-content-text>
+        Your Debate Score is based on your total Knight Power.
       </app-content-text>
       <app-content-text>
-        If you have time (you're alone on the floor) use scrolls when you find the strongest NPC on Floor 3, before hitting it to find both hit bonus and score bonus.
+        Higher Knight Power = stronger attacks, score and better ability to
+        defeat difficult opponents.
       </app-content-text>
       <app-content-note>
-        You can find scroll boosts for the score and for the damage, naturally both stacks and boost score greatly.
+        You can also use Gold to temporarily (until the end of the day) increase
+        your Debate Score.
       </app-content-note>
-    </app-content-step>
-    <app-content-step heading="Mark instead of wasting attacks">
+    </app-content-section>
+    <app-content-section heading="Scrolls">
       <app-content-text>
-        If you can't kill a target efficiently: MARK IT and pass the attack to a teammate.
-      </app-content-text>
-      <app-content-note>
-        They finish it, you both benefit, and you continue exploring. This is
-        one of the biggest efficiency advantages of a coordinated team.
-      </app-content-note>
-    </app-content-step>
-    <app-content-step heading="Don't chase points blindly">
-      <app-content-text>
-        More Debate Points aren't always worth the Gold/resource cost. Before
-        spending Gold, ask: "Will this actually change my ranking or allow an
-        important kill?"
-      </app-content-text>
-      <app-content-note>If the answer is no, save it.</app-content-note>
-    </app-content-step>
-    <app-content-step heading="Quick moves">
-      <app-content-text>
-        Theres a trick to speed up the gameplay, it requires steps:</app-content-text>
-      <app-content-list
-        [items]="['Explore to find the enemy', 'Click the arrow back to skip the animation', 'Enter the event', 'Handle the enemy', 'Repeat']"
-      />
-    </app-content-step>
-    <app-content-step heading="Resources gameplay">
-      <app-content-text>
-        You can use "Divine Inspiration" items from the money packs to instantly move floor up. Open the purple scrolls with them, afterwards you get the floor advancement points.
+        During Athens you can obtain different scrolls that provide useful
+        effects, including:
       </app-content-text>
       <app-content-list
-        [items]="['To move 1st to 2nd floor you need 1 floor advancement point.', 'To move 2nd to 3rd floor you need 3 floor advancement points.']"
+        [items]="[
+          'Point bonuses',
+          'Debate bonuses',
+          'Eureka, which can help you advance floors',
+        ]"
       />
-      <app-content-note>
-        For the effective high score competition you can use purple scrolls after finding strong NPC on 3rd floor.
-        You both use the purple scroll boosts effectively and stack the floor advancement points needed to advance to 3rd floor the next time your stamina is back.
-      </app-content-note>
-    </app-content-step>
-  </app-content-steps>
+    </app-content-section>
+    <app-content-section heading="Teamwork">
+      <app-content-text>Athens is a team event.</app-content-text>
+      <app-content-text>
+        Your teammates can kill opponents you've marked, so communicating and
+        coordinating your targets is important.
+      </app-content-text>
+    </app-content-section>
+  } @else if (activeTab.value === 'smart-play') {
+    <app-content-steps>
+      <app-content-step heading="Effective scoring">
+        <app-content-text
+          >You get score for dealing damage to opponents YOU encounter and
+          defeating any opponent.</app-content-text
+        >
+        <app-content-text
+          >You should focus on dealing damage to enemies you find yourself and
+          helping your team to finish off their targets.</app-content-text
+        >
+        <app-content-note>
+          Don't skip opponents you can't defeat, always place an attack before
+          moving on.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Collect stamina before Floor 3">
+        <app-content-text>The biggest strategic idea:</app-content-text>
+        <app-content-note>
+          Try to reach Floor 3 with a healthy stamina reserve so you can
+          immediately take advantage of valuable targets.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Coordinate your Floor 3 entry">
+        <app-content-text
+          >Don't go to Floor 3 alone if possible.</app-content-text
+        >
+        <app-content-text>Ideally:</app-content-text>
+        <app-content-list
+          [items]="[
+            'Teammates ready → you reach Floor 3 → protection starts → everyone attacks',
+          ]"
+        />
+        <app-content-note>
+          You get a short protection period after reaching Floor 3, so use it
+          aggressively rather than spending it looking for targets.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Prepare before using your scrolls">
+        <app-content-text>
+          Don't automatically use scrolls the moment you get them. Ask: "Does
+          using this now save me significant score?"
+        </app-content-text>
+        <app-content-text>
+          If you have time (you're alone on the floor) use scrolls when you find
+          the strongest NPC on Floor 3, before hitting it to find both hit bonus
+          and score bonus.
+        </app-content-text>
+        <app-content-note>
+          You can find scroll boosts for the score and for the damage, naturally
+          both stacks and boost score greatly.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Mark instead of wasting attacks">
+        <app-content-text>
+          If you can't kill a target efficiently: MARK IT and pass the attack to
+          a teammate.
+        </app-content-text>
+        <app-content-note>
+          They finish it, you both benefit, and you continue exploring. This is
+          one of the biggest efficiency advantages of a coordinated team.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Don't chase points blindly">
+        <app-content-text>
+          More Debate Points aren't always worth the Gold/resource cost. Before
+          spending Gold, ask: "Will this actually change my ranking or allow an
+          important kill?"
+        </app-content-text>
+        <app-content-note>If the answer is no, save it.</app-content-note>
+      </app-content-step>
+      <app-content-step heading="Quick moves">
+        <app-content-text>
+          Theres a trick to speed up the gameplay, it requires
+          steps:</app-content-text
+        >
+        <app-content-list
+          [items]="[
+            'Explore to find the enemy',
+            'Click the arrow back to skip the animation',
+            'Enter the event',
+            'Handle the enemy',
+            'Repeat',
+          ]"
+        />
+      </app-content-step>
+      <app-content-step heading="Resources gameplay">
+        <app-content-text>
+          You can use "Divine Inspiration" items from the money packs to
+          instantly move floor up. Open the purple scrolls with them, afterwards
+          you get the floor advancement points.
+        </app-content-text>
+        <app-content-list
+          [items]="[
+            'To move 1st to 2nd floor you need 1 floor advancement point.',
+            'To move 2nd to 3rd floor you need 3 floor advancement points.',
+          ]"
+        />
+        <app-content-note>
+          For the effective high score competition you can use purple scrolls
+          after finding strong NPC on 3rd floor. You both use the purple scroll
+          boosts effectively and stack the floor advancement points needed to
+          advance to 3rd floor the next time your stamina is back.
+        </app-content-note>
+      </app-content-step>
+    </app-content-steps>
   }
 </app-tabs>

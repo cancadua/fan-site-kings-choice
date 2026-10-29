@@ -1,71 +1,112 @@
 <h1>Members</h1>
 
-@if (isOwner()) {
-<form class="toolbar" (ngSubmit)="invite()">
-  <label class="grow">
-    Email of a registered user
-    <input type="email" name="email" required [(ngModel)]="inviteEmail" />
-  </label>
-  <label>
-    Role
-    <select name="role" [(ngModel)]="inviteRole">
-      @for (r of assignableRoles; track r) {
-      <option [value]="r">{{ r }}</option>
-      }
-    </select>
-  </label>
-  <button type="submit" class="primary" [disabled]="!inviteEmail().trim()">Invite</button>
-</form>
-} @else {
-<p class="muted">Only the alliance owner can invite or manage members.</p>
-}
+<p class="muted">
+  Accounts join the alliance by being linked to a player. To add one, use
+  <em>Invite account</em> or <em>Generate code</em> on the
+  <a routerLink="/alliance/players">Players</a> page.
+  @if (!isOwner()) {
+    Only the alliance owner can change roles or remove accounts.
+  }
+</p>
 
 @if (error(); as message) {
-<p class="error" role="alert">{{ message }}</p>
+  <p class="error" role="alert">{{ message }}</p>
 }
 @if (info(); as message) {
-<p class="muted">{{ message }}</p>
+  <p class="muted">{{ message }}</p>
 }
 
 @if (loading() && members().length === 0) {
-<p class="muted">Loading…</p>
+  <p class="muted">Loading…</p>
 } @else {
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Joined</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (m of members(); track m.userId) {
-      <tr>
-        <td>{{ m.username }}</td>
-        <td>{{ m.email }}</td>
-        <td>
-          @if (isOwner() && m.role !== 'Owner') {
-          <select [attr.aria-label]="'Role for ' + m.username" (change)="changeRole(m, $event)">
-            @for (r of assignableRoles; track r) {
-            <option [value]="r" [selected]="r === m.role">{{ r }}</option>
-            }
-          </select>
-          } @else {
-          {{ m.role }}
-          }
-        </td>
-        <td>{{ m.joinedAt | date: 'mediumDate' }}</td>
-        <td class="actions">
-          @if (isOwner() && m.role !== 'Owner') {
-          <button type="button" class="small danger" (click)="remove(m)">Remove</button>
-          }
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th appSortHeader="username" [query]="table">Username</th>
+          <th appSortHeader="email" [query]="table">Email</th>
+          <th appSortHeader="playerName" [query]="table">Player</th>
+          <th appSortHeader="role" [query]="table">Role</th>
+          <th appSortHeader="joinedAt" [query]="table">Joined</th>
+          <th></th>
+        </tr>
+        <tr [appFilterRow]="table"></tr>
+      </thead>
+      <tbody>
+        @for (m of rows(); track m.userId) {
+          <tr>
+            <td>{{ m.username }}</td>
+            <td>{{ m.email }}</td>
+            <td>
+              @if (renaming() === m.userId) {
+                <form
+                  class="rename"
+                  (submit)="$event.preventDefault(); rename(m, nameInput)"
+                >
+                  <input
+                    #nameInput
+                    type="text"
+                    maxlength="64"
+                    required
+                    [value]="m.playerName ?? ''"
+                    [attr.aria-label]="'New player name for ' + m.username"
+                    (keydown.escape)="renaming.set(null)"
+                  />
+                  <button type="submit" class="small primary">Save</button>
+                  <button
+                    type="button"
+                    class="small"
+                    (click)="renaming.set(null)"
+                  >
+                    Cancel
+                  </button>
+                </form>
+              } @else {
+                {{ m.playerName ?? '—' }}
+                @if (isManager() && m.playerId) {
+                  <button
+                    type="button"
+                    class="small"
+                    [attr.aria-label]="'Rename player ' + m.playerName"
+                    (click)="renaming.set(m.userId)"
+                  >
+                    Rename
+                  </button>
+                }
+              }
+            </td>
+            <td>
+              @if (isOwner() && m.role !== 'Owner') {
+                <select
+                  [attr.aria-label]="'Role for ' + m.username"
+                  (change)="changeRole(m, $event)"
+                >
+                  @for (r of assignableRoles; track r) {
+                    <option [value]="r" [selected]="r === m.role">
+                      {{ r }}
+                    </option>
+                  }
+                </select>
+              } @else {
+                {{ m.role }}
+              }
+            </td>
+            <td>{{ m.joinedAt | date }}</td>
+            <td class="actions">
+              @if (isOwner() && m.role !== 'Owner') {
+                <button type="button" class="small danger" (click)="remove(m)">
+                  Remove
+                </button>
+              }
+            </td>
+          </tr>
+        }
+        @if (rows().length === 0) {
+          <tr>
+            <td class="muted" colspan="6">No matches.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }
