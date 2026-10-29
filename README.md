@@ -23,7 +23,6 @@ Kings Choice Fan Site is an Angular-based web application that provides an inter
 - **Framework**: [Angular](https://angular.dev/) 22.0.0
 - **Language**: [TypeScript](https://www.typescriptlang.org/) 6.0.0
 - **Backend**: [Supabase](https://supabase.com/)
-- **Testing**: Karma/Jasmine
 - **Build Tool**: Angular CLI 22.0.0
 - **Code Formatting**: Prettier
 - **Package Manager**: npm
@@ -83,14 +82,6 @@ npm run build
 
 Build artifacts will be stored in the `dist/` directory.
 
-### Running Tests
-
-Execute unit tests with [Karma](https://karma-runner.github.io):
-
-```bash
-npm test
-```
-
 ### Code Formatting
 
 Format all code using Prettier:
@@ -112,9 +103,8 @@ When adding new features or components:
    ng generate component feature-name
    ```
 2. Follow the existing folder structure
-3. Run tests and formatting before committing:
+3. Run formatting before committing:
    ```bash
-   npm test
    npm run format
    ```
 4. Use conventional commit messages

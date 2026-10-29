@@ -83,7 +83,6 @@ npm start
 | ---------------- | ------------------------------ |
 | `npm start`      | Run dev server with hot reload |
 | `npm run build`  | Production build               |
-| `npm test`       | Run unit tests                 |
 | `npm run format` | Format code with Prettier      |
 | `npm run watch`  | Watch mode build               |
 
@@ -101,13 +100,11 @@ npm start
    - `fix:` Bug fix
    - `refactor:` Code refactoring
    - `docs:` Documentation
-   - `test:` Adding/updating tests
    - `perf:` Performance improvements
    - `chore:` Build, dependencies, config
 
 3. **Before Committing**:
    ```bash
-   npm test          # Ensure all tests pass
    npm run format    # Format code
    git status        # Review changes
    git add [files]   # Stage specific files
@@ -313,47 +310,6 @@ export class EventState {
 
 ---
 
-## Testing Strategy
-
-### Unit Tests
-
-- **Coverage Target**: Aim for 80%+ coverage
-- **Framework**: Jasmine/Karma
-- **Scope**: Test business logic, not implementation details
-- **Run**: `npm test`
-
-```typescript
-describe('EventService', () => {
-  let service: EventService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(EventService);
-  });
-
-  it('should return events', (done) => {
-    const mockEvents = [{ id: '1', name: 'Event 1' }];
-    spyOn(service, 'getEvents').and.returnValue(of(mockEvents));
-
-    service.getEvents().subscribe((events) => {
-      expect(events).toEqual(mockEvents);
-      done();
-    });
-  });
-});
-```
-
-### Testing Checklist
-
-- [ ] User interactions (clicks, forms)
-- [ ] Data binding (inputs, outputs)
-- [ ] Event emissions
-- [ ] Error handling
-- [ ] Edge cases (empty data, null values)
-- [ ] Observable subscriptions
-
----
-
 ## Build & Deployment
 
 ### Production Build
@@ -401,7 +357,6 @@ ng generate component features/my-feature/my-feature
 # - my-feature.component.ts (standalone)
 # - my-feature.component.html
 # - my-feature.component.scss
-# - my-feature.component.spec.ts
 ```
 
 Edit the component:
@@ -527,15 +482,6 @@ npm run ng -- cache clean
 2. Clear dist folder: `rm -r dist`
 3. Check bundle size: `npm run build --stats-json`
 
-### Test Failures
-
-```bash
-# Run single test file
-npm test -- --include='**/my-feature/**'
-
-# Run with debugging
-npm test -- --browsers=Chrome --watch
-```
 
 ---
 
@@ -570,11 +516,10 @@ Monitor these metrics regularly using:
 
 Before submitting PRs:
 
-1. Ensure all tests pass
-2. Run formatter: `npm run format`
-3. Check TypeScript strict mode compliance
-4. Write clear commit messages
-5. Update documentation if needed
+1. Run formatter: `npm run format`
+2. Check TypeScript strict mode compliance
+3. Write clear commit messages
+4. Update documentation if needed
 
 ### Documentation
 
