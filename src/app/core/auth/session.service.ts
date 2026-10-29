@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 const TOKEN_KEY = 'kc_alliance_token';
 
@@ -25,10 +25,17 @@ export class SessionService {
   private readonly tokenSignal = signal<string | null>(this.load());
 
   readonly token = this.tokenSignal.asReadonly();
-  readonly isLoggedIn = computed(() => {
+
+  /** A plain function, not a computed: expiry depends on the clock, which signals don't track. */
+  isLoggedIn(): boolean {
     const token = this.tokenSignal();
-    return token !== null && !isExpired(token);
-  });
+    if (token === null) return false;
+    if (isExpired(token)) {
+      this.clear();
+      return false;
+    }
+    return true;
+  }
 
   setToken(token: string): void {
     this.tokenSignal.set(token);
