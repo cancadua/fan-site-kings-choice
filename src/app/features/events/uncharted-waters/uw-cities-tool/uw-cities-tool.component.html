@@ -1,5 +1,9 @@
 <div class="row">
   <section class="share-panel" aria-label="Shared map">
+    <p class="share-hint">
+      A planning board: move cities between your two lists by hand. It is not
+      connected to the game and shows no live game data.
+    </p>
     @if (shared.code(); as code) {
       @if (shared.expired()) {
         <p class="share-text">This map has expired or doesn't exist.</p>
@@ -50,8 +54,8 @@
       }
     } @else {
       <p class="share-hint">
-        Track vacant cities together with your alliance: share the map and
-        everyone with the link edits it live for 4 hours.
+        Plan together with your alliance: share the map and everyone with the
+        link edits the same lists for 4 hours.
       </p>
       <button
         type="button"

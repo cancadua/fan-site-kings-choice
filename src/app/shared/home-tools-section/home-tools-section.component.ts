@@ -13,21 +13,21 @@ export class HomeToolsSectionComponent {
   protected readonly tools = [
     {
       title: 'Uncharted Waters Planner',
-      text: 'Pick the best cities for your team on the interactive map and share the plan with a short link.',
+      text: 'A planning board: sort cities by hand on the interactive map and share the plan with a short link. Not connected to the game.',
       icon: '🗺️',
       route: `/events/${Event.UnchartedWaters}`,
       queryParams: { tab: 'cities-tool' },
     },
     {
       title: 'Knight Development',
-      text: 'Advanced guides on hidden mechanics, optimization and competitive strategies.',
+      text: 'Advanced guides on how the mechanics work, optimization and competitive strategies.',
       icon: '⚔️',
       route: '/knight-development/overview',
       queryParams: {},
     },
     {
       title: 'Alliance Hub',
-      text: 'Track members and rewards for your alliance. Sign in to get started.',
+      text: 'A private notebook for alliance leaders: members, events and MVP awards you record by hand. Not connected to the game.',
       icon: '🛡️',
       route: '/alliance',
       queryParams: {},

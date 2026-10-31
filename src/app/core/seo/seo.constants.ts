@@ -34,7 +34,7 @@ export const PAGE_SEO = {
   knights: {
     title: "King's Choice Knight Development Guide",
     description:
-      "Advanced King's Choice knight development: hidden mechanics, optimization and competitive strategies for serious players.",
+      "Advanced King's Choice knight development: how the mechanics work, optimization and competitive strategies for serious players.",
     path: '/knight-development',
   },
   guide: {
@@ -57,7 +57,7 @@ export const PAGE_SEO = {
   },
   alliance: {
     title: 'Alliance Management',
-    description: 'Alliance management tools.',
+    description: 'Private notebook for alliance leaders.',
     path: '/alliance',
     noindex: true,
   },
