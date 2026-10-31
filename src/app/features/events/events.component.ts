@@ -14,6 +14,8 @@ import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle
 import { SchoolOfAthensComponent } from './school-of-athens/school-of-athens.component';
 import { SiegeOfTheUndeadComponent } from './siege-of-the-undead/siege-of-the-undead.component';
 
+const LAST_EVENT_KEY = 'kc.lastEvent';
+
 interface EventDetail {
   id: Event;
   title: string;
@@ -72,7 +74,8 @@ export class EventsComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    const requestedEvent = this.route.snapshot.queryParamMap.get('event');
+    const requestedEvent =
+      this.route.snapshot.queryParamMap.get('event') ?? this.loadLastEvent();
     if (requestedEvent && this.events.some((e) => e.id === requestedEvent)) {
       this.activeEvent = requestedEvent as Event;
     }
@@ -80,11 +83,29 @@ export class EventsComponent implements OnInit {
 
   onEventChange(event: Event): void {
     this.activeEvent = event;
+    this.saveLastEvent(event);
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { event, tab: null, map: null },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
+  }
+
+  // Remembers the last viewed event; storage can be blocked, so failures are ignored.
+  private loadLastEvent(): string | null {
+    try {
+      return localStorage.getItem(LAST_EVENT_KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  private saveLastEvent(event: Event): void {
+    try {
+      localStorage.setItem(LAST_EVENT_KEY, event);
+    } catch {
+      // ignore
+    }
   }
 }

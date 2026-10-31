@@ -4,6 +4,7 @@
   navLabel="Available Events"
   [items]="events"
   [activeId]="activeEvent"
+  [filterable]="true"
   (activeIdChange)="onEventChange($event)"
 >
   <!-- Render event-specific component -->
