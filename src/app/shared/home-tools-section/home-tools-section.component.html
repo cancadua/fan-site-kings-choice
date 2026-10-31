@@ -1,0 +1,19 @@
+<div class="tools-section">
+  <h2>Tools of the Tavern</h2>
+  <p class="section-subtitle">Everything a Lord needs, free to use</p>
+  <div class="tools-grid">
+    @for (tool of tools; track tool.title; let i = $index) {
+      <a
+        class="tool-card"
+        [routerLink]="tool.route"
+        [queryParams]="tool.queryParams"
+        [style.--i]="i"
+      >
+        <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
+        <h3>{{ tool.title }}</h3>
+        <p>{{ tool.text }}</p>
+        <span class="tool-link">Open &rarr;</span>
+      </a>
+    }
+  </div>
+</div>

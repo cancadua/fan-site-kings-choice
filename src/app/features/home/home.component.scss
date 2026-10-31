@@ -2,12 +2,23 @@
 
 .home {
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    $black-primary 0%,
-    $black-dark 50%,
-    $black-primary 100%
-  );
+  background:
+    radial-gradient(
+      ellipse 70% 25% at 50% 0%,
+      rgba(255, 160, 60, 0.12),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 25% at 50% 100%,
+      rgba(255, 120, 40, 0.08),
+      transparent 70%
+    ),
+    linear-gradient(
+      135deg,
+      $black-primary 0%,
+      $black-dark 50%,
+      $black-primary 100%
+    );
   font-family: $font-lore;
   color: $parchment;
   display: flex;
@@ -51,6 +62,152 @@
   text-align: center;
   max-width: 800px;
   padding: 40px;
+  animation: hero-fade 1s ease-out backwards;
+}
+
+// Wall torches either side of the hero: a flickering glow with a flame on top.
+.torch {
+  position: absolute;
+  top: 28%;
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+  pointer-events: none;
+  animation: torch-flicker 3.2s ease-in-out infinite;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 170, 60, 0.5) 0%,
+      rgba(255, 120, 30, 0.2) 40%,
+      transparent 70%
+    );
+    filter: blur(6px);
+    mix-blend-mode: screen;
+  }
+
+  &::after {
+    content: '🔥';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2rem;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 0 10px rgba(255, 150, 40, 0.9));
+  }
+}
+
+.torch-left {
+  left: 3%;
+}
+
+.torch-right {
+  right: 3%;
+  animation-duration: 2.7s;
+  animation-delay: -1.4s;
+}
+
+@keyframes torch-flicker {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  45% {
+    opacity: 0.7;
+    transform: scale(0.96);
+  }
+  70% {
+    opacity: 0.95;
+    transform: scale(1.04);
+  }
+}
+
+// Floating embers: each spark gets its own spot, size and speed from its index.
+.sparks {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.spark {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  background: $gold-light;
+  box-shadow: 0 0 8px 2px rgba($gold-primary, 0.7);
+  opacity: 0;
+  animation: spark-rise 7s linear infinite;
+}
+
+@for $i from 1 through 16 {
+  .spark:nth-child(#{$i}) {
+    left: $i * 6%;
+    width: 2px + ($i % 3);
+    height: 2px + ($i % 3);
+    animation-duration: 5s + ($i % 5) * 1.3s;
+    animation-delay: -($i * 0.8s);
+
+    @if $i % 2 == 0 {
+      background: #ffb347;
+      box-shadow: 0 0 8px 2px rgba(255, 140, 40, 0.7);
+    }
+  }
+}
+
+@keyframes spark-rise {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(24px, -520px);
+    opacity: 0;
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+  // Parallax: only the photo layer stays fixed while the page scrolls.
+  .hero-section {
+    background-attachment: scroll, fixed;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark {
+    display: none;
+  }
+
+  .torch {
+    animation: none;
+  }
+
+  .hero-overlay {
+    animation: none;
+  }
 }
 
 .hero-title {
@@ -92,6 +249,16 @@
 
   .hero-section {
     height: 320px;
+  }
+
+  .torch {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+
+    &::after {
+      font-size: 1.3rem;
+    }
   }
 
   .hero-title {

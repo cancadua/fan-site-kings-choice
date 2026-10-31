@@ -1,0 +1,19 @@
+@if (!dismissed()) {
+  <div class="whats-new" role="status">
+    <span class="badge">New</span>
+    <a
+      class="text"
+      [routerLink]="update.route"
+      [queryParams]="update.queryParams"
+      >{{ update.text }} &rarr;</a
+    >
+    <button
+      type="button"
+      class="close"
+      aria-label="Dismiss announcement"
+      (click)="dismiss()"
+    >
+      &times;
+    </button>
+  </div>
+}

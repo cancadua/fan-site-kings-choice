@@ -1,5 +1,12 @@
 <div class="home">
   <div class="hero-section">
+    <div class="sparks" aria-hidden="true">
+      @for (spark of sparks; track spark) {
+        <span class="spark"></span>
+      }
+    </div>
+    <span class="torch torch-left" aria-hidden="true"></span>
+    <span class="torch torch-right" aria-hidden="true"></span>
     <div class="hero-overlay">
       <h1 class="hero-title">KC Lord's Tavern</h1>
       <p class="hero-subtitle">
@@ -8,6 +15,8 @@
     </div>
   </div>
 
+  <app-whats-new></app-whats-new>
   <app-home-events-highlight></app-home-events-highlight>
+  <app-home-tools-section></app-home-tools-section>
   <app-home-cta-section></app-home-cta-section>
 </div>
