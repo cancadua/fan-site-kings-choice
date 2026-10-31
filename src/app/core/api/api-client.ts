@@ -43,7 +43,8 @@ import {
 
 /** Extracts the API's `{ error }` / ProblemDetails message from a failed request. */
 export function apiErrorMessage(err: unknown): string {
-  if (err instanceof TimeoutError) return 'The server took too long to respond. Try again in a moment.';
+  if (err instanceof TimeoutError)
+    return 'The server took too long to respond. Try again in a moment.';
   if (err instanceof HttpErrorResponse) {
     if (err.status === 0)
       return 'Cannot reach the server. Try again in a moment.';

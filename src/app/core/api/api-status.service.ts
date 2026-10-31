@@ -9,10 +9,10 @@ export class ApiStatusService {
   readonly waking = computed(() => this.slowCount() > 0);
 
   markSlow(): void {
-    this.slowCount.update(n => n + 1);
+    this.slowCount.update((n) => n + 1);
   }
 
   markDone(): void {
-    this.slowCount.update(n => Math.max(0, n - 1));
+    this.slowCount.update((n) => Math.max(0, n - 1));
   }
 }

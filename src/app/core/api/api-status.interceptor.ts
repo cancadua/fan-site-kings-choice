@@ -16,7 +16,7 @@ export const apiStatusInterceptor: HttpInterceptorFn = (req, next) => {
 
   const status = inject(ApiStatusService);
 
-  return new Observable(subscriber => {
+  return new Observable((subscriber) => {
     let slow = false;
     const timer = setTimeout(() => {
       slow = true;
@@ -29,7 +29,7 @@ export const apiStatusInterceptor: HttpInterceptorFn = (req, next) => {
         finalize(() => {
           clearTimeout(timer);
           if (slow) status.markDone();
-        }),
+        })
       )
       .subscribe(subscriber);
 

@@ -16,7 +16,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([apiStatusInterceptor, authInterceptor])),
+    provideHttpClient(
+      withInterceptors([apiStatusInterceptor, authInterceptor])
+    ),
     // Plain `| date` renders dd.MM.yyyy; timestamps use 'dd.MM.yyyy HH:mm'.
     {
       provide: DATE_PIPE_DEFAULT_OPTIONS,
