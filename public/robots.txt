@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kc-lords-tavern.com/sitemap.xml
