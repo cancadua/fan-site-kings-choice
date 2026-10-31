@@ -437,7 +437,6 @@ See `.vscode/extensions.json` (VS Code prompts to install them). Key ones:
 - Angular Language Service
 - Prettier - Code Formatter
 - ESLint
-- Supabase
 
 **VS Code Settings** (`settings.json`):
 

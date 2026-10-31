@@ -22,7 +22,7 @@ Kings Choice Fan Site is an Angular-based web application that provides an inter
 
 - **Framework**: [Angular](https://angular.dev/) 22.0.0
 - **Language**: [TypeScript](https://www.typescriptlang.org/) 6.0.0
-- **Backend**: [Supabase](https://supabase.com/)
+- **Backend**: ASP.NET Core API (Render) with a Neon Postgres database
 - **Build Tool**: Angular CLI 22.0.0
 - **Code Formatting**: Prettier
 - **Package Manager**: npm
