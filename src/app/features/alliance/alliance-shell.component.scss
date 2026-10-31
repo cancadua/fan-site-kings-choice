@@ -1,8 +1,9 @@
 @use 'variables' as *;
+@use 'mixins' as *;
 
 .alliance {
   min-height: 100vh;
-  background: linear-gradient(135deg, $knight-bg-start 0%, $knight-bg-end 100%);
+  @include tavern-room;
   color: $knight-text;
 }
 

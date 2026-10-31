@@ -2,9 +2,11 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   input,
   model,
+  signal,
   viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -29,6 +31,17 @@ export class NavHubComponent<
   navLabel = input('Sections');
   items = input.required<NavHubItem<T>[]>();
   activeId = model.required<T>();
+  /** Shows a search box above the list; hidden on narrow screens where the list scrolls sideways. */
+  filterable = input(false);
+
+  protected readonly query = signal('');
+  protected readonly visibleItems = computed(() => {
+    const q = this.query().trim().toLowerCase();
+    if (!q) return this.items();
+    return this.items().filter((item) =>
+      `${item.title} ${item.subtitle ?? ''}`.toLowerCase().includes(q)
+    );
+  });
 
   ngAfterViewInit(): void {
     this.scrollToActiveButton();
@@ -36,6 +49,10 @@ export class NavHubComponent<
 
   get activeItem(): NavHubItem<T> | undefined {
     return this.items().find((item) => item.id === this.activeId());
+  }
+
+  protected onQuery(event: Event): void {
+    this.query.set((event.target as HTMLInputElement).value);
   }
 
   selectItem(id: T): void {

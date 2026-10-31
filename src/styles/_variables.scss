@@ -31,9 +31,13 @@ $shadow: rgba(0, 0, 0, 0.4);
 $knight-amber: #ffc107;
 $knight-bg-start: #1a1a2e;
 $knight-bg-end: #16213e;
-$knight-text: #e0e0e0;
-$knight-text-muted: #b0b0b0;
-$knight-text-body: #d0d0d0;
+
+// Warm tavern-room backdrop for the sub-pages
+$tavern-bg-start: #211811;
+$tavern-bg-end: #120d09;
+$knight-text: #f0ead6;
+$knight-text-muted: #d2cbb6;
+$knight-text-body: #e6e0cc;
 
 // ========== TYPOGRAPHY ==========
 $font-lore: 'Cinzel', serif;

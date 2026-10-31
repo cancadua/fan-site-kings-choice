@@ -10,7 +10,17 @@
     <!-- Navigation Sidebar -->
     <nav class="nav-hub-nav" #navContainer>
       <div class="nav-hub-nav-title">{{ navLabel() }}</div>
-      @for (item of items(); track item.id) {
+      @if (filterable()) {
+        <input
+          class="nav-hub-filter"
+          type="search"
+          placeholder="Search…"
+          aria-label="Search"
+          [value]="query()"
+          (input)="onQuery($event)"
+        />
+      }
+      @for (item of visibleItems(); track item.id) {
         <button
           class="nav-hub-link"
           [class.active]="activeId() === item.id"
@@ -18,6 +28,8 @@
         >
           {{ item.title }}
         </button>
+      } @empty {
+        <p class="nav-hub-empty">No matches</p>
       }
     </nav>
 
