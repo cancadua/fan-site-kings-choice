@@ -13,12 +13,14 @@ import { routes } from './app.routes';
 import { apiStatusInterceptor } from './core/api/api-status.interceptor';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { AnalyticsService } from './core/analytics/analytics.service';
+import { provideScrollToTopOnNavigation } from './core/navigation/scroll-to-top';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
+    provideScrollToTopOnNavigation(),
     provideAppInitializer(() => inject(AnalyticsService).init()),
     provideHttpClient(
       withInterceptors([apiStatusInterceptor, authInterceptor])

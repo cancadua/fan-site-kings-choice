@@ -1,6 +1,7 @@
 import {
   Component,
   ChangeDetectionStrategy,
+  OnDestroy,
   OnInit,
   inject,
 } from '@angular/core';
@@ -8,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsService } from '../../core/analytics/analytics.service';
 import { Event } from '../../core/enums/events';
+import { IntroPlayback } from '../../core/intro/intro-playback.service';
 import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
 import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
@@ -39,10 +41,11 @@ interface EventDetail {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly analytics = inject(AnalyticsService);
+  private readonly intro = inject(IntroPlayback);
 
   activeEvent: Event = Event.UnchartedWaters;
   readonly Event = Event;
@@ -83,7 +86,13 @@ export class EventsComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.intro.reset();
+  }
+
   onEventChange(event: Event): void {
+    // Intro scenes play only after the viewer switches events here, never on arrival.
+    this.intro.enable();
     this.activeEvent = event;
     this.saveLastEvent(event);
     this.analytics.track('event-select', { event });

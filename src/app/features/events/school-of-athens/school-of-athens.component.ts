@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { IntroPlayback } from '../../../core/intro/intro-playback.service';
 import { AppTabsComponent } from '../../../shared/app-tabs/app-tabs.component';
 import { TabbedPage } from '../../../shared/app-tabs/tabbed-page';
 import { SchoolOfAthensTabs } from './school-of-athens.schema';
@@ -14,6 +15,8 @@ import { MagicBookSceneComponent } from '../../../shared/magic-book-scene/magic-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchoolOfAthensComponent extends TabbedPage {
+  protected readonly intro = inject(IntroPlayback);
+
   constructor() {
     super(SchoolOfAthensTabs);
   }

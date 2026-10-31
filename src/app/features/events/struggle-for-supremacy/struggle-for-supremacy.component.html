@@ -1,15 +1,17 @@
-<app-warrior-scene
-  title="STRUGGLE FOR SUPREMACY"
-  backgroundSrc="assets/img/struggle-for-supremacy/background.webp"
-  [backgroundWidth]="1920"
-  [backgroundHeight]="1080"
-  leftSrc="assets/img/struggle-for-supremacy/warriors-left.webp"
-  [leftWidth]="429"
-  [leftHeight]="1080"
-  rightSrc="assets/img/struggle-for-supremacy/warriors-right.webp"
-  [rightWidth]="413"
-  [rightHeight]="1080"
-></app-warrior-scene>
+@if (intro.enabled()) {
+  <app-warrior-scene
+    title="STRUGGLE FOR SUPREMACY"
+    backgroundSrc="assets/img/struggle-for-supremacy/background.webp"
+    [backgroundWidth]="1920"
+    [backgroundHeight]="1080"
+    leftSrc="assets/img/struggle-for-supremacy/warriors-left.webp"
+    [leftWidth]="429"
+    [leftHeight]="1080"
+    rightSrc="assets/img/struggle-for-supremacy/warriors-right.webp"
+    [rightWidth]="413"
+    [rightHeight]="1080"
+  ></app-warrior-scene>
+}
 
 <app-tabs
   [tabs]="tabs"
