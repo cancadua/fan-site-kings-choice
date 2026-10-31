@@ -92,7 +92,7 @@ npm run format
 
 ## 🌐 Deployment
 
-This project is deployed to GitHub Pages. The deployment is managed via the Angular CLI GitHub Pages plugin (`angular-cli-ghpages`).
+This project is deployed to GitHub Pages and served from the custom domain `kc-lords-tavern.com` (DNS managed at OVH, `CNAME` written by the deploy workflow). The deployment is managed via the Angular CLI GitHub Pages plugin (`angular-cli-ghpages`).
 
 ## 🤝 Contributing
 
