@@ -44,6 +44,7 @@ jobs:
         run: >-
           npx angular-cli-ghpages
           --dir=dist/kings-choice/browser
+          --cname=kc-lords-tavern.com
           --name="github-actions[bot]"
           --email="41898282+github-actions[bot]@users.noreply.github.com"
           --message="deploy: ${{ github.sha }}"
