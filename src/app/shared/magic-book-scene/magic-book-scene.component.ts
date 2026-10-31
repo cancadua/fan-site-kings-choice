@@ -43,7 +43,7 @@ const SCENE_BACKGROUND_IMAGE = 'var(--magic-book-scene-bg)';
 export class MagicBookSceneComponent {
   readonly title = input.required<string>();
 
-  readonly bookSrc = input('assets/img/school-of-athens/magic-book.png');
+  readonly bookSrc = input('assets/img/school-of-athens/magic-book.webp');
   readonly bookWidth = input(800);
   readonly bookHeight = input(400);
 

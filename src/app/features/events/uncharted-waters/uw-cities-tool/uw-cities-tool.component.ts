@@ -16,9 +16,7 @@ import { City } from './uw-cities-container/uw-cities-container.schema';
 import { apiErrorMessage } from '../../../../core/api/api-client';
 import { SharedMapState } from '../../../../core/api/api.models';
 import { SharedMapSession } from './shared-map-session.service';
-
-/** Query param that holds the shared map code on the events page. */
-export const SHARED_MAP_PARAM = 'map';
+import { SHARED_MAP_PARAM } from './shared-map.constants';
 
 const CITY_KEY_PREFIX = 'city:';
 

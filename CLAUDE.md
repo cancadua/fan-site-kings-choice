@@ -325,7 +325,7 @@ npm run build
 
 - **Budget Limits** (from angular.json):
   - Initial bundle: 500kB warning, 1MB error
-  - Component styles: 4kB warning, 8kB error per component
+  - Component styles: 6kB warning, 8kB error per component
 - **Optimization**: Enabled by default in production
 - **Source Maps**: Disabled in production for security
 
