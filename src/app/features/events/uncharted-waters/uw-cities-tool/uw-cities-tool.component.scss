@@ -161,6 +161,7 @@
   background-repeat: no-repeat;
   background-position: center;
   content: url(../../../../../assets/img/kings-choice-unchartered-waters-map.webp);
+  user-select: none;
   border: 3px solid $gold-primary;
   border-radius: 8px;
   box-shadow:
@@ -218,6 +219,10 @@
 
 .map-section {
   display: none;
+  // The map is a div with generated image content and the dots are clickable on top of
+  // it, so repeated clicks must not paint a text selection over any of it.
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
   &.expanded {
     display: flex;

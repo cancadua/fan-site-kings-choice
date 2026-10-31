@@ -7,6 +7,8 @@
   z-index: 1000;
   display: block;
   cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :host:focus-visible {

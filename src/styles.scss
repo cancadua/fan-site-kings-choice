@@ -47,6 +47,14 @@
 }
 
 // ========== BASE STYLES ==========
+// Images can be clicked (map tool, intro scenes), so they must not get the blue
+// selection highlight or be dragged as a ghost image.
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Reset margin and padding for the whole app */
 * {
   margin: 0;
