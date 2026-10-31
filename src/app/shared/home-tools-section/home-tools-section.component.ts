@@ -15,14 +15,14 @@ export class HomeToolsSectionComponent {
       title: 'Uncharted Waters Planner',
       text: 'Pick the best cities for your team on the interactive map and share the plan with a short link.',
       icon: '🗺️',
-      route: '/events',
-      queryParams: { event: Event.UnchartedWaters, tab: 'cities-tool' },
+      route: `/events/${Event.UnchartedWaters}`,
+      queryParams: { tab: 'cities-tool' },
     },
     {
       title: 'Knight Development',
       text: 'Advanced guides on hidden mechanics, optimization and competitive strategies.',
       icon: '⚔️',
-      route: '/knight-development',
+      route: '/knight-development/overview',
       queryParams: {},
     },
     {

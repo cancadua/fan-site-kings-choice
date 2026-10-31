@@ -159,7 +159,7 @@
   }
 }
 
-.scene-title h1 {
+.scene-title .scene-heading {
   @include lore-heading(clamp(22px, 5vw, 64px), $letter-spacing: 0.25em);
   margin: 0;
   max-width: 100%;
@@ -167,7 +167,7 @@
 }
 
 @media (max-width: 480px) {
-  .scene-title h1 {
+  .scene-title .scene-heading {
     letter-spacing: 0.12em;
   }
 }

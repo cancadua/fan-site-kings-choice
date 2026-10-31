@@ -3,9 +3,11 @@
   subtitle="Advanced Optimization for Serious Players"
   navLabel="Sections"
   [items]="sections"
-  [(activeId)]="activeSection"
+  articleHeading="h1"
+  [activeId]="activeSection()"
+  (activeIdChange)="onSectionChange($event)"
 >
-  @let active = getActiveSection();
+  @let active = activeData();
   @if (active) {
     <div class="kd-article-body">
       @for (paragraph of active.content; track $index) {

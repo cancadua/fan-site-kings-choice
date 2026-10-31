@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LATEST_UPDATE } from '../../core/constants/updates';
 
@@ -14,7 +19,12 @@ const DISMISSED_KEY = 'kc.dismissedUpdate';
 })
 export class WhatsNewComponent {
   protected readonly update = LATEST_UPDATE;
-  protected readonly dismissed = signal(this.wasDismissed());
+  protected readonly dismissed = signal(false);
+
+  constructor() {
+    // Read after the first render so the prerendered HTML and hydration agree.
+    afterNextRender(() => this.dismissed.set(this.wasDismissed()));
+  }
 
   protected dismiss(): void {
     this.dismissed.set(true);

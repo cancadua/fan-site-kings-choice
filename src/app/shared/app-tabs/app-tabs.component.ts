@@ -1,4 +1,13 @@
-import { Component, ElementRef, input, model, viewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  PLATFORM_ID,
+  inject,
+  input,
+  model,
+  viewChild,
+} from '@angular/core';
 import { ContentTab } from './app-tabs.schema';
 
 @Component({
@@ -7,6 +16,7 @@ import { ContentTab } from './app-tabs.schema';
   styleUrls: ['./app-tabs.component.scss'],
 })
 export class AppTabsComponent {
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly tabsContainer =
     viewChild<ElementRef<HTMLElement>>('tabsContainer');
 
@@ -50,6 +60,7 @@ export class AppTabsComponent {
   }
 
   private scrollToActiveTab(): void {
+    if (!this.isBrowser) return;
     const container = this.tabsContainer()?.nativeElement;
     if (!container) return;
 

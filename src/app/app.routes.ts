@@ -16,12 +16,27 @@ export const routes: Routes = [
       ),
   },
   {
+    // One URL per event so each can be indexed and shared on its own.
+    path: 'events/:event',
+    loadComponent: () =>
+      import('./features/events/events.component').then(
+        (m) => m.EventsComponent
+      ),
+  },
+  {
     path: 'guide',
     loadComponent: () =>
       import('./features/guide/guide.component').then((m) => m.GuideComponent),
   },
   {
     path: 'knight-development',
+    loadComponent: () =>
+      import('./features/knight-development/knight-development.component').then(
+        (m) => m.KnightDevelopmentComponent
+      ),
+  },
+  {
+    path: 'knight-development/:section',
     loadComponent: () =>
       import('./features/knight-development/knight-development.component').then(
         (m) => m.KnightDevelopmentComponent
@@ -40,9 +55,8 @@ export const routes: Routes = [
     // Short link to a shared Uncharted Waters map
     path: 'uncharted-waters/:code',
     redirectTo: ({ params }) =>
-      inject(Router).createUrlTree(['/events'], {
+      inject(Router).createUrlTree(['/events', Event.UnchartedWaters], {
         queryParams: {
-          event: Event.UnchartedWaters,
           tab: 'cities-tool',
           [SHARED_MAP_PARAM]: params['code'],
         },

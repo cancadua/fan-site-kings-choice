@@ -10,6 +10,8 @@ import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../core/api/api-client';
 import { SessionService } from '../../core/auth/session.service';
+import { PAGE_SEO } from '../../core/seo/seo.constants';
+import { SeoService } from '../../core/seo/seo.service';
 
 type Mode = 'login' | 'register';
 
@@ -33,6 +35,7 @@ export class Login {
   error = signal<string | null>(null);
 
   constructor() {
+    inject(SeoService).update(PAGE_SEO.login);
     if (this.session.isLoggedIn()) void this.router.navigate(['/alliance']);
   }
 

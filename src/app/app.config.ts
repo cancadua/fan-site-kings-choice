@@ -7,6 +7,10 @@ import {
 } from '@angular/core';
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  provideClientHydration,
+  withEventReplay,
+} from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -20,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
+    provideClientHydration(withEventReplay()),
     provideScrollToTopOnNavigation(),
     provideAppInitializer(() => inject(AnalyticsService).init()),
     provideHttpClient(

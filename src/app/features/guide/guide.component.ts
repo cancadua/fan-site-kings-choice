@@ -1,5 +1,7 @@
 import { GuideTabs } from './guide.schema';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { PAGE_SEO } from '../../core/seo/seo.constants';
+import { SeoService } from '../../core/seo/seo.service';
 import { AppTabsComponent } from '../../shared/app-tabs/app-tabs.component';
 import { TabbedPage } from '../../shared/app-tabs/tabbed-page';
 import { GuideAdvancedComponent } from './guide-advanced/guide-advanced.component';
@@ -14,5 +16,9 @@ import { GuideTipsComponent } from './guide-tips/guide-tips.component';
 export class GuideComponent extends TabbedPage {
   constructor() {
     super(GuideTabs);
+    inject(SeoService).update({
+      ...PAGE_SEO.guide,
+      breadcrumbs: [{ name: 'Guide', path: PAGE_SEO.guide.path }],
+    });
   }
 }

@@ -128,7 +128,12 @@
       ></button>
     }
     <!-- Mouse-only dev helper that logs map coordinates for placing cities. -->
-    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
-    <div class="col-24 map" (click)="logClickPosition($event)"></div>
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
+    <div
+      class="col-24 map"
+      role="img"
+      aria-label="Map of the Uncharted Waters event with the city locations"
+      (click)="logClickPosition($event)"
+    ></div>
   </div>
 </div>

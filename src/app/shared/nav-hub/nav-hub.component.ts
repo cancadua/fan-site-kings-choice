@@ -4,12 +4,14 @@ import {
   Component,
   computed,
   ElementRef,
+  inject,
   input,
   model,
+  PLATFORM_ID,
   signal,
   viewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NavHubItem } from './nav-hub.schema';
 
 @Component({
@@ -23,12 +25,15 @@ import { NavHubItem } from './nav-hub.schema';
 export class NavHubComponent<
   T extends string = string,
 > implements AfterViewInit {
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly navContainer =
     viewChild<ElementRef<HTMLElement>>('navContainer');
 
   title = input.required<string>();
   subtitle = input('');
   navLabel = input('Sections');
+  /** `h1` makes the selected article title the page heading; the hub title then is plain text. */
+  articleHeading = input<'h1' | 'h2'>('h2');
   items = input.required<NavHubItem<T>[]>();
   activeId = model.required<T>();
   /** Shows a search box above the list; hidden on narrow screens where the list scrolls sideways. */
@@ -61,6 +66,7 @@ export class NavHubComponent<
   }
 
   private scrollToActiveButton(): void {
+    if (!this.isBrowser) return;
     const nav = this.navContainer()?.nativeElement;
     if (!nav) return;
 

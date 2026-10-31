@@ -11,6 +11,5 @@ export interface SiteUpdate {
 export const LATEST_UPDATE: SiteUpdate = {
   id: 'siege-of-the-undead',
   text: 'New event guide: Siege of the Undead',
-  route: '/events',
-  queryParams: { event: Event.SiegeOfTheUndead },
+  route: `/events/${Event.SiegeOfTheUndead}`,
 };

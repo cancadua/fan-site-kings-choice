@@ -36,6 +36,12 @@ jobs:
       - name: Build project
         run: npm run build
 
+      # Public pages are prerendered to real HTML files (HTTP 200). Anything else, such as the
+      # login/alliance tools or an unknown URL, is served by the 404.html fallback, which must be
+      # the client-only shell (index.csr.html), not the prerendered home page.
+      - name: Add client-side fallback page
+        run: cp dist/kings-choice/browser/index.csr.html dist/kings-choice/browser/404.html
+
       # --dir must point at the browser bundle: @angular/build:application
       # emits dist/kings-choice/browser/, not dist/kings-choice/.
       # --name/--email are required: the runner has no git identity, and
@@ -45,6 +51,7 @@ jobs:
           npx angular-cli-ghpages
           --dir=dist/kings-choice/browser
           --cname=kc-lords-tavern.com
+          --no-notfound
           --name="github-actions[bot]"
           --email="41898282+github-actions[bot]@users.noreply.github.com"
           --message="deploy: ${{ github.sha }}"

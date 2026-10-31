@@ -17,6 +17,8 @@ import {
 
 import { apiErrorMessage } from '../../core/api/api-client';
 import { SessionService } from '../../core/auth/session.service';
+import { PAGE_SEO } from '../../core/seo/seo.constants';
+import { SeoService } from '../../core/seo/seo.service';
 import { ALLIANCE_SECTIONS } from './alliance-sections';
 import { AllianceStateService } from './alliance-state.service';
 import { AllianceLinkAccountComponent } from './link-account/alliance-link-account.component';
@@ -53,6 +55,7 @@ export class AllianceShellComponent {
   createError = signal<string | null>(null);
 
   constructor() {
+    inject(SeoService).update(PAGE_SEO.alliance);
     void this.state.load();
 
     effect(() => {

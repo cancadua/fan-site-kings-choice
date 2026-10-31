@@ -38,7 +38,7 @@
       [routerLink]="link.route"
       class="bottom-nav-link"
       routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
+      [routerLinkActiveOptions]="{ exact: link.route === '/' }"
     >
       <span class="icon">{{ getIcon(link.label) }}</span>
       <span class="label">{{ link.label }}</span>

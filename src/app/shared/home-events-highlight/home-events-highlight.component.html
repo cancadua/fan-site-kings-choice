@@ -4,8 +4,7 @@
   <div class="events-showcase">
     @for (event of events; track event.id; let i = $index) {
       <a
-        [routerLink]="'/events'"
-        [queryParams]="{ event: event.id }"
+        [routerLink]="['/events', event.id]"
         class="event-item"
         [style.--i]="i"
       >

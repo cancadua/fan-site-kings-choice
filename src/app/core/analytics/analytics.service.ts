@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Injectable, inject } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 declare global {
@@ -21,10 +21,11 @@ const COUNTED_DOMAINS = 'kc-lords-tavern.com,www.kc-lords-tavern.com';
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
   private readonly doc = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   init(): void {
     const id = environment.analyticsWebsiteId;
-    if (!id) return;
+    if (!id || !this.isBrowser) return;
 
     const script = this.doc.createElement('script');
     script.defer = true;
