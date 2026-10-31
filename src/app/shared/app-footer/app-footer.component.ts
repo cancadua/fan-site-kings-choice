@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { KOFI_URL } from '../../core/constants/links';
 
 @Component({
   selector: 'app-footer',
@@ -10,4 +11,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class AppFooterComponent {
   protected readonly year = new Date().getFullYear();
+  protected readonly kofiUrl = KOFI_URL;
 }

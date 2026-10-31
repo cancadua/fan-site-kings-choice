@@ -20,6 +20,13 @@
       @for (link of navLinks.slice(1); track $index) {
         <a [routerLink]="link.route" (click)="closeMenu()">{{ link.label }}</a>
       }
+      <a
+        class="kofi-link"
+        [href]="kofiUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        >☕ Ko-fi</a
+      >
     </nav>
   </div>
 </header>

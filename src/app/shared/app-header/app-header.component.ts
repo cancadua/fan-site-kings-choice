@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { KOFI_URL } from '../../core/constants/links';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,8 @@ export class AppHeaderComponent {
     { label: 'Events', route: '/events' },
     { label: 'Alliance', route: '/alliance' },
   ];
+
+  kofiUrl = KOFI_URL;
 
   menuOpen = signal(false);
 

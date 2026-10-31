@@ -74,6 +74,21 @@ header {
   }
 }
 
+.nav-right a.kofi-link {
+  padding: 6px 14px;
+  border: 1px solid $gold-primary;
+  border-radius: 999px;
+  font-size: 0.85rem;
+
+  &::after {
+    display: none;
+  }
+
+  &:hover {
+    background: rgba($gold-primary, 0.15);
+  }
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
