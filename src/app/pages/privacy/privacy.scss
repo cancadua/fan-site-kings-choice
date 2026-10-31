@@ -1,0 +1,36 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.privacy {
+  @include guide-page(800px);
+  color: $knight-text;
+  font-family: $font-body;
+  line-height: 1.7;
+
+  h1 {
+    color: $gold-light;
+    font-family: $font-lore;
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    margin: 28px 0 10px;
+    font-size: 1.3rem;
+  }
+
+  ul {
+    margin: 8px 0 8px 22px;
+  }
+
+  a {
+    color: $gold-light;
+
+    &:hover {
+      color: $gold-primary;
+    }
+  }
+}

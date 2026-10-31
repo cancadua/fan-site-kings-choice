@@ -15,6 +15,7 @@ import { uwCities } from '../../../../core/constants/uw-cities';
 import { City } from './uw-cities-container/uw-cities-container.schema';
 import { apiErrorMessage } from '../../../../core/api/api-client';
 import { SharedMapState } from '../../../../core/api/api.models';
+import { AnalyticsService } from '../../../../core/analytics/analytics.service';
 import { SharedMapSession } from './shared-map-session.service';
 import { SHARED_MAP_PARAM } from './shared-map.constants';
 
@@ -68,6 +69,7 @@ export class UwCitiesToolComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly location = inject(Location);
+  private readonly analytics = inject(AnalyticsService);
   readonly shared = inject(SharedMapSession);
 
   position: NonNullable<City['position']>[] = [];
@@ -161,6 +163,7 @@ export class UwCitiesToolComponent {
         this.empty().map((city, i) => [cityKey(city), sharedCity(now + i)])
       );
       const created = await this.shared.create(state);
+      this.analytics.track('share-map-created');
       this.copied.set(false);
       await this.router.navigate([], {
         relativeTo: this.route,

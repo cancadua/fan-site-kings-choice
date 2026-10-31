@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AnalyticsService } from '../../core/analytics/analytics.service';
 import { Event } from '../../core/enums/events';
 import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
@@ -41,6 +42,7 @@ interface EventDetail {
 export class EventsComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly analytics = inject(AnalyticsService);
 
   activeEvent: Event = Event.UnchartedWaters;
   readonly Event = Event;
@@ -84,6 +86,7 @@ export class EventsComponent implements OnInit {
   onEventChange(event: Event): void {
     this.activeEvent = event;
     this.saveLastEvent(event);
+    this.analytics.track('event-select', { event });
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { event, tab: null, map: null },

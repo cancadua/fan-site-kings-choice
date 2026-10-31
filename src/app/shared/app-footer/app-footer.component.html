@@ -32,6 +32,7 @@
 
     <a
       class="kofi-button"
+      (click)="onKofiClick()"
       [href]="kofiUrl"
       target="_blank"
       rel="noopener noreferrer"
@@ -42,6 +43,7 @@
     <p class="copyright">
       &copy; {{ year }} KC Lord's Tavern. All original content on this
       website is protected by applicable copyright laws. All rights reserved.
+      <a class="privacy-link" routerLink="/privacy">Privacy</a>
     </p>
   </div>
 </footer>

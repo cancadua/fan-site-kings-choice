@@ -100,6 +100,15 @@
   }
 }
 
+.privacy-link {
+  margin-left: 8px;
+  color: $gold-light;
+
+  &:hover {
+    color: $gold-primary;
+  }
+}
+
 .copyright {
   margin: 0;
   font-family: $font-body;

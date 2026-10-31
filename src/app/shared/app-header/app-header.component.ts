@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AnalyticsService } from '../../core/analytics/analytics.service';
 import { KOFI_URL } from '../../core/constants/links';
 
 @Component({
@@ -20,11 +21,16 @@ export class AppHeaderComponent {
   ];
 
   kofiUrl = KOFI_URL;
+  private readonly analytics = inject(AnalyticsService);
 
   menuOpen = signal(false);
 
   toggleMenu(): void {
     this.menuOpen.update((open) => !open);
+  }
+
+  onKofiClick(): void {
+    this.analytics.track('kofi-click', { place: 'header' });
   }
 
   closeMenu(): void {
