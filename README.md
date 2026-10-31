@@ -1,4 +1,4 @@
-# 👑 Kings Choice Fan Site
+# 👑 KC Lord's Tavern
 
 ![Angular](https://img.shields.io/badge/Angular-22.0.0-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0.0-3178C6?logo=typescript&logoColor=white)

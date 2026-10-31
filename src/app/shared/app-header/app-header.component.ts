@@ -9,7 +9,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   imports: [CommonModule, RouterLink, RouterLinkActive],
 })
 export class AppHeaderComponent {
-  title = "King's Choice Fan Site";
+  title = "KC Lord's Tavern";
   subtitle = 'A Journey Through the Medieval Era';
   navLinks = [
     { label: 'Home', route: '/' },
