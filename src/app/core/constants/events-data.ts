@@ -27,4 +27,9 @@ export const EventsData: EventData[] = [
     value: Event.SchoolOfAthens,
     image: '',
   },
+  {
+    name: 'Siege of the Undead',
+    value: Event.SiegeOfTheUndead,
+    image: '',
+  },
 ];

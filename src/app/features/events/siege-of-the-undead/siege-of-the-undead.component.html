@@ -1,0 +1,135 @@
+<app-tabs
+  [tabs]="tabs"
+  [activeTab]="activeTab"
+  (activeTabChange)="onTabChange($event)"
+>
+  @if (activeTab.value === 'basic-information') {
+    <app-content-section heading="Event Overview">
+      <app-content-text>
+        Siege of the Undead is an alliance event. Undead invade your town, and
+        you and your alliance have to protect the gate. Members place NPCs on a
+        grid to fight randomly generated undead that arrive in waves.
+      </app-content-text>
+    </app-content-section>
+    <app-content-section heading="The Basics">
+      <app-content-list
+        [items]="[
+          'Placing an NPC costs 100 energy. Energy recovers over time, up to a maximum of 1680.',
+          'Undead move one space forward every 5 minutes. Undead that reach the gate damage it.',
+          'NPCs level up with upgrade resources, up to level 20. Level 10 unlocks their special skill.',
+          'You can send prank undead to other alliances, and they can send them to you.',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="NPCs">
+      <app-content-list
+        [items]="[
+          'Girl Who Toys with Fire',
+          'Farmer with a Stick',
+          'Hunter with Spear',
+          'Boy with Balloon',
+          'Butler',
+          'Village Elder',
+          'Guardian of the Kingdom (no skills, but very powerful)',
+        ]"
+      />
+      <app-content-note>
+        This page is based on community guides and the community wiki. Values
+        can change between game updates, so check the in-game event page.
+      </app-content-note>
+    </app-content-section>
+  } @else if (activeTab.value === 'smart-play') {
+    <app-content-steps>
+      <app-content-step heading="Play as an alliance">
+        <app-content-text> This is a team event! </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Level up one NPC">
+        <app-content-text>
+          Playing normally, you should level up only one NPC, focus
+          on a single NPC rather than spreading upgrades.
+        </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Use only useful NPC types">
+        <app-content-text>
+          There is no single right combination, but the Farmer, the Girl Who
+          Toys with Fire and the Boy with Balloon are recommended as the core
+          group. Especialy the boy, because he can attack zombies without being
+          attacked.
+        </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Defend only 3 columns">
+        <app-content-text>
+          At level 10, the Boy with Balloon gets the Slingshot skill, which hits
+          the squares to his left and right. This makes it one of the best
+          tactics in the event.
+        </app-content-text>
+        <app-content-list
+          [items]="[
+            'You only need to defend 3 columns.',
+            'Undead between the columns are cleared by the Boys with Balloon.',
+            'The higher the level of the Boys, the more damage they deal.',
+          ]"
+        />
+        <app-content-note>
+          The main problem in this event is not having enough resources to keep
+          fighting.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Faster alternatives">
+        <app-content-text>
+          The 3-column setup is a great tactic, but you can go faster when
+          needed.
+        </app-content-text>
+        <app-content-list
+          [items]="[
+            '4 columns: every column of undead takes damage from both sides. This is faster than 3 columns, but slower than fighting at the front.',
+            'Fighting on the top row: gives the most points and beats waves the fastest.',
+          ]"
+        />
+      </app-content-step>
+      <app-content-step heading="Match NPCs to enemies">
+        <app-content-list
+          [items]="[
+            'Girl Who Toys with Fire in front of Scarecrow Puppet.',
+            'Farmer with a Stick in front of Undead Villager.',
+            'Hunter with Spear near Deranged Deer.',
+          ]"
+        />
+        <app-content-text>
+          For other enemies, it is best if your NPC attacks as fast as or faster
+          than the undead it fights.
+        </app-content-text>
+        <app-content-note>
+          The +20% bonuses matter most early on, when almost everyone has
+          low-level NPCs.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Watch out for support undead">
+        <app-content-list
+          [items]="[
+            'Undead Princess reduces your NPCs attack speed by 8%.',
+            'Undead Knight increases the attack speed of undead by 8%.',
+          ]"
+        />
+        <app-content-note>
+          Do not worry if you lose a lot of NPCs at the start of the event.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Tips for the whole alliance">
+        <app-content-list
+          [items]="[
+            'Take your time. There are 5 minutes between undead steps, which is enough to think and discuss.',
+            'Undead come whether or not anyone plays, but scores never go below zero.',
+            'The first time you enter, add your Knights to troop energy.',
+            'Players in similar time zones should be online together, so a few players are always around.',
+            'Each time you enter, check the Knights already on the board for recovered mobility. Three moves is the maximum.',
+          ]"
+        />
+        <app-content-note>
+          A Guardian Knight and a Zombie King can be bought in top value packs.
+          Both are powerful. The Zombie King is worth 7-7.6k ranking points.
+        </app-content-note>
+      </app-content-step>
+    </app-content-steps>
+  }
+</app-tabs>

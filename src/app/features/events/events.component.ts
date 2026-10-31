@@ -12,6 +12,7 @@ import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.co
 import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
 import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle-for-supremacy.component';
 import { SchoolOfAthensComponent } from './school-of-athens/school-of-athens.component';
+import { SiegeOfTheUndeadComponent } from './siege-of-the-undead/siege-of-the-undead.component';
 
 interface EventDetail {
   id: Event;
@@ -31,6 +32,7 @@ interface EventDetail {
     ReapWhatYouSowComponent,
     StruggleForSupremacyComponent,
     SchoolOfAthensComponent,
+    SiegeOfTheUndeadComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -61,6 +63,11 @@ export class EventsComponent implements OnInit {
       id: Event.SchoolOfAthens,
       title: 'School of Athens',
       subtitle: '3-Player Team Event',
+    },
+    {
+      id: Event.SiegeOfTheUndead,
+      title: 'Siege of the Undead',
+      subtitle: 'Alliance Defense Event',
     },
   ];
 
