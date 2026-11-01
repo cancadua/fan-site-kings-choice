@@ -11,7 +11,7 @@
   $letter-spacing: 0.5px,
   $weight: 700
 ) {
-  @include lore-font;
+  font-family: $font-heading;
   font-size: $size;
   font-weight: $weight;
   color: $color;
