@@ -10,7 +10,8 @@ const AUTH_PATHS = ['/api/auth/login', '/api/auth/register'];
 
 /** Adds the bearer token to API calls and signs the user out when the API rejects it. */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!req.url.startsWith(environment.apiUrl)) return next(req);
+  // The trailing slash keeps the token away from look-alike hosts (api.example.com.evil.net).
+  if (!req.url.startsWith(`${environment.apiUrl}/`)) return next(req);
 
   const session = inject(SessionService);
   const router = inject(Router);

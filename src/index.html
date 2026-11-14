@@ -2,6 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <!--
+      GitHub Pages cannot set response headers, so the policy lives here. 'unsafe-inline' is needed for
+      Angular's inline styles and critical-CSS loader; the value is in limiting where data can be sent,
+      since the login token is in localStorage.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://kcfs-alliance-management.onrender.com https://cloud.umami.is https://api-gateway.umami.dev; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
     <title>King's Choice Guides &amp; Tools | KC Lord's Tavern</title>
     <meta
       name="description"

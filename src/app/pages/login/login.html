@@ -60,7 +60,8 @@
         type="password"
         name="password"
         required
-        minlength="6"
+        [minlength]="mode() === 'register' ? 10 : null"
+        maxlength="128"
         [autocomplete]="mode() === 'login' ? 'current-password' : 'new-password'"
         [(ngModel)]="password"
       />
