@@ -12,6 +12,8 @@ export type PlayerColor =
   'None' | 'Orange' | 'Yellow' | 'White' | 'Green' | 'Blue' | 'Red' | 'DarkRed';
 export type LinkRequestStatus =
   'Pending' | 'Accepted' | 'Rejected' | 'Cancelled';
+export type AllianceInviteStatus =
+  'Pending' | 'Accepted' | 'Declined' | 'Cancelled';
 export type PlayerLinkAction = 'Linked' | 'Unlinked';
 export type PlayerLinkMethod =
   'Code' | 'Invite' | 'Request' | 'Unlink' | 'MemberRemoved' | 'PlayerDeleted';
@@ -70,12 +72,33 @@ export interface Member {
   playerName: string | null;
 }
 
-/** Links a registered account to a player; only the Owner may grant Leader. */
+/**
+ * Invites a registered account to be linked to a player; it is linked once the
+ * account accepts. Only the Owner may grant Leader.
+ */
 export interface InviteRequest {
   /** Email or username of a registered account. */
   user: string;
   playerId: string;
   role?: Exclude<AllianceRole, 'Owner'>;
+}
+
+/** An account is linked to the player only after the invited user accepts. */
+export interface AllianceInvite {
+  id: string;
+  allianceId: string;
+  allianceName: string;
+  playerId: string | null;
+  playerName: string;
+  userId: string;
+  username: string;
+  /** Role the account gets if it isn't in the alliance yet. */
+  role: AllianceRole;
+  invitedById: string;
+  invitedByUsername: string | null;
+  status: AllianceInviteStatus;
+  createdAt: string;
+  resolvedAt: string | null;
 }
 
 export interface AllianceSearchResult {

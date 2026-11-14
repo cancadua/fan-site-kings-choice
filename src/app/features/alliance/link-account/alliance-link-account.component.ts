@@ -21,6 +21,7 @@ import {
 
 import { ApiClient, apiErrorMessage } from '../../../core/api/api-client';
 import {
+  AllianceInvite,
   AllianceSearchResult,
   LinkRequest,
   LinkRequestStatus,
@@ -69,6 +70,11 @@ export class AllianceLinkAccountComponent {
   readonly minSearchLength = MIN_SEARCH_LENGTH;
 
   tab = signal<LinkTab>('code');
+
+  // Invites from alliance leaders, waiting for an answer
+  readonly invites = this.state.pendingInvites;
+  answering = signal<string | null>(null);
+  inviteError = signal<string | null>(null);
 
   // "I have a code"
   code = signal('');
@@ -132,6 +138,39 @@ export class AllianceLinkAccountComponent {
 
   constructor() {
     void this.loadRequests();
+    void this.state.loadPendingInvites();
+  }
+
+  async acceptInvite(invite: AllianceInvite): Promise<void> {
+    if (this.answering()) return;
+    this.answering.set(invite.id);
+    this.inviteError.set(null);
+    try {
+      await firstValueFrom(this.api.acceptInvite(invite.id));
+      await Promise.all([this.state.load(), this.state.loadPendingInvites()]);
+      this.state.select(invite.allianceId);
+      await this.router.navigate(['/alliance']);
+    } catch (err) {
+      this.inviteError.set(apiErrorMessage(err));
+      await this.state.loadPendingInvites();
+    } finally {
+      this.answering.set(null);
+    }
+  }
+
+  async declineInvite(invite: AllianceInvite): Promise<void> {
+    if (this.answering()) return;
+    if (!confirm(`Decline the invite to ${invite.allianceName}?`)) return;
+    this.answering.set(invite.id);
+    this.inviteError.set(null);
+    try {
+      await firstValueFrom(this.api.declineInvite(invite.id));
+    } catch (err) {
+      this.inviteError.set(apiErrorMessage(err));
+    } finally {
+      await this.state.loadPendingInvites();
+      this.answering.set(null);
+    }
   }
 
   statusBadge(status: LinkRequestStatus): string {

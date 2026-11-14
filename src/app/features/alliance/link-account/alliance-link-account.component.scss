@@ -70,3 +70,9 @@
   align-self: flex-end;
   font-size: 0.75rem;
 }
+
+.invite-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.5rem;
+}

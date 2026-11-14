@@ -36,6 +36,16 @@
               {{ state.pendingRequests().length }}
             </span>
           }
+          @if (link.showsPendingInvites && state.pendingInvites().length) {
+            <span
+              class="nav-badge"
+              [attr.aria-label]="
+                state.pendingInvites().length + ' invites waiting for you'
+              "
+            >
+              {{ state.pendingInvites().length }}
+            </span>
+          }
         </a>
       }
     </nav>

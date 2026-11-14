@@ -16,6 +16,8 @@ export interface AllianceSection {
   roles: readonly AllianceRole[];
   /** Shows the number of pending link requests next to the label. */
   showsPendingRequests?: boolean;
+  /** Shows the number of invites waiting for the current user next to the label. */
+  showsPendingInvites?: boolean;
 }
 
 /**
@@ -35,5 +37,10 @@ export const ALLIANCE_SECTIONS: readonly AllianceSection[] = [
   { label: 'MVP picks', path: 'mvp', roles: MANAGER_ROLES },
   { label: 'Members', path: 'members', roles: MANAGER_ROLES },
   { label: 'Link history', path: 'link-history', roles: MANAGER_ROLES },
-  { label: 'Link account', path: 'link', roles: ALL_ROLES },
+  {
+    label: 'Link account',
+    path: 'link',
+    roles: ALL_ROLES,
+    showsPendingInvites: true,
+  },
 ];

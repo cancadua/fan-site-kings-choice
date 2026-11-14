@@ -3,6 +3,54 @@
   Connect your account to your player in an alliance to see your rewards.
 </p>
 
+@if (invites().length > 0) {
+  <section aria-labelledby="invites-title">
+    <h2 id="invites-title">Invites for you ({{ invites().length }})</h2>
+    <p class="muted">
+      Accepting links your account to the player and adds you to the alliance.
+    </p>
+    @if (inviteError(); as message) {
+      <p class="error" role="alert">{{ message }}</p>
+    }
+    <ul class="pick-list">
+      @for (i of invites(); track i.id) {
+        <li>
+          <span>
+            <strong>{{ i.allianceName }}</strong
+            >: player
+            <strong>{{ i.playerName }}</strong>
+            @if (i.role === 'Leader') {
+              as Leader
+            }
+            <span class="muted">
+              (from {{ i.invitedByUsername ?? 'a leader' }},
+              {{ i.createdAt | date }})
+            </span>
+          </span>
+          <span class="invite-actions">
+            <button
+              type="button"
+              class="small primary"
+              [disabled]="answering() !== null"
+              (click)="acceptInvite(i)"
+            >
+              {{ answering() === i.id ? 'Accepting…' : 'Accept' }}
+            </button>
+            <button
+              type="button"
+              class="small danger"
+              [disabled]="answering() !== null"
+              (click)="declineInvite(i)"
+            >
+              Decline
+            </button>
+          </span>
+        </li>
+      }
+    </ul>
+  </section>
+}
+
 <div class="tabs" role="tablist" aria-label="How to link">
   <button
     type="button"

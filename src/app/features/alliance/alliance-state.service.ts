@@ -2,7 +2,11 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiClient, apiErrorMessage } from '../../core/api/api-client';
-import { LinkRequest, MyAlliance } from '../../core/api/api.models';
+import {
+  AllianceInvite,
+  LinkRequest,
+  MyAlliance,
+} from '../../core/api/api.models';
 import { isManagerRole } from './alliance-sections';
 
 const SELECTED_KEY = 'kc_selected_alliance';
@@ -20,6 +24,7 @@ export class AllianceStateService {
   private readonly loadedSignal = signal(false);
   private readonly errorSignal = signal<string | null>(null);
   private readonly pendingRequestsSignal = signal<LinkRequest[]>([]);
+  private readonly pendingInvitesSignal = signal<AllianceInvite[]>([]);
   private inFlight: Promise<void> | null = null;
 
   readonly alliances = this.alliancesSignal.asReadonly();
@@ -28,6 +33,8 @@ export class AllianceStateService {
   readonly error = this.errorSignal.asReadonly();
   /** Pending link requests of the selected alliance (managers only). */
   readonly pendingRequests = this.pendingRequestsSignal.asReadonly();
+  /** Invites waiting for the current user to accept or decline (any alliance). */
+  readonly pendingInvites = this.pendingInvitesSignal.asReadonly();
 
   readonly selected = computed(() => {
     const alliances = this.alliancesSignal();
@@ -73,6 +80,18 @@ export class AllianceStateService {
     }
   }
 
+  /** Refreshes the invites addressed to the current user. */
+  async loadPendingInvites(): Promise<void> {
+    try {
+      const invites = await firstValueFrom(this.api.myInvites());
+      this.pendingInvitesSignal.set(
+        invites.filter((i) => i.status === 'Pending')
+      );
+    } catch {
+      // Only feeds the nav badge and the Link account page; keep the last known value.
+    }
+  }
+
   select(id: string): void {
     this.selectedIdSignal.set(id);
     try {
@@ -91,6 +110,7 @@ export class AllianceStateService {
   reset(): void {
     this.alliancesSignal.set([]);
     this.pendingRequestsSignal.set([]);
+    this.pendingInvitesSignal.set([]);
     this.loadedSignal.set(false);
     this.errorSignal.set(null);
   }
@@ -101,6 +121,7 @@ export class AllianceStateService {
     try {
       this.alliancesSignal.set(await firstValueFrom(this.api.myAlliances()));
       this.loadedSignal.set(true);
+      void this.loadPendingInvites();
     } catch (err) {
       this.errorSignal.set(apiErrorMessage(err));
     } finally {

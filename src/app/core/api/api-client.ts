@@ -11,6 +11,7 @@ import { environment } from '../../../environments/environment';
 import {
   Alliance,
   AllianceEvent,
+  AllianceInvite,
   AllianceSearchResult,
   AllianceStats,
   AuthResponse,
@@ -123,11 +124,44 @@ export class ApiClient {
     );
   }
 
-  invite(allianceId: string, req: InviteRequest): Observable<void> {
-    return this.http.post<void>(
+  /**
+   * Sends an invite the account must accept; resolves to null instead when the
+   * account is your own, which is linked at once.
+   */
+  invite(
+    allianceId: string,
+    req: InviteRequest
+  ): Observable<AllianceInvite | null> {
+    return this.http.post<AllianceInvite | null>(
       `${this.base}/api/alliances/${allianceId}/invite`,
       req
     );
+  }
+
+  /** Pending invites sent by the alliance (Owner/Leader), oldest first. */
+  allianceInvites(allianceId: string): Observable<AllianceInvite[]> {
+    return this.http.get<AllianceInvite[]>(
+      `${this.base}/api/alliances/${allianceId}/invites`
+    );
+  }
+
+  cancelInvite(allianceId: string, inviteId: string): Observable<void> {
+    return this.http.delete<void>(
+      `${this.base}/api/alliances/${allianceId}/invites/${inviteId}`
+    );
+  }
+
+  /** Invites addressed to the current user, newest first. */
+  myInvites(): Observable<AllianceInvite[]> {
+    return this.http.get<AllianceInvite[]>(`${this.base}/api/invites/mine`);
+  }
+
+  acceptInvite(id: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/invites/${id}/accept`, {});
+  }
+
+  declineInvite(id: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/api/invites/${id}/decline`, {});
   }
 
   changeMemberRole(

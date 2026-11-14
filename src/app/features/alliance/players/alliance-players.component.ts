@@ -16,6 +16,7 @@ import {
   isHttpStatus,
 } from '../../../core/api/api-client';
 import {
+  AllianceInvite,
   InviteRequest,
   LinkCode,
   LinkRequest,
@@ -100,6 +101,9 @@ export class AlliancePlayersComponent {
   );
 
   isOwner = computed(() => this.state.selected()?.myRole === 'Owner');
+
+  /** Invites sent by this alliance that the accounts haven't answered yet. */
+  invites = signal<AllianceInvite[]>([]);
 
   /** Code just generated for a player; it can't be read again later. */
   issuedCode = signal<{ player: Player; code: LinkCode } | null>(null);
@@ -227,7 +231,7 @@ export class AlliancePlayersComponent {
     this.inviting.set(true);
     this.inviteError.set(null);
     try {
-      await firstValueFrom(
+      const sent = await firstValueFrom(
         this.api.invite(alliance.id, {
           user,
           playerId: player.id,
@@ -236,7 +240,11 @@ export class AlliancePlayersComponent {
       );
       this.invitePlayer.set(null);
       await this.run(() => this.refreshLinks());
-      this.info.set(`${user} is now linked to ${player.name}.`);
+      this.info.set(
+        sent
+          ? `Invite sent to ${sent.username}. They are linked to ${player.name} once they accept it under Link account.`
+          : `Your account is now linked to ${player.name}.`
+      );
     } catch (err) {
       this.inviteError.set(apiErrorMessage(err));
     } finally {
@@ -274,6 +282,21 @@ export class AlliancePlayersComponent {
       await firstValueFrom(this.api.rejectLinkRequest(request.id));
       await this.state.loadPendingRequests();
     });
+  }
+
+  async cancelInvite(invite: AllianceInvite): Promise<void> {
+    const alliance = this.state.selected();
+    if (!alliance) return;
+    if (!confirm(`Withdraw the invite for ${invite.username}?`)) return;
+    await this.run(async () => {
+      await firstValueFrom(this.api.cancelInvite(alliance.id, invite.id));
+      await this.loadInvites(alliance.id);
+    });
+  }
+
+  /** Pending invite for the player, if any. */
+  inviteFor(player: Player): AllianceInvite | undefined {
+    return this.invites().find((i) => i.playerId === player.id);
   }
 
   /** Places a row menu (a top-layer popover) under its trigger button. */
@@ -314,6 +337,7 @@ export class AlliancePlayersComponent {
     if (!allianceId) return;
     await Promise.all([
       this.loadPlayers(allianceId),
+      this.loadInvites(allianceId),
       this.state.loadPendingRequests(),
       this.state.load(),
     ]);
@@ -321,8 +345,18 @@ export class AlliancePlayersComponent {
 
   private async load(allianceId: string): Promise<void> {
     this.loading.set(true);
-    await this.run(() => this.loadPlayers(allianceId));
+    await this.run(async () => {
+      await Promise.all([
+        this.loadPlayers(allianceId),
+        this.loadInvites(allianceId),
+      ]);
+    });
     this.loading.set(false);
+  }
+
+  private async loadInvites(allianceId: string): Promise<void> {
+    const invites = await firstValueFrom(this.api.allianceInvites(allianceId));
+    if (this.state.selectedId() === allianceId) this.invites.set(invites);
   }
 
   private async loadPlayers(allianceId: string): Promise<void> {
