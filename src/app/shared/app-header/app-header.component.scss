@@ -89,6 +89,51 @@ header {
   }
 }
 
+.search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 5px 8px 5px 12px;
+  border: 1px solid rgba($gold-primary, 0.45);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  color: $gold-light;
+  font-family: $font-lore;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  app-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  kbd {
+    padding: 1px 6px;
+    border: 1px solid rgba($gold-primary, 0.35);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.7rem;
+    color: $stone-light;
+  }
+
+  &:hover {
+    border-color: $gold-primary;
+    background: rgba($gold-primary, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+  }
+}
+
+button.bottom-nav-link {
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
