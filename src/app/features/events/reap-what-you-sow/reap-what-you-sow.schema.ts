@@ -9,4 +9,8 @@ export const ReapWhatYouSowTabs: ContentTab[] = [
     label: 'Smart play',
     value: 'smart-play',
   },
+  {
+    label: 'Calculators',
+    value: 'calculators',
+  },
 ];

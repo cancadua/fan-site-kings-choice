@@ -1,0 +1,253 @@
+<div class="calcs">
+  <!-- Moves (stamina) -->
+  <section class="calc" aria-labelledby="calc-moves-title">
+    <header class="calc__header">
+      <app-icon class="calc__icon" name="zap" />
+      <div>
+        <h3 class="calc__title" id="calc-moves-title">Moves</h3>
+        <p class="calc__hint">
+          Stamina caps at {{ rules.maxStamina }} and refills +{{
+            rules.regenAmount
+          }}
+          every {{ rules.regenEveryMinutes }} min. Anything above the cap is
+          lost.
+        </p>
+      </div>
+    </header>
+
+    <div class="calc__fields">
+      <label class="field">
+        <span class="field__label">Current stamina</span>
+        <input
+          class="field__input"
+          type="number"
+          inputmode="numeric"
+          min="0"
+          [attr.max]="rules.maxStamina"
+          [value]="stamina()"
+          (input)="setStamina($event)"
+        />
+      </label>
+      <label class="field">
+        <span class="field__label">Minutes to next refill</span>
+        <input
+          class="field__input"
+          type="number"
+          inputmode="numeric"
+          min="0"
+          [attr.max]="rules.regenEveryMinutes"
+          [value]="minutesToTick()"
+          (input)="setMinutesToTick($event)"
+        />
+      </label>
+      <label class="field">
+        <span class="field__label">I'll be away for (hours)</span>
+        <input
+          class="field__input"
+          type="number"
+          inputmode="decimal"
+          min="0"
+          max="48"
+          step="0.5"
+          [value]="hoursAway()"
+          (input)="setHoursAway($event)"
+        />
+      </label>
+    </div>
+
+    <div class="calc__results" aria-live="polite">
+      <p class="result">
+        <span class="result__label">Full stamina</span>
+        <span class="result__value">
+          {{ formatDuration(minutesToFull()) }}
+          @if (fullAt(); as at) {
+            @if (minutesToFull() > 0) {
+              <span class="result__aside">at {{ at }}</span>
+            }
+          }
+        </span>
+      </p>
+
+      @let away = afterAway();
+      <p class="result" [class.result--warn]="away.wasted > 0">
+        <span class="result__label">When you're back</span>
+        <span class="result__value">
+          {{ away.stamina }} / {{ rules.maxStamina }}
+          @if (backAt(); as at) {
+            <span class="result__aside">at {{ at }}</span>
+          }
+        </span>
+      </p>
+
+      @if (away.wasted > 0) {
+        <p class="verdict verdict--warn">
+          You would lose <strong>{{ away.wasted }} stamina</strong> ({{
+            away.wasted
+          }}
+          explorations). Spend it down
+          @if (fullAt(); as at) {
+            before <strong>{{ at }}</strong>
+          } @else {
+            before it's full
+          }
+          or come back sooner.
+        </p>
+      } @else {
+        <p class="verdict verdict--ok">
+          No stamina is wasted while you're away.
+        </p>
+      }
+
+      <p class="result">
+        <span class="result__label">Max per day</span>
+        <span class="result__value">
+          {{ movesPerDay }} explorations
+          <span class="result__aside"
+            >≈ {{ formatNumber(dailyExp()) }} EXP with your
+            {{ delegation().applied.toFixed(1) }}% bonus</span
+          >
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Knight strength (delegation) -->
+  <section class="calc" aria-labelledby="calc-knights-title">
+    <header class="calc__header">
+      <app-icon class="calc__icon" name="swords" />
+      <div>
+        <h3 class="calc__title" id="calc-knights-title">Knight strength</h3>
+        <p class="calc__hint">
+          Up to {{ rules.maxDelegatedKnights }} delegated knights add
+          exploration EXP, capped at +{{ rules.maxDelegationBonus }}%. Only
+          Total Talents count.
+        </p>
+      </div>
+    </header>
+
+    <div class="calc__fields calc__fields--knights">
+      @for (value of talents(); track $index) {
+        <label class="field">
+          <span class="field__label"
+            >Knight {{ $index + 1 }} · Total Talents</span
+          >
+          <input
+            class="field__input"
+            type="number"
+            inputmode="numeric"
+            min="0"
+            [value]="value || ''"
+            placeholder="0"
+            (input)="setTalent($index, $event)"
+          />
+        </label>
+      }
+    </div>
+
+    @let bonus = delegation();
+    <div class="calc__results" aria-live="polite">
+      <div class="meter">
+        <div class="meter__top">
+          <span class="result__label">Exploration EXP bonus</span>
+          <span class="meter__value"
+            >+{{ bonus.applied.toFixed(1) }}%
+            <span class="result__aside"
+              >/ {{ rules.maxDelegationBonus }}%</span
+            ></span
+          >
+        </div>
+        <span
+          class="meter__bar"
+          role="progressbar"
+          aria-label="Delegation bonus"
+          [attr.aria-valuenow]="bonus.applied.toFixed(1)"
+          aria-valuemin="0"
+          [attr.aria-valuemax]="rules.maxDelegationBonus"
+        >
+          <span class="meter__fill" [style.transform]="bonusFill()"></span>
+        </span>
+      </div>
+
+      @if (bonus.missing > 0) {
+        <p class="verdict">
+          Add
+          <strong>{{ formatNumber(bonus.missing) }} Total Talents</strong> to
+          reach the full +{{ rules.maxDelegationBonus }}%.
+        </p>
+      } @else if (bonus.spareKnight !== null) {
+        <p class="verdict verdict--warn">
+          {{ formatNumber(bonus.surplus) }} talents above the cap.
+          <strong>Knight {{ bonus.spareKnight + 1 }}</strong> isn't needed for
+          the full bonus: swap in a weaker knight and keep this one for
+          defending crops.
+        </p>
+      } @else {
+        <p class="verdict verdict--ok">
+          Full +{{ rules.maxDelegationBonus }}% with no knight to spare.
+        </p>
+      }
+    </div>
+
+    <details class="formula">
+      <summary>
+        Formula
+        @if (isCustomRatio()) {
+          <span class="formula__badge">custom</span>
+        } @else {
+          <span class="formula__badge formula__badge--muted">unverified</span>
+        }
+      </summary>
+      <p class="formula__text">
+        Bonus = min({{ rules.maxDelegationBonus }}%, Total Talents ÷
+        {{ formatNumber(talentsPerPercent()) }}). Full bonus at
+        {{ formatNumber(bonus.talentsForCap) }} Total Talents.
+      </p>
+      <label class="field field--inline">
+        <span class="field__label">Total Talents per +1%</span>
+        <input
+          class="field__input"
+          type="number"
+          min="1"
+          [value]="talentsPerPercent()"
+          (input)="setRatio($event)"
+        />
+      </label>
+      <p class="formula__text">Or calibrate from one in-game reading:</p>
+      <div class="formula__sample">
+        <label class="field">
+          <span class="field__label">Total Talents delegated</span>
+          <input
+            class="field__input"
+            type="number"
+            min="0"
+            (input)="setSampleTalents($event)"
+          />
+        </label>
+        <label class="field">
+          <span class="field__label">Bonus shown (%)</span>
+          <input
+            class="field__input"
+            type="number"
+            min="0"
+            max="100"
+            step="0.1"
+            (input)="setSampleBonus($event)"
+          />
+        </label>
+        <button
+          type="button"
+          class="btn"
+          [disabled]="!sampleTalents() || !sampleBonus()"
+          (click)="applySample()"
+        >
+          Use
+        </button>
+      </div>
+      @if (isCustomRatio()) {
+        <button type="button" class="btn btn--ghost" (click)="resetRatio()">
+          Reset to default ({{ rules.talentsPerBonusPercent }})
+        </button>
+      }
+    </details>
+  </section>
+</div>
