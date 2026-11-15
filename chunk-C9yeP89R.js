@@ -1,0 +1,1 @@
+var e=[{label:`Advanced Guide`,value:`guide`},{label:`Advanced Tips`,value:`tips`}];export{e as t};
