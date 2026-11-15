@@ -78,6 +78,12 @@ export const GLOSSARY = {
       'Spent to place NPCs in Siege of the Undead: 100 per NPC. It recovers over time up to 1680.',
     event: Event.SiegeOfTheUndead,
   },
+  funds: {
+    term: 'Funds',
+    definition:
+      'The Realm Revival event currency: villages produce it, investments cost it and raids steal it. It is not your main-game Gold.',
+    event: Event.RealmRevival,
+  },
   leadership: {
     term: 'Leadership',
     definition:
