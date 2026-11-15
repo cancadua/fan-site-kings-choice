@@ -78,6 +78,12 @@ export const GLOSSARY = {
       'Spent to place NPCs in Siege of the Undead: 100 per NPC. It recovers over time up to 1680.',
     event: Event.SiegeOfTheUndead,
   },
+  leadership: {
+    term: 'Leadership',
+    definition:
+      'A knight attribute that raises HP and battle stats in Realm Revival.',
+    event: Event.RealmRevival,
+  },
 } as const satisfies Record<string, GlossaryEntry>;
 
 export type GlossaryKey = keyof typeof GLOSSARY;

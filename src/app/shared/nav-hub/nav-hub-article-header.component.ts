@@ -52,6 +52,13 @@ import { NavHubItem } from './nav-hub.schema';
           @if (active.subtitle) {
             <p class="plaque__subtitle">{{ active.subtitle }}</p>
           }
+          @if (active.tags?.length) {
+            <ul class="plaque__tags" aria-label="Variants">
+              @for (tag of active.tags; track tag) {
+                <li>{{ tag }}</li>
+              }
+            </ul>
+          }
         </div>
       </div>
     </header>

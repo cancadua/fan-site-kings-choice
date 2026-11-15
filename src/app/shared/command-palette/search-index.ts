@@ -1,6 +1,7 @@
 import { GLOSSARY } from '../../core/constants/glossary';
 import { Event } from '../../core/enums/events';
 import { EVENTS_NAV } from '../../features/events/events.data';
+import { RealmRevivalTabs } from '../../features/events/realm-revival/realm-revival.schema';
 import { ReapWhatYouSowTabs } from '../../features/events/reap-what-you-sow/reap-what-you-sow.schema';
 import { SchoolOfAthensTabs } from '../../features/events/school-of-athens/school-of-athens.schema';
 import { SiegeOfTheUndeadTabs } from '../../features/events/siege-of-the-undead/siege-of-the-undead.schema';
@@ -34,6 +35,7 @@ const EVENT_TABS: Record<Event, ContentTab[]> = {
   [Event.StruggleForSupremacy]: StruggleForSupremacyTabs,
   [Event.SchoolOfAthens]: SchoolOfAthensTabs,
   [Event.SiegeOfTheUndead]: SiegeOfTheUndeadTabs,
+  [Event.RealmRevival]: RealmRevivalTabs,
 };
 
 /** Tabs that are tools rather than reading, so they get their own group. */

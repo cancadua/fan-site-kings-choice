@@ -9,7 +9,7 @@ export interface SiteUpdate {
 }
 
 export const LATEST_UPDATE: SiteUpdate = {
-  id: 'siege-of-the-undead',
-  text: 'New event guide: Siege of the Undead',
-  route: `/events/${Event.SiegeOfTheUndead}`,
+  id: 'realm-revival',
+  text: 'New event guide: Realm Revival',
+  route: `/events/${Event.RealmRevival}`,
 };

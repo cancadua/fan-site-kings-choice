@@ -25,6 +25,8 @@ export interface NavHubItem<T extends string = string> {
   icon?: IconName;
   facts?: NavHubFact[];
   banner?: NavHubBanner;
+  /** Short labels shown as pills on the title plaque and cards, e.g. event variants. */
+  tags?: string[];
   /** ISO date (yyyy-mm-dd) the content was last checked against the game. */
   reviewed?: string;
 }

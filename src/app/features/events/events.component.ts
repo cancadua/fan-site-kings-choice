@@ -21,6 +21,7 @@ import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.c
 import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle-for-supremacy.component';
 import { SchoolOfAthensComponent } from './school-of-athens/school-of-athens.component';
 import { SiegeOfTheUndeadComponent } from './siege-of-the-undead/siege-of-the-undead.component';
+import { RealmRevivalComponent } from './realm-revival/realm-revival.component';
 
 const LAST_EVENT_KEY = 'kc.lastEvent';
 
@@ -37,6 +38,7 @@ const LAST_EVENT_KEY = 'kc.lastEvent';
     StruggleForSupremacyComponent,
     SchoolOfAthensComponent,
     SiegeOfTheUndeadComponent,
+    RealmRevivalComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

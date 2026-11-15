@@ -1,0 +1,276 @@
+<app-tabs
+  [tabs]="tabs"
+  [activeTab]="activeTab()"
+  (activeTabChange)="onTabChange($event)"
+>
+  @if (activeTab().value === 'basic-information') {
+    <app-content-section heading="Event Overview">
+      <app-content-text lead>
+        Realm Revival is a large alliance ranking event. Your alliance develops
+        its own realm, plays cards, upgrades buildings and villages, and
+        competes with other alliances by raiding them.
+      </app-content-text>
+    </app-content-section>
+    <app-content-section heading="The Basics">
+      <app-content-list
+        [items]="[
+          'Upgrading villages increases how much money they produce.',
+          'Moving by the Civic Center gives extra profit.',
+          'Tile numbers are shown on the map, so you can point teammates to an exact spot.',
+          'Cards are used to take actions. You can play cards one after another and use First Aid cards in batches.',
+          'You start with 20 dice. They refill by 4 every 30 minutes, up to 32.',
+          'You can hold up to 20 cards in your hand.',
+          'Cards carry over to the next day of the event, so you can save them for later.',
+          'The Grounded card can only be played when it can actually take effect.',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="Coins and Points">
+      <app-content-text>
+        Coins are not points. Your alliance scores points by investing coins in
+        buildings, so a big pile of coins alone does not raise your score.
+      </app-content-text>
+      <app-content-list
+        [items]="[
+          'A regular investment costs more at every building level, from 300 coins at level 1 to 1090 at level 10.',
+          'Advanced Investment costs double, but raises a building faster.',
+          'The Civic Center shows Starting Point Returns and Storage Returns, the coins your alliance collected from taxes.',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="Knights">
+      <app-content-text>
+        <app-term key="leadership">Leadership</app-term> is the knight attribute
+        that matters here: it raises your knights' HP and battle stats in Realm
+        Revival.
+      </app-content-text>
+      <app-content-text>
+        Players use a rough formula: HP ≈ Leadership talents × knight level ×
+        20. It is not confirmed, so treat it as an estimate.
+      </app-content-text>
+      <app-content-note>
+        Players report diminishing returns from stacking Leadership books on a
+        single knight, so spreading them across several knights is usually
+        better.
+      </app-content-note>
+    </app-content-section>
+    <app-content-section heading="Raids">
+      <app-content-text>
+        Alliances raid and sabotage each other to steal money. A raid goes like
+        this:
+      </app-content-text>
+      <app-content-list
+        [items]="[
+          'Pick the alliance you want to raid.',
+          'Choose up to 5 knights.',
+          'Roll the dice: it costs stamina and moves you 1 to 6 tiles.',
+          'Earn coins for landing on economic buildings.',
+          'Attack buildings by defeating the knights that defend them, for extra coins.',
+          'Use special buildings to heal, buy cards or remove guards.',
+          'The raid ends when you return to the carriage, lose all your knights, or meet a guard and do not pay.',
+        ]"
+      />
+      <app-content-text>Special buildings during a raid:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Almshouse: heals the knights you raid with.',
+          'Academy: buy up to 3 cards.',
+          'Sheriff: removes a random guard.',
+          'Alchemy Lab: gives a random card.',
+          'Tent: gives 335 coins instead of a random event.',
+        ]"
+      />
+      <app-content-text>
+        Defenders can place up to 8 guards with the Sheriff. Meeting a guard
+        during a raid costs 40 coins; if you do not pay, the raid ends. You can
+        use First Aid and Guardian cards during a raid: Guardian teleports you
+        to the Sheriff and removes a guard.
+      </app-content-text>
+    </app-content-section>
+    <app-content-section heading="Cards">
+      <app-content-text>Economy cards:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Build: grows your economy. Saving it for later gives a bigger profit.',
+          'All Realm Revival and Link Construction: speed up your economy.',
+          'Big Sale, Technical Novelty and Carnival Party: worth more once your buildings are upgraded, ideally level 3 or higher.',
+          'Investment Boost and Collection: best together with Rapid Speed, on upgraded buildings.',
+          'Talented Investor: play it on its own, not together with the same effect.',
+          'Forceful Collection: pick your three highest-level buildings.',
+          'Golden Tree: activate it when many members are online.',
+        ]"
+      />
+      <app-content-text>Support cards:</app-content-text>
+      <app-content-list
+        [items]="[
+          'First Aid: heals knights that lost a lot of HP.',
+          'Rescue: rebuilds destroyed buildings, start with the highest levels.',
+          'Set a Trap: protects strategic tiles.',
+          'Grounded: stops an intruder, if your alliance can arrest them.',
+        ]"
+      />
+      <app-content-text>Raid cards:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Attack: hits economic buildings.',
+          'Operation Sabotage and Exploitation: raise your raid earnings.',
+          'Surprise Attack: starts the next raid quickly.',
+          'Summon the Dragon: use it on high-level buildings.',
+          'Revenge: team up with an alliance member for extra profit.',
+          'Copycat: copies a card, often worth holding back.',
+          'Scout: reveals the defense, especially at the Civic Center.',
+        ]"
+      />
+      <app-content-text>Movement cards:</app-content-text>
+      <app-content-list
+        [items]="[
+          'Slow Speed: control your movement and stop on the tile you want.',
+          'Lead Dice: control your movement, especially around the Civic Center and Health Center.',
+          'Guardian: move to a strategic point of the board.',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="Paid Extras">
+      <app-content-text>
+        The Allie avatar is an instant coins income boost: +15% profit.
+      </app-content-text>
+      <app-content-note>
+        This page is based on the game's update notes, community guides and
+        discussions. Rewards and values can change between game updates, so
+        check the in-game event page.
+      </app-content-note>
+    </app-content-section>
+  } @else if (activeTab().value === 'smart-play') {
+    <app-content-steps checklist="realm-revival">
+      <app-content-step heading="Play as an alliance">
+        <app-content-text>
+          This is a team event. Having lots of active members is more important
+          than having a few strong players.
+        </app-content-text>
+        <app-content-note>
+          Never try to contest it with the money, you need active players
+          backup.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Strong knights in the civic center">
+        <app-content-text>
+          Place your strongest knight in the civic center immediately the game
+          starts.
+        </app-content-text>
+        <app-content-note>
+          Additionally fortify with knights your high level buildings, don't
+          forget to take them with you for a raid if you lack power.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Don't rush to the top">
+        <app-content-text>
+          Don't use lots of items or extra moves right away. The alliance in
+          first place always gets attacked the most and ends up with the most
+          destroyed buildings.
+        </app-content-text>
+        <app-content-note>
+          A leader from the start gets sabotaged nonstop, while rivals quietly
+          grow their economy and strike later.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Invest, don't just collect">
+        <app-content-text>
+          Points come from investing coins in buildings, not from holding them.
+        </app-content-text>
+        <app-content-note>
+          Always use the double (Advanced) Investment, especially on boosted
+          buildings.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Save money cards for later">
+        <app-content-text>
+          Leave money-related cards for later in the event. Upgraded villages
+          produce more money, so the same card is worth more once your villages
+          have grown.
+        </app-content-text>
+        <app-content-list
+          [items]="[
+            'Cards that give a fixed amount can be played early.',
+            'Cards that scale with building level (Big Sale, Technical Novelty, Carnival Party) are worth saving.',
+            'Play Forceful Collection on your three highest-level buildings.',
+            'Cards carry over to the next day, so you do not have to use them all on day one.',
+          ]"
+        />
+        <app-content-note>
+          The same goes for "Build" cards: save them for later, when they give a
+          bigger profit.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Don't hoard too much gold">
+        <app-content-text>
+          Random events from the tents on the map can take a percentage of the
+          gold you carry, so the more you hold, the more you lose.
+        </app-content-text>
+        <app-content-note>
+          Still keep a decent amount on hand, in case you land on a building
+          which is boosted for the next payment. Boosts come from cards or from
+          random tent events.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Pick your raid targets">
+        <app-content-list
+          [items]="[
+            'Attack active alliances that still have non destroyed buildings.',
+            'Sabotage the first alliance: their buildings are the most upgraded, so they pay the most.',
+            'Use sabotage to earn money.',
+            'Strike when a rival alliance is not online.',
+          ]"
+        />
+        <app-content-note>
+          Landing on a building already pays: 1300 coins at level 10, more than
+          a successful attack on it (1220). Every high-level building you pass
+          counts.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Raid smart">
+        <app-content-list
+          [items]="[
+            'Use Scout before raiding the Civic Center, it pays 1000 coins for landing and 1000 for a successful attack.',
+            'Keep 40 coins per guard you may meet, or the raid ends.',
+            'Save raid cards for when rivals have upgraded their buildings.',
+          ]"
+        />
+      </app-content-step>
+      <app-content-step heading="Keep cards for defense">
+        <app-content-text>
+          Don't play every card on attack. Keep some to defend against rivals.
+        </app-content-text>
+        <app-content-list
+          [items]="[
+            'Rescue your highest-level destroyed buildings first.',
+            'Use First Aid on knights that lost the most HP.',
+            'Set traps on strategic tiles.',
+          ]"
+        />
+      </app-content-step>
+      <app-content-step heading="Card combos">
+        <app-content-list
+          [items]="[
+            'Investment Boost + Collection + Rapid Speed: the biggest economy profit, best on upgraded buildings.',
+            'Guardian + Slow Speed on a raid: jump to a strategic point, then control your moves and collect extra coins.',
+            'Link Construction + Slow Speed + enough coins: trigger the boosted effect.',
+            'Golden Tree + many members online: agree on a time so as many players as possible benefit.',
+          ]"
+        />
+        <app-content-note>
+          Combos are absolutely best way to get ahead.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Coordinate cards and upgrades">
+        <app-content-list
+          [items]="[
+            'Agree on which cards and combinations members play, and when',
+            'Ask for revival of your knights when needed or other cards for a good combos.',
+          ]"
+        />
+      </app-content-step>
+    </app-content-steps>
+  } @else if (activeTab().value === 'moves-calculator') {
+    <app-moves-calculator [rules]="moves" />
+  }
+</app-tabs>

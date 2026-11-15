@@ -119,6 +119,32 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
+// Variant pills over the artwork, top-left (the "New" badge sits top-right).
+.card__tags {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 2px 8px;
+    border: 1px solid rgba($gold-primary, 0.6);
+    border-radius: 999px;
+    background: rgba(10, 6, 3, 0.8);
+    color: $gold-light;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+}
+
 .card__emblem {
   position: relative;
   z-index: 1;

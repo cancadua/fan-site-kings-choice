@@ -133,6 +133,29 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
+// Variant pills under the subtitle (Server, Cross-Server).
+.plaque__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.15rem 0.6rem;
+    border: 1px solid rgba($gold-primary, 0.5);
+    border-radius: 999px;
+    background: rgba(10, 6, 3, 0.7);
+    font-family: $font-heading;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $gold-light;
+  }
+}
+
 // "Reviewed Oct 2026" pill in the top-right corner.
 .plaque__reviewed {
   position: absolute;

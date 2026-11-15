@@ -5,6 +5,7 @@ import { NavHubItem } from '../../shared/nav-hub/nav-hub.schema';
  * Sidebar, title plaque and search data for every event.
  *
  * - `facts` repeat figures from each event's Basic Information tab; keep them in sync.
+ * - `tags` list the variants an event runs in (Server, Cross-Server).
  * - `reviewed` is the date the guide was last checked against the game.
  * - `banner`: artwork lives in `assets/img/events/<event-id>/`: `banner.webp`
  *   (full size, title plaque), `card.webp` (640 px, home page cards) and `og.jpg`
@@ -17,6 +18,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     title: 'Uncharted Waters',
     subtitle: 'Trade & Plunder Event',
     icon: 'compass',
+    tags: ['Cross-Server'],
     banner: {
       src: 'assets/img/events/uncharted-waters/banner.webp',
       width: 1672,
@@ -29,6 +31,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
       },
     },
     facts: [
+      { icon: 'globe', label: 'Format', value: 'Solo trading & plunder' },
       { icon: 'shield', label: 'Entry', value: 'Alliance with vouchers' },
       { icon: 'map', label: 'Planner', value: 'Interactive cities map' },
       { icon: 'zap', label: 'Moves', value: 'Max 10 · +1 / 30 min' },
@@ -40,6 +43,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     title: 'Reap What You Sow',
     subtitle: 'Flora & Fauna Event',
     icon: 'sprout',
+    tags: ['Server', 'Cross-Server'],
     banner: {
       src: 'assets/img/events/reap-what-you-sow/banner.webp',
       width: 1672,
@@ -63,6 +67,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     title: 'Struggle for Supremacy',
     subtitle: 'Alliance Season Event',
     icon: 'crown',
+    tags: ['Cross-Server'],
     banner: {
       src: 'assets/img/events/struggle-for-supremacy/banner.webp',
       width: 1920,
@@ -86,6 +91,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     title: 'School of Athens',
     subtitle: '3-Player Team Event',
     icon: 'book',
+    tags: ['Server', 'Cross-Server'],
     banner: {
       src: 'assets/img/events/school-of-athens/banner.webp',
       width: 1672,
@@ -98,6 +104,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
       },
     },
     facts: [
+      { icon: 'globe', label: 'Format', value: 'Team exploration & PvP' },
       { icon: 'users', label: 'Team', value: '3 players' },
       { icon: 'layers', label: 'Floors', value: '3 · PvP on the top' },
       { icon: 'zap', label: 'Stamina', value: 'Max 40 · +1 / 6 min' },
@@ -121,10 +128,38 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
       },
     },
     facts: [
+      { icon: 'globe', label: 'Format', value: 'Alliance tower defense' },
       { icon: 'castle', label: 'Goal', value: 'Defend the gate' },
       { icon: 'zap', label: 'NPC cost', value: '100 energy (max 1680)' },
       { icon: 'clock', label: 'Undead advance', value: 'Every 5 min' },
       { icon: 'levelUp', label: 'NPC max level', value: '20 · skill at 10' },
+    ],
+  },
+  {
+    id: Event.RealmRevival,
+    title: 'Realm Revival',
+    subtitle: 'Alliance Ranking Event',
+    icon: 'swords',
+    tags: ['Server', 'Cross-Server'],
+    banner: {
+      src: 'assets/img/events/realm-revival/banner.webp',
+      width: 1672,
+      height: 941,
+      card: 'assets/img/events/realm-revival/card.webp',
+      og: {
+        src: 'assets/img/events/realm-revival/og.jpg',
+        width: 1200,
+        height: 630,
+      },
+    },
+    facts: [
+      { icon: 'zap', label: 'Dice', value: 'Max 32 · +4 / 30 min' },
+      {
+        icon: 'shield',
+        label: 'Format',
+        value: 'Alliance raids & realm building',
+      },
+      { icon: 'trophy', label: 'Titles', value: 'Alliance + voted MVP' },
     ],
   },
 ];

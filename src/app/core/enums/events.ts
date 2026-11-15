@@ -4,4 +4,5 @@ export enum Event {
   StruggleForSupremacy = 'struggle-for-supremacy',
   SchoolOfAthens = 'school-of-athens',
   SiegeOfTheUndead = 'siege-of-the-undead',
+  RealmRevival = 'realm-revival',
 }

@@ -26,6 +26,13 @@
               />
             }
           </span>
+          @if (event.tags?.length) {
+            <ul class="card__tags" aria-label="Variants">
+              @for (tag of event.tags; track tag) {
+                <li>{{ tag }}</li>
+              }
+            </ul>
+          }
           @if ('/events/' + event.id === newRoute) {
             <span class="card__new">New</span>
           }
