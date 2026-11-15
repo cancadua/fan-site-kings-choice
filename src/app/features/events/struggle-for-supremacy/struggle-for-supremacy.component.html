@@ -1,30 +1,18 @@
-@if (intro.enabled()) {
-  <app-warrior-scene
-    title="STRUGGLE FOR SUPREMACY"
-    backgroundSrc="assets/img/struggle-for-supremacy/background.webp"
-    [backgroundWidth]="1920"
-    [backgroundHeight]="1080"
-    leftSrc="assets/img/struggle-for-supremacy/warriors-left.webp"
-    [leftWidth]="429"
-    [leftHeight]="1080"
-    rightSrc="assets/img/struggle-for-supremacy/warriors-right.webp"
-    [rightWidth]="413"
-    [rightHeight]="1080"
-  ></app-warrior-scene>
-}
-
 <app-tabs
   [tabs]="tabs"
-  [activeTab]="activeTab"
+  [activeTab]="activeTab()"
   (activeTabChange)="onTabChange($event)"
 >
-  @if (activeTab.value === 'basic-information') {
+  @if (activeTab().value === 'basic-information') {
     <app-content-section heading="Event Overview">
-      <app-content-text>
+      <app-content-text lead>
         Struggle for Supremacy (SfS) is a 4-week Alliance Season. Your alliance
-        competes through different events and completes Alliance Goals, while
-        individual players also earn progress toward Individual Milestones,
-        Stage Rankings, and the overall Peak Ranking.
+        competes through different events and completes
+        <app-term key="alliance-goals">Alliance Goals</app-term>, while
+        individual players also earn progress toward
+        <app-term key="individual-milestones">Individual Milestones</app-term>,
+        <app-term key="stage-rankings">Stage Rankings</app-term>, and the
+        overall <app-term key="peak-ranking">Peak Ranking</app-term>.
       </app-content-text>
       <app-content-text>
         The key difference from normal ranking events is that your alliance
@@ -49,8 +37,8 @@
         guide.
       </app-content-note>
     </app-content-section>
-  } @else if (activeTab.value === 'smart-play') {
-    <app-content-steps>
+  } @else if (activeTab().value === 'smart-play') {
+    <app-content-steps checklist="struggle-for-supremacy">
       <app-content-step heading="Save before SfS starts">
         <app-content-text>
           Don't burn all your event resources immediately. Enter the season with

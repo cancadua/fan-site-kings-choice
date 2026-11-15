@@ -1,11 +1,11 @@
 <app-tabs
   [tabs]="tabs"
-  [activeTab]="activeTab"
+  [activeTab]="activeTab()"
   (activeTabChange)="onTabChange($event)"
 >
-  @if (activeTab.value === 'basic-information') {
+  @if (activeTab().value === 'basic-information') {
     <app-content-section heading="Event Overview">
-      <app-content-text>
+      <app-content-text lead>
         Siege of the Undead is an alliance event. Undead invade your town, and
         you and your alliance have to protect the gate. Members place NPCs on a
         grid to fight randomly generated undead that arrive in waves.
@@ -38,15 +38,15 @@
         can change between game updates, so check the in-game event page.
       </app-content-note>
     </app-content-section>
-  } @else if (activeTab.value === 'smart-play') {
-    <app-content-steps>
+  } @else if (activeTab().value === 'smart-play') {
+    <app-content-steps checklist="siege-of-the-undead">
       <app-content-step heading="Play as an alliance">
         <app-content-text> This is a team event! </app-content-text>
       </app-content-step>
       <app-content-step heading="Level up one NPC">
         <app-content-text>
-          Playing normally, you should level up only one NPC, focus
-          on a single NPC rather than spreading upgrades.
+          Playing normally, you should level up only one NPC, focus on a single
+          NPC rather than spreading upgrades.
         </app-content-text>
       </app-content-step>
       <app-content-step heading="Use only useful NPC types">
