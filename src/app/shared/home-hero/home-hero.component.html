@@ -1,0 +1,56 @@
+<section class="hero" aria-labelledby="hero-title">
+  <div class="sparks" aria-hidden="true">
+    @for (spark of sparks; track $index) {
+      <span
+        class="spark"
+        [class.spark--warm]="spark.warm"
+        [style.left]="spark.left"
+        [style.width]="spark.size"
+        [style.height]="spark.size"
+        [style.animation-duration]="spark.duration"
+        [style.animation-delay]="spark.delay"
+      ></span>
+    }
+  </div>
+
+  <span class="torch torch--left" aria-hidden="true"
+    ><span class="torch__flame"></span
+  ></span>
+  <span class="torch torch--right" aria-hidden="true"
+    ><span class="torch__flame"></span
+  ></span>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">
+      Free fan-made guides &amp; tools for King's Choice
+    </p>
+    <h1 class="hero__title" id="hero-title">KC Lord's Tavern</h1>
+    <p class="hero__subtitle">Master Strategy. Forge Legends. Rule Your Fate</p>
+
+    <div class="hero__actions">
+      <a routerLink="/events" class="cta-button primary"
+        >Explore event guides</a
+      >
+      <a
+        class="cta-button secondary"
+        [routerLink]="['/events', plannerEvent]"
+        [queryParams]="{ tab: 'cities-tool' }"
+        >Open UW planner</a
+      >
+    </div>
+
+    <button type="button" class="hero__search" (click)="search.open()">
+      <app-icon name="search" />
+      <span class="hero__search-text">Search guides, knights, game terms…</span>
+      <kbd>{{ search.shortcutLabel() }}</kbd>
+    </button>
+
+    <ul class="hero__stats" aria-label="What's inside">
+      <li>
+        <strong>{{ guideCount }}</strong> event guides
+      </li>
+      <li><strong>Planners</strong> &amp; calculators</li>
+      <li><strong>Free</strong>, no game login</li>
+    </ul>
+  </div>
+</section>

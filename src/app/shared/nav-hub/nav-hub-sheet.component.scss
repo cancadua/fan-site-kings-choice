@@ -1,0 +1,248 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Only phones and small tablets use the sheet; wider screens keep the sidebar.
+:host {
+  display: none;
+
+  @media (max-width: 968px) {
+    display: block;
+    position: sticky;
+    top: 0.5rem;
+    z-index: 20;
+    align-self: start;
+  }
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  @include tavern-panel;
+  border: 2px solid rgba($gold-primary, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+  color: $parchment;
+  font-family: $font-lore;
+  text-align: left;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+  }
+}
+
+.trigger__icon {
+  width: 26px;
+  height: 26px;
+  color: $knight-amber;
+}
+
+.trigger__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.trigger__label {
+  font-family: $font-heading;
+  font-size: 0.65rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: $knight-text-muted;
+}
+
+.trigger__title {
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $knight-amber;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trigger__change {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba($gold-primary, 0.45);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: $gold-light;
+
+  app-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// ---------- Bottom sheet ----------
+.sheet {
+  position: fixed;
+  inset: auto 0 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 82vh;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $parchment;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(2px);
+  }
+}
+
+.sheet__panel {
+  display: flex;
+  flex-direction: column;
+  max-height: 82vh;
+  padding: 0.5rem 1rem calc(1rem + env(safe-area-inset-bottom));
+  @include tavern-panel(true);
+  border: 2px solid rgba($gold-primary, 0.55);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.sheet__handle {
+  width: 44px;
+  height: 4px;
+  margin: 0.25rem auto 0.5rem;
+  border-radius: 2px;
+  background: rgba($gold-primary, 0.5);
+}
+
+.sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba($gold-primary, 0.3);
+}
+
+.sheet__title {
+  margin: 0;
+  font-family: $font-heading;
+  font-size: 0.95rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: $gold-light;
+}
+
+.sheet__close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba($gold-primary, 0.4);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: $gold-light;
+  cursor: pointer;
+
+  app-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.sheet__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.75rem 0 0;
+  overflow-y: auto;
+  list-style: none;
+  overscroll-behavior: contain;
+}
+
+.sheet__item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid rgba($knight-amber, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: $parchment;
+  font-family: $font-lore;
+  text-align: left;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+  }
+}
+
+.sheet__item--active {
+  border-color: $knight-amber;
+  background: linear-gradient(
+    90deg,
+    rgba($knight-amber, 0.28),
+    rgba($knight-amber, 0.08)
+  );
+  color: $knight-amber;
+}
+
+.sheet__item-icon {
+  width: 24px;
+  height: 24px;
+  color: $gold-primary;
+}
+
+.sheet__item-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.sheet__item-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sheet__item-subtitle {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: $knight-text-muted;
+}
+
+.sheet__item-check {
+  width: 20px;
+  height: 20px;
+  color: $knight-amber;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sheet[open] {
+    animation: sheet-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .sheet[open]::backdrop {
+    animation: sheet-fade 0.28s ease-out;
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes sheet-fade {
+  from {
+    opacity: 0;
+  }
+}

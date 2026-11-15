@@ -1,6 +1,9 @@
-<div class="tools-section">
-  <h2>Tools of the Tavern</h2>
-  <p class="section-subtitle">Everything a Lord needs, free to use</p>
+<section class="tools-section">
+  <app-section-heading
+    eyebrow="Free to use"
+    heading="Tools of the Tavern"
+    subtitle="Everything a Lord needs, hanging on the tavern wall"
+  />
   <div class="tools-grid">
     @for (tool of tools; track tool.title; let i = $index) {
       <a
@@ -9,11 +12,13 @@
         [queryParams]="tool.queryParams"
         [style.--i]="i"
       >
-        <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
+        <span class="tool-emblem" aria-hidden="true"
+          ><app-icon [name]="tool.icon"
+        /></span>
         <h3>{{ tool.title }}</h3>
         <p>{{ tool.text }}</p>
-        <span class="tool-link">Open &rarr;</span>
+        <span class="tool-link">Open <app-icon name="chevronRight" /></span>
       </a>
     }
   </div>
-</div>
+</section>

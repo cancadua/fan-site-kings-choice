@@ -25,6 +25,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kc-lords-tavern.com/events/realm-revival</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kc-lords-tavern.com/knight-development/overview</loc>
     <priority>0.8</priority>
   </url>

@@ -1,15 +1,11 @@
-@if (intro.enabled()) {
-  <app-magic-book-scene title="SCHOOL OF ATHENS"></app-magic-book-scene>
-}
-
 <app-tabs
   [tabs]="tabs"
-  [activeTab]="activeTab"
+  [activeTab]="activeTab()"
   (activeTabChange)="onTabChange($event)"
 >
-  @if (activeTab.value === 'basic-information') {
+  @if (activeTab().value === 'basic-information') {
     <app-content-section heading="Event Overview">
-      <app-content-text>
+      <app-content-text lead>
         School of Athens is a 3-player team event where you explore three
         floors, defeat Students, Professors and Masters, and earn Debate Points
         and team progress.
@@ -59,7 +55,8 @@
     </app-content-section>
     <app-content-section heading="Certificates">
       <app-content-text>
-        Certificates are important for your team ranking.
+        <app-term key="certificates">Certificates</app-term> are important for
+        your team ranking.
       </app-content-text>
       <app-content-text>You can get them by:</app-content-text>
       <app-content-list [items]="['Reaching Floor 3', 'Defeating players']" />
@@ -69,7 +66,8 @@
     </app-content-section>
     <app-content-section heading="Debate Score">
       <app-content-text>
-        Your Debate Score is based on your total Knight Power.
+        Your <app-term key="debate-score">Debate Score</app-term> is based on
+        your total Knight Power.
       </app-content-text>
       <app-content-text>
         Higher Knight Power = stronger attacks, score and better ability to
@@ -100,8 +98,8 @@
         coordinating your targets is important.
       </app-content-text>
     </app-content-section>
-  } @else if (activeTab.value === 'smart-play') {
-    <app-content-steps>
+  } @else if (activeTab().value === 'smart-play') {
+    <app-content-steps checklist="school-of-athens">
       <app-content-step heading="Effective scoring">
         <app-content-text
           >You get score for dealing damage to opponents YOU encounter and
@@ -206,5 +204,7 @@
         </app-content-note>
       </app-content-step>
     </app-content-steps>
+  } @else if (activeTab().value === 'moves-calculator') {
+    <app-moves-calculator [rules]="moves" />
   }
 </app-tabs>

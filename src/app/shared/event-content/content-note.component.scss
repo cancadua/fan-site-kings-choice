@@ -1,15 +1,42 @@
+@use 'variables' as *;
 @use 'typography' as *;
 
 .ec-note {
-  @include lore-text(1rem);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 10px 0 4px;
+  padding: 10px 14px;
+  background: linear-gradient(
+    90deg,
+    rgba($gold-primary, 0.1),
+    rgba($gold-primary, 0.03)
+  );
+  border: 1px solid rgba($gold-primary, 0.18);
+  border-left: 3px solid rgba($gold-primary, 0.75);
+  border-radius: 0 6px 6px 0;
+}
+
+.ec-note__icon {
+  width: 18px;
+  height: 18px;
+  margin-top: 4px;
+  color: $gold-primary;
+}
+
+.ec-note__text {
+  @include lore-text(1rem, 1.6);
+  margin: 0;
   font-style: italic;
-  opacity: 0.75;
-  margin: 6px 0 0;
+  color: $knight-text-muted;
 }
 
 @media (max-width: 768px) {
   .ec-note {
+    padding: 8px 10px;
+  }
+
+  .ec-note__text {
     font-size: 0.95rem;
-    line-height: 1.6;
   }
 }

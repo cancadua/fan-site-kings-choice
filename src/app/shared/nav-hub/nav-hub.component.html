@@ -1,4 +1,6 @@
-<div class="nav-hub">
+<div class="nav-hub torchlit reading-scope">
+  <div class="reading-progress" aria-hidden="true"></div>
+
   <div class="nav-hub-header">
     @if (articleHeading() === 'h1') {
       <p class="nav-hub-title">{{ title() }}</p>
@@ -10,9 +12,18 @@
     }
   </div>
 
-  <div class="nav-hub-container">
+  <div class="nav-hub-container" [class.has-toc]="toc.entries().length > 1">
+    <!-- Phones: sticky bar + bottom sheet instead of the sidebar -->
+    <app-nav-hub-sheet
+      [items]="items()"
+      [activeId]="activeId()"
+      [label]="navLabel()"
+      [showSubtitles]="showItemSubtitles()"
+      (choose)="selectItem($event)"
+    />
+
     <!-- Navigation Sidebar -->
-    <nav class="nav-hub-nav" #navContainer>
+    <nav class="nav-hub-nav" [attr.aria-label]="navLabel()">
       <div class="nav-hub-nav-title">{{ navLabel() }}</div>
       @if (filterable()) {
         <input
@@ -26,11 +37,21 @@
       }
       @for (item of visibleItems(); track item.id) {
         <button
+          type="button"
           class="nav-hub-link"
           [class.active]="activeId() === item.id"
+          [attr.aria-current]="activeId() === item.id ? 'page' : null"
           (click)="selectItem(item.id)"
         >
-          {{ item.title }}
+          @if (item.icon) {
+            <app-icon class="nav-hub-link__icon" [name]="item.icon" />
+          }
+          <span class="nav-hub-link__text">
+            <span class="nav-hub-link__title">{{ item.title }}</span>
+            @if (showItemSubtitles() && item.subtitle) {
+              <span class="nav-hub-link__subtitle">{{ item.subtitle }}</span>
+            }
+          </span>
         </button>
       } @empty {
         <p class="nav-hub-empty">No matches</p>
@@ -38,19 +59,19 @@
     </nav>
 
     <!-- Content Area -->
-    <main class="nav-hub-content">
+    <main class="nav-hub-content" #content>
       @if (activeItem; as active) {
-        <article class="nav-hub-article">
-          <header class="nav-hub-article-header">
-            @if (articleHeading() === 'h1') {
-              <h1 class="nav-hub-article-title">{{ active.title }}</h1>
-            } @else {
-              <h2 class="nav-hub-article-title">{{ active.title }}</h2>
+        <article class="nav-hub-article reading-subject">
+          <app-nav-hub-article-header
+            [item]="active"
+            [headingLevel]="articleHeading()"
+          />
+
+          @if (active.facts; as facts) {
+            @if (facts.length) {
+              <app-key-facts class="nav-hub-facts" [facts]="facts" />
             }
-            @if (active.subtitle) {
-              <p class="nav-hub-article-subtitle">{{ active.subtitle }}</p>
-            }
-          </header>
+          }
 
           <div class="nav-hub-article-body">
             <ng-content></ng-content>
@@ -58,5 +79,10 @@
         </article>
       }
     </main>
+
+    <!-- Wide screens: "On this page" contents -->
+    <aside class="nav-hub-toc">
+      <app-nav-hub-toc #toc [root]="content" />
+    </aside>
   </div>
 </div>

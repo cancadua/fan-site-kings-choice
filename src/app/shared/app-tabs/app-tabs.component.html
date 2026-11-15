@@ -1,37 +1,60 @@
-<div class="row">
-  <div class="col-24">
-    <div class="tabs-wrapper">
-      @if (hasPrevTab) {
-        <button
-          type="button"
-          class="tabs-arrow tabs-arrow--left"
-          aria-label="Previous tab"
-          (click)="selectPrevTab()"
-        ></button>
-      }
-      <div class="tabs" #tabsContainer>
-        @for (tab of visibleTabs; track $index) {
-          <button
-            [class.active]="tab.value === activeTab()?.value"
-            (click)="selectTab(tab)"
-          >
-            {{ tab.label }}
-          </button>
-        }
-      </div>
-      @if (hasNextTab) {
-        <button
-          type="button"
-          class="tabs-arrow tabs-arrow--right"
-          aria-label="Next tab"
-          (click)="selectNextTab()"
-        ></button>
-      }
-    </div>
-  </div>
-  <div class="col-24">
-    <div class="tab-content">
-      <ng-content></ng-content>
-    </div>
+<div class="tabs-wrapper" #tabsWrapper>
+  <div class="tabs" role="tablist" #tabsContainer>
+    @for (tab of visibleTabs; track tab.value) {
+      <button
+        type="button"
+        role="tab"
+        [id]="tabId(tab)"
+        [class.active]="tab.value === activeTab()?.value"
+        [attr.aria-selected]="tab.value === activeTab()?.value"
+        [attr.aria-controls]="panelId"
+        [tabIndex]="tab.value === activeTab()?.value ? 0 : -1"
+        (click)="selectTab(tab)"
+        (keydown)="onTabKeydown($event)"
+      >
+        {{ tab.label }}
+      </button>
+    }
   </div>
 </div>
+
+<div
+  class="tab-content"
+  #panel
+  role="tabpanel"
+  [id]="panelId"
+  [attr.aria-labelledby]="activeTabId"
+>
+  <ng-content></ng-content>
+</div>
+
+@if (visibleTabs.length > 1) {
+  <nav class="tab-pager" aria-label="More sections">
+    @if (prevTab; as prev) {
+      <button
+        type="button"
+        class="tab-pager__link tab-pager__link--prev"
+        (click)="goToTab(prev)"
+      >
+        <app-icon name="chevronLeft" />
+        <span class="tab-pager__text">
+          <span class="tab-pager__hint">Previous</span>
+          <span class="tab-pager__label">{{ prev.label }}</span>
+        </span>
+      </button>
+    }
+    @if (nextTab; as next) {
+      <button
+        type="button"
+        class="tab-pager__link tab-pager__link--next"
+        (click)="goToTab(next)"
+      >
+        <span class="tab-pager__text">
+          <span class="tab-pager__hint">Next</span>
+          <span class="tab-pager__label">{{ next.label }}</span>
+        </span>
+        <app-icon name="chevronRight" />
+      </button>
+    }
+  </nav>
+}

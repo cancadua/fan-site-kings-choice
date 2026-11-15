@@ -1,7 +1,29 @@
-<div class="cta-section">
-  <h2>Ready to Rule?</h2>
-  <p>Join experienced Lords making history in King's Choice</p>
-  <div class="cta-buttons-footer">
-    <a [routerLink]="'/events'" class="cta-button primary">Learn Events</a>
+<section class="cta-section">
+  <div class="cta-card reveal-on-scroll">
+    <h2>Ready for the Next Event?</h2>
+    <p class="cta-lead">
+      Pick your event, check the key numbers, then follow the Smart Play
+      checklist step by step.
+    </p>
+    <div class="cta-buttons">
+      <a routerLink="/events" class="cta-button primary">Browse event guides</a>
+      <button
+        type="button"
+        class="cta-button secondary"
+        (click)="search.open()"
+      >
+        <app-icon name="search" /> Search the tavern
+      </button>
+    </div>
+    <p class="cta-support">
+      Enjoying the tavern?
+      <a
+        [href]="kofiUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        (click)="onKofiClick()"
+        >Buy the innkeeper a coffee on Ko-fi</a
+      >
+    </p>
   </div>
-</div>
+</section>

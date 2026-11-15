@@ -1,4 +1,70 @@
+@use 'variables' as *;
+
 :host {
   display: block;
   counter-reset: ec-step;
+}
+
+.ec-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba($gold-primary, 0.25);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  font-family: $font-lore;
+}
+
+.ec-progress__label {
+  white-space: nowrap;
+  font-size: 0.92rem;
+  color: $knight-text-muted;
+
+  strong {
+    color: $gold-light;
+  }
+}
+
+.ec-progress__bar {
+  flex: 1;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba($gold-primary, 0.15);
+}
+
+.ec-progress__fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, $gold-dark, $gold-primary, $gold-light);
+  transform-origin: 0 50%;
+  transition: transform 0.35s ease;
+}
+
+.ec-progress__reset {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgba($gold-primary, 0.4);
+  border-radius: 6px;
+  background: none;
+  color: $gold-primary;
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba($gold-primary, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ec-progress__fill {
+    transition: none;
+  }
 }

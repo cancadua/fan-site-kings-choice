@@ -20,6 +20,16 @@
       @for (link of navLinks.slice(1); track $index) {
         <a [routerLink]="link.route" (click)="closeMenu()">{{ link.label }}</a>
       }
+      <button
+        type="button"
+        class="search-trigger"
+        aria-keyshortcuts="Control+K Meta+K /"
+        (click)="openSearch()"
+      >
+        <app-icon name="search" />
+        <span>Search</span>
+        <kbd>{{ search.shortcutLabel() }}</kbd>
+      </button>
       <a
         class="kofi-link"
         (click)="onKofiClick()"
@@ -44,4 +54,16 @@
       <span class="label">{{ link.label }}</span>
     </a>
   }
+  <button type="button" class="bottom-nav-link" (click)="openSearch()">
+    <span class="icon">🔍</span>
+    <span class="label">Search</span>
+  </button>
 </nav>
+
+<!-- Site search: its code loads the first time it is opened. -->
+@defer (when search.loaded()) {
+  <app-command-palette
+    [open]="search.isOpen()"
+    (openChange)="search.isOpen.set($event)"
+  />
+}

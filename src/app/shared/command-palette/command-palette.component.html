@@ -1,0 +1,79 @@
+<dialog
+  class="palette lock-scroll"
+  #dialog
+  aria-label="Search the site"
+  closedby="any"
+  (close)="onClosed()"
+>
+  <div class="palette__panel">
+    <div class="palette__search">
+      <app-icon class="palette__search-icon" name="search" />
+      <input
+        #input
+        class="palette__input"
+        type="text"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="palette-results"
+        aria-autocomplete="list"
+        aria-label="Search events, knights and terms"
+        [attr.aria-activedescendant]="activeOptionId()"
+        placeholder="Search events, knights, terms…"
+        autocomplete="off"
+        spellcheck="false"
+        [value]="query()"
+        (input)="onInput($event)"
+        (keydown)="onKeydown($event)"
+      />
+      <kbd class="palette__kbd">Esc</kbd>
+    </div>
+
+    <ul
+      #list
+      id="palette-results"
+      class="palette__results"
+      role="listbox"
+      aria-label="Results"
+    >
+      @for (group of groups(); track group.name) {
+        <li class="palette__group" role="presentation">{{ group.name }}</li>
+        @for (item of group.items; track item.index) {
+          <li
+            role="option"
+            tabindex="-1"
+            class="palette__item"
+            [id]="'palette-opt-' + item.index"
+            [class.palette__item--active]="item.index === activeIndex()"
+            [attr.aria-selected]="item.index === activeIndex()"
+            (click)="go(item.entry)"
+            (keydown.enter)="go(item.entry)"
+            (mousemove)="activeIndex.set(item.index)"
+          >
+            <span class="palette__item-icon">
+              <app-icon [name]="item.entry.icon" />
+            </span>
+            <span class="palette__item-text">
+              <span class="palette__item-title">{{ item.entry.title }}</span>
+              @if (item.entry.subtitle) {
+                <span class="palette__item-subtitle">{{
+                  item.entry.subtitle
+                }}</span>
+              }
+            </span>
+            <app-icon class="palette__item-go" name="chevronRight" />
+          </li>
+        }
+      } @empty {
+        <li class="palette__empty" role="presentation">
+          Nothing found for “{{ query() }}”.
+        </li>
+      }
+    </ul>
+
+    <footer class="palette__footer" aria-hidden="true">
+      <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
+      <span><kbd>Enter</kbd> open</span>
+      <span><kbd>Esc</kbd> close</span>
+    </footer>
+  </div>
+</dialog>

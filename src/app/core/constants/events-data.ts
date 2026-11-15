@@ -32,4 +32,9 @@ export const EventsData: EventData[] = [
     value: Event.SiegeOfTheUndead,
     image: '',
   },
+  {
+    name: 'Realm Revival',
+    value: Event.RealmRevival,
+    image: '',
+  },
 ];

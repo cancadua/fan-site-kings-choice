@@ -1,0 +1,40 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:host {
+  display: block;
+  margin-bottom: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.4rem;
+  font-family: $font-heading;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: $knight-amber;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.title {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.6rem, 1.1rem + 2.2vw, 2.5rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $gold-primary;
+  text-shadow: 2px 2px 4px $shadow;
+  @include ornate-underline;
+}
+
+.subtitle {
+  margin: 0 auto;
+  max-width: 560px;
+  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.2rem);
+  font-style: italic;
+  color: $stone-light;
+}

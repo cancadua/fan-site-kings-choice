@@ -14,6 +14,8 @@ export interface SeoPage {
   noindex?: boolean;
   /** Crumbs after Home, used for the BreadcrumbList structured data. */
   breadcrumbs?: { name: string; path: string }[];
+  /** Page-specific link preview image (absolute URL); the site image is used otherwise. */
+  image?: { url: string; width: number; height: number };
 }
 
 export const DEFAULT_DESCRIPTION =
@@ -28,7 +30,7 @@ export const PAGE_SEO = {
   events: {
     title: "King's Choice Event Guides",
     description:
-      "Guides for King's Choice events: Uncharted Waters, Reap What You Sow, Struggle for Supremacy, School of Athens and Siege of the Undead.",
+      "Guides for King's Choice events: Uncharted Waters, Reap What You Sow, Struggle for Supremacy, School of Athens, Siege of the Undead and Realm Revival.",
     path: '/events/uncharted-waters',
   },
   knights: {
@@ -68,7 +70,7 @@ export const EVENT_SEO: Record<Event, { title: string; description: string }> =
     [Event.UnchartedWaters]: {
       title: 'Uncharted Waters Event Guide & City Planner',
       description:
-        "Plan your King's Choice Uncharted Waters event with the interactive map, the city selection tool and shareable plans for your alliance.",
+        "King's Choice Uncharted Waters guide: how prices and ship skills work, the best goods for your hold, an interactive city planner and a moves calculator.",
     },
     [Event.ReapWhatYouSow]: {
       title: 'Reap What You Sow Event Guide',
@@ -89,5 +91,10 @@ export const EVENT_SEO: Record<Event, { title: string; description: string }> =
       title: 'Siege of the Undead Event Guide',
       description:
         "King's Choice Siege of the Undead alliance defense event: guide and tips.",
+    },
+    [Event.RealmRevival]: {
+      title: 'Realm Revival Event Guide',
+      description:
+        "King's Choice Realm Revival alliance ranking event: building economy, raids, cards and combos, tips for your alliance and a dice calculator.",
     },
   };

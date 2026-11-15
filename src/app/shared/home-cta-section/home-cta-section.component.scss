@@ -2,65 +2,78 @@
 @use 'mixins' as *;
 
 .cta-section {
-  padding: 50px 30px;
-  text-align: center;
-  border-top: 2px solid $gold-primary;
-  background: linear-gradient(
-    90deg,
-    rgba($gold-primary, 0.05) 0%,
-    rgba($gold-primary, 0.1) 50%,
-    rgba($gold-primary, 0.05) 100%
+  padding: clamp(2.5rem, 2rem + 3vw, 4rem) clamp(1rem, 3vw, 2rem);
+  border-top: 2px solid rgba($gold-primary, 0.6);
+  background: radial-gradient(
+    ellipse 60% 100% at 50% 0%,
+    rgba($gold-primary, 0.12),
+    transparent 70%
   );
+}
+
+.cta-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem) clamp(1.25rem, 4vw, 3rem);
+  @include tavern-panel;
+  border: 2px solid rgba($gold-primary, 0.55);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  text-align: center;
 
   h2 {
-    font-size: 2.2rem;
-    color: $gold-primary;
-    margin: 0 0 15px 0;
-    text-transform: uppercase;
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.2rem);
     letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $gold-primary;
+    text-shadow: 2px 2px 4px $shadow;
     @include ornate-underline;
-  }
-
-  p {
-    font-size: 1.3rem;
-    color: $stone-light;
-    margin: 0 0 30px 0;
-    letter-spacing: 1px;
-    font-weight: 700;
-  }
-
-  .cta-buttons-footer {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
   }
 }
 
-// Base .cta-button lives in global src/styles.scss
+.cta-lead {
+  max-width: 520px;
+  margin: 0 auto 1.6rem;
+  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.15rem);
+  line-height: 1.6;
+  color: $stone-light;
+}
 
-@media (max-width: 768px) {
-  .cta-section {
-    padding: 30px 16px;
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
 
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-    }
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
 
-    p {
-      font-size: 1rem;
-      margin-bottom: 20px;
-    }
+  app-icon {
+    width: 18px;
+    height: 18px;
+  }
 
-    .cta-buttons-footer {
-      flex-direction: column;
-      gap: 10px;
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
 
-      .cta-button {
-        width: 100%;
-        padding: 12px 24px;
-      }
+.cta-support {
+  margin: 1.5rem 0 0;
+  font-size: 0.88rem;
+  color: $knight-text-muted;
+
+  a {
+    color: $gold-primary;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: $gold-light;
     }
   }
 }

@@ -1,0 +1,193 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  margin-bottom: 1.25rem;
+}
+
+// A framed strip with artwork (banner) or a faint emblem watermark behind the title.
+.plaque {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid rgba($gold-primary, 0.35);
+  border-radius: 8px;
+  background:
+    radial-gradient(
+      ellipse 70% 120% at 0% 0%,
+      rgba($gold-primary, 0.14),
+      transparent 60%
+    ),
+    rgba(0, 0, 0, 0.35);
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+}
+
+.plaque--banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 180px;
+
+  // Darkens the artwork on the text side so the title stays legible.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(0deg, rgba(10, 6, 3, 0.85), transparent 70%),
+      linear-gradient(
+        90deg,
+        rgba(10, 6, 3, 0.9),
+        rgba(10, 6, 3, 0.55) 50%,
+        rgba(10, 6, 3, 0.15)
+      );
+  }
+
+  @media (max-width: 480px) {
+    min-height: 140px;
+  }
+}
+
+.plaque__banner {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.plaque__watermark {
+  position: absolute;
+  z-index: -1;
+  right: -10px;
+  top: 50%;
+  width: 150px;
+  height: 150px;
+  transform: translateY(-50%) rotate(-12deg);
+  color: $gold-primary;
+  opacity: 0.08;
+
+  @media (max-width: 480px) {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.plaque__heading {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.plaque__emblem {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border: 2px solid $gold-primary;
+  border-radius: 50%;
+  outline: 1px solid rgba($gold-primary, 0.35);
+  outline-offset: 3px;
+  background: radial-gradient(circle at 35% 30%, #4a3214, #140c05 75%);
+  color: $gold-light;
+  box-shadow: 0 0 18px rgba($gold-primary, 0.3);
+
+  app-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  @media (max-width: 480px) {
+    width: 44px;
+    height: 44px;
+
+    app-icon {
+      width: 22px;
+      height: 22px;
+    }
+  }
+}
+
+.plaque__title {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.3rem, 0.95rem + 1.6vw, 2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: $knight-amber;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.plaque__subtitle {
+  margin: 0;
+  font-size: clamp(0.92rem, 0.87rem + 0.25vw, 1.05rem);
+  font-style: italic;
+  color: $stone-light;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+// Variant pills under the subtitle (Server, Cross-Server).
+.plaque__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.15rem 0.6rem;
+    border: 1px solid rgba($gold-primary, 0.5);
+    border-radius: 999px;
+    background: rgba(10, 6, 3, 0.7);
+    font-family: $font-heading;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $gold-light;
+  }
+}
+
+// "Reviewed Oct 2026" pill in the top-right corner.
+.plaque__reviewed {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgba($gold-primary, 0.45);
+  border-radius: 999px;
+  background: rgba(10, 6, 3, 0.75);
+  font-family: $font-lore;
+  font-size: 0.75rem;
+  color: $knight-text-muted;
+
+  app-icon {
+    width: 14px;
+    height: 14px;
+    color: $gold-primary;
+  }
+
+  time {
+    color: $gold-light;
+    font-weight: 700;
+  }
+
+  // On phones it joins the flow above the title instead of overlapping it.
+  @media (max-width: 600px) {
+    position: static;
+    align-self: flex-start;
+    margin-bottom: 0.75rem;
+  }
+}

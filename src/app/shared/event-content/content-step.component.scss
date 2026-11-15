@@ -17,10 +17,15 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 6px;
+
+  &:hover {
+    --anchor-opacity: 1;
+  }
 }
 
 .ec-step__marker {
   @include lore-font;
+  min-width: 1ch;
   font-size: 1.2rem;
   color: $gold-primary;
   text-shadow: 1px 1px 3px $shadow;
@@ -32,12 +37,70 @@
 }
 
 .ec-step__title {
-  @include lore-heading(1.1rem);
+  @include lore-heading(clamp(1rem, 0.92rem + 0.3vw, 1.1rem));
+  flex: 1;
   margin: 0;
 }
 
-@media (max-width: 768px) {
+// Custom tick box; the real checkbox stays in the page for keyboard and screen readers.
+.ec-step__check {
+  position: relative;
+  display: inline-grid;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.ec-step__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.ec-step__box {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid rgba($gold-primary, 0.6);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  color: transparent;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  app-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.ec-step__input:hover + .ec-step__box {
+  border-color: $gold-primary;
+}
+
+.ec-step__input:focus-visible + .ec-step__box {
+  outline: 2px solid $knight-amber;
+  outline-offset: 2px;
+}
+
+.ec-step__input:checked + .ec-step__box {
+  background: $gold-primary;
+  border-color: $gold-primary;
+  color: $black-primary;
+}
+
+// A finished step fades back so the remaining ones stand out.
+:host(.ec-step--done) {
   .ec-step__title {
-    font-size: 1rem;
+    text-decoration: line-through;
+    text-decoration-color: rgba($gold-primary, 0.6);
+    opacity: 0.6;
+  }
+
+  .ec-step__body {
+    opacity: 0.55;
   }
 }
