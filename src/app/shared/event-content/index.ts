@@ -6,6 +6,7 @@ import {
 import { ContentTextComponent } from './content-text.component';
 import { ContentNoteComponent } from './content-note.component';
 import { ContentListComponent } from './content-list.component';
+import { ContentTermComponent } from './content-term.component';
 
 export { ContentSectionComponent } from './content-section.component';
 export {
@@ -15,6 +16,7 @@ export {
 export { ContentTextComponent } from './content-text.component';
 export { ContentNoteComponent } from './content-note.component';
 export { ContentListComponent } from './content-list.component';
+export { ContentTermComponent } from './content-term.component';
 
 /** Spread into a standalone component's `imports` to use the whole vocabulary. */
 export const EVENT_CONTENT = [
@@ -24,4 +26,5 @@ export const EVENT_CONTENT = [
   ContentTextComponent,
   ContentNoteComponent,
   ContentListComponent,
+  ContentTermComponent,
 ] as const;

@@ -1,0 +1,84 @@
+@use 'variables' as *;
+
+.term {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: $gold-light;
+  text-decoration: underline dotted rgba($gold-primary, 0.8);
+  text-underline-offset: 3px;
+  cursor: help;
+
+  &:hover {
+    color: $gold-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.term__pop {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 24px));
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba($gold-primary, 0.55);
+  border-radius: 8px;
+  background: linear-gradient(160deg, #2a1c0e, #120b05);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(0, 0, 0, 0.6);
+  color: $parchment;
+  font-family: $font-lore;
+  font-size: 0.92rem;
+  font-style: normal;
+  line-height: 1.5;
+  text-align: left;
+  text-shadow: none;
+
+  &::backdrop {
+    background: transparent;
+  }
+}
+
+// Sits above the word, flips below when there is no room, centred on the word.
+@supports (position-area: top) {
+  .term__pop {
+    position-area: top span-all;
+    margin-bottom: 8px;
+    position-try-fallbacks: flip-block;
+  }
+}
+
+.term__title {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-family: $font-heading;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  color: $gold-primary;
+}
+
+.term__def {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .term__pop:popover-open {
+    animation: term-in 0.15s ease-out;
+  }
+}
+
+@keyframes term-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}

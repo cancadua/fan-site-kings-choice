@@ -1,13 +1,33 @@
+@use 'variables' as *;
 @use 'typography' as *;
 
 .ec-text {
-  @include lore-text;
+  @include lore-text(clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem));
   margin: 6px 0;
 }
 
-@media (max-width: 768px) {
-  .ec-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
+// Illuminated capital, as in a manuscript. `initial-letter` sinks it exactly two
+// lines deep; browsers without it get a floated capital of similar size.
+.ec-text--lead::first-letter {
+  float: left;
+  margin: 0.1em 0.12em 0 0;
+  font-family: $font-heading;
+  font-size: 3.2em;
+  font-weight: 700;
+  line-height: 0.8;
+  color: $gold-primary;
+  text-shadow:
+    0 0 12px rgba($gold-primary, 0.35),
+    2px 2px 3px rgba(0, 0, 0, 0.8);
+}
+
+@supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
+  .ec-text--lead::first-letter {
+    float: none;
+    margin: 0 0.14em 0 0;
+    font-size: 1em;
+    line-height: 1;
+    -webkit-initial-letter: 2;
+    initial-letter: 2;
   }
 }
