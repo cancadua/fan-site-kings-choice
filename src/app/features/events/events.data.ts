@@ -31,7 +31,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
       },
     },
     facts: [
-      { icon: 'globe', label: 'Format', value: 'Solo trading & plunder' },
+      { icon: 'globe', label: 'Format', value: 'Alliance · Cross-Server' },
       { icon: 'shield', label: 'Entry', value: 'Alliance with vouchers' },
       { icon: 'map', label: 'Planner', value: 'Interactive cities map' },
       { icon: 'zap', label: 'Moves', value: 'Max 10 · +1 / 30 min' },
@@ -56,7 +56,11 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
       },
     },
     facts: [
-      { icon: 'globe', label: 'Format', value: 'Alliance → Cross-Server' },
+      {
+        icon: 'globe',
+        label: 'Format',
+        value: 'Alliance · Server / Cross-Server',
+      },
       { icon: 'zap', label: 'Stamina', value: 'Max 28 · +4 / 30 min' },
       { icon: 'layers', label: 'Crop rarities', value: '8 tiers' },
     ],
@@ -81,7 +85,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     },
     facts: [
       { icon: 'hourglass', label: 'Duration', value: '4 weeks' },
-      { icon: 'shield', label: 'Format', value: 'Alliance season' },
+      { icon: 'globe', label: 'Format', value: 'Alliance · Cross-Server' },
       { icon: 'users', label: 'Eligibility', value: 'Top 110 by power' },
     ],
   },
@@ -104,7 +108,11 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
       },
     },
     facts: [
-      { icon: 'globe', label: 'Format', value: 'Team exploration & PvP' },
+      {
+        icon: 'globe',
+        label: 'Format',
+        value: '3-player team + Individual · Server / Cross-Server',
+      },
       { icon: 'users', label: 'Team', value: '3 players' },
       { icon: 'layers', label: 'Floors', value: '3 · PvP on the top' },
       { icon: 'zap', label: 'Stamina', value: 'Max 40 · +1 / 6 min' },
@@ -116,6 +124,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     title: 'Siege of the Undead',
     subtitle: 'Alliance Defense Event',
     icon: 'skull',
+    tags: ['Server', 'Cross-Server'],
     banner: {
       src: 'assets/img/events/siege-of-the-undead/banner.webp',
       width: 1672,
@@ -128,7 +137,11 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
       },
     },
     facts: [
-      { icon: 'globe', label: 'Format', value: 'Alliance tower defense' },
+      {
+        icon: 'globe',
+        label: 'Format',
+        value: 'Alliance · Server / Cross-Server',
+      },
       { icon: 'castle', label: 'Goal', value: 'Defend the gate' },
       { icon: 'zap', label: 'NPC cost', value: '100 energy (max 1680)' },
       { icon: 'clock', label: 'Undead advance', value: 'Every 5 min' },
@@ -155,9 +168,9 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     facts: [
       { icon: 'zap', label: 'Dice', value: 'Max 32 · +4 / 30 min' },
       {
-        icon: 'shield',
+        icon: 'globe',
         label: 'Format',
-        value: 'Alliance raids & realm building',
+        value: 'Alliance · Server / Cross-Server',
       },
       { icon: 'trophy', label: 'Titles', value: 'Alliance + voted MVP' },
     ],
