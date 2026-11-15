@@ -15,7 +15,7 @@ export const GLOSSARY = {
   stamina: {
     term: 'Stamina',
     definition:
-      'Spent on exploring: each exploration costs 1. In Reap What You Sow it caps at 28 and refills +4 every 30 minutes, so anything above the cap is wasted.',
+      'Spent on exploring: each exploration costs 1. It caps at 28 (+4 every 30 min) in Reap What You Sow and at 40 (+1 every 6 min) in School of Athens; refills above the cap are wasted.',
     event: Event.ReapWhatYouSow,
   },
   'total-talents': {

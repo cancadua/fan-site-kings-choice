@@ -37,7 +37,7 @@ const EVENT_TABS: Record<Event, ContentTab[]> = {
 };
 
 /** Tabs that are tools rather than reading, so they get their own group. */
-const TOOL_TABS = new Set(['cities-tool', 'calculators']);
+const TOOL_TABS = new Set(['cities-tool', 'moves-calculator']);
 
 function buildIndex(): SearchEntry[] {
   const entries: SearchEntry[] = [];
@@ -61,13 +61,13 @@ function buildIndex(): SearchEntry[] {
         subtitle: isTool ? 'Interactive tool' : 'Step-by-step strategy',
         group: isTool ? 'Tools' : 'Event guides',
         icon: isTool
-          ? tab.value === 'calculators'
+          ? tab.value === 'moves-calculator'
             ? 'calculator'
             : 'map'
           : 'list',
         url: `${base}?tab=${tab.value}`,
         keywords: isTool
-          ? 'tool calculator planner stamina moves knights talents map cities'
+          ? 'tool calculator planner stamina moves refill map cities'
           : 'tips strategy smart play checklist',
         featured: isTool,
       });

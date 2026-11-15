@@ -19,6 +19,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     facts: [
       { icon: 'coins', label: 'Focus', value: 'Trade & plunder' },
       { icon: 'map', label: 'Planner', value: 'Interactive cities map' },
+      { icon: 'zap', label: 'Moves', value: 'Max 10 · +1 / 30 min' },
     ],
   },
   {
@@ -59,7 +60,7 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
     facts: [
       { icon: 'users', label: 'Team', value: '3 players' },
       { icon: 'layers', label: 'Floors', value: '3 · PvP on the top' },
-      { icon: 'zap', label: 'Exploring', value: '1 Stamina each' },
+      { icon: 'zap', label: 'Stamina', value: 'Max 40 · +1 / 6 min' },
     ],
   },
   {

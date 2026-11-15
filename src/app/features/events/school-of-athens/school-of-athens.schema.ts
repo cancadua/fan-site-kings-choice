@@ -1,4 +1,5 @@
 import { ContentTab } from '../../../shared/app-tabs/app-tabs.schema';
+import { MovesRules } from '../../../shared/moves-calculator/moves-formulas';
 
 export const SchoolOfAthensTabs: ContentTab[] = [
   {
@@ -9,4 +10,16 @@ export const SchoolOfAthensTabs: ContentTab[] = [
     label: 'Smart play',
     value: 'smart-play',
   },
+  {
+    label: 'Moves calculator',
+    value: 'moves-calculator',
+  },
 ];
+
+/** Moves refill for the Moves calculator tab. */
+export const SchoolOfAthensMoves: MovesRules = {
+  resource: 'stamina',
+  max: 40,
+  amount: 1,
+  everyMinutes: 6,
+};

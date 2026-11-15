@@ -15,5 +15,7 @@
     <p class="placeholder-text">Coming soon.</p>
   } @else if (activeTab().value === 'cities-tool') {
     <app-uw-cities-tool data-no-swipe></app-uw-cities-tool>
+  } @else if (activeTab().value === 'moves-calculator') {
+    <app-moves-calculator [rules]="moves" />
   }
 </app-tabs>

@@ -31,11 +31,11 @@ export class HomeToolsSectionComponent {
       queryParams: { tab: 'cities-tool' },
     },
     {
-      title: 'Reap What You Sow Calculators',
-      text: 'See when your stamina overflows and how much exploration bonus your delegated knights give.',
+      title: 'Moves Calculators',
+      text: 'See when your moves refill to the cap in Uncharted Waters, Reap What You Sow and School of Athens, so none go to waste.',
       icon: 'calculator',
       route: `/events/${Event.ReapWhatYouSow}`,
-      queryParams: { tab: 'calculators' },
+      queryParams: { tab: 'moves-calculator' },
     },
     {
       title: 'Knight Development',

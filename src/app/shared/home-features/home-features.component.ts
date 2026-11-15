@@ -69,12 +69,12 @@ export class HomeFeaturesComponent {
     },
     {
       icon: 'calculator',
-      title: 'Calculators',
-      text: 'Know when stamina overflows and how much bonus your knights give.',
+      title: 'Moves calculators',
+      text: 'See when your moves refill to the cap, so none go to waste.',
       link: {
-        label: 'Try the calculators',
+        label: 'Try a calculator',
         route: `/events/${Event.ReapWhatYouSow}`,
-        tab: 'calculators',
+        tab: 'moves-calculator',
       },
     },
     {

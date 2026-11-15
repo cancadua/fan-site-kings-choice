@@ -1,0 +1,100 @@
+@let r = rules();
+<section class="calc" aria-labelledby="moves-calc-title">
+  <header class="calc__header">
+    <app-icon class="calc__icon" name="zap" />
+    <div>
+      <h3 class="calc__title" id="moves-calc-title">Moves calculator</h3>
+      <p class="calc__hint">
+        {{ r.resource }} caps at <strong>{{ r.max }}</strong> and refills
+        <strong>+{{ r.amount }}</strong> every
+        <strong>{{ formatDuration(r.everyMinutes) }}</strong
+        >. Anything above the cap is lost.
+      </p>
+    </div>
+  </header>
+
+  <div class="calc__fields">
+    <label class="field">
+      <span class="field__label">Current {{ r.resource }}</span>
+      <input
+        class="field__input"
+        type="number"
+        inputmode="numeric"
+        min="0"
+        [attr.max]="r.max"
+        [value]="current()"
+        (input)="setCurrent($event)"
+      />
+    </label>
+    <label class="field">
+      <span class="field__label">Minutes to next refill</span>
+      <input
+        class="field__input"
+        type="number"
+        inputmode="numeric"
+        min="0"
+        [attr.max]="r.everyMinutes"
+        [value]="minutesToTick()"
+        (input)="setMinutesToTick($event)"
+      />
+    </label>
+    <label class="field">
+      <span class="field__label">I'll be away for (hours)</span>
+      <input
+        class="field__input"
+        type="number"
+        inputmode="decimal"
+        min="0"
+        max="48"
+        step="0.5"
+        [value]="hoursAway()"
+        (input)="setHoursAway($event)"
+      />
+    </label>
+  </div>
+
+  <div class="calc__results" aria-live="polite">
+    <p class="result">
+      <span class="result__label">Full {{ r.resource }}</span>
+      <span class="result__value">
+        {{ formatDuration(minutesToFull()) }}
+        @if (fullAt(); as at) {
+          @if (minutesToFull() > 0) {
+            <span class="result__aside">at {{ at }}</span>
+          }
+        }
+      </span>
+    </p>
+
+    @let away = afterAway();
+    <p class="result" [class.result--warn]="away.wasted > 0">
+      <span class="result__label">When you're back</span>
+      <span class="result__value">
+        {{ away.moves }} / {{ r.max }}
+        @if (backAt(); as at) {
+          <span class="result__aside">at {{ at }}</span>
+        }
+      </span>
+    </p>
+
+    @if (away.wasted > 0) {
+      <p class="verdict verdict--warn">
+        You would lose <strong>{{ away.wasted }} {{ r.resource }}</strong
+        >. Spend some
+        @if (fullAt(); as at) {
+          before <strong>{{ at }}</strong>
+        } @else {
+          before the cap
+        }
+        or come back sooner.
+      </p>
+    } @else {
+      <p class="verdict verdict--ok">Nothing is wasted while you're away.</p>
+    }
+
+    <p class="result">
+      <span class="result__label">Max per day from refills</span>
+      <span class="result__value">{{ perDay() }} {{ r.resource }}</span>
+    </p>
+  </div>
+</section>

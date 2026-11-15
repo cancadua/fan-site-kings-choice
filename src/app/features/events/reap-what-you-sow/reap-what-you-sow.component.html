@@ -183,7 +183,7 @@
         </app-content-note>
       </app-content-step>
     </app-content-steps>
-  } @else if (activeTab().value === 'calculators') {
-    <app-rwys-calculators />
+  } @else if (activeTab().value === 'moves-calculator') {
+    <app-moves-calculator [rules]="moves" />
   }
 </app-tabs>
