@@ -1,0 +1,150 @@
+@use 'variables' as *;
+
+// Atmosphere and motion shared by the guide pages. Everything here is either
+// pure CSS (scroll-driven animations) or opacity-only, so it stays on the
+// compositor, and all of it switches off for people who prefer reduced motion.
+
+// ---------- Torchlight (flickering glow from above) ----------
+.torchlit {
+  position: relative;
+  isolation: isolate;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  // Main torch above the page header.
+  &::before {
+    inset: 0 0 auto;
+    height: 560px;
+    background: radial-gradient(
+      ellipse 50% 100% at 50% 0%,
+      rgba(255, 150, 50, 0.16),
+      transparent 70%
+    );
+    opacity: 0.85;
+  }
+
+  // Two wall sconces at the upper corners, flickering out of step.
+  &::after {
+    inset: 0 0 auto;
+    height: 900px;
+    background:
+      radial-gradient(
+        circle 260px at 0% 260px,
+        rgba(255, 130, 40, 0.1),
+        transparent 70%
+      ),
+      radial-gradient(
+        circle 260px at 100% 260px,
+        rgba(255, 130, 40, 0.1),
+        transparent 70%
+      );
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .torchlit::before {
+    animation: torch-flicker 6.5s ease-in-out infinite;
+  }
+
+  .torchlit::after {
+    animation: torch-flicker 4.3s ease-in-out -1.7s infinite;
+  }
+}
+
+// Irregular steps read as a living flame rather than a pulse.
+@keyframes torch-flicker {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  9% {
+    opacity: 0.95;
+  }
+  14% {
+    opacity: 0.72;
+  }
+  23% {
+    opacity: 1;
+  }
+  36% {
+    opacity: 0.82;
+  }
+  48% {
+    opacity: 0.93;
+  }
+  57% {
+    opacity: 0.7;
+  }
+  69% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 0.84;
+  }
+  91% {
+    opacity: 0.96;
+  }
+}
+
+// ---------- Reading progress ----------
+// The article publishes a view timeline; the bar at the top of the screen fills
+// as the reader moves from the article's top to its end. No JavaScript.
+.reading-scope {
+  timeline-scope: --reading;
+}
+
+.reading-subject {
+  view-timeline: --reading block;
+}
+
+.reading-progress {
+  display: none;
+}
+
+@supports (animation-timeline: view()) {
+  .reading-progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1000;
+    height: 3px;
+    background: linear-gradient(90deg, $gold-dark, $gold-primary, $gold-light);
+    box-shadow: 0 0 8px rgba($gold-primary, 0.6);
+    transform-origin: 0 50%;
+    pointer-events: none;
+    animation: reading-grow linear both;
+    animation-timeline: --reading;
+    animation-range: contain 0% contain 100%;
+  }
+
+  // Sections and steps rise into place as they scroll into view.
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-on-scroll {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@keyframes reading-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}

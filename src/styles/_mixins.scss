@@ -55,8 +55,13 @@
 // Wooden tavern panel: organic grain, edge vignette, torchlight from above and four iron
 // nails. The background itself is the global --tavern-wood variable (styles.scss), so the
 // texture data is shipped once instead of in every component stylesheet.
-@mixin tavern-panel {
-  background: var(--tavern-wood);
+// $dark: true uses the darker wood cut meant for panels of long reading text.
+@mixin tavern-panel($dark: false) {
+  @if $dark {
+    background: var(--tavern-wood-dark);
+  } @else {
+    background: var(--tavern-wood);
+  }
   outline: 1px solid rgba($gold-primary, 0.35);
   outline-offset: -6px;
 }

@@ -1,35 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'variables' as *;
+@use 'effects';
 
 // Cinzel is loaded via <link> in index.html for non-render-blocking delivery.
-
-:root {
-  // Layered arcane gradient for the magic-book intro. Shared with <body> so the
-  // scene's fade-out bleeds into an identical background (see MagicBookScene).
-  --magic-book-scene-bg:
-    radial-gradient(
-      ellipse 65% 50% at 50% 40%,
-      rgba(150, 85, 255, 0.32),
-      transparent 62%
-    ),
-    radial-gradient(
-      ellipse 45% 40% at 14% 8%,
-      rgba(80, 120, 255, 0.22),
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 55% 45% at 88% 94%,
-      rgba(224, 90, 210, 0.2),
-      transparent 55%
-    ),
-    radial-gradient(
-      circle at 50% 46%,
-      #2c1b50 0%,
-      #170f2f 46%,
-      #0b0818 74%,
-      #07050e 100%
-    );
-}
 
 :root {
   // Tavern wood background shared by every wood panel (see tavern-panel in _mixins.scss).
@@ -44,6 +17,61 @@
     linear-gradient(rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32)),
     url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='480'%20height='280'%3E%3Cfilter%20id='w'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%20color-interpolation-filters='sRGB'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.004%200.18'%20numOctaves='5'%20seed='7'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0.70%200%200%200%200.02%20%200.40%200%200%200%200.01%20%200.17%200%200%200%200.00%20%200%200%200%200%201'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url%28%23w%29'/%3E%3C/svg%3E") center / 480px 280px,
     #3f2711;
+  // Darker cut of the same wood for panels that hold long reading text, so the
+  // body copy keeps strong contrast while matching the lighter wood panels.
+  --tavern-wood-dark:
+    radial-gradient(circle, #e8e2c8 0, #e8e2c8 1.4px, #4a4a42 1.5px, #4a4a42 3px, transparent 3.5px) left 8px top 8px / 8px 8px no-repeat,
+    radial-gradient(circle, #e8e2c8 0, #e8e2c8 1.4px, #4a4a42 1.5px, #4a4a42 3px, transparent 3.5px) right 8px top 8px / 8px 8px no-repeat,
+    radial-gradient(circle, #e8e2c8 0, #e8e2c8 1.4px, #4a4a42 1.5px, #4a4a42 3px, transparent 3.5px) left 8px bottom 8px / 8px 8px no-repeat,
+    radial-gradient(circle, #e8e2c8 0, #e8e2c8 1.4px, #4a4a42 1.5px, #4a4a42 3px, transparent 3.5px) right 8px bottom 8px / 8px 8px no-repeat,
+    linear-gradient(180deg, rgba(255, 190, 100, 0.07), transparent 30%),
+    radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.45)),
+    linear-gradient(rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.66)),
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='480'%20height='280'%3E%3Cfilter%20id='w'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%20color-interpolation-filters='sRGB'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.004%200.18'%20numOctaves='5'%20seed='7'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0.70%200%200%200%200.02%20%200.40%200%200%200%200.01%20%200.17%200%200%200%200.00%20%200%200%200%200%201'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url%28%23w%29'/%3E%3C/svg%3E") center / 480px 280px,
+    #3f2711;
+}
+
+// ========== TYPOGRAPHY ==========
+// Balanced headings avoid a lone word on the last line; `pretty` does the same
+// for paragraph endings. Browsers without support simply wrap as before.
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+// Hidden on screen, still read by screen readers.
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// Linked sections (#id) land a little below the top edge; on phones they also
+// clear the sticky section picker.
+[data-toc][id] {
+  scroll-margin-top: 1.5rem;
+}
+
+@media (max-width: 968px) {
+  [data-toc][id] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+// The page behind an open modal sheet or search box should not scroll.
+body:has(dialog[open].lock-scroll) {
+  overflow: hidden;
 }
 
 // ========== BASE STYLES ==========
