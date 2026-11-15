@@ -28,13 +28,26 @@ export class SeoService {
     this.setProperty('og:title', fullTitle);
     this.setProperty('og:description', page.description);
     this.setProperty('og:url', url);
-    this.setProperty('og:image', OG_IMAGE);
+    const image = page.image?.url ?? OG_IMAGE;
+    this.setProperty('og:image', image);
+    this.setImageSize(page.image);
     this.setName('twitter:card', 'summary_large_image');
     this.setName('twitter:title', fullTitle);
     this.setName('twitter:description', page.description);
-    this.setName('twitter:image', OG_IMAGE);
+    this.setName('twitter:image', image);
     this.setCanonical(url);
     this.setBreadcrumbs(page);
+  }
+
+  /** Width/height let Discord and Facebook lay out the preview before the image loads. */
+  private setImageSize(image: SeoPage['image']): void {
+    if (!image) {
+      this.meta.removeTag("property='og:image:width'");
+      this.meta.removeTag("property='og:image:height'");
+      return;
+    }
+    this.setProperty('og:image:width', String(image.width));
+    this.setProperty('og:image:height', String(image.height));
   }
 
   private setName(name: string, content: string): void {

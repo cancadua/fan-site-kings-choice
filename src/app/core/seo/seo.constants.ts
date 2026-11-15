@@ -14,6 +14,8 @@ export interface SeoPage {
   noindex?: boolean;
   /** Crumbs after Home, used for the BreadcrumbList structured data. */
   breadcrumbs?: { name: string; path: string }[];
+  /** Page-specific link preview image (absolute URL); the site image is used otherwise. */
+  image?: { url: string; width: number; height: number };
 }
 
 export const DEFAULT_DESCRIPTION =
