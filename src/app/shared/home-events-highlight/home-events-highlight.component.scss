@@ -1,165 +1,206 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-.events-highlight-section {
-  padding: 50px 30px;
-  max-width: 1200px;
-  margin: 0 auto;
+.events {
   width: 100%;
-  text-align: center;
-
-  h2 {
-    font-size: 2.5rem;
-    color: $gold-primary;
-    margin: 0 0 10px 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px $shadow;
-    @include ornate-underline;
-  }
-
-  .section-subtitle {
-    font-size: 1.2rem;
-    color: $stone-light;
-    margin: 0 0 40px 0;
-    font-style: italic;
-  }
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 2rem + 3vw, 4rem) clamp(1rem, 3vw, 2rem);
 }
 
-.events-showcase {
+.events__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 16px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.event-item {
-  display: block;
-  min-width: 0;
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem 1.1rem;
+  overflow: hidden;
   @include tavern-panel;
-  border: 2px solid $gold-primary;
-  border-radius: 8px;
-  padding: 24px 16px;
+  border: 2px solid rgba($gold-primary, 0.55);
+  border-radius: 10px;
+  color: $parchment;
   text-align: center;
   text-decoration: none;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  animation: card-rise 0.6s ease-out backwards;
-  animation-delay: calc(var(--i, 0) * 90ms);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-6px);
-    box-shadow:
-      0 10px 24px rgba($gold-primary, 0.35),
-      inset 0 0 18px rgba($gold-primary, 0.12);
     border-color: $gold-light;
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.5),
+      0 0 22px rgba($gold-primary, 0.25);
 
-    .event-icon {
-      transform: scale(1.2) rotate(-6deg);
-      filter: drop-shadow(0 0 10px rgba($gold-primary, 0.8));
+    .card__art img {
+      transform: scale(1.06);
+    }
+
+    .card__cta {
+      gap: 0.5rem;
+      color: $gold-light;
     }
   }
 
-  .event-icon {
-    display: block;
-    font-size: 2.2rem;
-    line-height: 1;
-    margin-bottom: 6px;
-    transition:
-      transform 0.3s ease,
-      filter 0.3s ease;
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 3px;
   }
 
-  h4 {
-    font-size: 1.1rem;
-    color: $gold-light;
-    margin: 8px 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .event-label {
-    font-size: 0.85rem;
-    color: $parchment;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-    display: block;
-    font-style: italic;
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &:hover {
+      transform: translateY(-5px);
+    }
   }
 }
 
-.highlight-cta {
-  text-align: center;
+// Artwork strip (banner, or a glowing watermark until the banner exists).
+.card__art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(100% + 2rem);
+  height: 92px;
+  margin: 0 -1rem;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse 80% 120% at 50% 0%,
+    rgba($gold-primary, 0.28),
+    rgba(0, 0, 0, 0.45) 75%
+  );
+  border-bottom: 1px solid rgba($gold-primary, 0.4);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(15, 9, 4, 0.75));
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
 }
 
-@keyframes card-rise {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
+.card__watermark {
+  width: 120px;
+  height: 120px;
+  color: $gold-primary;
+  opacity: 0.14;
+  transform: rotate(-10deg);
+}
+
+.card__new {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: $gold-primary;
+  color: $black-primary;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.card__emblem {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0.6rem;
+  border: 2px solid $gold-primary;
+  border-radius: 50%;
+  outline: 1px solid rgba($gold-primary, 0.35);
+  outline-offset: 3px;
+  background: radial-gradient(circle at 35% 30%, #4a3214, #140c05 75%);
+  color: $gold-light;
+  box-shadow: 0 0 16px rgba($gold-primary, 0.35);
+
+  app-icon {
+    width: 28px;
+    height: 28px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+.card__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: $gold-light;
+}
+
+.card__subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: $stone-light;
+}
+
+.card__facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.15rem 0.55rem;
+    border: 1px solid rgba($gold-primary, 0.3);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 0.74rem;
+    color: $knight-text-muted;
+  }
+}
+
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: auto;
+  font-family: $font-heading;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: $gold-primary;
+  transition:
+    gap 0.2s ease,
+    color 0.2s ease;
+
+  app-icon {
+    width: 14px;
+    height: 14px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .event-item {
-    animation: none;
+  .card,
+  .card__art img,
+  .card__cta {
     transition: none;
-  }
-}
-
-// Base .cta-button lives in global src/styles.scss
-
-@media (max-width: 768px) {
-  .events-highlight-section {
-    padding: 30px 16px;
-
-    h2 {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-    }
-
-    .section-subtitle {
-      font-size: 1rem;
-      margin-bottom: 30px;
-    }
-  }
-
-  .events-showcase {
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 10px;
-    margin-bottom: 30px;
-  }
-
-  .event-item {
-    padding: 14px 10px;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    .event-icon {
-      font-size: 1.7rem;
-      margin-bottom: 4px;
-    }
-
-    h4 {
-      font-size: 0.9rem;
-      margin: 4px 0;
-    }
-
-    .event-label {
-      font-size: 0.75rem;
-    }
-  }
-
-  .highlight-cta {
-    margin-top: 20px;
-
-    .cta-button {
-      width: 100%;
-      padding: 12px 24px;
-    }
   }
 }

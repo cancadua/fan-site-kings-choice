@@ -2,33 +2,18 @@
 @use 'mixins' as *;
 
 .tools-section {
-  padding: 50px 30px;
-  max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: clamp(2rem, 1.5rem + 2vw, 3rem) clamp(1rem, 3vw, 2rem)
+    clamp(2.5rem, 2rem + 3vw, 4rem);
+  border-top: 1px solid rgba($gold-primary, 0.15);
   text-align: center;
-
-  h2 {
-    font-size: 2.5rem;
-    color: $gold-primary;
-    margin: 0 0 10px 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px $shadow;
-    @include ornate-underline;
-  }
-
-  .section-subtitle {
-    font-size: 1.2rem;
-    color: $stone-light;
-    margin: 0 0 40px 0;
-    font-style: italic;
-  }
 }
 
 .tools-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 20px;
 }
 
@@ -84,9 +69,9 @@
       0 10px 24px rgba($gold-primary, 0.35),
       inset 0 0 18px rgba($gold-primary, 0.12);
 
-    .tool-icon {
-      transform: scale(1.2) rotate(-6deg);
-      filter: drop-shadow(0 0 10px rgba($gold-primary, 0.8));
+    .tool-emblem {
+      transform: scale(1.1) rotate(-6deg);
+      box-shadow: 0 0 22px rgba($gold-primary, 0.6);
     }
 
     .tool-link {
@@ -95,12 +80,26 @@
     }
   }
 
-  .tool-icon {
-    font-size: 2.6rem;
-    line-height: 1;
+  .tool-emblem {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border: 2px solid $gold-primary;
+    border-radius: 50%;
+    outline: 1px solid rgba($gold-primary, 0.35);
+    outline-offset: 3px;
+    background: radial-gradient(circle at 35% 30%, #4a3214, #140c05 75%);
+    color: $gold-light;
+    box-shadow: 0 0 16px rgba($gold-primary, 0.3);
     transition:
       transform 0.3s ease,
-      filter 0.3s ease;
+      box-shadow 0.3s ease;
+
+    app-icon {
+      width: 28px;
+      height: 28px;
+    }
   }
 
   h3 {
@@ -121,6 +120,9 @@
   }
 
   .tool-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
     margin-top: auto;
     padding-top: 6px;
     font-size: 0.8rem;
@@ -129,6 +131,11 @@
     text-transform: uppercase;
     color: $gold-light;
     transition: all 0.3s ease;
+
+    app-icon {
+      width: 14px;
+      height: 14px;
+    }
   }
 }
 
@@ -162,20 +169,6 @@
 }
 
 @media (max-width: 768px) {
-  .tools-section {
-    padding: 30px 16px;
-
-    h2 {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-    }
-
-    .section-subtitle {
-      font-size: 1rem;
-      margin-bottom: 30px;
-    }
-  }
-
   .tool-card {
     padding: 20px 16px;
   }

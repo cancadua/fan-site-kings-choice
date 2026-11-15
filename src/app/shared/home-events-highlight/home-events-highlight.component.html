@@ -1,17 +1,51 @@
-<div class="events-highlight-section">
-  <h2>Featured Events</h2>
-  <p class="section-subtitle">Explore the latest events</p>
-  <div class="events-showcase">
-    @for (event of events; track event.id; let i = $index) {
-      <a
-        [routerLink]="['/events', event.id]"
-        class="event-item"
-        [style.--i]="i"
-      >
-        <span class="event-icon" aria-hidden="true">{{ event.icon }}</span>
-        <h4>{{ event.title }}</h4>
-        <span class="event-label">{{ event.label }}</span>
-      </a>
+<section class="events">
+  <app-section-heading
+    eyebrow="Event guides"
+    heading="Featured Events"
+    subtitle="Rules, key numbers and step-by-step strategy for every event"
+  />
+
+  <ul class="events__grid">
+    @for (event of events; track event.id) {
+      <li class="reveal-on-scroll">
+        <a class="card" [routerLink]="['/events', event.id]">
+          <span class="card__art" aria-hidden="true">
+            @if (event.banner; as banner) {
+              <img
+                [src]="banner.src"
+                [width]="banner.width"
+                [height]="banner.height"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            } @else {
+              <app-icon
+                class="card__watermark"
+                [name]="event.icon ?? 'scroll'"
+              />
+            }
+          </span>
+          @if ('/events/' + event.id === newRoute) {
+            <span class="card__new">New</span>
+          }
+          <span class="card__emblem" aria-hidden="true">
+            <app-icon [name]="event.icon ?? 'scroll'" />
+          </span>
+          <h3 class="card__title">{{ event.title }}</h3>
+          <p class="card__subtitle">{{ event.subtitle }}</p>
+          @if (event.facts; as facts) {
+            <ul class="card__facts">
+              @for (fact of facts.slice(0, 2); track fact.label) {
+                <li>{{ fact.value }}</li>
+              }
+            </ul>
+          }
+          <span class="card__cta"
+            >Read guide <app-icon name="chevronRight"
+          /></span>
+        </a>
+      </li>
     }
-  </div>
-</div>
+  </ul>
+</section>
