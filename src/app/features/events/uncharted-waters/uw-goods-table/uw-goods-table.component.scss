@@ -1,0 +1,86 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  margin: 0.75rem 0 0.25rem;
+}
+
+.table-wrap {
+  max-width: 560px;
+  overflow-x: auto;
+  border: 1px solid rgba($gold-primary, 0.3);
+  border-radius: 8px;
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+  }
+}
+
+.goods {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: $font-lore;
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: 0.45rem 0.8rem;
+    border-bottom: 1px solid rgba($gold-primary, 0.12);
+    text-align: right;
+  }
+
+  th:first-child {
+    text-align: left;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: #1d1309;
+    font-family: $font-heading;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $gold-primary;
+  }
+
+  tbody th {
+    font-weight: 400;
+    color: $parchment;
+  }
+
+  td {
+    color: $knight-text-muted;
+  }
+
+  tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: none;
+  }
+}
+
+.goods__value {
+  font-weight: 700;
+  color: $gold-light;
+}
+
+// Densest cargo: the most value per unit of hold space.
+.goods__best {
+  background: rgba($gold-primary, 0.12) !important;
+
+  th {
+    font-weight: 700;
+    color: $gold-light;
+  }
+
+  th::after {
+    content: ' ★';
+    color: $gold-primary;
+    font-size: 0.8em;
+  }
+}

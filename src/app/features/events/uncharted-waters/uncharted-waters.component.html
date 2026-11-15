@@ -4,11 +4,104 @@
   (activeTabChange)="onTabChange($event)"
 >
   @if (activeTab().value === 'basic-information') {
-    <app-uw-description></app-uw-description>
+    <app-content-section heading="Event Overview">
+      <app-content-text lead>
+        Trade goods between famous harbors: buy where a good is cheap, sell
+        where it's expensive and grow your
+        <app-term key="voyagers-coins">Voyager's Coins</app-term> for
+        achievements and ranking rewards.
+      </app-content-text>
+      <app-content-note>
+        You need an Alliance to take part.
+      </app-content-note>
+    </app-content-section>
+
+    <app-content-section heading="Resources">
+      <app-content-list
+        [items]="[
+          'Voyager\'s Coins: the starting amount depends on your title level.',
+          'Supply Barrels: used up by voyages and recover over time. Items refill them instantly.',
+        ]"
+      />
+    </app-content-section>
+
+    <app-content-section heading="Prices">
+      <app-content-text>
+        The percentage next to a good compares its price with normal: 109% sells
+        9% above the usual price. Prices rarely go to 110% (max), so buy below
+        100% and sell from around 105% up. (Different alliances/servers set their own thresholds for what counts as "high" and "low".)
+      </app-content-text>
+    </app-content-section>
+
+    <app-content-section heading="Ship Upgrades">
+      <app-content-text>
+        Upgrade your ship with voyage EXP or Gold. Each upgrade lets you pick
+        one of two random skills:
+      </app-content-text>
+      <app-content-list
+        [items]="[
+          'Expansion: more storage. The total weight of your goods can\'t exceed it.',
+          'Accounts: extra profit when selling.',
+          'Battle: better odds in fights, both attacking and defending.',
+          'Loot: more loot after winning a battle.',
+          'Espionage: cheaper refreshes of nearby players.',
+        ]"
+      />
+      <app-content-note>
+        Upgrades last until the end of the event, so take them as
+        early as possible.
+      </app-content-note>
+    </app-content-section>
+
+    <app-content-section heading="Goods">
+      <app-content-text>
+        Your hold is limited by weight, so at the same price percentage, goods
+        worth more per unit of weight earn more from a full hold.
+      </app-content-text>
+      <app-uw-goods-table />
+      <app-content-note>
+        Base prices based on old version, to verify! In game, each city's percentage
+        moves them up or down.
+      </app-content-note>
+    </app-content-section>
   } @else if (activeTab().value === 'smart-play') {
-    <span class="placeholder-icon">⚔️</span>
-    <h3 class="placeholder-title">Smart play</h3>
-    <p class="placeholder-text">Coming soon.</p>
+    <app-content-steps checklist="uncharted-waters">
+      <app-content-step heading="Take Expansion and Profit early">
+        <app-content-text>
+          More storage means more goods per trip, and Profit makes you snowball quicker.
+        </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Fill the hold with dense goods">
+        <app-content-text>
+          Diamonds, Dye, Meat and Medicine carry the most value per weight. See
+          the Goods table on the Basic Information tab.
+        </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Share prices with your alliance">
+        <app-content-text>
+          Tap a good, then the arrow in the top right to post its price to the
+          shared tab. When everyone shares prices from their own city, you all
+          find the 105–110% spots much faster.
+        </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Landed in an empty city?">
+        <app-content-text>
+          If everything is 105% or more, there's little to gain. If some goods
+          are still around 90–100%:
+        </app-content-text>
+        <app-content-list
+          [items]="[
+            'Buy 1 of every good and open Products Info.',
+            'Find where the most expensive goods sell even higher.',
+            'Buy as many of those as you can and sell the rest back. Buying and selling in the same city costs nothing.',
+          ]"
+        />
+        <app-content-note>
+          Then share your alliance if the city is empty based on your arrangements or if you use the tool mark the city as Vacant in the Cities Tool so your alliance skips
+          it.
+        </app-content-note>
+      </app-content-step>
+    </app-content-steps>
   } @else if (activeTab().value === 'advanced-tips') {
     <span class="placeholder-icon">🎯</span>
     <h3 class="placeholder-title">Advanced Tips</h3>

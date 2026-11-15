@@ -2,7 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AppTabsComponent } from '../../../shared/app-tabs/app-tabs.component';
 import { MovesCalculatorComponent } from '../../../shared/moves-calculator/moves-calculator.component';
 import { TabbedPage } from '../../../shared/app-tabs/tabbed-page';
-import { UwDescriptionComponent } from './uw-description/uw-description.component';
+import { EVENT_CONTENT } from '../../../shared/event-content';
+import { UwGoodsTableComponent } from './uw-goods-table/uw-goods-table.component';
 import { UwCitiesToolComponent } from './uw-cities-tool/uw-cities-tool.component';
 import {
   UnchartedWaterTabs,
@@ -15,8 +16,9 @@ import {
   imports: [
     AppTabsComponent,
     MovesCalculatorComponent,
-    UwDescriptionComponent,
     UwCitiesToolComponent,
+    UwGoodsTableComponent,
+    ...EVENT_CONTENT,
   ],
   templateUrl: './uncharted-waters.component.html',
   styleUrl: './uncharted-waters.component.scss',

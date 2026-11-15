@@ -12,6 +12,12 @@ export interface GlossaryEntry {
  * <app-term key="…">. Definitions only restate what the guides already say.
  */
 export const GLOSSARY = {
+  'voyagers-coins': {
+    term: "Voyager's Coins",
+    definition:
+      'The Uncharted Waters currency. You start with an amount based on your title level and grow it by trading; it counts towards achievements and ranking rewards.',
+    event: Event.UnchartedWaters,
+  },
   stamina: {
     term: 'Stamina',
     definition:

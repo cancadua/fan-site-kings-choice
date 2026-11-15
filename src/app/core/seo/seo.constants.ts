@@ -70,7 +70,7 @@ export const EVENT_SEO: Record<Event, { title: string; description: string }> =
     [Event.UnchartedWaters]: {
       title: 'Uncharted Waters Event Guide & City Planner',
       description:
-        "Plan your King's Choice Uncharted Waters event with the interactive map, the city selection tool and shareable plans for your alliance.",
+        "King's Choice Uncharted Waters guide: how prices and ship skills work, the best goods for your hold, an interactive city planner and a moves calculator.",
     },
     [Event.ReapWhatYouSow]: {
       title: 'Reap What You Sow Event Guide',

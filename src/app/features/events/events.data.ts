@@ -12,12 +12,12 @@ import { NavHubItem } from '../../shared/nav-hub/nav-hub.schema';
 export const EVENTS_NAV: NavHubItem<Event>[] = [
   {
     id: Event.UnchartedWaters,
-    reviewed: '2026-10-29',
+    reviewed: '2026-11-15',
     title: 'Uncharted Waters',
     subtitle: 'Trade & Plunder Event',
     icon: 'compass',
     facts: [
-      { icon: 'coins', label: 'Focus', value: 'Trade & plunder' },
+      { icon: 'shield', label: 'Entry', value: 'Alliance with vouchers' },
       { icon: 'map', label: 'Planner', value: 'Interactive cities map' },
       { icon: 'zap', label: 'Moves', value: 'Max 10 · +1 / 30 min' },
     ],
