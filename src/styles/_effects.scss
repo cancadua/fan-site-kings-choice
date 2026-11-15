@@ -47,7 +47,10 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
+// Phones and small tablets (same breakpoint as the nav sheet) skip the
+// flicker and the reveal animations below: on weaker GPUs the extra layers make
+// scrolling stutter.
+@media (prefers-reduced-motion: no-preference) and (min-width: 969px) {
   .torchlit::before {
     animation: torch-flicker 6.5s ease-in-out infinite;
   }
@@ -124,7 +127,7 @@
   }
 
   // Sections and steps rise into place as they scroll into view.
-  @media (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 969px) {
     .reveal-on-scroll {
       animation: reveal-up linear both;
       animation-timeline: view();
