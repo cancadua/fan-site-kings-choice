@@ -1,7 +1,6 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  OnDestroy,
   afterNextRender,
   computed,
   effect,
@@ -13,10 +12,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { AnalyticsService } from '../../core/analytics/analytics.service';
 import { Event } from '../../core/enums/events';
-import { IntroPlayback } from '../../core/intro/intro-playback.service';
-import { EVENT_SEO } from '../../core/seo/seo.constants';
+import { EVENT_SEO, SITE_URL } from '../../core/seo/seo.constants';
 import { SeoService } from '../../core/seo/seo.service';
 import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
+import { EVENTS_NAV } from './events.data';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
 import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
 import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle-for-supremacy.component';
@@ -24,12 +23,6 @@ import { SchoolOfAthensComponent } from './school-of-athens/school-of-athens.com
 import { SiegeOfTheUndeadComponent } from './siege-of-the-undead/siege-of-the-undead.component';
 
 const LAST_EVENT_KEY = 'kc.lastEvent';
-
-interface EventDetail {
-  id: Event;
-  title: string;
-  subtitle: string;
-}
 
 @Component({
   selector: 'app-events',
@@ -47,11 +40,10 @@ interface EventDetail {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventsComponent implements OnDestroy {
+export class EventsComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly analytics = inject(AnalyticsService);
-  private readonly intro = inject(IntroPlayback);
   private readonly seo = inject(SeoService);
 
   /** The event comes from the URL (`/events/:event`), so each event has its own page. */
@@ -66,40 +58,15 @@ export class EventsComponent implements OnDestroy {
   });
   readonly Event = Event;
 
-  events: EventDetail[] = [
-    {
-      id: Event.UnchartedWaters,
-      title: 'Uncharted Waters',
-      subtitle: 'Trade & Plunder Event',
-    },
-    {
-      id: Event.ReapWhatYouSow,
-      title: 'Reap What You Sow',
-      subtitle: 'Flora & Fauna Event',
-    },
-    {
-      id: Event.StruggleForSupremacy,
-      title: 'Struggle for Supremacy',
-      subtitle: 'Alliance Season Event',
-    },
-    {
-      id: Event.SchoolOfAthens,
-      title: 'School of Athens',
-      subtitle: '3-Player Team Event',
-    },
-    {
-      id: Event.SiegeOfTheUndead,
-      title: 'Siege of the Undead',
-      subtitle: 'Alliance Defense Event',
-    },
-  ];
+  readonly events = EVENTS_NAV;
 
   constructor() {
     effect(() => {
       const event = this.activeEvent();
       const details = EVENT_SEO[event];
-      const title =
-        this.events.find((e) => e.id === event)?.title ?? details.title;
+      const item = this.events.find((e) => e.id === event);
+      const title = item?.title ?? details.title;
+      const preview = item?.banner?.og ?? item?.banner;
       this.seo.update({
         title: details.title,
         description: details.description,
@@ -108,6 +75,11 @@ export class EventsComponent implements OnDestroy {
           { name: 'Events', path: `/events/${Event.UnchartedWaters}` },
           { name: title, path: `/events/${event}` },
         ],
+        image: preview && {
+          url: `${SITE_URL}/${preview.src}`,
+          width: preview.width,
+          height: preview.height,
+        },
       });
     });
 
@@ -128,13 +100,7 @@ export class EventsComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.intro.reset();
-  }
-
   onEventChange(event: Event): void {
-    // Intro scenes play only after the viewer switches events here, never on arrival.
-    this.intro.enable();
     this.saveLastEvent(event);
     this.analytics.track('event-select', { event });
     this.goTo(event, { tab: null, map: null, event: null });

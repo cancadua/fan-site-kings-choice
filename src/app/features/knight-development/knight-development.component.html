@@ -28,7 +28,11 @@
       @if (active.subsections) {
         <div class="kd-subsections">
           @for (subsection of active.subsections; track subsection.title) {
-            <section class="kd-subsection">
+            <section
+              class="kd-subsection"
+              [id]="slug(subsection.title)"
+              [attr.data-toc]="subsection.title"
+            >
               <h3>{{ subsection.title }}</h3>
               @for (paragraph of subsection.content; track $index) {
                 <div class="kd-paragraph-block">

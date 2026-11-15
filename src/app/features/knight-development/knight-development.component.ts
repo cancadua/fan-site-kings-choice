@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { PAGE_SEO } from '../../core/seo/seo.constants';
 import { SeoService } from '../../core/seo/seo.service';
 import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
+import { slugify } from '../../shared/utils/slug';
 import { KNIGHT_SECTIONS, Section } from './knight-development.data';
 
 const DESCRIPTION_MAX = 155;
@@ -39,6 +40,8 @@ export class KnightDevelopmentComponent {
   private readonly seo = inject(SeoService);
 
   readonly sections = KNIGHT_SECTIONS;
+  /** Subsection ids, so they can be linked to and listed in the page contents. */
+  protected readonly slug = slugify;
 
   private readonly requested = toSignal(
     this.route.paramMap.pipe(map((params) => params.get('section'))),
