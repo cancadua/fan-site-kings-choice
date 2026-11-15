@@ -1,124 +1,316 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+$field-bg: #140d06;
+
 .login {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 70px);
+  padding: clamp(1.25rem, 4vw, 3rem) 1rem;
   @include tavern-room;
   color: $knight-text;
 }
 
-.login-card {
+// Intro plaque and form side by side; stacked on narrow screens.
+.login-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 2rem 1.5rem;
-  background: rgba($knight-amber, 0.05);
-  border-left: 4px solid $knight-amber;
+  max-width: 940px;
+  border: 2px solid rgba($gold-primary, 0.5);
   border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
 
-  h1 {
-    color: $knight-amber;
-    font-size: 1.6rem;
-    text-align: center;
+  @media (max-width: 820px) {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 480px;
   }
 }
 
-.login-subtitle {
-  text-align: center;
-  color: $knight-text-muted;
-  font-style: italic;
-  margin-top: -0.5rem;
-}
-
-.login-note {
-  margin: 0;
-  padding: 10px 12px;
-  border: 1px solid rgba($knight-amber, 0.35);
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.3);
-  color: $parchment;
-  font-family: $font-body;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.login-tabs {
+// ---------- Form ----------
+.login-card {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  @include tavern-panel(true);
+}
+
+// Segmented control with a sliding gold thumb.
+.login-switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border: 1px solid rgba($gold-primary, 0.35);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
 
   button {
-    flex: 1;
-    padding: 0.6rem;
-    background: transparent;
+    position: relative;
+    z-index: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 999px;
+    background: none;
     color: $knight-text-muted;
-    border: 1px solid rgba($knight-amber, 0.3);
-    border-radius: 8px;
-    font: inherit;
+    font-family: $font-heading;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
+    transition: color 0.25s ease;
 
     &.active {
       color: $black-primary;
-      background: $knight-amber;
-      border-color: $knight-amber;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $knight-amber;
+      outline-offset: 2px;
     }
   }
 }
 
-label {
+.login-switch__thumb {
+  position: absolute;
+  inset: 4px auto 4px 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: linear-gradient(135deg, $gold-light, $gold-primary);
+  box-shadow: 0 2px 10px rgba($gold-primary, 0.4);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.login-switch__thumb--right {
+  transform: translateX(100%);
+}
+
+.login-card__heading {
+  h2 {
+    margin: 0 0 0.2rem;
+    font-family: $font-heading;
+    font-size: 1.3rem;
+    color: $knight-amber;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: $knight-text-muted;
+  }
+}
+
+.field {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+}
 
-  span {
-    color: $knight-text-muted;
-    font-size: 0.9rem;
+.field__label {
+  font-size: 0.85rem;
+  letter-spacing: 0.3px;
+  color: $knight-text-muted;
+}
+
+.field__control {
+  position: relative;
+}
+
+.field__icon {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  width: 18px;
+  height: 18px;
+  color: rgba($gold-primary, 0.75);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.field__input {
+  width: 100%;
+  padding: 0.75rem 0.85rem 0.75rem 2.6rem;
+  border: 1px solid rgba($gold-primary, 0.35);
+  border-radius: 8px;
+  background: $field-bg;
+  color: $parchment;
+  font-family: $font-lore;
+  font-size: 1rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: rgba($knight-text-muted, 0.45);
   }
 
-  input {
-    padding: 0.7rem 0.8rem;
-    background: rgba(0, 0, 0, 0.35);
-    color: $knight-text;
-    border: 1px solid rgba($knight-amber, 0.3);
-    border-radius: 8px;
-    font: inherit;
-
-    &:focus {
-      outline: 2px solid $knight-amber;
-      outline-offset: 1px;
-    }
+  &:hover {
+    border-color: rgba($gold-primary, 0.6);
   }
+
+  &:focus {
+    outline: none;
+    border-color: $gold-primary;
+    box-shadow: 0 0 0 3px rgba($gold-primary, 0.2);
+  }
+
+  // Browsers paint autofilled fields bright yellow; keep them in theme.
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-text-fill-color: $parchment;
+    caret-color: $parchment;
+    box-shadow: 0 0 0 1000px $field-bg inset;
+    transition: background-color 9999s ease-out;
+  }
+}
+
+.field__input--with-action {
+  padding-right: 2.9rem;
+}
+
+.field__action {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: $knight-text-muted;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  app-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: $gold-light;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+  }
+}
+
+.field__hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba($knight-text-muted, 0.8);
 }
 
 .login-error {
-  color: #ff8a80;
-  font-size: 0.95rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(#ff8a80, 0.4);
+  border-radius: 8px;
+  background: rgba(#ff8a80, 0.1);
+  color: #ffb4ac;
+  font-size: 0.9rem;
+
+  app-icon {
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+  }
 }
 
 .login-submit {
-  padding: 0.75rem;
-  background: $knight-amber;
-  color: $black-primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+  padding: 0.85rem;
   border: none;
   border-radius: 8px;
-  font: inherit;
+  background: linear-gradient(135deg, $gold-primary, $gold-light);
+  box-shadow: 0 4px 16px rgba($gold-primary, 0.35);
+  color: $black-primary;
+  font-family: $font-heading;
+  font-size: 1rem;
   font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 8px 24px rgba($gold-primary, 0.55);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $parchment;
+    outline-offset: 3px;
+  }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.75;
     cursor: wait;
   }
 }
 
-.login-hint {
-  text-align: center;
+.login-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba($black-primary, 0.3);
+  border-top-color: $black-primary;
+  border-radius: 50%;
+  animation: login-spin 0.8s linear infinite;
+}
+
+@keyframes login-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.login-hint,
+.login-alt {
+  margin: 0;
   font-size: 0.85rem;
+  text-align: center;
   color: $knight-text-muted;
+}
+
+.login-alt button {
+  padding: 0;
+  border: none;
+  background: none;
+  color: $gold-primary;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+
+  &:hover {
+    color: $gold-light;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-switch__thumb,
+  .login-submit,
+  .field__input {
+    transition: none;
+  }
+
+  .login-spinner {
+    animation-duration: 2.4s;
+  }
 }

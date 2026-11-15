@@ -12,12 +12,14 @@ import { ApiClient, apiErrorMessage } from '../../core/api/api-client';
 import { SessionService } from '../../core/auth/session.service';
 import { PAGE_SEO } from '../../core/seo/seo.constants';
 import { SeoService } from '../../core/seo/seo.service';
+import { AppIconComponent } from '../../shared/app-icon/app-icon.component';
+import { LoginIntro } from './login-intro';
 
 type Mode = 'login' | 'register';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, AppIconComponent, LoginIntro],
   templateUrl: './login.html',
   styleUrl: './login.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +35,7 @@ export class Login {
   password = signal('');
   busy = signal(false);
   error = signal<string | null>(null);
+  showPassword = signal(false);
 
   constructor() {
     inject(SeoService).update(PAGE_SEO.login);
