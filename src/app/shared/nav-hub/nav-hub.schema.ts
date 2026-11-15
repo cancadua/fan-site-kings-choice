@@ -14,6 +14,8 @@ export interface NavHubBanner {
   height: number;
   /** Image for link previews (Discord, Facebook…); defaults to `src`. Best at 1200×630. */
   og?: { src: string; width: number; height: number };
+  /** Small copy (640 px wide) for cards, so lists don't load full-size art. */
+  card?: string;
 }
 
 export interface NavHubItem<T extends string = string> {

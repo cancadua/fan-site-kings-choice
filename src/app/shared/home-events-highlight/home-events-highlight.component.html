@@ -12,9 +12,9 @@
           <span class="card__art" aria-hidden="true">
             @if (event.banner; as banner) {
               <img
-                [src]="banner.src"
-                [width]="banner.width"
-                [height]="banner.height"
+                [src]="banner.card ?? banner.src"
+                width="640"
+                height="360"
                 alt=""
                 loading="lazy"
                 decoding="async"
