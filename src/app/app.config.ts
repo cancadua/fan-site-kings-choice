@@ -11,12 +11,13 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
+import { RouteReuseStrategy, provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { apiStatusInterceptor } from './core/api/api-status.interceptor';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { AnalyticsService } from './core/analytics/analytics.service';
+import { SamePageReuseStrategy } from './core/navigation/same-page-reuse.strategy';
 import { provideScrollToTopOnNavigation } from './core/navigation/scroll-to-top';
 
 export const appConfig: ApplicationConfig = {
@@ -24,6 +25,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
+    // Switching tabs (`/events/x` ↔ `/events/x/smart-play`) keeps the page component.
+    { provide: RouteReuseStrategy, useClass: SamePageReuseStrategy },
     provideClientHydration(withEventReplay()),
     provideScrollToTopOnNavigation(),
     provideAppInitializer(() => inject(AnalyticsService).init()),

@@ -40,6 +40,8 @@ export class KnightDevelopmentComponent {
   private readonly seo = inject(SeoService);
 
   readonly sections = KNIGHT_SECTIONS;
+  protected readonly sectionHref = (id: string): string =>
+    `/knight-development/${id}`;
   /** Subsection ids, so they can be linked to and listed in the page contents. */
   protected readonly slug = slugify;
 

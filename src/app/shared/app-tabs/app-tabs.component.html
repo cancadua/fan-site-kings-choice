@@ -1,19 +1,19 @@
 <div class="tabs-wrapper" #tabsWrapper>
   <div class="tabs" role="tablist" #tabsContainer>
     @for (tab of visibleTabs; track tab.value) {
-      <button
-        type="button"
+      <a
         role="tab"
         [id]="tabId(tab)"
+        [href]="tabHref()(tab)"
         [class.active]="tab.value === activeTab()?.value"
         [attr.aria-selected]="tab.value === activeTab()?.value"
         [attr.aria-controls]="panelId"
         [tabIndex]="tab.value === activeTab()?.value ? 0 : -1"
-        (click)="selectTab(tab)"
+        (click)="onTabClick($event, tab)"
         (keydown)="onTabKeydown($event)"
       >
         {{ tab.label }}
-      </button>
+      </a>
     }
   </div>
 </div>
@@ -31,30 +31,30 @@
 @if (visibleTabs.length > 1) {
   <nav class="tab-pager" aria-label="More sections">
     @if (prevTab; as prev) {
-      <button
-        type="button"
+      <a
         class="tab-pager__link tab-pager__link--prev"
-        (click)="goToTab(prev)"
+        [href]="tabHref()(prev)"
+        (click)="onTabClick($event, prev, true)"
       >
         <app-icon name="chevronLeft" />
         <span class="tab-pager__text">
           <span class="tab-pager__hint">Previous</span>
           <span class="tab-pager__label">{{ prev.label }}</span>
         </span>
-      </button>
+      </a>
     }
     @if (nextTab; as next) {
-      <button
-        type="button"
+      <a
         class="tab-pager__link tab-pager__link--next"
-        (click)="goToTab(next)"
+        [href]="tabHref()(next)"
+        (click)="onTabClick($event, next, true)"
       >
         <span class="tab-pager__text">
           <span class="tab-pager__hint">Next</span>
           <span class="tab-pager__label">{{ next.label }}</span>
         </span>
         <app-icon name="chevronRight" />
-      </button>
+      </a>
     }
   </nav>
 }

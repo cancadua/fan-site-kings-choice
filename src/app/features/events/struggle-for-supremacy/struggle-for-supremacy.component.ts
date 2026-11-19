@@ -1,6 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AppTabsComponent } from '../../../shared/app-tabs/app-tabs.component';
 import { TabbedPage } from '../../../shared/app-tabs/tabbed-page';
+import { Event } from '../../../core/enums/events';
+import { eventPath } from '../event-tabs';
 import { StruggleForSupremacyTabs } from './struggle-for-supremacy.schema';
 import { EVENT_CONTENT } from '../../../shared/event-content';
 
@@ -14,6 +16,6 @@ import { EVENT_CONTENT } from '../../../shared/event-content';
 })
 export class StruggleForSupremacyComponent extends TabbedPage {
   constructor() {
-    super(StruggleForSupremacyTabs);
+    super(StruggleForSupremacyTabs, eventPath(Event.StruggleForSupremacy));
   }
 }

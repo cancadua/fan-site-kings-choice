@@ -1,0 +1,58 @@
+<main class="events-index">
+  <header class="events-index__header">
+    <h1>King's Choice Event Guides</h1>
+    <p class="events-index__intro">
+      Rules, key numbers and step-by-step strategy for every event. Pick an
+      event below, or jump straight to one of its sections.
+    </p>
+    @if (lastEntry(); as last) {
+      <a class="events-index__continue" [routerLink]="last.path">
+        Continue with {{ last.event.title }}
+        <app-icon name="chevronRight" />
+      </a>
+    }
+  </header>
+
+  <ul class="events-index__list">
+    @for (entry of entries; track entry.event.id) {
+      <li class="event">
+        @if (entry.event.banner; as banner) {
+          <a
+            class="event__art"
+            [routerLink]="entry.path"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <img
+              [src]="banner.card ?? banner.src"
+              width="640"
+              height="360"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+        }
+        <div class="event__body">
+          <h2 class="event__title">
+            <a [routerLink]="entry.path">{{ entry.event.title }}</a>
+          </h2>
+          @if (entry.event.subtitle) {
+            <p class="event__subtitle">{{ entry.event.subtitle }}</p>
+          }
+          <p class="event__description">{{ entry.description }}</p>
+          <ul
+            class="event__sections"
+            [attr.aria-label]="entry.event.title + ' sections'"
+          >
+            @for (section of entry.sections; track section.path) {
+              <li>
+                <a [routerLink]="section.path">{{ section.label }}</a>
+              </li>
+            }
+          </ul>
+        </div>
+      </li>
+    }
+  </ul>
+</main>

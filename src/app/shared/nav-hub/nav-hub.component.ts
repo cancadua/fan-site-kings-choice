@@ -37,6 +37,8 @@ export class NavHubComponent<T extends string = string> {
   articleHeading = input<'h1' | 'h2'>('h2');
   items = input.required<NavHubItem<T>[]>();
   activeId = model.required<T>();
+  /** URL of each item. The sidebar is made of real links, so crawlers can find every page. */
+  itemHref = input.required<(id: T) => string>();
   /** Shows a search box above the sidebar list (the phone sheet lists everything). */
   filterable = input(false);
   /** Shows each item's subtitle under its title in the sidebar and the phone sheet. */
@@ -57,6 +59,21 @@ export class NavHubComponent<T extends string = string> {
 
   protected onQuery(event: Event): void {
     this.query.set((event.target as HTMLInputElement).value);
+  }
+
+  /** A plain click switches in place; Ctrl/Cmd/Shift/Alt-click opens the link as usual. */
+  protected onItemClick(event: MouseEvent, id: T): void {
+    if (
+      event.button !== 0 ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+    event.preventDefault();
+    this.selectItem(id);
   }
 
   selectItem(id: T): void {

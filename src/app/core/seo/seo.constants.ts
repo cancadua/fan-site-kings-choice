@@ -4,6 +4,15 @@ export const SITE_URL = 'https://kc-lords-tavern.com';
 export const SITE_NAME = "KC Lord's Tavern";
 export const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
+/**
+ * Absolute URL of a page. GitHub Pages serves each prerendered page from
+ * `<path>/index.html` and redirects `<path>` to `<path>/`, so canonical URLs end
+ * with a slash and crawlers land on the page without a redirect.
+ */
+export function pageUrl(path: string): string {
+  return SITE_URL + (path.endsWith('/') ? path : `${path}/`);
+}
+
 export interface SeoPage {
   /** Short page title; the site name is appended automatically. */
   title: string;
@@ -31,7 +40,7 @@ export const PAGE_SEO = {
     title: "King's Choice Event Guides",
     description:
       "Guides for King's Choice events: Uncharted Waters, Reap What You Sow, Struggle for Supremacy, School of Athens, Siege of the Undead and Realm Revival.",
-    path: '/events/uncharted-waters',
+    path: '/events',
   },
   knights: {
     title: "King's Choice Knight Development Guide",
@@ -64,6 +73,20 @@ export const PAGE_SEO = {
     noindex: true,
   },
 } satisfies Record<string, SeoPage>;
+
+/**
+ * Meta descriptions for event tabs other than Basic Information, built from the
+ * event name. Tabs not listed here reuse the event's own description.
+ */
+export const EVENT_TAB_DESCRIPTIONS: Record<string, (event: string) => string> =
+  {
+    'smart-play': (event) =>
+      `Smart play for the King's Choice ${event} event: a step-by-step strategy checklist and tips to get the most out of it.`,
+    'moves-calculator': (event) =>
+      `${event} moves calculator for King's Choice: see when your moves refill to the cap, so none go to waste.`,
+    'cities-tool': (event) =>
+      `Interactive ${event} city planner for King's Choice: sort cities on the map and share the plan with a short link.`,
+  };
 
 export const EVENT_SEO: Record<Event, { title: string; description: string }> =
   {

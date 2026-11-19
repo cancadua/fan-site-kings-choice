@@ -36,12 +36,12 @@
         />
       }
       @for (item of visibleItems(); track item.id) {
-        <button
-          type="button"
+        <a
           class="nav-hub-link"
+          [href]="itemHref()(item.id)"
           [class.active]="activeId() === item.id"
           [attr.aria-current]="activeId() === item.id ? 'page' : null"
-          (click)="selectItem(item.id)"
+          (click)="onItemClick($event, item.id)"
         >
           @if (item.icon) {
             <app-icon class="nav-hub-link__icon" [name]="item.icon" />
@@ -52,7 +52,7 @@
               <span class="nav-hub-link__subtitle">{{ item.subtitle }}</span>
             }
           </span>
-        </button>
+        </a>
       } @empty {
         <p class="nav-hub-empty">No matches</p>
       }

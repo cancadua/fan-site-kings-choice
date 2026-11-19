@@ -6,12 +6,7 @@
   />
   <div class="tools-grid">
     @for (tool of tools; track tool.title; let i = $index) {
-      <a
-        class="tool-card"
-        [routerLink]="tool.route"
-        [queryParams]="tool.queryParams"
-        [style.--i]="i"
-      >
+      <a class="tool-card" [routerLink]="tool.route" [style.--i]="i">
         <span class="tool-emblem" aria-hidden="true"
           ><app-icon [name]="tool.icon"
         /></span>

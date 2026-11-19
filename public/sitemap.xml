@@ -5,71 +5,123 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/events/uncharted-waters</loc>
+    <loc>https://kc-lords-tavern.com/events/</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/uncharted-waters/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/events/reap-what-you-sow</loc>
+    <loc>https://kc-lords-tavern.com/events/uncharted-waters/smart-play/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/uncharted-waters/cities-tool/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/uncharted-waters/moves-calculator/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/reap-what-you-sow/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/events/struggle-for-supremacy</loc>
+    <loc>https://kc-lords-tavern.com/events/reap-what-you-sow/smart-play/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/reap-what-you-sow/moves-calculator/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/struggle-for-supremacy/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/events/school-of-athens</loc>
+    <loc>https://kc-lords-tavern.com/events/struggle-for-supremacy/smart-play/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/school-of-athens/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/events/siege-of-the-undead</loc>
+    <loc>https://kc-lords-tavern.com/events/school-of-athens/smart-play/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/school-of-athens/moves-calculator/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/siege-of-the-undead/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/events/realm-revival</loc>
+    <loc>https://kc-lords-tavern.com/events/siege-of-the-undead/smart-play/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/realm-revival/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/overview</loc>
+    <loc>https://kc-lords-tavern.com/events/realm-revival/smart-play/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/events/realm-revival/moves-calculator/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/knight-development/overview/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/golden-rule</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/golden-rule/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/power-breakdown</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/power-breakdown/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/intellect-priority</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/intellect-priority/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/edict-mathematics</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/edict-mathematics/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/knight-power</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/knight-power/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/aura-knights</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/aura-knights/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/progression-stages</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/progression-stages/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/knight-development/university-optimization</loc>
+    <loc>https://kc-lords-tavern.com/knight-development/university-optimization/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/guide</loc>
+    <loc>https://kc-lords-tavern.com/guide/</loc>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://kc-lords-tavern.com/privacy</loc>
+    <loc>https://kc-lords-tavern.com/guide/tips/</loc>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://kc-lords-tavern.com/privacy/</loc>
+    <priority>0.3</priority>
   </url>
 </urlset>
