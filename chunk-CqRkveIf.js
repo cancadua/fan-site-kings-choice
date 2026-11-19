@@ -1,0 +1,1 @@
+var t=`kc.lastEvent`;function n(){try{return localStorage.getItem(t)}catch{return null}}function r(e){try{localStorage.setItem(t,e)}catch{}}export{r as n,n as t};
