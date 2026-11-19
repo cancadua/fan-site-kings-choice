@@ -9,7 +9,7 @@ import { NavHubItem } from '../../shared/nav-hub/nav-hub.schema';
  * - `reviewed` is the date the guide was last checked against the game.
  * - `banner`: artwork lives in `assets/img/events/<event-id>/`: `banner.webp`
  *   (full size, title plaque), `card.webp` (640 px, home page cards) and `og.jpg`
- *   (1200×630, link previews).
+ *   (1200×630, link previews). Generator prompts: `docs/event-banner-prompts.md`.
  */
 export const EVENTS_NAV: NavHubItem<Event>[] = [
   {
@@ -173,6 +173,28 @@ export const EVENTS_NAV: NavHubItem<Event>[] = [
         value: 'Alliance · Server / Cross-Server',
       },
       { icon: 'trophy', label: 'Titles', value: 'Alliance + voted MVP' },
+    ],
+  },
+  {
+    id: Event.SpiceRoad,
+    title: 'Spice Road',
+    subtitle: 'Trade & Raid Ranking Event',
+    icon: 'coins',
+    banner: {
+      src: 'assets/img/events/spice-road/banner.webp',
+      width: 1672,
+      height: 941,
+      card: 'assets/img/events/spice-road/card.webp',
+      og: {
+        src: 'assets/img/events/spice-road/og.jpg',
+        width: 1200,
+        height: 630,
+      },
+    },
+    facts: [
+      { icon: 'calendar', label: 'Duration', value: '3 days' },
+      { icon: 'trophy', label: 'Ranking', value: 'Individual' },
+      { icon: 'users', label: 'Alliance', value: 'Giant Carriage · 1 h' },
     ],
   },
 ];

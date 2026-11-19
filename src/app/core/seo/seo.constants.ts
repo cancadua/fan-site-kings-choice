@@ -39,7 +39,7 @@ export const PAGE_SEO = {
   events: {
     title: "King's Choice Event Guides",
     description:
-      "Guides for King's Choice events: Uncharted Waters, Reap What You Sow, Struggle for Supremacy, School of Athens, Siege of the Undead and Realm Revival.",
+      "Guides for King's Choice events: Uncharted Waters, Reap What You Sow, Struggle for Supremacy, School of Athens, Siege of the Undead, Realm Revival and Spice Road.",
     path: '/events',
   },
   knights: {
@@ -119,5 +119,10 @@ export const EVENT_SEO: Record<Event, { title: string; description: string }> =
       title: 'Realm Revival Event Guide',
       description:
         "King's Choice Realm Revival alliance ranking event: building economy, raids, cards and combos, tips for your alliance and a dice calculator.",
+    },
+    [Event.SpiceRoad]: {
+      title: 'Spice Road Event Guide',
+      description:
+        "King's Choice Spice Road ranking event: where points come from, EXP and orders, carriages, raids, Retail Orders and Giant Carriage, plus a smart play checklist.",
     },
   };

@@ -1,0 +1,117 @@
+<app-tabs
+  [tabs]="tabs"
+  [tabHref]="tabHref"
+  [activeTab]="activeTab()"
+  (activeTabChange)="onTabChange($event)"
+>
+  @if (activeTab().value === 'basic-information') {
+    <app-content-section heading="Event Overview">
+      <app-content-text lead>
+        Spice Road is a 3-day individual ranking event. You explore for spices,
+        fill orders, dispatch carriages, raid other players' carriages and
+        defend your own.
+      </app-content-text>
+    </app-content-section>
+    <app-content-section heading="Where Points Come From">
+      <app-content-list
+        [items]="[
+          'Dispatching a carriage: part of the points is paid immediately on dispatch, the rest when the transport completes.',
+          'Orders: Advanced and Royal Orders are worth the most.',
+          'Retail Orders: sell specific spices directly for points, until the event ends.',
+          'Raids and defense: skills add bonus points for every successful raid and every successful defense.',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="EXP and Skills">
+      <app-content-list
+        [items]="[
+          'EXP levels unlock skills.',
+          'Higher EXP raises the chance of getting Advanced and Royal Orders.',
+          'Transport skills unlock early in the skill tree.',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="Carriages and Raids">
+      <app-content-list
+        [items]="[
+          'The carriage list prioritizes opponents with a transport level similar to yours.',
+          'Speedup items finish a transport faster.',
+        ]"
+      />
+    </app-content-section>
+    <app-content-section heading="Giant Carriage">
+      <app-content-text>
+        An alliance activity that runs for one hour. Chests earned from it can
+        be kept and opened later in the event, for example on the last day.
+      </app-content-text>
+    </app-content-section>
+    <app-content-section heading="Pets">
+      <app-content-text>
+        Pets can have a Spice Road bloodline. Check yours before the event
+        starts.
+      </app-content-text>
+      <app-content-note>
+        This page is based on the game's update notes and community discussions.
+        Values can change between game updates, so check the in-game event page.
+      </app-content-note>
+    </app-content-section>
+  } @else if (activeTab().value === 'smart-play') {
+    <app-content-steps checklist="spice-road">
+      <app-content-step heading="Prepare before day one">
+        <app-content-list
+          [items]="[
+            'Save speedup items for the event.',
+            'Assign pets with a Spice Road bloodline.',
+          ]"
+        />
+      </app-content-step>
+      <app-content-step heading="Level EXP first">
+        <app-content-text>
+          Early EXP pays back for the rest of the event: it unlocks skills and
+          raises your chance of Advanced and Royal Orders.
+        </app-content-text>
+        <app-content-note>
+          Don't trade EXP for small one-off points on day one.
+        </app-content-note>
+      </app-content-step>
+      <app-content-step heading="Take raid and defense skills">
+        <app-content-text>
+          Successful raids and defenses pay bonus points with the right skills,
+          so raiding is a scoring source, not a side activity.
+        </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Keep carriages moving">
+        <app-content-list
+          [items]="[
+            'Compare carriages by points per hour of transport, not by size.',
+            'Dispatch often: part of the points comes on dispatch.',
+            'Use speedups only when they let you fit another transport before the event ends.',
+          ]"
+        />
+      </app-content-step>
+      <app-content-step heading="Spend spices on the best order">
+        <app-content-text>
+          Save spices for Advanced and Royal Orders. Use Retail Orders for
+          spices you won't need for a better order.
+        </app-content-text>
+      </app-content-step>
+      <app-content-step heading="Giant Carriage with your alliance">
+        <app-content-list
+          [items]="[
+            'Join at the time your alliance agrees on.',
+            'Keep the chests and open them on the last day.',
+          ]"
+        />
+      </app-content-step>
+      <app-content-step heading="Last hours">
+        <app-content-list
+          [items]="[
+            'Dispatch every carriage you can: part of the points is paid on dispatch.',
+            'Sell leftover spices through Retail Orders before the event ends.',
+            'Open saved Giant Carriage chests and claim all rewards.',
+          ]"
+        />
+      </app-content-step>
+    </app-content-steps>
+  }
+</app-tabs>
