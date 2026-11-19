@@ -36,6 +36,9 @@ export class AppTabsComponent {
 
   tabs = input<ContentTab[]>();
 
+  /** URL of each tab. Tabs are real links, so crawlers and "open in new tab" work. */
+  tabHref = input.required<(tab: ContentTab) => string>();
+
   activeTab = model<ContentTab | null>(null);
 
   constructor() {
@@ -83,6 +86,29 @@ export class AppTabsComponent {
     setTimeout(() => this.scrollToActiveTab(), 0);
   }
 
+  /**
+   * A plain click switches the tab in place. Ctrl/Cmd/Shift/Alt-click keeps the
+   * browser's own behaviour (new tab or window).
+   */
+  protected onTabClick(
+    event: MouseEvent,
+    tab: ContentTab,
+    fromPager = false
+  ): void {
+    if (
+      event.button !== 0 ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+    event.preventDefault();
+    if (fromPager) this.goToTab(tab);
+    else this.selectTab(tab);
+  }
+
   /** Used by the pager under the content: switches tab and brings the tab bar back into view. */
   protected goToTab(tab: ContentTab): void {
     this.selectTab(tab);
@@ -126,7 +152,7 @@ export class AppTabsComponent {
     this.selectTab(tabs[target]);
     setTimeout(() => {
       this.tabsContainer()
-        ?.nativeElement.querySelector<HTMLElement>('button.active')
+        ?.nativeElement.querySelector<HTMLElement>('[role="tab"].active')
         ?.focus();
     }, 0);
   }
@@ -187,7 +213,7 @@ export class AppTabsComponent {
     if (!container) return;
 
     const activeButton = container.querySelector(
-      'button.active'
+      '[role="tab"].active'
     ) as HTMLElement;
     if (!activeButton) return;
 

@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 
 const TOKEN_KEY = 'kc_alliance_token';
 
@@ -22,6 +23,11 @@ function isExpired(token: string): boolean {
 /** Holds the API JWT. Stored in localStorage so a refresh keeps the user signed in. */
 @Injectable({ providedIn: 'root' })
 export class SessionService {
+  /**
+   * Storage is touched only in the browser. Node 25+ has its own global `localStorage`,
+   * so reading it while prerendering logs a warning (and could share data between pages).
+   */
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly tokenSignal = signal<string | null>(this.load());
 
   readonly token = this.tokenSignal.asReadonly();
@@ -39,6 +45,7 @@ export class SessionService {
 
   setToken(token: string): void {
     this.tokenSignal.set(token);
+    if (!this.isBrowser) return;
     try {
       localStorage.setItem(TOKEN_KEY, token);
     } catch {
@@ -48,6 +55,7 @@ export class SessionService {
 
   clear(): void {
     this.tokenSignal.set(null);
+    if (!this.isBrowser) return;
     try {
       localStorage.removeItem(TOKEN_KEY);
     } catch {
@@ -56,6 +64,7 @@ export class SessionService {
   }
 
   private load(): string | null {
+    if (!this.isBrowser) return null;
     try {
       const token = localStorage.getItem(TOKEN_KEY);
       return token && !isExpired(token) ? token : null;

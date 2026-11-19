@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AppTabsComponent } from '../../../shared/app-tabs/app-tabs.component';
 import { MovesCalculatorComponent } from '../../../shared/moves-calculator/moves-calculator.component';
 import { TabbedPage } from '../../../shared/app-tabs/tabbed-page';
+import { Event } from '../../../core/enums/events';
+import { eventPath } from '../event-tabs';
 import {
   SchoolOfAthensTabs,
   SchoolOfAthensMoves,
@@ -20,6 +22,6 @@ export class SchoolOfAthensComponent extends TabbedPage {
   protected readonly moves = SchoolOfAthensMoves;
 
   constructor() {
-    super(SchoolOfAthensTabs);
+    super(SchoolOfAthensTabs, eventPath(Event.SchoolOfAthens));
   }
 }

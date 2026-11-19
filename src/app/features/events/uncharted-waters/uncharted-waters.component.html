@@ -1,5 +1,6 @@
 <app-tabs
   [tabs]="tabs"
+  [tabHref]="tabHref"
   [activeTab]="activeTab()"
   (activeTabChange)="onTabChange($event)"
 >
@@ -11,9 +12,7 @@
         <app-term key="voyagers-coins">Voyager's Coins</app-term> for
         achievements and ranking rewards.
       </app-content-text>
-      <app-content-note>
-        You need an Alliance to take part.
-      </app-content-note>
+      <app-content-note> You need an Alliance to take part. </app-content-note>
     </app-content-section>
 
     <app-content-section heading="Resources">
@@ -29,7 +28,8 @@
       <app-content-text>
         The percentage next to a good compares its price with normal: 109% sells
         9% above the usual price. Prices rarely go to 110% (max), so buy below
-        100% and sell from around 105% up. (Different alliances/servers set their own thresholds for what counts as "high" and "low".)
+        100% and sell from around 105% up. (Different alliances/servers set
+        their own thresholds for what counts as "high" and "low".)
       </app-content-text>
     </app-content-section>
 
@@ -48,8 +48,8 @@
         ]"
       />
       <app-content-note>
-        Upgrades last until the end of the event, so take them as
-        early as possible.
+        Upgrades last until the end of the event, so take them as early as
+        possible.
       </app-content-note>
     </app-content-section>
 
@@ -60,15 +60,16 @@
       </app-content-text>
       <app-uw-goods-table />
       <app-content-note>
-        Base prices based on old version, to verify! In game, each city's percentage
-        moves them up or down.
+        Base prices based on old version, to verify! In game, each city's
+        percentage moves them up or down.
       </app-content-note>
     </app-content-section>
   } @else if (activeTab().value === 'smart-play') {
     <app-content-steps checklist="uncharted-waters">
       <app-content-step heading="Take Expansion and Profit early">
         <app-content-text>
-          More storage means more goods per trip, and Profit makes you snowball quicker.
+          More storage means more goods per trip, and Profit makes you snowball
+          quicker.
         </app-content-text>
       </app-content-step>
       <app-content-step heading="Fill the hold with dense goods">
@@ -97,8 +98,9 @@
           ]"
         />
         <app-content-note>
-          Then share your alliance if the city is empty based on your arrangements or if you use the tool mark the city as Vacant in the Cities Tool so your alliance skips
-          it.
+          Then share your alliance if the city is empty based on your
+          arrangements or if you use the tool mark the city as Vacant in the
+          Cities Tool so your alliance skips it.
         </app-content-note>
       </app-content-step>
     </app-content-steps>

@@ -10,7 +10,6 @@ interface Tool {
   text: string;
   icon: IconName;
   route: string;
-  queryParams: Record<string, string>;
 }
 
 @Component({
@@ -27,29 +26,25 @@ export class HomeToolsSectionComponent {
       title: 'Uncharted Waters Planner',
       text: 'Sort cities by hand on the interactive map and share the plan with a short link. Not connected to the game.',
       icon: 'map',
-      route: `/events/${Event.UnchartedWaters}`,
-      queryParams: { tab: 'cities-tool' },
+      route: `/events/${Event.UnchartedWaters}/cities-tool`,
     },
     {
       title: 'Moves Calculators',
       text: 'See when your moves refill to the cap in Uncharted Waters, Reap What You Sow and School of Athens, so none go to waste.',
       icon: 'calculator',
-      route: `/events/${Event.ReapWhatYouSow}`,
-      queryParams: { tab: 'moves-calculator' },
+      route: `/events/${Event.ReapWhatYouSow}/moves-calculator`,
     },
     {
       title: 'Knight Development',
       text: 'Advanced guides on how the mechanics work, optimization and competitive strategies.',
       icon: 'swords',
       route: '/knight-development/overview',
-      queryParams: {},
     },
     {
       title: 'Alliance Hub',
       text: 'A private notebook for alliance leaders: members, events and MVP awards you record by hand. Not connected to the game.',
       icon: 'shield',
       route: '/alliance',
-      queryParams: {},
     },
   ];
 }

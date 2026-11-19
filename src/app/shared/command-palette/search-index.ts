@@ -1,16 +1,10 @@
 import { GLOSSARY } from '../../core/constants/glossary';
-import { Event } from '../../core/enums/events';
+import { EVENT_TABS, eventPath } from '../../features/events/event-tabs';
 import { EVENTS_NAV } from '../../features/events/events.data';
-import { RealmRevivalTabs } from '../../features/events/realm-revival/realm-revival.schema';
-import { ReapWhatYouSowTabs } from '../../features/events/reap-what-you-sow/reap-what-you-sow.schema';
-import { SchoolOfAthensTabs } from '../../features/events/school-of-athens/school-of-athens.schema';
-import { SiegeOfTheUndeadTabs } from '../../features/events/siege-of-the-undead/siege-of-the-undead.schema';
-import { StruggleForSupremacyTabs } from '../../features/events/struggle-for-supremacy/struggle-for-supremacy.schema';
-import { UnchartedWaterTabs } from '../../features/events/uncharted-waters/uncharted-waters.schema';
 import { GuideTabs } from '../../features/guide/guide.schema';
 import { KNIGHT_SECTIONS } from '../../features/knight-development/knight-development.data';
 import { IconName } from '../app-icon/icons';
-import { ContentTab } from '../app-tabs/app-tabs.schema';
+import { subTabs, tabPath } from '../app-tabs/tab-path';
 import { slugify } from '../utils/slug';
 
 export type SearchGroup =
@@ -21,22 +15,13 @@ export interface SearchEntry {
   subtitle?: string;
   group: SearchGroup;
   icon: IconName;
-  /** Router URL, may include `?tab=` and `#section`. */
+  /** Router URL, may include `#section`. */
   url: string;
   /** Extra words that should find this entry. */
   keywords?: string;
   /** Shown before anything is typed. */
   featured?: boolean;
 }
-
-const EVENT_TABS: Record<Event, ContentTab[]> = {
-  [Event.UnchartedWaters]: UnchartedWaterTabs,
-  [Event.ReapWhatYouSow]: ReapWhatYouSowTabs,
-  [Event.StruggleForSupremacy]: StruggleForSupremacyTabs,
-  [Event.SchoolOfAthens]: SchoolOfAthensTabs,
-  [Event.SiegeOfTheUndead]: SiegeOfTheUndeadTabs,
-  [Event.RealmRevival]: RealmRevivalTabs,
-};
 
 /** Tabs that are tools rather than reading, so they get their own group. */
 const TOOL_TABS = new Set(['cities-tool', 'moves-calculator']);
@@ -45,7 +30,8 @@ function buildIndex(): SearchEntry[] {
   const entries: SearchEntry[] = [];
 
   for (const event of EVENTS_NAV) {
-    const base = `/events/${event.id}`;
+    const base = eventPath(event.id);
+    const tabs = EVENT_TABS[event.id];
     entries.push({
       title: event.title,
       subtitle: event.subtitle,
@@ -55,8 +41,7 @@ function buildIndex(): SearchEntry[] {
       keywords: event.facts?.map((f) => `${f.label} ${f.value}`).join(' '),
       featured: true,
     });
-    for (const tab of EVENT_TABS[event.id]) {
-      if (tab.hidden || tab.value === 'basic-information') continue;
+    for (const tab of subTabs(tabs)) {
       const isTool = TOOL_TABS.has(tab.value);
       entries.push({
         title: `${event.title} · ${tab.label}`,
@@ -67,7 +52,7 @@ function buildIndex(): SearchEntry[] {
             ? 'calculator'
             : 'map'
           : 'list',
-        url: `${base}?tab=${tab.value}`,
+        url: tabPath(base, tabs, tab.value),
         keywords: isTool
           ? 'tool calculator planner stamina moves refill map cities'
           : 'tips strategy smart play checklist',
@@ -113,7 +98,7 @@ function buildIndex(): SearchEntry[] {
       subtitle: 'Guide',
       group: 'Pages',
       icon: 'scroll',
-      url: `/guide?tab=${tab.value}`,
+      url: tabPath('/guide', GuideTabs, tab.value),
       keywords: 'guide progression lord level resources',
     });
   }

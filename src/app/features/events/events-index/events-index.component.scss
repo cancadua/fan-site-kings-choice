@@ -1,0 +1,159 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.events-index {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: $knight-text;
+  font-family: $font-lore;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+  }
+}
+
+.events-index__header {
+  margin-bottom: 2rem;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 0.75rem;
+    color: $gold-light;
+    font-family: $font-heading;
+    font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem);
+  }
+}
+
+.events-index__intro {
+  max-width: 640px;
+  margin: 0 auto;
+  color: $knight-text-muted;
+  line-height: 1.6;
+}
+
+.events-index__continue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid $gold-primary;
+  border-radius: 8px;
+  color: $gold-light;
+  text-decoration: none;
+
+  app-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: rgba($gold-primary, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+  }
+}
+
+.events-index__list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: minmax(0, 240px) 1fr;
+  gap: 1.25rem;
+  padding: 1rem;
+  @include tavern-panel(true);
+  border: 2px solid rgba($gold-primary, 0.45);
+  border-radius: 10px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.event__art {
+  display: block;
+  overflow: hidden;
+  border-radius: 6px;
+  align-self: start;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.event__title {
+  margin: 0;
+  font-family: $font-heading;
+  font-size: 1.35rem;
+
+  a {
+    color: $gold-light;
+    text-decoration: none;
+
+    &:hover {
+      color: $gold-primary;
+      text-decoration: underline;
+    }
+  }
+}
+
+.event__subtitle {
+  margin: 0.2rem 0 0;
+  color: $knight-amber;
+  font-size: 0.9rem;
+}
+
+.event__description {
+  margin: 0.6rem 0 0.9rem;
+  color: $knight-text-body;
+  line-height: 1.55;
+}
+
+.event__sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba($gold-primary, 0.4);
+    border-radius: 999px;
+    color: $parchment;
+    font-size: 0.88rem;
+    text-decoration: none;
+
+    &:hover {
+      border-color: $gold-primary;
+      background: rgba($gold-primary, 0.12);
+      color: $gold-light;
+    }
+  }
+}
+
+.event__title a,
+.event__sections a {
+  &:focus-visible {
+    outline: 2px solid $knight-amber;
+    outline-offset: 2px;
+  }
+}

@@ -5,6 +5,7 @@
   [items]="sections"
   articleHeading="h1"
   [activeId]="activeSection()"
+  [itemHref]="sectionHref"
   (activeIdChange)="onSectionChange($event)"
 >
   @let active = activeData();

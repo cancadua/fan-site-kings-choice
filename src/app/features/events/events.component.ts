@@ -1,29 +1,39 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  afterNextRender,
+  PLATFORM_ID,
   computed,
   effect,
   inject,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
 import { AnalyticsService } from '../../core/analytics/analytics.service';
 import { Event } from '../../core/enums/events';
-import { EVENT_SEO, SITE_URL } from '../../core/seo/seo.constants';
+import {
+  EVENT_SEO,
+  EVENT_TAB_DESCRIPTIONS,
+  PAGE_SEO,
+  SITE_URL,
+} from '../../core/seo/seo.constants';
 import { SeoService } from '../../core/seo/seo.service';
+import {
+  TAB_PARAM,
+  defaultTab,
+  findTab,
+  tabPath,
+} from '../../shared/app-tabs/tab-path';
 import { NavHubComponent } from '../../shared/nav-hub/nav-hub.component';
+import { EVENT_TABS, eventPath } from './event-tabs';
 import { EVENTS_NAV } from './events.data';
+import { saveLastEvent } from './last-event';
 import { UnchartedWatersComponent } from './uncharted-waters/uncharted-waters.component';
 import { ReapWhatYouSowComponent } from './reap-what-you-sow/reap-what-you-sow.component';
 import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle-for-supremacy.component';
 import { SchoolOfAthensComponent } from './school-of-athens/school-of-athens.component';
 import { SiegeOfTheUndeadComponent } from './siege-of-the-undead/siege-of-the-undead.component';
 import { RealmRevivalComponent } from './realm-revival/realm-revival.component';
-
-const LAST_EVENT_KEY = 'kc.lastEvent';
 
 @Component({
   selector: 'app-events',
@@ -47,35 +57,54 @@ export class EventsComponent {
   private readonly router = inject(Router);
   private readonly analytics = inject(AnalyticsService);
   private readonly seo = inject(SeoService);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  /** The event comes from the URL (`/events/:event`), so each event has its own page. */
-  private readonly requestedEvent = toSignal(
-    this.route.paramMap.pipe(map((params) => params.get('event'))),
-    { initialValue: this.route.snapshot.paramMap.get('event') }
-  );
+  /** The event and tab come from the URL (`/events/:event/:tab`), so each has its own page. */
+  private readonly params = toSignal(this.route.paramMap, {
+    initialValue: this.route.snapshot.paramMap,
+  });
 
   readonly activeEvent = computed<Event>(() => {
-    const requested = this.requestedEvent();
+    const requested = this.params().get('event');
     return this.isEvent(requested) ? requested : Event.UnchartedWaters;
   });
+
+  /** Open tab, for the page title and canonical URL (the event component shows it). */
+  private readonly activeTab = computed(() => {
+    const tabs = EVENT_TABS[this.activeEvent()];
+    return findTab(tabs, this.params().get(TAB_PARAM)) ?? defaultTab(tabs);
+  });
+
   readonly Event = Event;
 
   readonly events = EVENTS_NAV;
 
+  protected readonly eventHref = eventPath;
+
   constructor() {
     effect(() => {
       const event = this.activeEvent();
+      const tab = this.activeTab();
+      const tabs = EVENT_TABS[event];
+      const isDefaultTab = tab === defaultTab(tabs);
       const details = EVENT_SEO[event];
       const item = this.events.find((e) => e.id === event);
       const title = item?.title ?? details.title;
       const preview = item?.banner?.og ?? item?.banner;
+      const page = eventPath(event);
+      const path = tabPath(page, tabs, tab.value);
+      const describeTab = EVENT_TAB_DESCRIPTIONS[tab.value];
       this.seo.update({
-        title: details.title,
-        description: details.description,
-        path: `/events/${event}`,
+        title: isDefaultTab ? details.title : `${tab.label} – ${details.title}`,
+        description:
+          isDefaultTab || !describeTab
+            ? details.description
+            : describeTab(title),
+        path,
         breadcrumbs: [
-          { name: 'Events', path: `/events/${Event.UnchartedWaters}` },
-          { name: title, path: `/events/${event}` },
+          { name: 'Events', path: PAGE_SEO.events.path },
+          { name: title, path: page },
+          ...(isDefaultTab ? [] : [{ name: tab.label, path }]),
         ],
         image: preview && {
           url: `${SITE_URL}/${preview.src}`,
@@ -83,34 +112,15 @@ export class EventsComponent {
           height: preview.height,
         },
       });
-    });
-
-    // Browser only: old `?event=` links and the remembered event move to the
-    // matching `/events/:event` URL once the prerendered page is on screen.
-    afterNextRender(() => {
-      const legacy = this.route.snapshot.queryParamMap.get('event');
-      const target = this.isEvent(legacy)
-        ? legacy
-        : this.requestedEvent() === null
-          ? this.loadLastEvent()
-          : null;
-      if (this.isEvent(target) && target !== this.activeEvent()) {
-        this.goTo(target, { event: null });
-      } else if (legacy) {
-        this.goTo(this.activeEvent(), { event: null });
-      }
+      // The events list offers to continue with this event.
+      if (this.isBrowser) saveLastEvent(event);
     });
   }
 
   onEventChange(event: Event): void {
-    this.saveLastEvent(event);
     this.analytics.track('event-select', { event });
-    this.goTo(event, { tab: null, map: null, event: null });
-  }
-
-  private goTo(event: Event, queryParams: Record<string, null>): void {
-    this.router.navigate(['/events', event], {
-      queryParams,
+    this.router.navigate([eventPath(event)], {
+      queryParams: { [TAB_PARAM]: null, map: null, event: null },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
@@ -118,22 +128,5 @@ export class EventsComponent {
 
   private isEvent(value: string | null): value is Event {
     return !!value && this.events.some((e) => e.id === value);
-  }
-
-  // Remembers the last viewed event; storage can be blocked, so failures are ignored.
-  private loadLastEvent(): string | null {
-    try {
-      return localStorage.getItem(LAST_EVENT_KEY);
-    } catch {
-      return null;
-    }
-  }
-
-  private saveLastEvent(event: Event): void {
-    try {
-      localStorage.setItem(LAST_EVENT_KEY, event);
-    } catch {
-      // ignore
-    }
   }
 }

@@ -9,7 +9,7 @@ interface Feature {
   icon: IconName;
   title: string;
   text: string;
-  link: { label: string; route: string; tab?: string };
+  link: { label: string; route: string };
 }
 
 /** "Inside every guide": what the guide pages offer beyond plain text. */
@@ -32,10 +32,7 @@ interface Feature {
             /></span>
             <h3 class="feature__title">{{ feature.title }}</h3>
             <p class="feature__text">{{ feature.text }}</p>
-            <a
-              class="feature__link"
-              [routerLink]="feature.link.route"
-              [queryParams]="feature.link.tab ? { tab: feature.link.tab } : {}"
+            <a class="feature__link" [routerLink]="feature.link.route"
               >{{ feature.link.label }} <app-icon name="chevronRight"
             /></a>
           </li>
@@ -63,8 +60,7 @@ export class HomeFeaturesComponent {
       text: 'Tick off each step as you go. Progress is saved in your browser.',
       link: {
         label: 'Open a checklist',
-        route: `/events/${Event.SiegeOfTheUndead}`,
-        tab: 'smart-play',
+        route: `/events/${Event.SiegeOfTheUndead}/smart-play`,
       },
     },
     {
@@ -73,8 +69,7 @@ export class HomeFeaturesComponent {
       text: 'See when your moves refill to the cap, so none go to waste.',
       link: {
         label: 'Try a calculator',
-        route: `/events/${Event.ReapWhatYouSow}`,
-        tab: 'moves-calculator',
+        route: `/events/${Event.ReapWhatYouSow}/moves-calculator`,
       },
     },
     {

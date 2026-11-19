@@ -5,6 +5,7 @@
   [items]="events"
   articleHeading="h1"
   [activeId]="activeEvent()"
+  [itemHref]="eventHref"
   [filterable]="true"
   [showItemSubtitles]="true"
   (activeIdChange)="onEventChange($event)"

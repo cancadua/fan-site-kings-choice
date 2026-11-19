@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { OG_IMAGE, SeoPage, SITE_NAME, SITE_URL } from './seo.constants';
+import { OG_IMAGE, SeoPage, SITE_NAME, pageUrl } from './seo.constants';
 
 const JSON_LD_ID = 'seo-jsonld';
 
@@ -17,7 +17,7 @@ export class SeoService {
 
   update(page: SeoPage): void {
     const fullTitle = `${page.title} | ${SITE_NAME}`;
-    const url = SITE_URL + (page.path === '/' ? '/' : page.path);
+    const url = pageUrl(page.path);
     const robots = page.noindex ? 'noindex, nofollow' : 'index, follow';
 
     this.title.setTitle(fullTitle);
@@ -93,7 +93,7 @@ export class SeoService {
         '@type': 'ListItem',
         position: i + 1,
         name: item.name,
-        item: SITE_URL + item.path,
+        item: pageUrl(item.path),
       })),
     });
   }
