@@ -37,4 +37,9 @@ export const EventsData: EventData[] = [
     value: Event.RealmRevival,
     image: '',
   },
+  {
+    name: 'Spice Road',
+    value: Event.SpiceRoad,
+    image: '',
+  },
 ];

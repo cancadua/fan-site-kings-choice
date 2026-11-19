@@ -9,7 +9,7 @@ export interface SiteUpdate {
 }
 
 export const LATEST_UPDATE: SiteUpdate = {
-  id: 'realm-revival',
-  text: 'New event guide: Realm Revival',
-  route: `/events/${Event.RealmRevival}`,
+  id: 'spice-road',
+  text: 'New event guide: Spice Road',
+  route: `/events/${Event.SpiceRoad}`,
 };

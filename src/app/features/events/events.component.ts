@@ -34,6 +34,7 @@ import { StruggleForSupremacyComponent } from './struggle-for-supremacy/struggle
 import { SchoolOfAthensComponent } from './school-of-athens/school-of-athens.component';
 import { SiegeOfTheUndeadComponent } from './siege-of-the-undead/siege-of-the-undead.component';
 import { RealmRevivalComponent } from './realm-revival/realm-revival.component';
+import { SpiceRoadComponent } from './spice-road/spice-road.component';
 
 @Component({
   selector: 'app-events',
@@ -49,6 +50,7 @@ import { RealmRevivalComponent } from './realm-revival/realm-revival.component';
     SchoolOfAthensComponent,
     SiegeOfTheUndeadComponent,
     RealmRevivalComponent,
+    SpiceRoadComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
